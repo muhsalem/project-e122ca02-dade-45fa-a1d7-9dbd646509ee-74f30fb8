@@ -1,8 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowLeft, Brain, Compass, GraduationCap, Sparkles, Target, Users, BookOpen, ShieldCheck } from "lucide-react";
-import heroImg from "@/assets/hero.jpg";
-import compassImg from "@/assets/compass.jpg";
-import coachingImg from "@/assets/coaching.jpg";
+import { ArrowLeft, Brain, Compass, GraduationCap, Sparkles, Target, Users, BookOpen, ShieldCheck, Briefcase } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
