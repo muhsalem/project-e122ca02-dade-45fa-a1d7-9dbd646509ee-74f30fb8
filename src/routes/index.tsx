@@ -161,7 +161,9 @@ function HomePage() {
       {/* TESTIMONIAL */}
       <section className="border-b border-border">
         <div className="container-page grid items-center gap-12 py-20 lg:grid-cols-2">
-          <img src={coachingImg} alt="جلسة كوتشينج" width={1200} height={900} loading="lazy" className="rounded-2xl border border-border" />
+          <div className="flex aspect-[4/3] items-center justify-center rounded-2xl border border-border bg-card">
+            <Briefcase className="h-20 w-20 text-primary/20" />
+          </div>
           <figure>
             <p className="font-serif text-sm uppercase tracking-widest text-gold">قصة نجاح</p>
             <blockquote className="mt-4 font-serif text-2xl leading-relaxed text-primary md:text-3xl">
