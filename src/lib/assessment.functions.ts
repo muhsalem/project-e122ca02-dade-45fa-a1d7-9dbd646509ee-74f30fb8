@@ -82,6 +82,7 @@ export const submitAssessment = createServerFn({ method: "POST" })
       },
       body: JSON.stringify({
         model: "google/gemini-2.5-flash",
+        max_tokens: 8192,
         messages: [
           { role: "system", content: systemPrompt },
           { role: "user", content: `إليك إجابات المتدرب على التقييم الشامل. قم بتحليلها وإصدار التقرير وفق الهيكل المحدد:\n\n${userPayload}` },
@@ -98,8 +99,12 @@ export const submitAssessment = createServerFn({ method: "POST" })
     }
 
     const aiJson = await aiRes.json();
-    const aiReport: string = aiJson?.choices?.[0]?.message?.content ?? "";
-    if (!aiReport) throw new Error("استجابة فارغة من الذكاء الاصطناعي.");
+    const choice = aiJson?.choices?.[0];
+    const aiReport: string = choice?.message?.content ?? "";
+    if (!aiReport) {
+      console.error("Empty AI response. finish_reason:", choice?.finish_reason, "usage:", aiJson?.usage, "raw:", JSON.stringify(aiJson).slice(0, 500));
+      throw new Error("لم يكتمل توليد التقرير. حاول مرة أخرى.");
+    }
 
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     let code = generateCode();
