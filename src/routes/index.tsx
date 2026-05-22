@@ -63,13 +63,9 @@ function HomePage() {
 
           <div className="relative">
             <div className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-gold/20 to-primary/20 blur-2xl" />
-            <img
-              src={heroImg}
-              alt="جلسة إرشاد مهني تعاونية"
-              width={1600}
-              height={1100}
-              className="relative rounded-3xl shadow-[var(--shadow-elegant)]"
-            />
+            <div className="relative flex aspect-[16/11] items-center justify-center rounded-3xl border border-border bg-card shadow-[var(--shadow-elegant)]">
+              <Compass className="h-24 w-24 text-gold/30" />
+            </div>
           </div>
         </div>
       </section>
