@@ -118,7 +118,7 @@ function ReportPage() {
       </section>
 
       <article className="container-page py-12">
-        <div className="prose prose-slate mx-auto max-w-3xl prose-headings:font-serif prose-headings:text-primary prose-h1:text-3xl prose-h2:mt-8 prose-h2:text-xl prose-h2:border-b prose-h2:border-gold/30 prose-h2:pb-2 prose-strong:text-primary prose-li:marker:text-gold">
+        <div className="report-content mx-auto max-w-3xl text-base leading-relaxed text-foreground">
           <ReactMarkdown>{data.report}</ReactMarkdown>
         </div>
       </article>
