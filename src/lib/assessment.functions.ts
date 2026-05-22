@@ -98,8 +98,8 @@ export const submitAssessment = createServerFn({ method: "POST" })
     }
 
     const aiJson = await aiRes.json();
-    const report: string = aiJson?.choices?.[0]?.message?.content ?? "";
-    if (!report) throw new Error("استجابة فارغة من الذكاء الاصطناعي.");
+    const aiReport: string = aiJson?.choices?.[0]?.message?.content ?? "";
+    if (!aiReport) throw new Error("استجابة فارغة من الذكاء الاصطناعي.");
 
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     let code = generateCode();
@@ -109,6 +109,52 @@ export const submitAssessment = createServerFn({ method: "POST" })
       if (!existing) break;
       code = generateCode();
     }
+
+    // Header + answer log + referral footer
+    const header = [
+      `# تقرير الإرشاد المهني الشامل`,
+      ``,
+      `**الاسم:** ${data.name ?? "غير محدد"}  `,
+      `**العمر:** ${data.age ?? "غير محدد"}  `,
+      `**المرحلة:** ${data.stage ?? "غير محدد"}  `,
+      `**كود التقرير المميز:** \`${code}\`  `,
+      `**تاريخ الإصدار:** ${new Date().toLocaleDateString("ar-EG")}`,
+      ``,
+      `---`,
+      ``,
+    ].join("\n");
+
+    let answerLog = "";
+    if (data.sections && data.sections.length) {
+      answerLog = `\n\n---\n\n## ١٢. ملخص إجاباتك النهائية حسب المحاور\n\n`;
+      for (const s of data.sections) {
+        answerLog += `### ${s.title}\n`;
+        for (const it of s.items) {
+          answerLog += `- **${it.q}**\n  - الإجابة: ${it.a}\n`;
+        }
+        answerLog += `\n`;
+      }
+    }
+
+    const referral = [
+      ``,
+      `---`,
+      ``,
+      `## ١٣. الإحالة لمرشد مهني للمناقشة`,
+      ``,
+      `${data.name ? `عزيزي/عزيزتي **${data.name}**، ` : ""}هذا التقرير نقطة انطلاق وليس نهاية الطريق. ننصح بشدة بحجز جلسة مع مرشد مهني معتمد لمناقشة هذه النتائج بعمق وتحويلها إلى خطة عملية واضحة.`,
+      ``,
+      `**خطوات الإحالة:**`,
+      `1. احفظ كود التقرير: \`${code}\``,
+      `2. احجز جلسة استشارة من صفحة [حجز جلسة](/booking).`,
+      `3. شارك الكود مع المرشد ليطّلع على التقرير كاملًا قبل الجلسة.`,
+      `4. حضّر أسئلتك من قسم "أسئلة للنقاش مع المرشد المهني" أعلاه.`,
+      ``,
+      `> 💼 **ملاحظة:** التقرير سري ولا يُشارك إلا بمعرفة صاحبه عبر هذا الكود.`,
+      ``,
+    ].join("\n");
+
+    const report = header + aiReport + answerLog + referral;
 
     const { error } = await supabaseAdmin.from("assessment_reports").insert({
       code,
