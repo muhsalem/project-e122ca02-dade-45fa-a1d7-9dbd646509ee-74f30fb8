@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ResourcesRouteImport } from './routes/resources'
+import { Route as DeepAssessmentRouteImport } from './routes/deep-assessment'
 import { Route as BookingRouteImport } from './routes/booking'
 import { Route as AssessmentsRouteImport } from './routes/assessments'
 import { Route as AboutRouteImport } from './routes/about'
@@ -18,6 +19,11 @@ import { Route as IndexRouteImport } from './routes/index'
 const ResourcesRoute = ResourcesRouteImport.update({
   id: '/resources',
   path: '/resources',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DeepAssessmentRoute = DeepAssessmentRouteImport.update({
+  id: '/deep-assessment',
+  path: '/deep-assessment',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BookingRoute = BookingRouteImport.update({
@@ -46,6 +52,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/assessments': typeof AssessmentsRoute
   '/booking': typeof BookingRoute
+  '/deep-assessment': typeof DeepAssessmentRoute
   '/resources': typeof ResourcesRoute
 }
 export interface FileRoutesByTo {
@@ -53,6 +60,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/assessments': typeof AssessmentsRoute
   '/booking': typeof BookingRoute
+  '/deep-assessment': typeof DeepAssessmentRoute
   '/resources': typeof ResourcesRoute
 }
 export interface FileRoutesById {
@@ -61,14 +69,34 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/assessments': typeof AssessmentsRoute
   '/booking': typeof BookingRoute
+  '/deep-assessment': typeof DeepAssessmentRoute
   '/resources': typeof ResourcesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/assessments' | '/booking' | '/resources'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/assessments'
+    | '/booking'
+    | '/deep-assessment'
+    | '/resources'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/assessments' | '/booking' | '/resources'
-  id: '__root__' | '/' | '/about' | '/assessments' | '/booking' | '/resources'
+  to:
+    | '/'
+    | '/about'
+    | '/assessments'
+    | '/booking'
+    | '/deep-assessment'
+    | '/resources'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/assessments'
+    | '/booking'
+    | '/deep-assessment'
+    | '/resources'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -76,6 +104,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   AssessmentsRoute: typeof AssessmentsRoute
   BookingRoute: typeof BookingRoute
+  DeepAssessmentRoute: typeof DeepAssessmentRoute
   ResourcesRoute: typeof ResourcesRoute
 }
 
@@ -86,6 +115,13 @@ declare module '@tanstack/react-router' {
       path: '/resources'
       fullPath: '/resources'
       preLoaderRoute: typeof ResourcesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/deep-assessment': {
+      id: '/deep-assessment'
+      path: '/deep-assessment'
+      fullPath: '/deep-assessment'
+      preLoaderRoute: typeof DeepAssessmentRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/booking': {
@@ -124,8 +160,19 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   AssessmentsRoute: AssessmentsRoute,
   BookingRoute: BookingRoute,
+  DeepAssessmentRoute: DeepAssessmentRoute,
   ResourcesRoute: ResourcesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
