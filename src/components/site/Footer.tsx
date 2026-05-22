@@ -29,8 +29,8 @@ export function Footer() {
         <div>
           <h4 className="mb-4 font-serif text-base text-primary">تواصل معنا</h4>
           <ul className="space-y-3 text-sm text-muted-foreground">
-            <li className="flex items-center gap-2"><Mail className="h-4 w-4 text-gold" /> info@busala.app</li>
-            <li className="flex items-center gap-2"><Phone className="h-4 w-4 text-gold" /> ‎+966 50 000 0000</li>
+            <li className="flex items-center gap-2"><Mail className="h-4 w-4 text-gold" /><span>info@busala.app</span></li>
+            <li className="flex items-center gap-2"><Phone className="h-4 w-4 text-gold" /><span>+966 50 000 0000</span></li>
           </ul>
         </div>
       </div>
