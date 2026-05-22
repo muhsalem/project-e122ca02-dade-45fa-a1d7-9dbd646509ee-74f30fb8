@@ -6,6 +6,10 @@ const SectionSchema = z.object({
   age: z.string().max(20).optional(),
   stage: z.string().max(100).optional(),
   answers: z.record(z.string(), z.string().max(3000)),
+  sections: z.array(z.object({
+    title: z.string().max(100),
+    items: z.array(z.object({ q: z.string().max(500), a: z.string().max(2000) })).max(20),
+  })).max(20).optional(),
 });
 
 function generateCode() {
