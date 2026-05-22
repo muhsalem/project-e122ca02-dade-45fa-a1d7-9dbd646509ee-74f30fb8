@@ -112,13 +112,13 @@
 
 @utility gold-rule {
   position: relative;
-}
-@utility gold-rule::after {
-  content: "";
-  display: block;
-  width: 48px;
-  height: 3px;
-  background: var(--gold);
-  margin-block-start: 1rem;
-  border-radius: 2px;
+  &::after {
+    content: "";
+    display: block;
+    width: 48px;
+    height: 3px;
+    background: var(--gold);
+    margin-block-start: 1rem;
+    border-radius: 2px;
+  }
 }
