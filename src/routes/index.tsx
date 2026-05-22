@@ -1,8 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowLeft, Brain, Compass, GraduationCap, Sparkles, Target, Users, BookOpen, ShieldCheck } from "lucide-react";
-import heroImg from "@/assets/hero.jpg";
-import compassImg from "@/assets/compass.jpg";
-import coachingImg from "@/assets/coaching.jpg";
+import { ArrowLeft, Brain, Compass, GraduationCap, Sparkles, Target, Users, BookOpen, ShieldCheck, Briefcase } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -66,13 +63,9 @@ function HomePage() {
 
           <div className="relative">
             <div className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-gold/20 to-primary/20 blur-2xl" />
-            <img
-              src={heroImg}
-              alt="جلسة إرشاد مهني تعاونية"
-              width={1600}
-              height={1100}
-              className="relative rounded-3xl shadow-[var(--shadow-elegant)]"
-            />
+            <div className="relative flex aspect-[16/11] items-center justify-center rounded-3xl border border-border bg-card shadow-[var(--shadow-elegant)]">
+              <Compass className="h-24 w-24 text-gold/30" />
+            </div>
           </div>
         </div>
       </section>
@@ -113,14 +106,9 @@ function HomePage() {
       <section className="border-b border-border">
         <div className="container-page py-20">
           <div className="grid items-center gap-12 lg:grid-cols-2">
-            <img
-              src={compassImg}
-              alt="بوصلة المسار المهني"
-              width={1200}
-              height={900}
-              loading="lazy"
-              className="rounded-2xl border border-border"
-            />
+            <div className="flex aspect-[4/3] items-center justify-center rounded-2xl border border-border bg-card">
+              <Target className="h-20 w-20 text-primary/20" />
+            </div>
             <div>
               <p className="font-serif text-sm uppercase tracking-widest text-gold">لمن نقدم خدماتنا</p>
               <h2 className="mt-3 text-3xl text-primary md:text-4xl">رفيق رحلتك في كل مرحلة</h2>
@@ -173,7 +161,9 @@ function HomePage() {
       {/* TESTIMONIAL */}
       <section className="border-b border-border">
         <div className="container-page grid items-center gap-12 py-20 lg:grid-cols-2">
-          <img src={coachingImg} alt="جلسة كوتشينج" width={1200} height={900} loading="lazy" className="rounded-2xl border border-border" />
+          <div className="flex aspect-[4/3] items-center justify-center rounded-2xl border border-border bg-card">
+            <Briefcase className="h-20 w-20 text-primary/20" />
+          </div>
           <figure>
             <p className="font-serif text-sm uppercase tracking-widest text-gold">قصة نجاح</p>
             <blockquote className="mt-4 font-serif text-2xl leading-relaxed text-primary md:text-3xl">
