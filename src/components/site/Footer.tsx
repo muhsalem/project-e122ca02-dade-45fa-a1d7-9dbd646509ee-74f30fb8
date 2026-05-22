@@ -1,0 +1,42 @@
+import { Link } from "@tanstack/react-router";
+import { Compass, Mail, Phone } from "lucide-react";
+
+export function Footer() {
+  return (
+    <footer className="mt-24 border-t border-border bg-secondary">
+      <div className="container-page grid gap-10 py-14 md:grid-cols-4">
+        <div className="md:col-span-2">
+          <Link to="/" className="flex items-center gap-2 font-serif text-2xl font-bold text-primary">
+            <Compass className="h-6 w-6 text-gold" />
+            <span>بوصلة</span>
+          </Link>
+          <p className="mt-4 max-w-md text-sm leading-7 text-muted-foreground">
+            منصة الإرشاد النفسي والمهني والكوتشينج للطلبة والخريجين الناطقين بالعربية —
+            مبنية على أسس علمية ومعايير دولية معتمدة.
+          </p>
+        </div>
+
+        <div>
+          <h4 className="mb-4 font-serif text-base text-primary">روابط</h4>
+          <ul className="space-y-2 text-sm text-muted-foreground">
+            <li><Link to="/assessments" className="hover:text-primary">التقييمات المهنية</Link></li>
+            <li><Link to="/booking" className="hover:text-primary">حجز جلسة كوتشينج</Link></li>
+            <li><Link to="/resources" className="hover:text-primary">الموارد والمقالات</Link></li>
+            <li><Link to="/about" className="hover:text-primary">عن المنصة</Link></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 className="mb-4 font-serif text-base text-primary">تواصل معنا</h4>
+          <ul className="space-y-3 text-sm text-muted-foreground">
+            <li className="flex items-center gap-2"><Mail className="h-4 w-4 text-gold" /> info@busala.app</li>
+            <li className="flex items-center gap-2"><Phone className="h-4 w-4 text-gold" /> ‎+966 50 000 0000</li>
+          </ul>
+        </div>
+      </div>
+      <div className="border-t border-border py-6 text-center text-xs text-muted-foreground">
+        © {new Date().getFullYear()} بوصلة — جميع الحقوق محفوظة.
+      </div>
+    </footer>
+  );
+}
