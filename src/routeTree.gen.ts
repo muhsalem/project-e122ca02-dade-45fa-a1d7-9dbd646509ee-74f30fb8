@@ -16,6 +16,7 @@ import { Route as AssessmentsRouteImport } from './routes/assessments'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ReportIndexRouteImport } from './routes/report.index'
+import { Route as ReportCodeRouteImport } from './routes/report.$code'
 
 const ResourcesRoute = ResourcesRouteImport.update({
   id: '/resources',
@@ -52,6 +53,11 @@ const ReportIndexRoute = ReportIndexRouteImport.update({
   path: '/report/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ReportCodeRoute = ReportCodeRouteImport.update({
+  id: '/report/$code',
+  path: '/report/$code',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -60,6 +66,7 @@ export interface FileRoutesByFullPath {
   '/booking': typeof BookingRoute
   '/deep-assessment': typeof DeepAssessmentRoute
   '/resources': typeof ResourcesRoute
+  '/report/$code': typeof ReportCodeRoute
   '/report/': typeof ReportIndexRoute
 }
 export interface FileRoutesByTo {
@@ -69,6 +76,7 @@ export interface FileRoutesByTo {
   '/booking': typeof BookingRoute
   '/deep-assessment': typeof DeepAssessmentRoute
   '/resources': typeof ResourcesRoute
+  '/report/$code': typeof ReportCodeRoute
   '/report': typeof ReportIndexRoute
 }
 export interface FileRoutesById {
@@ -79,6 +87,7 @@ export interface FileRoutesById {
   '/booking': typeof BookingRoute
   '/deep-assessment': typeof DeepAssessmentRoute
   '/resources': typeof ResourcesRoute
+  '/report/$code': typeof ReportCodeRoute
   '/report/': typeof ReportIndexRoute
 }
 export interface FileRouteTypes {
@@ -90,6 +99,7 @@ export interface FileRouteTypes {
     | '/booking'
     | '/deep-assessment'
     | '/resources'
+    | '/report/$code'
     | '/report/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -99,6 +109,7 @@ export interface FileRouteTypes {
     | '/booking'
     | '/deep-assessment'
     | '/resources'
+    | '/report/$code'
     | '/report'
   id:
     | '__root__'
@@ -108,6 +119,7 @@ export interface FileRouteTypes {
     | '/booking'
     | '/deep-assessment'
     | '/resources'
+    | '/report/$code'
     | '/report/'
   fileRoutesById: FileRoutesById
 }
@@ -118,6 +130,7 @@ export interface RootRouteChildren {
   BookingRoute: typeof BookingRoute
   DeepAssessmentRoute: typeof DeepAssessmentRoute
   ResourcesRoute: typeof ResourcesRoute
+  ReportCodeRoute: typeof ReportCodeRoute
   ReportIndexRoute: typeof ReportIndexRoute
 }
 
@@ -172,6 +185,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ReportIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/report/$code': {
+      id: '/report/$code'
+      path: '/report/$code'
+      fullPath: '/report/$code'
+      preLoaderRoute: typeof ReportCodeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -182,6 +202,7 @@ const rootRouteChildren: RootRouteChildren = {
   BookingRoute: BookingRoute,
   DeepAssessmentRoute: DeepAssessmentRoute,
   ResourcesRoute: ResourcesRoute,
+  ReportCodeRoute: ReportCodeRoute,
   ReportIndexRoute: ReportIndexRoute,
 }
 export const routeTree = rootRouteImport
