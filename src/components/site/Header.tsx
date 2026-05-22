@@ -4,7 +4,8 @@ import { Menu, X, Compass } from "lucide-react";
 
 const nav = [
   { to: "/", label: "الرئيسية" },
-  { to: "/assessments", label: "التقييمات" },
+  { to: "/deep-assessment", label: "التقييم الشامل" },
+  { to: "/assessments", label: "ميولك (RIASEC)" },
   { to: "/booking", label: "حجز جلسة" },
   { to: "/resources", label: "الموارد" },
   { to: "/about", label: "من نحن" },
