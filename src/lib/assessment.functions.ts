@@ -81,7 +81,7 @@ export const submitAssessment = createServerFn({ method: "POST" })
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "google/gemini-2.5-pro",
+        model: "google/gemini-2.5-flash",
         messages: [
           { role: "system", content: systemPrompt },
           { role: "user", content: `إليك إجابات المتدرب على التقييم الشامل. قم بتحليلها وإصدار التقرير وفق الهيكل المحدد:\n\n${userPayload}` },
