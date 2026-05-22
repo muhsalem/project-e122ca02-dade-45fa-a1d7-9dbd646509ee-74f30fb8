@@ -79,6 +79,10 @@ function AssessmentsPage() {
           <p className="mx-auto mt-4 max-w-xl text-muted-foreground">
             ١٢ سؤال قصير تكشف لك أنماطك المهنية المسيطرة ومسارات تتناسب معها.
           </p>
+          <div className="mx-auto mt-6 max-w-xl rounded-md border border-gold/30 bg-gold/5 p-3 text-sm">
+            تريد تحليلاً أعمق بالذكاء الاصطناعي يشمل الوعي الذاتي والمهارات والأحلام والطموح؟{" "}
+            <Link to="/deep-assessment" className="font-semibold text-primary underline">جرّب التقييم الشامل</Link>
+          </div>
         </div>
       </section>
 

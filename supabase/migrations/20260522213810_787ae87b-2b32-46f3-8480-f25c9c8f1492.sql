@@ -1,0 +1,1 @@
+DROP POLICY "Anyone can insert a report" ON public.assessment_reports;
