@@ -327,12 +327,20 @@ function DeepAssessmentPage() {
     try {
       const answers: Record<string, string> = {};
       for (const k of Object.keys(selections)) answers[k] = selections[k].join("، ");
+      const sections = SECTIONS.map((s) => ({
+        title: s.title,
+        items: s.questions.map((q) => ({
+          q: q.q,
+          a: (selections[q.id] ?? []).join("، ") || "—",
+        })),
+      }));
       const res = await submitFn({
         data: {
           name: meta.name || undefined,
           age: meta.age || undefined,
           stage: meta.stage || undefined,
           answers,
+          sections,
         },
       });
       navigate({ to: "/report/$code", params: { code: res.code } });
