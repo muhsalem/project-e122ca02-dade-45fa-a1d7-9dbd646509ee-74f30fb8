@@ -106,14 +106,9 @@ function HomePage() {
       <section className="border-b border-border">
         <div className="container-page py-20">
           <div className="grid items-center gap-12 lg:grid-cols-2">
-            <img
-              src={compassImg}
-              alt="بوصلة المسار المهني"
-              width={1200}
-              height={900}
-              loading="lazy"
-              className="rounded-2xl border border-border"
-            />
+            <div className="flex aspect-[4/3] items-center justify-center rounded-2xl border border-border bg-card">
+              <Target className="h-20 w-20 text-primary/20" />
+            </div>
             <div>
               <p className="font-serif text-sm uppercase tracking-widest text-gold">لمن نقدم خدماتنا</p>
               <h2 className="mt-3 text-3xl text-primary md:text-4xl">رفيق رحلتك في كل مرحلة</h2>
