@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { ArrowLeft, ArrowRight, Loader2, Sparkles, Brain } from "lucide-react";
+import { ArrowLeft, ArrowRight, Loader2, Sparkles, Brain, Check } from "lucide-react";
 import { useServerFn } from "@tanstack/react-start";
 import { submitAssessment } from "@/lib/assessment.functions";
 
@@ -14,117 +14,261 @@ export const Route = createFileRoute("/deep-assessment")({
   component: DeepAssessmentPage,
 });
 
-type Question = { id: string; q: string; placeholder?: string };
+type Question = {
+  id: string;
+  q: string;
+  type: "single" | "multi";
+  options: string[];
+  maxSelect?: number;
+};
 type Section = { key: string; title: string; intro: string; questions: Question[] };
 
 const SECTIONS: Section[] = [
   {
     key: "self",
     title: "الوعي الذاتي",
-    intro: "كيف ترى نفسك من الداخل؟ كن صادقًا، فلا توجد إجابة صحيحة أو خاطئة.",
+    intro: "كيف ترى نفسك من الداخل؟ اختر ما يصفك أكثر.",
     questions: [
-      { id: "self_strengths", q: "ما أبرز نقاط قوتك التي يلاحظها الآخرون فيك؟" },
-      { id: "self_weakness", q: "ما الجوانب التي تشعر أنك تحتاج لتطويرها في شخصيتك؟" },
-      { id: "self_values", q: "ما القيم التي لا تستطيع التنازل عنها في حياتك أو عملك؟" },
+      {
+        id: "self_strengths",
+        q: "أبرز نقاط قوتك التي يلاحظها الآخرون فيك (اختر حتى 3):",
+        type: "multi",
+        maxSelect: 3,
+        options: ["القيادة", "الإبداع والابتكار", "التحليل والتفكير المنطقي", "التواصل والإقناع", "الانضباط والالتزام", "التعاطف والإصغاء", "الصبر والمثابرة", "حل المشكلات"],
+      },
+      {
+        id: "self_weakness",
+        q: "الجانب الذي تشعر أنك تحتاج لتطويره أكثر:",
+        type: "single",
+        options: ["إدارة الوقت", "الثقة بالنفس", "مهارات التواصل", "ضبط الانفعالات", "اتخاذ القرار", "التركيز ومقاومة التشتت", "الحزم وقول لا"],
+      },
+      {
+        id: "self_values",
+        q: "أهم القيم التي لا تتنازل عنها (اختر حتى 3):",
+        type: "multi",
+        maxSelect: 3,
+        options: ["الصدق والأمانة", "الحرية والاستقلالية", "العائلة", "الإنجاز والنجاح", "خدمة الآخرين", "الإبداع", "الاستقرار المالي", "التعلّم المستمر", "العدالة"],
+      },
     ],
   },
   {
     key: "personality",
     title: "الشخصية",
-    intro: "فهم نمط شخصيتك يساعدك على اختيار بيئة عمل تناسب طبيعتك.",
+    intro: "نمط شخصيتك يحدد بيئة العمل المناسبة لك.",
     questions: [
-      { id: "personality_type", q: "هل تصف نفسك بأنك انطوائي (تستمد طاقتك من الوحدة) أم انبساطي (تستمد طاقتك من التفاعل مع الآخرين)؟ أعطِ أمثلة من حياتك اليومية." },
-      { id: "personality_stress", q: "كيف تتصرف عادةً عند الضغوط أو المواقف الصعبة؟" },
-      { id: "personality_decision", q: "هل تعتمد في قراراتك الكبرى على المنطق والتحليل أم على الحدس والمشاعر؟ اشرح بموقف مررت به." },
+      {
+        id: "personality_type",
+        q: "كيف تستمد طاقتك؟",
+        type: "single",
+        options: ["انطوائي — أستعيد طاقتي في الوحدة والهدوء", "انبساطي — أستمد طاقتي من التفاعل مع الناس", "بين الاثنين (مرن) — يعتمد على الموقف"],
+      },
+      {
+        id: "personality_stress",
+        q: "تصرفك المعتاد تحت الضغط:",
+        type: "single",
+        options: ["أهدأ وأخطط بمنهجية", "أتحرك بسرعة وأرتجل حلولًا", "أستشير من حولي قبل القرار", "أنسحب لأفكر بمفردي", "أتوتر وأحتاج وقتًا لاستعادة التركيز"],
+      },
+      {
+        id: "personality_decision",
+        q: "على ماذا تعتمد في قراراتك الكبرى؟",
+        type: "single",
+        options: ["المنطق والبيانات والتحليل", "الحدس والمشاعر الداخلية", "تأثير القرار على الآخرين", "مزيج متوازن من المنطق والحدس"],
+      },
     ],
   },
   {
     key: "skills",
     title: "المهارات والمواهب",
-    intro: "ما الذي تجيده فعلًا، وما الذي يقول الناس إنك موهوب فيه؟",
+    intro: "ما الذي تجيده فعلًا؟",
     questions: [
-      { id: "skills_have", q: "اذكر أهم 3-5 مهارات تتقنها (تقنية، اجتماعية، إبداعية...)." },
-      { id: "skills_talents", q: "ما المواهب الفطرية التي تشعر أنك ولدت بها؟" },
-      { id: "skills_develop", q: "ما المهارات التي تتمنى اكتسابها خلال السنة القادمة؟" },
+      {
+        id: "skills_have",
+        q: "أهم المهارات التي تتقنها (اختر حتى 4):",
+        type: "multi",
+        maxSelect: 4,
+        options: ["الكتابة والتعبير", "البرمجة والتقنية", "التصميم والإبداع البصري", "التحليل والأرقام", "الإقناع والمبيعات", "التدريس والشرح", "إدارة الفرق", "التنظيم والتخطيط", "اللغات الأجنبية", "الحرف اليدوية", "الرياضة والنشاط البدني"],
+      },
+      {
+        id: "skills_talents",
+        q: "الموهبة الفطرية الأبرز فيك:",
+        type: "single",
+        options: ["سرعة التعلم", "الذاكرة القوية", "الإحساس الفني والجمالي", "الذكاء العاطفي", "الذكاء الاجتماعي", "التفكير الاستراتيجي", "التفكير الرياضي/المنطقي", "الإبداع اللفظي"],
+      },
+      {
+        id: "skills_develop",
+        q: "المهارة التي تتمنى اكتسابها هذه السنة:",
+        type: "single",
+        options: ["لغة جديدة", "مهارة تقنية/برمجية", "مهارة قيادية", "مهارة عرض وتقديم", "مهارة تسويق أو مبيعات", "مهارة مالية واستثمارية", "مهارة إبداعية (تصميم/كتابة/فيديو)", "مهارة بحثية أو تحليلية"],
+      },
     ],
   },
   {
     key: "habits",
     title: "العادات والاتجاهات",
-    intro: "عاداتك اليومية وطريقة تفكيرك تشكّل مسارك المهني.",
+    intro: "عاداتك اليومية تشكّل مسارك.",
     questions: [
-      { id: "habits_positive", q: "ما العادات الإيجابية التي تمارسها بانتظام؟" },
-      { id: "habits_negative", q: "ما العادات التي تعطّل تقدمك وتريد التخلص منها؟" },
-      { id: "habits_attitude", q: "كيف تتعامل عادةً مع التحديات والفشل؟" },
+      {
+        id: "habits_positive",
+        q: "العادات الإيجابية التي تمارسها بانتظام (اختر كل ما ينطبق):",
+        type: "multi",
+        maxSelect: 4,
+        options: ["القراءة اليومية", "الرياضة", "التأمل أو الذكر", "التخطيط اليومي/الأسبوعي", "النوم المبكر", "تعلم شيء جديد دوريًا", "الكتابة أو التدوين", "تطوع أو خدمة مجتمعية"],
+      },
+      {
+        id: "habits_negative",
+        q: "أكثر عادة تعطّل تقدمك:",
+        type: "single",
+        options: ["التأجيل والمماطلة", "الإفراط في وسائل التواصل", "السهر وقلة النوم", "الكمالية المفرطة", "تشتت الاهتمامات", "الخوف من البدء", "المقارنة بالآخرين"],
+      },
+      {
+        id: "habits_attitude",
+        q: "موقفك من الفشل والتحديات:",
+        type: "single",
+        options: ["أعتبره فرصة للتعلم وأكمل بسرعة", "أحتاج وقتًا للهضم ثم أعود أقوى", "يحبطني ويأخذ مني وقتًا طويلًا", "أتجنب المواقف التي قد أفشل فيها", "أحلّل بعمق قبل أي خطوة لتفادي الفشل"],
+      },
     ],
   },
   {
     key: "interests",
     title: "الميول والاهتمامات",
-    intro: "ما المجالات التي تشدّك حتى دون مقابل مادي؟",
+    intro: "ما المجالات التي تشدّك؟",
     questions: [
-      { id: "interests_topics", q: "ما المواضيع أو المجالات التي تقرأ عنها أو تتابعها باستمرار؟" },
-      { id: "interests_activities", q: "ما الأنشطة التي تفقد معها الإحساس بالوقت؟" },
-      { id: "interests_environment", q: "هل تفضل العمل بمفردك، أو ضمن فريق، أو مع الناس؟ ولماذا؟" },
+      {
+        id: "interests_topics",
+        q: "أكثر المجالات التي تتابعها/تقرأ عنها (اختر حتى 3):",
+        type: "multi",
+        maxSelect: 3,
+        options: ["تقنية وذكاء اصطناعي", "اقتصاد وأعمال", "تنمية ذاتية", "علوم وأبحاث", "فنون وأدب", "تاريخ ودين", "صحة وطب", "سياسة ومجتمع", "تربية وتعليم", "رياضة", "سفر وثقافات"],
+      },
+      {
+        id: "interests_activities",
+        q: "النشاط الذي تفقد معه الإحساس بالوقت:",
+        type: "single",
+        options: ["البرمجة/الحلول التقنية", "الكتابة والتأليف", "التصميم والرسم", "النقاش وتبادل الأفكار", "البحث والتعلم", "العمل اليدوي/الصنع", "تنظيم الأحداث والأنشطة", "مساعدة الآخرين", "ممارسة الرياضة"],
+      },
+      {
+        id: "interests_environment",
+        q: "بيئة العمل المفضلة لديك:",
+        type: "single",
+        options: ["العمل بمفردي بتركيز عميق", "ضمن فريق صغير متعاون", "في فريق كبير ديناميكي", "مع التعامل المباشر مع العملاء/الناس", "عمل ميداني خارج المكتب", "عمل عن بُعد بمرونة"],
+      },
     ],
   },
   {
     key: "dreams",
     title: "الرغبات والأحلام",
-    intro: "ما الذي تتمنى تحقيقه لو كانت كل الموارد متاحة لك؟",
+    intro: "ماذا تتمنى لو ضُمن لك النجاح؟",
     questions: [
-      { id: "dreams_wish", q: "لو ضمنتَ النجاح، ما المهنة أو المشروع الذي ستختاره فورًا؟" },
-      { id: "dreams_life", q: "صف يومًا مثاليًا في حياتك المهنية بعد 5 سنوات." },
-      { id: "dreams_legacy", q: "ما الأثر الذي تريد أن تتركه في العالم؟" },
+      {
+        id: "dreams_wish",
+        q: "لو ضمنت النجاح، المهنة/المشروع الذي ستختاره:",
+        type: "single",
+        options: ["ريادة أعمال خاصة بي", "مهنة إبداعية (فن/كتابة/إعلام)", "مهنة تقنية متقدمة", "العمل الأكاديمي والبحث", "مهنة في القطاع الصحي", "العمل الإنساني والخيري", "مهنة قيادية في مؤسسة كبرى", "مهنة استشارية/تدريبية"],
+      },
+      {
+        id: "dreams_life",
+        q: "اليوم المثالي بعد 5 سنوات:",
+        type: "single",
+        options: ["أعمل من بيتي بحرية كاملة وأسافر متى أردت", "أقود فريقًا في شركة مؤثرة", "أدير مشروعي الخاص الذي يخدم الناس", "أبحث وأنشر علمًا وأُدرّس", "أوازن بين عملي وعائلتي بهدوء", "أعمل ميدانيًا في مشاريع متنوعة"],
+      },
+      {
+        id: "dreams_legacy",
+        q: "الأثر الذي تريد تركه:",
+        type: "single",
+        options: ["إلهام جيل وتعليمه", "حل مشكلة مجتمعية كبرى", "ابتكار منتج/خدمة تُغيّر السوق", "ثروة تُؤمّن عائلتي وأجيالها", "عمل خيري دائم", "إنجاز علمي أو فني خالد"],
+      },
     ],
   },
   {
     key: "abilities",
     title: "القدرات والإمكانيات",
-    intro: "ما الموارد المتاحة لك فعلًا الآن (وقت، شهادات، شبكة علاقات، رأس مال...)؟",
+    intro: "ما المتاح لك فعلًا الآن؟",
     questions: [
-      { id: "ability_resources", q: "ما الموارد الحالية المتاحة لك (تعليم، خبرة، علاقات، وقت، تمويل)؟" },
-      { id: "ability_obstacles", q: "ما العقبات الحقيقية التي تواجهك الآن؟" },
-      { id: "ability_support", q: "من يدعمك في رحلتك المهنية؟ ومن يحبطك؟" },
+      {
+        id: "ability_resources",
+        q: "أبرز مواردك المتاحة حاليًا (اختر كل ما ينطبق):",
+        type: "multi",
+        maxSelect: 4,
+        options: ["تعليم/شهادة جيدة", "خبرة عملية سابقة", "شبكة علاقات قوية", "وقت متفرغ", "تمويل/مدخرات", "أدوات وتقنية", "دعم عائلي", "موهبة بارزة معروفة عنّي"],
+      },
+      {
+        id: "ability_obstacles",
+        q: "أكبر عقبة تواجهك الآن:",
+        type: "single",
+        options: ["نقص الخبرة العملية", "ضعف الإمكانات المالية", "عدم وضوح المسار", "ضغط الأسرة/المحيط", "ضعف الثقة بالنفس", "نقص الفرص في بلدي", "صعوبة إدارة الوقت", "نقص المهارات المطلوبة"],
+      },
+      {
+        id: "ability_support",
+        q: "من يدعمك أكثر في رحلتك المهنية؟",
+        type: "single",
+        options: ["العائلة", "الأصدقاء المقربون", "مرشد/معلم/مدرّب", "مجتمع مهني أو زملاء عمل", "أنا أعتمد على نفسي غالبًا", "لا أجد دعمًا كافيًا"],
+      },
     ],
   },
   {
     key: "ambition",
     title: "الطموح والأشياء المفضلة",
-    intro: "أخيرًا، حدثنا عن طموحك وما تحبه.",
+    intro: "حدّثنا عن طموحك.",
     questions: [
-      { id: "amb_goal_1y", q: "ما هدفك المهني الأهم خلال 12 شهرًا القادمة؟" },
-      { id: "amb_goal_5y", q: "أين ترى نفسك مهنيًا بعد 5 سنوات؟" },
-      { id: "amb_favorites", q: "ما أكثر 3 أشياء مفضلة لديك (كتب، شخصيات ملهمة، مجالات، أماكن...)؟" },
+      {
+        id: "amb_goal_1y",
+        q: "هدفك الأهم خلال 12 شهرًا:",
+        type: "single",
+        options: ["الحصول على وظيفة في مجالي", "إطلاق مشروعي الخاص", "اكتساب مهارة متقدمة جديدة", "إكمال دراسة عليا/شهادة احترافية", "تحسين دخلي ووضعي المالي", "تحديد مساري المهني بوضوح", "بناء حضور مهني (لينكدإن/بورتفوليو)"],
+      },
+      {
+        id: "amb_goal_5y",
+        q: "أين ترى نفسك بعد 5 سنوات؟",
+        type: "single",
+        options: ["خبير مرجعي في مجالي", "صاحب شركة ناجحة", "قائد فريق في مؤسسة كبرى", "أعمل بحرية كمستقل ناجح", "أوازن بين مهنة هادئة وحياة شخصية مريحة", "أعمل في الخارج بمؤسسة عالمية", "أحقق أثرًا اجتماعيًا واسعًا"],
+      },
+      {
+        id: "amb_favorites",
+        q: "المجالات/الأنشطة الأقرب لقلبك (اختر حتى 3):",
+        type: "multi",
+        maxSelect: 3,
+        options: ["الكتب والقراءة", "السفر واستكشاف الثقافات", "التقنية والابتكار", "الطبيعة والرياضة", "الفنون (موسيقى/رسم/سينما)", "العائلة والعلاقات", "العمل التطوعي", "الدين والروحانيات", "الطعام والطهي", "الألعاب والتسلية"],
+      },
     ],
   },
 ];
 
-const TOTAL_STEPS = 1 + SECTIONS.length; // intro + sections
+const TOTAL_STEPS = 1 + SECTIONS.length;
 
 function DeepAssessmentPage() {
   const navigate = useNavigate();
   const submitFn = useServerFn(submitAssessment);
   const [step, setStep] = useState(0);
   const [meta, setMeta] = useState({ name: "", age: "", stage: "" });
-  const [answers, setAnswers] = useState<Record<string, string>>({});
+  const [selections, setSelections] = useState<Record<string, string[]>>({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const progress = (step / TOTAL_STEPS) * 100;
-
   const currentSection = step > 0 ? SECTIONS[step - 1] : null;
+
+  const toggle = (q: Question, opt: string) => {
+    setSelections((prev) => {
+      const cur = prev[q.id] ?? [];
+      if (q.type === "single") return { ...prev, [q.id]: [opt] };
+      if (cur.includes(opt)) return { ...prev, [q.id]: cur.filter((x) => x !== opt) };
+      if (q.maxSelect && cur.length >= q.maxSelect) return prev;
+      return { ...prev, [q.id]: [...cur, opt] };
+    });
+  };
 
   const canProceed = () => {
     if (step === 0) return meta.stage.trim().length > 0;
     if (!currentSection) return false;
-    return currentSection.questions.every((q) => (answers[q.id] ?? "").trim().length >= 5);
+    return currentSection.questions.every((q) => (selections[q.id]?.length ?? 0) > 0);
   };
 
   const submit = async () => {
     setLoading(true);
     setError(null);
     try {
+      const answers: Record<string, string> = {};
+      for (const k of Object.keys(selections)) answers[k] = selections[k].join("، ");
       const res = await submitFn({
         data: {
           name: meta.name || undefined,
@@ -150,7 +294,7 @@ function DeepAssessmentPage() {
           </span>
           <h1 className="mt-4 text-3xl text-primary md:text-4xl">رحلة استكشاف الذات المهنية</h1>
           <p className="mx-auto mt-3 max-w-2xl text-sm text-muted-foreground">
-             8 محاور تشمل الوعي الذاتي، الشخصية، المهارات، العادات، الميول، الأحلام، القدرات والطموح. في النهاية تحصل على تقرير تفصيلي بكود مميز لمناقشته مع مرشدك المهني.
+            8 محاور بأسئلة اختيارية سريعة. لا تحتاج للكتابة — فقط اختر ما يصفك، وسيُصدر الذكاء الاصطناعي تقريرًا تفصيليًا بكود لمناقشته مع مرشدك المهني.
           </p>
         </div>
       </section>
@@ -229,25 +373,42 @@ function DeepAssessmentPage() {
                 <p className="mt-2 text-sm text-muted-foreground">{currentSection.intro}</p>
               </div>
 
-              <div className="space-y-6">
-                {currentSection.questions.map((q, i) => (
-                  <div key={q.id}>
-                    <label className="block text-sm font-medium text-foreground">
-                      {i + 1}. {q.q}
-                    </label>
-                    <textarea
-                      value={answers[q.id] ?? ""}
-                      onChange={(e) => setAnswers({ ...answers, [q.id]: e.target.value })}
-                      maxLength={3000}
-                      rows={3}
-                      className="mt-2 w-full rounded-md border border-input bg-background px-3 py-2 text-sm leading-relaxed focus:border-primary focus:outline-none"
-                      placeholder="اكتب إجابتك بصدق..."
-                    />
-                    <div className="mt-1 text-left text-xs text-muted-foreground">
-                      {(answers[q.id] ?? "").length}/3000
+              <div className="space-y-8">
+                {currentSection.questions.map((q, i) => {
+                  const cur = selections[q.id] ?? [];
+                  return (
+                    <div key={q.id}>
+                      <label className="block text-sm font-medium text-foreground">
+                        {i + 1}. {q.q}
+                      </label>
+                      <div className="mt-3 grid gap-2 sm:grid-cols-2">
+                        {q.options.map((opt) => {
+                          const selected = cur.includes(opt);
+                          return (
+                            <button
+                              type="button"
+                              key={opt}
+                              onClick={() => toggle(q, opt)}
+                              className={`flex items-center justify-between gap-2 rounded-lg border px-3 py-2.5 text-right text-sm transition ${
+                                selected
+                                  ? "border-gold bg-gold/10 text-primary"
+                                  : "border-border bg-background hover:border-primary/40"
+                              }`}
+                            >
+                              <span>{opt}</span>
+                              {selected && <Check className="h-4 w-4 shrink-0 text-gold" />}
+                            </button>
+                          );
+                        })}
+                      </div>
+                      {q.type === "multi" && (
+                        <div className="mt-1.5 text-left text-xs text-muted-foreground">
+                          {cur.length}{q.maxSelect ? `/${q.maxSelect}` : ""} مختار
+                        </div>
+                      )}
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           ) : null}
