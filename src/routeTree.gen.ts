@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as LearningStyleRouteImport } from './routes/learning-style'
 import { Route as DeepAssessmentRouteImport } from './routes/deep-assessment'
+import { Route as CareerTypeAssessmentRouteImport } from './routes/career-type-assessment'
 import { Route as CareerPathRouteImport } from './routes/career-path'
 import { Route as BookingRouteImport } from './routes/booking'
 import { Route as AssessmentsRouteImport } from './routes/assessments'
@@ -33,6 +34,11 @@ const LearningStyleRoute = LearningStyleRouteImport.update({
 const DeepAssessmentRoute = DeepAssessmentRouteImport.update({
   id: '/deep-assessment',
   path: '/deep-assessment',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CareerTypeAssessmentRoute = CareerTypeAssessmentRouteImport.update({
+  id: '/career-type-assessment',
+  path: '/career-type-assessment',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CareerPathRoute = CareerPathRouteImport.update({
@@ -77,6 +83,7 @@ export interface FileRoutesByFullPath {
   '/assessments': typeof AssessmentsRoute
   '/booking': typeof BookingRoute
   '/career-path': typeof CareerPathRoute
+  '/career-type-assessment': typeof CareerTypeAssessmentRoute
   '/deep-assessment': typeof DeepAssessmentRoute
   '/learning-style': typeof LearningStyleRoute
   '/resources': typeof ResourcesRoute
@@ -89,6 +96,7 @@ export interface FileRoutesByTo {
   '/assessments': typeof AssessmentsRoute
   '/booking': typeof BookingRoute
   '/career-path': typeof CareerPathRoute
+  '/career-type-assessment': typeof CareerTypeAssessmentRoute
   '/deep-assessment': typeof DeepAssessmentRoute
   '/learning-style': typeof LearningStyleRoute
   '/resources': typeof ResourcesRoute
@@ -102,6 +110,7 @@ export interface FileRoutesById {
   '/assessments': typeof AssessmentsRoute
   '/booking': typeof BookingRoute
   '/career-path': typeof CareerPathRoute
+  '/career-type-assessment': typeof CareerTypeAssessmentRoute
   '/deep-assessment': typeof DeepAssessmentRoute
   '/learning-style': typeof LearningStyleRoute
   '/resources': typeof ResourcesRoute
@@ -116,6 +125,7 @@ export interface FileRouteTypes {
     | '/assessments'
     | '/booking'
     | '/career-path'
+    | '/career-type-assessment'
     | '/deep-assessment'
     | '/learning-style'
     | '/resources'
@@ -128,6 +138,7 @@ export interface FileRouteTypes {
     | '/assessments'
     | '/booking'
     | '/career-path'
+    | '/career-type-assessment'
     | '/deep-assessment'
     | '/learning-style'
     | '/resources'
@@ -140,6 +151,7 @@ export interface FileRouteTypes {
     | '/assessments'
     | '/booking'
     | '/career-path'
+    | '/career-type-assessment'
     | '/deep-assessment'
     | '/learning-style'
     | '/resources'
@@ -153,6 +165,7 @@ export interface RootRouteChildren {
   AssessmentsRoute: typeof AssessmentsRoute
   BookingRoute: typeof BookingRoute
   CareerPathRoute: typeof CareerPathRoute
+  CareerTypeAssessmentRoute: typeof CareerTypeAssessmentRoute
   DeepAssessmentRoute: typeof DeepAssessmentRoute
   LearningStyleRoute: typeof LearningStyleRoute
   ResourcesRoute: typeof ResourcesRoute
@@ -181,6 +194,13 @@ declare module '@tanstack/react-router' {
       path: '/deep-assessment'
       fullPath: '/deep-assessment'
       preLoaderRoute: typeof DeepAssessmentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/career-type-assessment': {
+      id: '/career-type-assessment'
+      path: '/career-type-assessment'
+      fullPath: '/career-type-assessment'
+      preLoaderRoute: typeof CareerTypeAssessmentRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/career-path': {
@@ -241,6 +261,7 @@ const rootRouteChildren: RootRouteChildren = {
   AssessmentsRoute: AssessmentsRoute,
   BookingRoute: BookingRoute,
   CareerPathRoute: CareerPathRoute,
+  CareerTypeAssessmentRoute: CareerTypeAssessmentRoute,
   DeepAssessmentRoute: DeepAssessmentRoute,
   LearningStyleRoute: LearningStyleRoute,
   ResourcesRoute: ResourcesRoute,
