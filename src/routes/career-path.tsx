@@ -248,11 +248,17 @@ function CareerPathPage() {
           </p>
           <div className="flex flex-wrap items-center justify-center gap-3">
             <Link
-              to="/deep-assessment"
+              to="/career-type-assessment"
               className="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
             >
-              التقييم الشامل
+              ابدأ تقييم نوع المسار المهني
               <ArrowLeft className="h-4 w-4" />
+            </Link>
+            <Link
+              to="/deep-assessment"
+              className="inline-flex items-center gap-2 rounded-md border border-border bg-background px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-card"
+            >
+              التقييم الشامل
             </Link>
             <Link
               to="/assessments"
