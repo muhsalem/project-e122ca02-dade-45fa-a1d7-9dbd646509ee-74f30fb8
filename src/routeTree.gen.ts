@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as LearningStyleRouteImport } from './routes/learning-style'
 import { Route as DeepAssessmentRouteImport } from './routes/deep-assessment'
+import { Route as CareerPathRouteImport } from './routes/career-path'
 import { Route as BookingRouteImport } from './routes/booking'
 import { Route as AssessmentsRouteImport } from './routes/assessments'
 import { Route as AboutRouteImport } from './routes/about'
@@ -32,6 +33,11 @@ const LearningStyleRoute = LearningStyleRouteImport.update({
 const DeepAssessmentRoute = DeepAssessmentRouteImport.update({
   id: '/deep-assessment',
   path: '/deep-assessment',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CareerPathRoute = CareerPathRouteImport.update({
+  id: '/career-path',
+  path: '/career-path',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BookingRoute = BookingRouteImport.update({
@@ -70,6 +76,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/assessments': typeof AssessmentsRoute
   '/booking': typeof BookingRoute
+  '/career-path': typeof CareerPathRoute
   '/deep-assessment': typeof DeepAssessmentRoute
   '/learning-style': typeof LearningStyleRoute
   '/resources': typeof ResourcesRoute
@@ -81,6 +88,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/assessments': typeof AssessmentsRoute
   '/booking': typeof BookingRoute
+  '/career-path': typeof CareerPathRoute
   '/deep-assessment': typeof DeepAssessmentRoute
   '/learning-style': typeof LearningStyleRoute
   '/resources': typeof ResourcesRoute
@@ -93,6 +101,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/assessments': typeof AssessmentsRoute
   '/booking': typeof BookingRoute
+  '/career-path': typeof CareerPathRoute
   '/deep-assessment': typeof DeepAssessmentRoute
   '/learning-style': typeof LearningStyleRoute
   '/resources': typeof ResourcesRoute
@@ -106,6 +115,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/assessments'
     | '/booking'
+    | '/career-path'
     | '/deep-assessment'
     | '/learning-style'
     | '/resources'
@@ -117,6 +127,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/assessments'
     | '/booking'
+    | '/career-path'
     | '/deep-assessment'
     | '/learning-style'
     | '/resources'
@@ -128,6 +139,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/assessments'
     | '/booking'
+    | '/career-path'
     | '/deep-assessment'
     | '/learning-style'
     | '/resources'
@@ -140,6 +152,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   AssessmentsRoute: typeof AssessmentsRoute
   BookingRoute: typeof BookingRoute
+  CareerPathRoute: typeof CareerPathRoute
   DeepAssessmentRoute: typeof DeepAssessmentRoute
   LearningStyleRoute: typeof LearningStyleRoute
   ResourcesRoute: typeof ResourcesRoute
@@ -168,6 +181,13 @@ declare module '@tanstack/react-router' {
       path: '/deep-assessment'
       fullPath: '/deep-assessment'
       preLoaderRoute: typeof DeepAssessmentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/career-path': {
+      id: '/career-path'
+      path: '/career-path'
+      fullPath: '/career-path'
+      preLoaderRoute: typeof CareerPathRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/booking': {
@@ -220,6 +240,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   AssessmentsRoute: AssessmentsRoute,
   BookingRoute: BookingRoute,
+  CareerPathRoute: CareerPathRoute,
   DeepAssessmentRoute: DeepAssessmentRoute,
   LearningStyleRoute: LearningStyleRoute,
   ResourcesRoute: ResourcesRoute,
@@ -229,3 +250,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
