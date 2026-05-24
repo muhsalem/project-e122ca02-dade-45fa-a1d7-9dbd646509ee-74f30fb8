@@ -209,8 +209,167 @@ function CohortTab() {
   );
 }
 
+/* ================= Directory Tab ================= */
+type CoachRow = {
+  id: string;
+  full_name: string;
+  photo_url: string | null;
+  country: string | null;
+  city: string | null;
+  bio: string;
+  specializations: string[];
+  experience_years: number;
+  hourly_price: number | null;
+  currency: string | null;
+  languages: string[];
+  linkedin_url: string | null;
+  website_url: string | null;
+};
+
+function DirectoryTab() {
+  const fetchFn = useServerFn(listApprovedCoaches);
+  const [coaches, setCoaches] = useState<CoachRow[] | null>(null);
+  const [q, setQ] = useState("");
+
+  useEffect(() => {
+    fetchFn({})
+      .then((r) => setCoaches((r.coaches ?? []) as CoachRow[]))
+      .catch(() => setCoaches([]));
+  }, [fetchFn]);
+
+  const filtered = (coaches ?? []).filter((c) => {
+    if (!q.trim()) return true;
+    const t = q.trim().toLowerCase();
+    return (
+      c.full_name.toLowerCase().includes(t) ||
+      c.specializations.some((s) => s.toLowerCase().includes(t)) ||
+      (c.country ?? "").toLowerCase().includes(t)
+    );
+  });
+
+  return (
+    <section className="container-page py-12">
+      <div className="mx-auto max-w-5xl">
+        <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h2 className="font-serif text-2xl text-primary">دليل المرشدين والكوتشز المعتمدين</h2>
+            <p className="mt-1 text-xs text-muted-foreground">
+              الملفات المعروضة هنا اجتازت مراجعة فريق بوصلة وأصبحت متاحة لاستقبال الحجوزات.
+            </p>
+          </div>
+          <Link
+            to="/join-as-coach"
+            className="inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-xs font-medium text-primary-foreground hover:opacity-90"
+          >
+            <UserPlus className="h-3.5 w-3.5" />
+            انضم للدليل
+          </Link>
+        </div>
+
+        <div className="mb-5">
+          <div className="relative">
+            <Search className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <input
+              value={q}
+              onChange={(e) => setQ(e.target.value)}
+              placeholder="ابحث بالاسم، التخصص، أو الدولة..."
+              className="w-full rounded-md border border-input bg-background py-2 pl-3 pr-10 text-sm focus:border-primary focus:outline-none"
+            />
+          </div>
+        </div>
+
+        {coaches === null ? (
+          <div className="flex items-center justify-center py-16 text-muted-foreground">
+            <Loader2 className="ml-2 h-4 w-4 animate-spin" /> جاري التحميل...
+          </div>
+        ) : filtered.length === 0 ? (
+          <div className="rounded-2xl border border-dashed border-border bg-card p-10 text-center text-sm text-muted-foreground">
+            لا يوجد مرشدون معتمدون في الدليل بعد. كن أول من ينضم عبر صفحة{" "}
+            <Link to="/join-as-coach" className="text-primary underline-offset-2 hover:underline">
+              انضم كمرشد
+            </Link>
+            .
+          </div>
+        ) : (
+          <div className="grid gap-4 md:grid-cols-2">
+            {filtered.map((c) => (
+              <article key={c.id} className="rounded-2xl border border-border bg-card p-5 shadow-[var(--shadow-soft)]">
+                <header className="flex items-start gap-4">
+                  {c.photo_url ? (
+                    <img src={c.photo_url} alt={c.full_name} className="h-14 w-14 rounded-full object-cover" />
+                  ) : (
+                    <div className="flex h-14 w-14 items-center justify-center rounded-full bg-secondary text-primary">
+                      <GraduationCap className="h-6 w-6" />
+                    </div>
+                  )}
+                  <div className="flex-1">
+                    <h3 className="font-serif text-lg text-primary">{c.full_name}</h3>
+                    <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted-foreground">
+                      {(c.country || c.city) && (
+                        <span className="inline-flex items-center gap-1">
+                          <MapPin className="h-3 w-3" />
+                          {[c.city, c.country].filter(Boolean).join("، ")}
+                        </span>
+                      )}
+                      <span className="inline-flex items-center gap-1">
+                        <Briefcase className="h-3 w-3" />
+                        {c.experience_years} سنة خبرة
+                      </span>
+                      {c.hourly_price != null && (
+                        <span className="font-medium text-gold">
+                          {c.hourly_price} {c.currency ?? "SAR"} / جلسة
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </header>
+
+                <p className="mt-3 line-clamp-3 text-sm text-foreground/90">{c.bio}</p>
+
+                {c.specializations.length > 0 && (
+                  <div className="mt-3 flex flex-wrap gap-1.5">
+                    {c.specializations.slice(0, 6).map((s) => (
+                      <span key={s} className="rounded-full border border-border bg-secondary/60 px-2.5 py-0.5 text-[11px] text-foreground/80">
+                        {s}
+                      </span>
+                    ))}
+                  </div>
+                )}
+
+                <footer className="mt-4 flex items-center justify-between border-t border-border pt-3">
+                  <span className="text-[11px] text-muted-foreground">
+                    {c.languages.length > 0 ? c.languages.join(" · ") : ""}
+                  </span>
+                  <div className="flex items-center gap-2">
+                    {c.linkedin_url && (
+                      <a href={c.linkedin_url} target="_blank" rel="noreferrer" className="rounded-md border border-border p-1.5 text-muted-foreground hover:border-primary hover:text-primary" aria-label="LinkedIn">
+                        <Linkedin className="h-3.5 w-3.5" />
+                      </a>
+                    )}
+                    {c.website_url && (
+                      <a href={c.website_url} target="_blank" rel="noreferrer" className="rounded-md border border-border p-1.5 text-muted-foreground hover:border-primary hover:text-primary" aria-label="الموقع">
+                        <Globe className="h-3.5 w-3.5" />
+                      </a>
+                    )}
+                    <Link
+                      to="/booking"
+                      className="inline-flex items-center gap-1 rounded-md bg-primary px-3 py-1.5 text-[11px] font-medium text-primary-foreground hover:opacity-90"
+                    >
+                      احجز جلسة
+                    </Link>
+                  </div>
+                </footer>
+              </article>
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
+
 /* ================= Ratings Tab ================= */
-const COACHES = ["د. سارة المنصور", "أ. خالد الرشيد", "د. ليلى الأحمد"];
+const FALLBACK_COACHES = ["د. سارة المنصور", "أ. خالد الرشيد", "د. ليلى الأحمد"];
 
 type Summary = { coach_name: string; count: number; avg: number; recommend_pct: number };
 type Recent = { coach_name: string; overall: number; comment: string | null; reviewer_name: string | null; created_at: string };
@@ -218,8 +377,11 @@ type Recent = { coach_name: string; overall: number; comment: string | null; rev
 function RatingsTab() {
   const submit = useServerFn(submitCoachRating);
   const fetchSummary = useServerFn(getCoachRatingsSummary);
+  const fetchCoaches = useServerFn(listApprovedCoaches);
 
-  const [coach, setCoach] = useState<string>(COACHES[0]);
+  const [coachOptions, setCoachOptions] = useState<string[]>(FALLBACK_COACHES);
+  const [coach, setCoach] = useState<string>(FALLBACK_COACHES[0]);
+
   const [overall, setOverall] = useState(0);
   const [clarity, setClarity] = useState(0);
   const [professionalism, setProfessionalism] = useState(0);
