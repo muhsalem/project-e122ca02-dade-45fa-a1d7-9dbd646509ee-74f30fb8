@@ -372,6 +372,8 @@ function CareerTypePage() {
           </p>
         </div>
 
+        <ComplementaryTools tools={["clarity"]} title="مدمج في رحلتك" />
+
         {/* Progress */}
         <div className="mx-auto mb-6 max-w-3xl">
           <div className="mb-2 flex justify-between text-xs text-foreground/60">
