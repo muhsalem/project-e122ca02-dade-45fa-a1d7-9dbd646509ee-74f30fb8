@@ -95,6 +95,72 @@ export type Database = {
         }
         Relationships: []
       }
+      coaches: {
+        Row: {
+          bio: string
+          certifications: string | null
+          city: string | null
+          country: string | null
+          created_at: string
+          currency: string | null
+          email: string
+          experience_years: number
+          full_name: string
+          hourly_price: number | null
+          id: string
+          languages: string[]
+          linkedin_url: string | null
+          phone: string | null
+          photo_url: string | null
+          specializations: string[]
+          status: Database["public"]["Enums"]["coach_status"]
+          updated_at: string
+          website_url: string | null
+        }
+        Insert: {
+          bio: string
+          certifications?: string | null
+          city?: string | null
+          country?: string | null
+          created_at?: string
+          currency?: string | null
+          email: string
+          experience_years?: number
+          full_name: string
+          hourly_price?: number | null
+          id?: string
+          languages?: string[]
+          linkedin_url?: string | null
+          phone?: string | null
+          photo_url?: string | null
+          specializations?: string[]
+          status?: Database["public"]["Enums"]["coach_status"]
+          updated_at?: string
+          website_url?: string | null
+        }
+        Update: {
+          bio?: string
+          certifications?: string | null
+          city?: string | null
+          country?: string | null
+          created_at?: string
+          currency?: string | null
+          email?: string
+          experience_years?: number
+          full_name?: string
+          hourly_price?: number | null
+          id?: string
+          languages?: string[]
+          linkedin_url?: string | null
+          phone?: string | null
+          photo_url?: string | null
+          specializations?: string[]
+          status?: Database["public"]["Enums"]["coach_status"]
+          updated_at?: string
+          website_url?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -103,7 +169,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      coach_status: "pending" | "approved" | "rejected"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -230,6 +296,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      coach_status: ["pending", "approved", "rejected"],
+    },
   },
 } as const
