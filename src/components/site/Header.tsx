@@ -10,7 +10,7 @@ const nav = [
   { to: "/academic-major", label: "اكتشف تخصصك الدراسي" },
   { to: "/career-type-assessment", label: "اكتشف مسارك المهنى" },
   { to: "/sector-guide", label: "دليل القطاعات والصناعات" },
-  { to: "/labor-market", label: "الرواتب والوظائف" },
+  { to: "/labor-market", label: "نبض السوق" },
   { to: "/comprehensive-assessment", label: "التقييم الشامل" },
   { to: "/review360", label: "تقييم 360°" },
   { to: "/clarity-check", label: "مقياس وضوح المسار" },

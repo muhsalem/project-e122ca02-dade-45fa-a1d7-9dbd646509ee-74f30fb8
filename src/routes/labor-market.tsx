@@ -4,9 +4,9 @@ import { DollarSign, Briefcase, TrendingUp, MapPin, Database, Building2 } from "
 export const Route = createFileRoute("/labor-market")({
   head: () => ({
     meta: [
-      { title: "رواتب ووظائف السوق — بوصلة" },
-      { name: "description", content: "نطاقات الرواتب الفعلية وإحصائيات الوظائف الشاغرة في السعودية والإمارات ومصر — محدّثة Q1 2026." },
-      { property: "og:title", content: "رواتب ووظائف السوق" },
+      { title: "نبض السوق — بوصلة" },
+      { name: "description", content: "نبض السوق: نطاقات الرواتب الفعلية وإحصائيات الوظائف الشاغرة في السعودية والإمارات ومصر — محدّثة Q1 2026." },
+      { property: "og:title", content: "نبض السوق" },
       { property: "og:description", content: "بيانات رواتب حقيقية وإحصائيات وظائف فعلية في المنطقة العربية." },
     ],
   }),
@@ -59,9 +59,9 @@ function LaborMarketPage() {
             <Database className="h-3.5 w-3.5 text-gold" />
             Salaries &amp; Live Jobs — Q1 2026
           </span>
-          <h1 className="mt-4 text-4xl text-primary md:text-5xl">رواتب ووظائف السوق</h1>
+          <h1 className="mt-4 text-4xl text-primary md:text-5xl">نبض السوق</h1>
           <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-muted-foreground">
-            نطاقات رواتب فعلية وإحصائيات وظائف شاغرة حقيقية في السعودية والإمارات ومصر — مجمّعة من Bayt و LinkedIn و Wuzzuf و GASTAT و Robert Half ME و WEF.
+            قراءة حيّة لسوق العمل العربي: نطاقات رواتب فعلية وإحصائيات وظائف شاغرة في السعودية والإمارات ومصر — مجمّعة من Bayt و LinkedIn و Wuzzuf و GASTAT و Robert Half ME و WEF.
           </p>
         </div>
       </section>
