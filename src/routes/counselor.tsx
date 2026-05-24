@@ -52,17 +52,31 @@ function CounselorPage() {
             اختر ما بين متابعة مجموعات الطلاب عبر كود المجموعة، أو مراجعة تقييمات المرشدين والكوتشز من الطلاب.
           </p>
 
-          <div className="mx-auto mt-8 flex max-w-md justify-center gap-2 rounded-xl border border-border bg-background/60 p-1.5 backdrop-blur-sm">
+          <div className="mx-auto mt-8 flex max-w-2xl flex-wrap justify-center gap-2 rounded-xl border border-border bg-background/60 p-1.5 backdrop-blur-sm">
             <TabButton active={tab === "cohort"} onClick={() => setTab("cohort")} icon={<ClipboardList className="h-4 w-4" />} label="متابعة المجموعات" />
+            <TabButton active={tab === "directory"} onClick={() => setTab("directory")} icon={<Users className="h-4 w-4" />} label="دليل المرشدين" />
             <TabButton active={tab === "ratings"} onClick={() => setTab("ratings")} icon={<BarChart3 className="h-4 w-4" />} label="تقييمات المرشدين" />
+          </div>
+
+          <div className="mt-5 flex justify-center">
+            <Link
+              to="/join-as-coach"
+              className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gradient-to-r from-primary to-gold px-5 py-2 text-xs font-medium text-primary-foreground hover:opacity-90"
+            >
+              <UserPlus className="h-3.5 w-3.5" />
+              انضم كمرشد أو كوتش مهني
+            </Link>
           </div>
         </div>
       </section>
 
-      {tab === "cohort" ? <CohortTab /> : <RatingsTab />}
+      {tab === "cohort" && <CohortTab />}
+      {tab === "directory" && <DirectoryTab />}
+      {tab === "ratings" && <RatingsTab />}
     </>
   );
 }
+
 
 function TabButton({ active, onClick, icon, label }: { active: boolean; onClick: () => void; icon: React.ReactNode; label: string }) {
   return (
