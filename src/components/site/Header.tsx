@@ -16,7 +16,6 @@ const discoveryGroup = {
 const nav = [
   { to: "/", label: "الرئيسية" },
   { to: "/about", label: "من نحن" },
-  { to: "/sector-guide", label: "دليل القطاعات والصناعات" },
   { to: "/labor-market", label: "نبض السوق" },
   { to: "/comprehensive-assessment", label: "التقييم الشامل" },
   { to: "/counselor", label: "الإرشاد المهني والكوتش" },
