@@ -53,6 +53,42 @@ export type Database = {
         }
         Relationships: []
       }
+      career_ladders: {
+        Row: {
+          created_at: string
+          id: string
+          isco: string | null
+          key_responsibilities: string
+          level_order: number
+          level_title: string
+          next_step_skills: string
+          role_family: string
+          years_experience: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          isco?: string | null
+          key_responsibilities: string
+          level_order: number
+          level_title: string
+          next_step_skills: string
+          role_family: string
+          years_experience: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          isco?: string | null
+          key_responsibilities?: string
+          level_order?: number
+          level_title?: string
+          next_step_skills?: string
+          role_family?: string
+          years_experience?: string
+        }
+        Relationships: []
+      }
       clarity_scores: {
         Row: {
           code: string
@@ -254,6 +290,39 @@ export type Database = {
         }
         Relationships: []
       }
+      journal_entries: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          mood: number
+          tags: string[]
+          title: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          mood: number
+          tags?: string[]
+          title?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          mood?: number
+          tags?: string[]
+          title?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           age: number | null
@@ -290,6 +359,36 @@ export type Database = {
           stage?: string | null
           updated_at?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      report_cache: {
+        Row: {
+          cache_key: string
+          created_at: string
+          expires_at: string
+          hit_count: number
+          id: string
+          report: string
+          report_type: string
+        }
+        Insert: {
+          cache_key: string
+          created_at?: string
+          expires_at?: string
+          hit_count?: number
+          id?: string
+          report: string
+          report_type: string
+        }
+        Update: {
+          cache_key?: string
+          created_at?: string
+          expires_at?: string
+          hit_count?: number
+          id?: string
+          report?: string
+          report_type?: string
         }
         Relationships: []
       }

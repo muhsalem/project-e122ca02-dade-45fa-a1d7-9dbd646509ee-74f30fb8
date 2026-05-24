@@ -5,6 +5,8 @@ import { submitWellbeing } from "@/lib/wellbeing.functions";
 import { useAuth } from "@/hooks/use-auth";
 import { toast } from "sonner";
 import { Heart, AlertTriangle, CheckCircle2 } from "lucide-react";
+import { EmergencyHelpline } from "@/components/site/EmergencyHelpline";
+import { AssessmentLimits } from "@/components/site/AssessmentLimits";
 
 export const Route = createFileRoute("/wellbeing-check")({
   head: () => ({
@@ -127,19 +129,23 @@ function WellbeingPage() {
             </div>
 
             {res.referral && (
-              <div className="rounded-2xl border-2 border-amber-500/40 bg-amber-50 p-6 text-sm leading-7 dark:bg-amber-950/20">
-                <h3 className="mb-2 flex items-center gap-2 font-serif text-lg text-primary">
-                  <AlertTriangle className="h-5 w-5 text-amber-600" />
-                  بروتوكول الإحالة المُوصى به
-                </h3>
-                <p>نتيجتك في أحد المقاييس تجاوزت العتبة الإكلينيكية (PHQ-2 ≥ 3 أو GAD-2 ≥ 3). <strong>نوصي بشدة باستشارة معالج/ة نفسي/ة مرخّص/ة</strong> قبل الاكتفاء بجلسات الإرشاد المهني.</p>
-                <ul className="mr-4 mt-3 list-disc space-y-1">
-                  <li>الكوتشينج المهني <strong>لا يعالج</strong> الاكتئاب أو القلق السريري.</li>
-                  <li>تواصل مع خط نجدة الصحة النفسية في بلدك (السعودية: 920033360 — الإمارات: 800-HOPE).</li>
-                  <li>يمكنك العودة لجلسات الإرشاد المهني بعد بدء العلاج النفسي بالتوازي.</li>
-                </ul>
-              </div>
+              <>
+                <div className="rounded-2xl border-2 border-amber-500/40 bg-amber-50 p-6 text-sm leading-7 dark:bg-amber-950/20">
+                  <h3 className="mb-2 flex items-center gap-2 font-serif text-lg text-primary">
+                    <AlertTriangle className="h-5 w-5 text-amber-600" />
+                    بروتوكول الإحالة المُوصى به
+                  </h3>
+                  <p>نتيجتك في أحد المقاييس تجاوزت العتبة الإكلينيكية (PHQ-2 ≥ 3 أو GAD-2 ≥ 3). <strong>نوصي بشدة باستشارة معالج/ة نفسي/ة مرخّص/ة</strong> قبل الاكتفاء بجلسات الإرشاد المهني.</p>
+                  <ul className="mr-4 mt-3 list-disc space-y-1">
+                    <li>الكوتشينج المهني <strong>لا يعالج</strong> الاكتئاب أو القلق السريري.</li>
+                    <li>يمكنك العودة لجلسات الإرشاد المهني بعد بدء العلاج النفسي بالتوازي.</li>
+                  </ul>
+                </div>
+                <EmergencyHelpline />
+              </>
             )}
+
+            <AssessmentLimits tool="PHQ-2 / GAD-2 / مقياس القلق المهني" />
 
             {!res.referral && (
               <div className="rounded-2xl border border-border bg-secondary/40 p-6 text-sm leading-7">

@@ -20,6 +20,7 @@ import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as MyAssessmentsRouteImport } from './routes/my-assessments'
 import { Route as LearningStyleRouteImport } from './routes/learning-style'
 import { Route as LaborMarketRouteImport } from './routes/labor-market'
+import { Route as JournalRouteImport } from './routes/journal'
 import { Route as JoinAsCoachRouteImport } from './routes/join-as-coach'
 import { Route as EthicsRouteImport } from './routes/ethics'
 import { Route as CounselorRouteImport } from './routes/counselor'
@@ -92,6 +93,11 @@ const LearningStyleRoute = LearningStyleRouteImport.update({
 const LaborMarketRoute = LaborMarketRouteImport.update({
   id: '/labor-market',
   path: '/labor-market',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JournalRoute = JournalRouteImport.update({
+  id: '/journal',
+  path: '/journal',
   getParentRoute: () => rootRouteImport,
 } as any)
 const JoinAsCoachRoute = JoinAsCoachRouteImport.update({
@@ -199,6 +205,7 @@ export interface FileRoutesByFullPath {
   '/counselor': typeof CounselorRoute
   '/ethics': typeof EthicsRoute
   '/join-as-coach': typeof JoinAsCoachRoute
+  '/journal': typeof JournalRoute
   '/labor-market': typeof LaborMarketRoute
   '/learning-style': typeof LearningStyleRoute
   '/my-assessments': typeof MyAssessmentsRoute
@@ -230,6 +237,7 @@ export interface FileRoutesByTo {
   '/counselor': typeof CounselorRoute
   '/ethics': typeof EthicsRoute
   '/join-as-coach': typeof JoinAsCoachRoute
+  '/journal': typeof JournalRoute
   '/labor-market': typeof LaborMarketRoute
   '/learning-style': typeof LearningStyleRoute
   '/my-assessments': typeof MyAssessmentsRoute
@@ -262,6 +270,7 @@ export interface FileRoutesById {
   '/counselor': typeof CounselorRoute
   '/ethics': typeof EthicsRoute
   '/join-as-coach': typeof JoinAsCoachRoute
+  '/journal': typeof JournalRoute
   '/labor-market': typeof LaborMarketRoute
   '/learning-style': typeof LearningStyleRoute
   '/my-assessments': typeof MyAssessmentsRoute
@@ -295,6 +304,7 @@ export interface FileRouteTypes {
     | '/counselor'
     | '/ethics'
     | '/join-as-coach'
+    | '/journal'
     | '/labor-market'
     | '/learning-style'
     | '/my-assessments'
@@ -326,6 +336,7 @@ export interface FileRouteTypes {
     | '/counselor'
     | '/ethics'
     | '/join-as-coach'
+    | '/journal'
     | '/labor-market'
     | '/learning-style'
     | '/my-assessments'
@@ -357,6 +368,7 @@ export interface FileRouteTypes {
     | '/counselor'
     | '/ethics'
     | '/join-as-coach'
+    | '/journal'
     | '/labor-market'
     | '/learning-style'
     | '/my-assessments'
@@ -389,6 +401,7 @@ export interface RootRouteChildren {
   CounselorRoute: typeof CounselorRoute
   EthicsRoute: typeof EthicsRoute
   JoinAsCoachRoute: typeof JoinAsCoachRoute
+  JournalRoute: typeof JournalRoute
   LaborMarketRoute: typeof LaborMarketRoute
   LearningStyleRoute: typeof LearningStyleRoute
   MyAssessmentsRoute: typeof MyAssessmentsRoute
@@ -484,6 +497,13 @@ declare module '@tanstack/react-router' {
       path: '/labor-market'
       fullPath: '/labor-market'
       preLoaderRoute: typeof LaborMarketRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/journal': {
+      id: '/journal'
+      path: '/journal'
+      fullPath: '/journal'
+      preLoaderRoute: typeof JournalRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/join-as-coach': {
@@ -642,6 +662,7 @@ const rootRouteChildren: RootRouteChildren = {
   CounselorRoute: CounselorRoute,
   EthicsRoute: EthicsRoute,
   JoinAsCoachRoute: JoinAsCoachRoute,
+  JournalRoute: JournalRoute,
   LaborMarketRoute: LaborMarketRoute,
   LearningStyleRoute: LearningStyleRoute,
   MyAssessmentsRoute: MyAssessmentsRoute,
@@ -662,13 +683,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
