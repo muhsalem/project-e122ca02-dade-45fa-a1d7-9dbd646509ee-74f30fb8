@@ -5,16 +5,13 @@ import { Menu, X, Compass } from "lucide-react";
 const nav = [
   { to: "/", label: "الرئيسية" },
   { to: "/about", label: "من نحن" },
-  { to: "/self-discovery", label: "اكتشاف ذاتك" },
+  { to: "/self-discovery", label: "اكتشف ذاتك" },
   { to: "/learning-style", label: "اكتشف نمط تعلمك" },
   { to: "/academic-major", label: "اكتشف تخصصك الدراسي" },
   { to: "/career-type-assessment", label: "اكتشف مسارك المهنى" },
   { to: "/sector-guide", label: "دليل القطاعات والصناعات" },
   { to: "/labor-market", label: "نبض السوق" },
   { to: "/comprehensive-assessment", label: "التقييم الشامل" },
-  { to: "/review360", label: "تقييم 360°" },
-  { to: "/clarity-check", label: "مقياس وضوح المسار" },
-  { to: "/wellbeing-check", label: "الفحص النفسي" },
   { to: "/counselor", label: "الإرشاد المهني والكوتش" },
   { to: "/resources", label: "الموارد" },
 ] as const;

@@ -1,6 +1,7 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Users } from "lucide-react";
+import { ComplementaryTools } from "@/components/site/ComplementaryTools";
 import { ArrowLeft, ArrowRight, Loader2, Sparkles, Brain, Check } from "lucide-react";
 import { useServerFn } from "@tanstack/react-start";
 import { submitAssessment } from "@/lib/assessment.functions";
@@ -460,12 +461,14 @@ function SelfDiscoveryPage() {
             <Sparkles className="h-3.5 w-3.5 text-gold" />
             اكتشاف ذاتك بالذكاء الاصطناعي
           </span>
-          <h1 className="mt-4 text-3xl text-primary md:text-4xl">اكتشف ذاتك ومسارك المهني</h1>
+          <h1 className="mt-4 text-3xl text-primary md:text-4xl">اكتشف ذاتك</h1>
           <p className="mx-auto mt-3 max-w-2xl text-sm text-muted-foreground">
             10 محاور بأسئلة اختيارية سريعة. لا تحتاج للكتابة — فقط اختر ما يصفك، وسيُصدر الذكاء الاصطناعي تقريرًا تفصيليًا بكود لمناقشته مع مرشدك المهني.
           </p>
         </div>
       </section>
+
+      <ComplementaryTools tools={["review360", "wellbeing"]} title="أدوات مدمجة ضمن اكتشف ذاتك" />
 
       <section className="container-page py-12">
         <div className="mx-auto max-w-3xl">

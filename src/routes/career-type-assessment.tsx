@@ -1,5 +1,6 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useState, useMemo } from "react";
+import { ComplementaryTools } from "@/components/site/ComplementaryTools";
 import {
   ArrowLeft,
   ArrowRight,
@@ -371,6 +372,8 @@ function CareerTypePage() {
             ثم ربط نتيجتك بمسمى مهني وفق التصنيف الدولي ISCO-08 والتصنيف العربي المعياري للمهن ASCO.
           </p>
         </div>
+
+        <ComplementaryTools tools={["clarity"]} title="مدمج في رحلتك" />
 
         {/* Progress */}
         <div className="mx-auto mb-6 max-w-3xl">
