@@ -13,21 +13,28 @@ import {
   MessageSquare,
   BarChart3,
   ClipboardList,
+  UserPlus,
+  Globe,
+  Linkedin,
+  Briefcase,
+  MapPin,
 } from "lucide-react";
 import { getCohortReports } from "@/lib/counselor.functions";
 import { submitCoachRating, getCoachRatingsSummary } from "@/lib/coach-rating.functions";
+import { listApprovedCoaches } from "@/lib/coach.functions";
 
 export const Route = createFileRoute("/counselor")({
   head: () => ({
     meta: [
       { title: "لوحة المرشد والمدرسة — بوصلة" },
-      { name: "description", content: "تابع تقارير مجموعة الطلاب التي ترشدها واطلع على تقييمات المرشدين." },
+      { name: "description", content: "تابع تقارير مجموعة الطلاب، استعرض دليل المرشدين والكوتشز، واطلع على تقييماتهم." },
     ],
   }),
   component: CounselorPage,
 });
 
-type Tab = "cohort" | "ratings";
+type Tab = "cohort" | "directory" | "ratings";
+
 
 function CounselorPage() {
   const [tab, setTab] = useState<Tab>("cohort");
