@@ -241,9 +241,7 @@ function SectorGuidePage() {
             اختر قطاعك وصناعتك بذكاء
           </h1>
           <p className="mx-auto max-w-2xl text-foreground/70">
-            دليل تشخيصي يربط مسمّاك الوظيفي بنظام <strong>ISCO-08</strong> الدولي والتصنيف العربي
-            المعياري للمهن، ويرشّح لك تصنيف <strong>GICS</strong> (Sector → Industry Group →
-            Industry → Sub-Industry) ويربطه بنشاط الأعمال وفق <strong>NAICS</strong>.
+            حدّد قطاعك وصناعتك بدقة، واكتشف نشاط الأعمال الأنسب لك للعمل به أو لتأسيس مشروعك الخاص — برحلة قرار واضحة تنقلك من <strong>القطاع</strong> إلى <strong>الصناعة</strong> إلى <strong>النشاط التجاري</strong> وفق التصنيفات الدولية <strong>GICS</strong> و<strong>NAICS</strong>.
           </p>
         </div>
 
