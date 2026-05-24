@@ -101,11 +101,14 @@ function ReportPage() {
                 <span>{code}</span>
                 {copied ? <Check className="h-4 w-4 text-emerald-600" /> : <Copy className="h-4 w-4 text-gold" />}
               </button>
-              <div className="flex gap-2">
+              <div className="flex flex-wrap gap-2">
                 <button onClick={() => window.print()} className="inline-flex items-center gap-1.5 rounded-md border border-border bg-background px-3 py-1.5 text-xs">
                   <Printer className="h-3.5 w-3.5" />
                   طباعة / PDF
                 </button>
+                <Link to="/idp/$code" params={{ code }} className="inline-flex items-center gap-1.5 rounded-md border border-gold bg-gold/10 px-3 py-1.5 text-xs font-medium text-primary">
+                  خطة التطوير 90 يوم
+                </Link>
                 <Link to="/booking" className="inline-flex items-center gap-1.5 rounded-md bg-primary px-3 py-1.5 text-xs text-primary-foreground">
                   ناقش مع مرشد
                   <ArrowLeft className="h-3.5 w-3.5" />

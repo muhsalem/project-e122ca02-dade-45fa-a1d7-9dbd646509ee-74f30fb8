@@ -50,6 +50,45 @@ export type Database = {
         }
         Relationships: []
       }
+      clarity_scores: {
+        Row: {
+          code: string
+          created_at: string
+          id: string
+          phase: string
+          q1_self_awareness: number
+          q2_career_options: number
+          q3_decision_confidence: number
+          q4_action_plan: number
+          q5_future_optimism: number
+          total_score: number
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          id?: string
+          phase: string
+          q1_self_awareness: number
+          q2_career_options: number
+          q3_decision_confidence: number
+          q4_action_plan: number
+          q5_future_optimism: number
+          total_score: number
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          id?: string
+          phase?: string
+          q1_self_awareness?: number
+          q2_career_options?: number
+          q3_decision_confidence?: number
+          q4_action_plan?: number
+          q5_future_optimism?: number
+          total_score?: number
+        }
+        Relationships: []
+      }
       coach_ratings: {
         Row: {
           clarity: number
@@ -158,6 +197,105 @@ export type Database = {
           status?: Database["public"]["Enums"]["coach_status"]
           updated_at?: string
           website_url?: string | null
+        }
+        Relationships: []
+      }
+      development_plans: {
+        Row: {
+          career_goal: string
+          code: string
+          created_at: string
+          current_stage: string | null
+          id: string
+          milestones: Json
+          recommended_courses: Json
+          report_code: string
+          skills_to_develop: Json
+          success_metrics: string | null
+          updated_at: string
+          weekly_actions: Json
+        }
+        Insert: {
+          career_goal: string
+          code: string
+          created_at?: string
+          current_stage?: string | null
+          id?: string
+          milestones?: Json
+          recommended_courses?: Json
+          report_code: string
+          skills_to_develop?: Json
+          success_metrics?: string | null
+          updated_at?: string
+          weekly_actions?: Json
+        }
+        Update: {
+          career_goal?: string
+          code?: string
+          created_at?: string
+          current_stage?: string | null
+          id?: string
+          milestones?: Json
+          recommended_courses?: Json
+          report_code?: string
+          skills_to_develop?: Json
+          success_metrics?: string | null
+          updated_at?: string
+          weekly_actions?: Json
+        }
+        Relationships: []
+      }
+      wellbeing_screenings: {
+        Row: {
+          career_anx_q1: number
+          career_anx_q2: number
+          career_anx_q3: number
+          career_anx_total: number
+          code: string
+          created_at: string
+          gad2_q1: number
+          gad2_q2: number
+          gad2_total: number
+          id: string
+          phq2_q1: number
+          phq2_q2: number
+          phq2_total: number
+          referral_needed: boolean
+          risk_level: string
+        }
+        Insert: {
+          career_anx_q1: number
+          career_anx_q2: number
+          career_anx_q3: number
+          career_anx_total: number
+          code: string
+          created_at?: string
+          gad2_q1: number
+          gad2_q2: number
+          gad2_total: number
+          id?: string
+          phq2_q1: number
+          phq2_q2: number
+          phq2_total: number
+          referral_needed?: boolean
+          risk_level: string
+        }
+        Update: {
+          career_anx_q1?: number
+          career_anx_q2?: number
+          career_anx_q3?: number
+          career_anx_total?: number
+          code?: string
+          created_at?: string
+          gad2_q1?: number
+          gad2_q2?: number
+          gad2_total?: number
+          id?: string
+          phq2_q1?: number
+          phq2_q2?: number
+          phq2_total?: number
+          referral_needed?: boolean
+          risk_level?: string
         }
         Relationships: []
       }

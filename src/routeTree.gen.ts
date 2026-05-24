@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WellbeingCheckRouteImport } from './routes/wellbeing-check'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as SelfDiscoveryRouteImport } from './routes/self-discovery'
 import { Route as SectorGuideRouteImport } from './routes/sector-guide'
@@ -19,6 +20,7 @@ import { Route as LaborMarketRouteImport } from './routes/labor-market'
 import { Route as JoinAsCoachRouteImport } from './routes/join-as-coach'
 import { Route as CounselorRouteImport } from './routes/counselor'
 import { Route as ComprehensiveAssessmentRouteImport } from './routes/comprehensive-assessment'
+import { Route as ClarityCheckRouteImport } from './routes/clarity-check'
 import { Route as CareerTypeAssessmentRouteImport } from './routes/career-type-assessment'
 import { Route as BookingRouteImport } from './routes/booking'
 import { Route as AcademicMajorRouteImport } from './routes/academic-major'
@@ -28,7 +30,13 @@ import { Route as ReportIndexRouteImport } from './routes/report.index'
 import { Route as ResourcesCoachingVsCareerCounselingRouteImport } from './routes/resources.coaching-vs-career-counseling'
 import { Route as ResourcesCareerPathTermsRouteImport } from './routes/resources.career-path-terms'
 import { Route as ReportCodeRouteImport } from './routes/report.$code'
+import { Route as IdpCodeRouteImport } from './routes/idp.$code'
 
+const WellbeingCheckRoute = WellbeingCheckRouteImport.update({
+  id: '/wellbeing-check',
+  path: '/wellbeing-check',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
   path: '/terms',
@@ -79,6 +87,11 @@ const ComprehensiveAssessmentRoute = ComprehensiveAssessmentRouteImport.update({
   path: '/comprehensive-assessment',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ClarityCheckRoute = ClarityCheckRouteImport.update({
+  id: '/clarity-check',
+  path: '/clarity-check',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CareerTypeAssessmentRoute = CareerTypeAssessmentRouteImport.update({
   id: '/career-type-assessment',
   path: '/career-type-assessment',
@@ -126,6 +139,11 @@ const ReportCodeRoute = ReportCodeRouteImport.update({
   path: '/report/$code',
   getParentRoute: () => rootRouteImport,
 } as any)
+const IdpCodeRoute = IdpCodeRouteImport.update({
+  id: '/idp/$code',
+  path: '/idp/$code',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -133,6 +151,7 @@ export interface FileRoutesByFullPath {
   '/academic-major': typeof AcademicMajorRoute
   '/booking': typeof BookingRoute
   '/career-type-assessment': typeof CareerTypeAssessmentRoute
+  '/clarity-check': typeof ClarityCheckRoute
   '/comprehensive-assessment': typeof ComprehensiveAssessmentRoute
   '/counselor': typeof CounselorRoute
   '/join-as-coach': typeof JoinAsCoachRoute
@@ -143,6 +162,8 @@ export interface FileRoutesByFullPath {
   '/sector-guide': typeof SectorGuideRoute
   '/self-discovery': typeof SelfDiscoveryRoute
   '/terms': typeof TermsRoute
+  '/wellbeing-check': typeof WellbeingCheckRoute
+  '/idp/$code': typeof IdpCodeRoute
   '/report/$code': typeof ReportCodeRoute
   '/resources/career-path-terms': typeof ResourcesCareerPathTermsRoute
   '/resources/coaching-vs-career-counseling': typeof ResourcesCoachingVsCareerCounselingRoute
@@ -154,6 +175,7 @@ export interface FileRoutesByTo {
   '/academic-major': typeof AcademicMajorRoute
   '/booking': typeof BookingRoute
   '/career-type-assessment': typeof CareerTypeAssessmentRoute
+  '/clarity-check': typeof ClarityCheckRoute
   '/comprehensive-assessment': typeof ComprehensiveAssessmentRoute
   '/counselor': typeof CounselorRoute
   '/join-as-coach': typeof JoinAsCoachRoute
@@ -164,6 +186,8 @@ export interface FileRoutesByTo {
   '/sector-guide': typeof SectorGuideRoute
   '/self-discovery': typeof SelfDiscoveryRoute
   '/terms': typeof TermsRoute
+  '/wellbeing-check': typeof WellbeingCheckRoute
+  '/idp/$code': typeof IdpCodeRoute
   '/report/$code': typeof ReportCodeRoute
   '/resources/career-path-terms': typeof ResourcesCareerPathTermsRoute
   '/resources/coaching-vs-career-counseling': typeof ResourcesCoachingVsCareerCounselingRoute
@@ -176,6 +200,7 @@ export interface FileRoutesById {
   '/academic-major': typeof AcademicMajorRoute
   '/booking': typeof BookingRoute
   '/career-type-assessment': typeof CareerTypeAssessmentRoute
+  '/clarity-check': typeof ClarityCheckRoute
   '/comprehensive-assessment': typeof ComprehensiveAssessmentRoute
   '/counselor': typeof CounselorRoute
   '/join-as-coach': typeof JoinAsCoachRoute
@@ -186,6 +211,8 @@ export interface FileRoutesById {
   '/sector-guide': typeof SectorGuideRoute
   '/self-discovery': typeof SelfDiscoveryRoute
   '/terms': typeof TermsRoute
+  '/wellbeing-check': typeof WellbeingCheckRoute
+  '/idp/$code': typeof IdpCodeRoute
   '/report/$code': typeof ReportCodeRoute
   '/resources/career-path-terms': typeof ResourcesCareerPathTermsRoute
   '/resources/coaching-vs-career-counseling': typeof ResourcesCoachingVsCareerCounselingRoute
@@ -199,6 +226,7 @@ export interface FileRouteTypes {
     | '/academic-major'
     | '/booking'
     | '/career-type-assessment'
+    | '/clarity-check'
     | '/comprehensive-assessment'
     | '/counselor'
     | '/join-as-coach'
@@ -209,6 +237,8 @@ export interface FileRouteTypes {
     | '/sector-guide'
     | '/self-discovery'
     | '/terms'
+    | '/wellbeing-check'
+    | '/idp/$code'
     | '/report/$code'
     | '/resources/career-path-terms'
     | '/resources/coaching-vs-career-counseling'
@@ -220,6 +250,7 @@ export interface FileRouteTypes {
     | '/academic-major'
     | '/booking'
     | '/career-type-assessment'
+    | '/clarity-check'
     | '/comprehensive-assessment'
     | '/counselor'
     | '/join-as-coach'
@@ -230,6 +261,8 @@ export interface FileRouteTypes {
     | '/sector-guide'
     | '/self-discovery'
     | '/terms'
+    | '/wellbeing-check'
+    | '/idp/$code'
     | '/report/$code'
     | '/resources/career-path-terms'
     | '/resources/coaching-vs-career-counseling'
@@ -241,6 +274,7 @@ export interface FileRouteTypes {
     | '/academic-major'
     | '/booking'
     | '/career-type-assessment'
+    | '/clarity-check'
     | '/comprehensive-assessment'
     | '/counselor'
     | '/join-as-coach'
@@ -251,6 +285,8 @@ export interface FileRouteTypes {
     | '/sector-guide'
     | '/self-discovery'
     | '/terms'
+    | '/wellbeing-check'
+    | '/idp/$code'
     | '/report/$code'
     | '/resources/career-path-terms'
     | '/resources/coaching-vs-career-counseling'
@@ -263,6 +299,7 @@ export interface RootRouteChildren {
   AcademicMajorRoute: typeof AcademicMajorRoute
   BookingRoute: typeof BookingRoute
   CareerTypeAssessmentRoute: typeof CareerTypeAssessmentRoute
+  ClarityCheckRoute: typeof ClarityCheckRoute
   ComprehensiveAssessmentRoute: typeof ComprehensiveAssessmentRoute
   CounselorRoute: typeof CounselorRoute
   JoinAsCoachRoute: typeof JoinAsCoachRoute
@@ -273,12 +310,21 @@ export interface RootRouteChildren {
   SectorGuideRoute: typeof SectorGuideRoute
   SelfDiscoveryRoute: typeof SelfDiscoveryRoute
   TermsRoute: typeof TermsRoute
+  WellbeingCheckRoute: typeof WellbeingCheckRoute
+  IdpCodeRoute: typeof IdpCodeRoute
   ReportCodeRoute: typeof ReportCodeRoute
   ReportIndexRoute: typeof ReportIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/wellbeing-check': {
+      id: '/wellbeing-check'
+      path: '/wellbeing-check'
+      fullPath: '/wellbeing-check'
+      preLoaderRoute: typeof WellbeingCheckRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/terms': {
       id: '/terms'
       path: '/terms'
@@ -349,6 +395,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ComprehensiveAssessmentRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/clarity-check': {
+      id: '/clarity-check'
+      path: '/clarity-check'
+      fullPath: '/clarity-check'
+      preLoaderRoute: typeof ClarityCheckRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/career-type-assessment': {
       id: '/career-type-assessment'
       path: '/career-type-assessment'
@@ -412,6 +465,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ReportCodeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/idp/$code': {
+      id: '/idp/$code'
+      path: '/idp/$code'
+      fullPath: '/idp/$code'
+      preLoaderRoute: typeof IdpCodeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -436,6 +496,7 @@ const rootRouteChildren: RootRouteChildren = {
   AcademicMajorRoute: AcademicMajorRoute,
   BookingRoute: BookingRoute,
   CareerTypeAssessmentRoute: CareerTypeAssessmentRoute,
+  ClarityCheckRoute: ClarityCheckRoute,
   ComprehensiveAssessmentRoute: ComprehensiveAssessmentRoute,
   CounselorRoute: CounselorRoute,
   JoinAsCoachRoute: JoinAsCoachRoute,
@@ -446,6 +507,8 @@ const rootRouteChildren: RootRouteChildren = {
   SectorGuideRoute: SectorGuideRoute,
   SelfDiscoveryRoute: SelfDiscoveryRoute,
   TermsRoute: TermsRoute,
+  WellbeingCheckRoute: WellbeingCheckRoute,
+  IdpCodeRoute: IdpCodeRoute,
   ReportCodeRoute: ReportCodeRoute,
   ReportIndexRoute: ReportIndexRoute,
 }
