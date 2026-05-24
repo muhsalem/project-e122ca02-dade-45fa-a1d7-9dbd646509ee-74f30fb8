@@ -440,6 +440,7 @@ function DeepAssessmentPage() {
           name: meta.name || undefined,
           age: meta.age || undefined,
           stage: meta.stage || undefined,
+          group_code: meta.groupCode.trim() || undefined,
           answers,
           sections,
         },
