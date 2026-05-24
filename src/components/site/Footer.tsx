@@ -22,7 +22,7 @@ export function Footer() {
             <li><Link to="/career-type-assessment" className="hover:text-primary">التقييمات المهنية</Link></li>
             <li><Link to="/career-ladder" className="hover:text-primary">سلالم المسارات المهنية</Link></li>
             <li><Link to="/skills-gap" className="hover:text-primary">تحليل فجوة المهارات</Link></li>
-            <li><Link to="/scholarships" className="hover:text-primary">خريطة المنح والتدريب</Link></li>
+            
             <li><Link to="/schools" className="hover:text-primary">بوصلة للمدارس (B2B)</Link></li>
             <li><Link to="/booking" className="hover:text-primary">حجز جلسة كوتشينج</Link></li>
             <li><Link to="/resources" className="hover:text-primary">الموارد والمقالات</Link></li>
