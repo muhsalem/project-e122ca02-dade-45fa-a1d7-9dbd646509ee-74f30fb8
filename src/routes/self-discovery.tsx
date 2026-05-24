@@ -8,11 +8,11 @@ import { submitAssessment } from "@/lib/assessment.functions";
 export const Route = createFileRoute("/self-discovery")({
   head: () => ({
     meta: [
-      { title: "التقييم المهنى الشامل بالذكاء الاصطناعي — بوصلة" },
-      { name: "description", content: "تقييم شامل للوعي الذاتي والمهارات والميول والطموح يُصدر تقريرًا تفصيليًا بكود لمناقشته مع مرشدك المهني." },
+      { title: "اكتشاف ذاتك بالذكاء الاصطناعي — بوصلة" },
+      { name: "description", content: "اكتشف ذاتك من خلال 10 محاور للوعي الذاتي والمهارات والميول والطموح، واصنع تقريرًا تفصيليًا بكود لمناقشته مع مرشدك المهني." },
     ],
   }),
-  component: DeepAssessmentPage,
+  component: SelfDiscoveryPage,
 });
 
 type Question = {
@@ -458,9 +458,9 @@ function SelfDiscoveryPage() {
         <div className="container-page py-12 text-center">
           <span className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/10 px-4 py-1.5 text-xs font-medium text-primary">
             <Sparkles className="h-3.5 w-3.5 text-gold" />
-            تقييم شامل بالذكاء الاصطناعي
+            اكتشاف ذاتك بالذكاء الاصطناعي
           </span>
-          <h1 className="mt-4 text-3xl text-primary md:text-4xl">رحلة استكشاف الذات المهنية</h1>
+          <h1 className="mt-4 text-3xl text-primary md:text-4xl">اكتشف ذاتك ومسارك المهني</h1>
           <p className="mx-auto mt-3 max-w-2xl text-sm text-muted-foreground">
             10 محاور بأسئلة اختيارية سريعة. لا تحتاج للكتابة — فقط اختر ما يصفك، وسيُصدر الذكاء الاصطناعي تقريرًا تفصيليًا بكود لمناقشته مع مرشدك المهني.
           </p>
