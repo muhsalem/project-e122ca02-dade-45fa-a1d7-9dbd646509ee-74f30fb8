@@ -7,6 +7,7 @@ const nav = [
   { to: "/deep-assessment", label: "التقييم الشامل" },
   { to: "/learning-style", label: "نمط التعلم" },
   { to: "/career-path", label: "اكتشاف المسار المهني" },
+  { to: "/sector-guide", label: "دليل القطاع والصناعات" },
   { to: "/assessments", label: "ميولك (RIASEC)" },
   { to: "/booking", label: "حجز جلسة" },
   { to: "/resources", label: "الموارد" },
