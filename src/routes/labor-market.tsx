@@ -1,5 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
 import { DollarSign, Briefcase, TrendingUp, MapPin, Database, Building2 } from "lucide-react";
+
 
 export const Route = createFileRoute("/labor-market")({
   head: () => ({
