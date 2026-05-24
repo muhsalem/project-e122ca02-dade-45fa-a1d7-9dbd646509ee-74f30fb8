@@ -187,6 +187,6 @@ function IDPPage() {
           </div>
         </div>
       </section>
-    </ContentProtection>
+    </>
   );
 }
