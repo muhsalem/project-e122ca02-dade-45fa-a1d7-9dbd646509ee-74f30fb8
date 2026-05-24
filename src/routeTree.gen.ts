@@ -16,13 +16,13 @@ import { Route as LaborMarketRouteImport } from './routes/labor-market'
 import { Route as DeepAssessmentRouteImport } from './routes/deep-assessment'
 import { Route as CounselorRouteImport } from './routes/counselor'
 import { Route as CareerTypeAssessmentRouteImport } from './routes/career-type-assessment'
-import { Route as CareerPathRouteImport } from './routes/career-path'
 import { Route as BookingRouteImport } from './routes/booking'
 import { Route as AssessmentsRouteImport } from './routes/assessments'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ReportIndexRouteImport } from './routes/report.index'
 import { Route as ResourcesCoachingVsCareerCounselingRouteImport } from './routes/resources.coaching-vs-career-counseling'
+import { Route as ResourcesCareerPathTermsRouteImport } from './routes/resources.career-path-terms'
 import { Route as ReportCodeRouteImport } from './routes/report.$code'
 
 const SectorGuideRoute = SectorGuideRouteImport.update({
@@ -60,11 +60,6 @@ const CareerTypeAssessmentRoute = CareerTypeAssessmentRouteImport.update({
   path: '/career-type-assessment',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CareerPathRoute = CareerPathRouteImport.update({
-  id: '/career-path',
-  path: '/career-path',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const BookingRoute = BookingRouteImport.update({
   id: '/booking',
   path: '/booking',
@@ -96,6 +91,12 @@ const ResourcesCoachingVsCareerCounselingRoute =
     path: '/coaching-vs-career-counseling',
     getParentRoute: () => ResourcesRoute,
   } as any)
+const ResourcesCareerPathTermsRoute =
+  ResourcesCareerPathTermsRouteImport.update({
+    id: '/career-path-terms',
+    path: '/career-path-terms',
+    getParentRoute: () => ResourcesRoute,
+  } as any)
 const ReportCodeRoute = ReportCodeRouteImport.update({
   id: '/report/$code',
   path: '/report/$code',
@@ -107,7 +108,6 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/assessments': typeof AssessmentsRoute
   '/booking': typeof BookingRoute
-  '/career-path': typeof CareerPathRoute
   '/career-type-assessment': typeof CareerTypeAssessmentRoute
   '/counselor': typeof CounselorRoute
   '/deep-assessment': typeof DeepAssessmentRoute
@@ -116,6 +116,7 @@ export interface FileRoutesByFullPath {
   '/resources': typeof ResourcesRouteWithChildren
   '/sector-guide': typeof SectorGuideRoute
   '/report/$code': typeof ReportCodeRoute
+  '/resources/career-path-terms': typeof ResourcesCareerPathTermsRoute
   '/resources/coaching-vs-career-counseling': typeof ResourcesCoachingVsCareerCounselingRoute
   '/report/': typeof ReportIndexRoute
 }
@@ -124,7 +125,6 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/assessments': typeof AssessmentsRoute
   '/booking': typeof BookingRoute
-  '/career-path': typeof CareerPathRoute
   '/career-type-assessment': typeof CareerTypeAssessmentRoute
   '/counselor': typeof CounselorRoute
   '/deep-assessment': typeof DeepAssessmentRoute
@@ -133,6 +133,7 @@ export interface FileRoutesByTo {
   '/resources': typeof ResourcesRouteWithChildren
   '/sector-guide': typeof SectorGuideRoute
   '/report/$code': typeof ReportCodeRoute
+  '/resources/career-path-terms': typeof ResourcesCareerPathTermsRoute
   '/resources/coaching-vs-career-counseling': typeof ResourcesCoachingVsCareerCounselingRoute
   '/report': typeof ReportIndexRoute
 }
@@ -142,7 +143,6 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/assessments': typeof AssessmentsRoute
   '/booking': typeof BookingRoute
-  '/career-path': typeof CareerPathRoute
   '/career-type-assessment': typeof CareerTypeAssessmentRoute
   '/counselor': typeof CounselorRoute
   '/deep-assessment': typeof DeepAssessmentRoute
@@ -151,6 +151,7 @@ export interface FileRoutesById {
   '/resources': typeof ResourcesRouteWithChildren
   '/sector-guide': typeof SectorGuideRoute
   '/report/$code': typeof ReportCodeRoute
+  '/resources/career-path-terms': typeof ResourcesCareerPathTermsRoute
   '/resources/coaching-vs-career-counseling': typeof ResourcesCoachingVsCareerCounselingRoute
   '/report/': typeof ReportIndexRoute
 }
@@ -161,7 +162,6 @@ export interface FileRouteTypes {
     | '/about'
     | '/assessments'
     | '/booking'
-    | '/career-path'
     | '/career-type-assessment'
     | '/counselor'
     | '/deep-assessment'
@@ -170,6 +170,7 @@ export interface FileRouteTypes {
     | '/resources'
     | '/sector-guide'
     | '/report/$code'
+    | '/resources/career-path-terms'
     | '/resources/coaching-vs-career-counseling'
     | '/report/'
   fileRoutesByTo: FileRoutesByTo
@@ -178,7 +179,6 @@ export interface FileRouteTypes {
     | '/about'
     | '/assessments'
     | '/booking'
-    | '/career-path'
     | '/career-type-assessment'
     | '/counselor'
     | '/deep-assessment'
@@ -187,6 +187,7 @@ export interface FileRouteTypes {
     | '/resources'
     | '/sector-guide'
     | '/report/$code'
+    | '/resources/career-path-terms'
     | '/resources/coaching-vs-career-counseling'
     | '/report'
   id:
@@ -195,7 +196,6 @@ export interface FileRouteTypes {
     | '/about'
     | '/assessments'
     | '/booking'
-    | '/career-path'
     | '/career-type-assessment'
     | '/counselor'
     | '/deep-assessment'
@@ -204,6 +204,7 @@ export interface FileRouteTypes {
     | '/resources'
     | '/sector-guide'
     | '/report/$code'
+    | '/resources/career-path-terms'
     | '/resources/coaching-vs-career-counseling'
     | '/report/'
   fileRoutesById: FileRoutesById
@@ -213,7 +214,6 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   AssessmentsRoute: typeof AssessmentsRoute
   BookingRoute: typeof BookingRoute
-  CareerPathRoute: typeof CareerPathRoute
   CareerTypeAssessmentRoute: typeof CareerTypeAssessmentRoute
   CounselorRoute: typeof CounselorRoute
   DeepAssessmentRoute: typeof DeepAssessmentRoute
@@ -276,13 +276,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CareerTypeAssessmentRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/career-path': {
-      id: '/career-path'
-      path: '/career-path'
-      fullPath: '/career-path'
-      preLoaderRoute: typeof CareerPathRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/booking': {
       id: '/booking'
       path: '/booking'
@@ -325,6 +318,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResourcesCoachingVsCareerCounselingRouteImport
       parentRoute: typeof ResourcesRoute
     }
+    '/resources/career-path-terms': {
+      id: '/resources/career-path-terms'
+      path: '/career-path-terms'
+      fullPath: '/resources/career-path-terms'
+      preLoaderRoute: typeof ResourcesCareerPathTermsRouteImport
+      parentRoute: typeof ResourcesRoute
+    }
     '/report/$code': {
       id: '/report/$code'
       path: '/report/$code'
@@ -336,10 +336,12 @@ declare module '@tanstack/react-router' {
 }
 
 interface ResourcesRouteChildren {
+  ResourcesCareerPathTermsRoute: typeof ResourcesCareerPathTermsRoute
   ResourcesCoachingVsCareerCounselingRoute: typeof ResourcesCoachingVsCareerCounselingRoute
 }
 
 const ResourcesRouteChildren: ResourcesRouteChildren = {
+  ResourcesCareerPathTermsRoute: ResourcesCareerPathTermsRoute,
   ResourcesCoachingVsCareerCounselingRoute:
     ResourcesCoachingVsCareerCounselingRoute,
 }
@@ -353,7 +355,6 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   AssessmentsRoute: AssessmentsRoute,
   BookingRoute: BookingRoute,
-  CareerPathRoute: CareerPathRoute,
   CareerTypeAssessmentRoute: CareerTypeAssessmentRoute,
   CounselorRoute: CounselorRoute,
   DeepAssessmentRoute: DeepAssessmentRoute,

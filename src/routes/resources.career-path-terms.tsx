@@ -1,18 +1,30 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Briefcase, Building2, GraduationCap, Hammer, Compass, ArrowLeft } from "lucide-react";
+import {
+  Briefcase,
+  Building2,
+  GraduationCap,
+  Hammer,
+  Compass,
+  ArrowLeft,
+  ThumbsUp,
+  ThumbsDown,
+} from "lucide-react";
 
-export const Route = createFileRoute("/career-path")({
+export const Route = createFileRoute("/resources/career-path-terms")({
   head: () => ({
     meta: [
-      { title: "اكتشاف المسار المهني — التفريق بين Occupation وJob وProfession وCraft | بوصلة" },
+      {
+        title:
+          "ما الفرق بين العمل والوظيفة والمهنة والحِرفة؟ — المميزات والعيوب | بوصلة",
+      },
       {
         name: "description",
         content:
-          "دليل تعريفي للتفريق بين المصطلحات المهنية الأربعة: Occupation (النشاط المهني العام)، Job (الوظيفة)، Profession (المهنة الاحترافية)، Craft (الحِرفة)، مع السمات والأمثلة لاختيار مسارك المهني بوعي.",
+          "دليل شامل للتفريق بين المصطلحات الأربعة: Occupation وJob وProfession وCraft مع السمات والأمثلة ومميزات وعيوب كل منها لاختيار مسارك المهني بوعي.",
       },
     ],
   }),
-  component: CareerPathPage,
+  component: CareerPathTermsArticle,
 });
 
 type Category = {
@@ -24,6 +36,8 @@ type Category = {
   meaning: string;
   traits: string[];
   examples: string[];
+  pros: string[];
+  cons: string[];
   accent: string;
 };
 
@@ -42,6 +56,16 @@ const CATEGORIES: Category[] = [
       "مصطلح عام يُستخدم في الإحصاءات والاستمارات الرسمية",
     ],
     examples: ["سائق", "بائع", "عامل مصنع", "موظف حكومي"],
+    pros: [
+      "سهولة الدخول وتوفر فرص كثيرة",
+      "مرونة في الانتقال بين المجالات",
+      "لا يتطلب بالضرورة شهادات عليا",
+    ],
+    cons: [
+      "غالبًا دخل محدود وغير ثابت",
+      "ضعف الأمان الوظيفي والمسار التطوري",
+      "هوية مهنية غير واضحة",
+    ],
     accent: "from-blue-500/20 to-blue-500/5 border-blue-500/30",
   },
   {
@@ -62,6 +86,16 @@ const CATEGORIES: Category[] = [
       "مدرس في مدرسة Y",
       "موظف خدمة عملاء في بنك",
     ],
+    pros: [
+      "دخل ثابت ومزايا (تأمين، إجازات)",
+      "مهام وساعات عمل واضحة",
+      "فرص ترقي ضمن سلم وظيفي",
+    ],
+    cons: [
+      "سقف للدخل ومحدودية الاستقلالية",
+      "ارتباط بقرارات صاحب العمل",
+      "احتمال الروتين وفقدان الشغف",
+    ],
     accent: "from-emerald-500/20 to-emerald-500/5 border-emerald-500/30",
   },
   {
@@ -78,6 +112,16 @@ const CATEGORIES: Category[] = [
       "يتمتع عادةً بمكانة اجتماعية أعلى",
     ],
     examples: ["طبيب", "مهندس", "محامٍ", "صيدلي"],
+    pros: [
+      "مكانة اجتماعية ودخل مرتفع نسبيًا",
+      "هوية مهنية قوية ومسار واضح",
+      "حماية قانونية وتنظيمية للممارسة",
+    ],
+    cons: [
+      "سنوات دراسة وتكاليف عالية",
+      "ضغط مسؤولية ومساءلة قانونية",
+      "صعوبة التحول لمسار آخر بعد التخصص",
+    ],
     accent: "from-amber-500/20 to-amber-500/5 border-amber-500/30",
   },
   {
@@ -94,19 +138,28 @@ const CATEGORIES: Category[] = [
       "قد يكون تراثيًا أو تقنيًا",
     ],
     examples: ["نجار", "حداد", "خزّاف", "صانع أثاث"],
+    pros: [
+      "استقلالية وإمكانية العمل لحساب الذات",
+      "طلب مستمر على المهارات اليدوية",
+      "إشباع إبداعي من إنتاج ملموس",
+    ],
+    cons: [
+      "جهد بدني وإصابات محتملة",
+      "دخل متذبذب حسب الطلب والموسم",
+      "نظرة اجتماعية أقل في بعض البيئات",
+    ],
     accent: "from-rose-500/20 to-rose-500/5 border-rose-500/30",
   },
 ];
 
-function CareerPathPage() {
+function CareerPathTermsArticle() {
   return (
     <div className="min-h-screen bg-background">
       <div className="container-page py-12">
-        {/* Hero */}
         <div className="mb-12 text-center">
           <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-1.5 text-sm text-foreground/70">
             <Compass className="h-4 w-4 text-gold" />
-            <span>اكتشاف المسار المهني</span>
+            <span>الموارد · اكتشاف المسار المهني</span>
           </div>
           <h1 className="mb-4 font-serif text-4xl font-bold text-primary md:text-5xl">
             ما الفرق بين العمل والوظيفة والمهنة والحِرفة؟
@@ -116,12 +169,11 @@ function CareerPathPage() {
             بالعمل: <strong className="text-foreground">Occupation</strong> و
             <strong className="text-foreground"> Job</strong> و
             <strong className="text-foreground"> Profession</strong> و
-            <strong className="text-foreground"> Craft</strong>. كل مصطلح يعكس
-            مستوى مختلفًا من التخصص والالتزام والمسار.
+            <strong className="text-foreground"> Craft</strong>، مع مميزات
+            وعيوب كل مسار لمساعدتك على المفاضلة بوعي.
           </p>
         </div>
 
-        {/* Categories grid */}
         <div className="grid gap-6 md:grid-cols-2">
           {CATEGORIES.map((cat) => {
             const Icon = cat.icon;
@@ -172,7 +224,7 @@ function CareerPathPage() {
                   </ul>
                 </section>
 
-                <section>
+                <section className="mb-4">
                   <h3 className="mb-2 text-sm font-semibold text-foreground">
                     أمثلة
                   </h3>
@@ -187,12 +239,46 @@ function CareerPathPage() {
                     ))}
                   </div>
                 </section>
+
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <section className="rounded-xl border border-emerald-500/30 bg-emerald-500/5 p-3">
+                    <h3 className="mb-2 flex items-center gap-2 text-sm font-semibold text-emerald-700 dark:text-emerald-400">
+                      <ThumbsUp className="h-4 w-4" /> المميزات
+                    </h3>
+                    <ul className="space-y-1.5">
+                      {cat.pros.map((p, i) => (
+                        <li
+                          key={i}
+                          className="flex items-start gap-2 text-xs text-foreground/80"
+                        >
+                          <span className="mt-1 h-1 w-1 flex-shrink-0 rounded-full bg-emerald-500" />
+                          <span>{p}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </section>
+                  <section className="rounded-xl border border-rose-500/30 bg-rose-500/5 p-3">
+                    <h3 className="mb-2 flex items-center gap-2 text-sm font-semibold text-rose-700 dark:text-rose-400">
+                      <ThumbsDown className="h-4 w-4" /> العيوب
+                    </h3>
+                    <ul className="space-y-1.5">
+                      {cat.cons.map((c, i) => (
+                        <li
+                          key={i}
+                          className="flex items-start gap-2 text-xs text-foreground/80"
+                        >
+                          <span className="mt-1 h-1 w-1 flex-shrink-0 rounded-full bg-rose-500" />
+                          <span>{c}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </section>
+                </div>
               </article>
             );
           })}
         </div>
 
-        {/* Comparison table */}
         <section className="mt-12 rounded-2xl border border-border bg-card p-6">
           <h2 className="mb-4 font-serif text-2xl font-bold text-primary">
             جدول مقارنة سريع
@@ -237,14 +323,13 @@ function CareerPathPage() {
           </div>
         </section>
 
-        {/* CTA */}
         <div className="mt-12 rounded-2xl border border-border bg-gradient-to-br from-primary/10 to-gold/10 p-8 text-center">
           <h2 className="mb-3 font-serif text-2xl font-bold text-primary">
             جاهز تكتشف أي نوع يناسبك؟
           </h2>
           <p className="mx-auto mb-6 max-w-2xl text-foreground/70">
-            ابدأ بالتقييم الشامل أو اختبار الميول المهنية (RIASEC) لتعرف توجهك
-            بدقة، ثم ناقش النتائج مع مرشد مهني.
+            ابدأ بتقييم نوع المسار المهني أو التقييم الشامل لتعرف توجهك بدقة،
+            ثم ناقش النتائج مع مرشد مهني.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-3">
             <Link
@@ -267,10 +352,10 @@ function CareerPathPage() {
               اختبار RIASEC
             </Link>
             <Link
-              to="/booking"
-              className="inline-flex items-center gap-2 rounded-md border border-gold/40 bg-gold/10 px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-gold/20"
+              to="/resources"
+              className="inline-flex items-center gap-2 rounded-md border border-border bg-background px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-card"
             >
-              حجز جلسة إرشاد
+              العودة للموارد
             </Link>
           </div>
         </div>
