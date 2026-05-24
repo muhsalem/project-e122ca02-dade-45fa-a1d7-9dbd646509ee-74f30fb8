@@ -19,6 +19,7 @@ import { Route as AssessmentsRouteImport } from './routes/assessments'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ReportIndexRouteImport } from './routes/report.index'
+import { Route as ResourcesCoachingVsCareerCounselingRouteImport } from './routes/resources.coaching-vs-career-counseling'
 import { Route as ReportCodeRouteImport } from './routes/report.$code'
 
 const ResourcesRoute = ResourcesRouteImport.update({
@@ -71,6 +72,12 @@ const ReportIndexRoute = ReportIndexRouteImport.update({
   path: '/report/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ResourcesCoachingVsCareerCounselingRoute =
+  ResourcesCoachingVsCareerCounselingRouteImport.update({
+    id: '/coaching-vs-career-counseling',
+    path: '/coaching-vs-career-counseling',
+    getParentRoute: () => ResourcesRoute,
+  } as any)
 const ReportCodeRoute = ReportCodeRouteImport.update({
   id: '/report/$code',
   path: '/report/$code',
@@ -86,8 +93,9 @@ export interface FileRoutesByFullPath {
   '/career-type-assessment': typeof CareerTypeAssessmentRoute
   '/deep-assessment': typeof DeepAssessmentRoute
   '/learning-style': typeof LearningStyleRoute
-  '/resources': typeof ResourcesRoute
+  '/resources': typeof ResourcesRouteWithChildren
   '/report/$code': typeof ReportCodeRoute
+  '/resources/coaching-vs-career-counseling': typeof ResourcesCoachingVsCareerCounselingRoute
   '/report/': typeof ReportIndexRoute
 }
 export interface FileRoutesByTo {
@@ -99,8 +107,9 @@ export interface FileRoutesByTo {
   '/career-type-assessment': typeof CareerTypeAssessmentRoute
   '/deep-assessment': typeof DeepAssessmentRoute
   '/learning-style': typeof LearningStyleRoute
-  '/resources': typeof ResourcesRoute
+  '/resources': typeof ResourcesRouteWithChildren
   '/report/$code': typeof ReportCodeRoute
+  '/resources/coaching-vs-career-counseling': typeof ResourcesCoachingVsCareerCounselingRoute
   '/report': typeof ReportIndexRoute
 }
 export interface FileRoutesById {
@@ -113,8 +122,9 @@ export interface FileRoutesById {
   '/career-type-assessment': typeof CareerTypeAssessmentRoute
   '/deep-assessment': typeof DeepAssessmentRoute
   '/learning-style': typeof LearningStyleRoute
-  '/resources': typeof ResourcesRoute
+  '/resources': typeof ResourcesRouteWithChildren
   '/report/$code': typeof ReportCodeRoute
+  '/resources/coaching-vs-career-counseling': typeof ResourcesCoachingVsCareerCounselingRoute
   '/report/': typeof ReportIndexRoute
 }
 export interface FileRouteTypes {
@@ -130,6 +140,7 @@ export interface FileRouteTypes {
     | '/learning-style'
     | '/resources'
     | '/report/$code'
+    | '/resources/coaching-vs-career-counseling'
     | '/report/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -143,6 +154,7 @@ export interface FileRouteTypes {
     | '/learning-style'
     | '/resources'
     | '/report/$code'
+    | '/resources/coaching-vs-career-counseling'
     | '/report'
   id:
     | '__root__'
@@ -156,6 +168,7 @@ export interface FileRouteTypes {
     | '/learning-style'
     | '/resources'
     | '/report/$code'
+    | '/resources/coaching-vs-career-counseling'
     | '/report/'
   fileRoutesById: FileRoutesById
 }
@@ -168,7 +181,7 @@ export interface RootRouteChildren {
   CareerTypeAssessmentRoute: typeof CareerTypeAssessmentRoute
   DeepAssessmentRoute: typeof DeepAssessmentRoute
   LearningStyleRoute: typeof LearningStyleRoute
-  ResourcesRoute: typeof ResourcesRoute
+  ResourcesRoute: typeof ResourcesRouteWithChildren
   ReportCodeRoute: typeof ReportCodeRoute
   ReportIndexRoute: typeof ReportIndexRoute
 }
@@ -245,6 +258,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ReportIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/resources/coaching-vs-career-counseling': {
+      id: '/resources/coaching-vs-career-counseling'
+      path: '/coaching-vs-career-counseling'
+      fullPath: '/resources/coaching-vs-career-counseling'
+      preLoaderRoute: typeof ResourcesCoachingVsCareerCounselingRouteImport
+      parentRoute: typeof ResourcesRoute
+    }
     '/report/$code': {
       id: '/report/$code'
       path: '/report/$code'
@@ -255,6 +275,19 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface ResourcesRouteChildren {
+  ResourcesCoachingVsCareerCounselingRoute: typeof ResourcesCoachingVsCareerCounselingRoute
+}
+
+const ResourcesRouteChildren: ResourcesRouteChildren = {
+  ResourcesCoachingVsCareerCounselingRoute:
+    ResourcesCoachingVsCareerCounselingRoute,
+}
+
+const ResourcesRouteWithChildren = ResourcesRoute._addFileChildren(
+  ResourcesRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
@@ -264,10 +297,20 @@ const rootRouteChildren: RootRouteChildren = {
   CareerTypeAssessmentRoute: CareerTypeAssessmentRoute,
   DeepAssessmentRoute: DeepAssessmentRoute,
   LearningStyleRoute: LearningStyleRoute,
-  ResourcesRoute: ResourcesRoute,
+  ResourcesRoute: ResourcesRouteWithChildren,
   ReportCodeRoute: ReportCodeRoute,
   ReportIndexRoute: ReportIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
