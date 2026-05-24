@@ -13,6 +13,7 @@ import { Route as WellbeingCheckRouteImport } from './routes/wellbeing-check'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as SelfDiscoveryRouteImport } from './routes/self-discovery'
 import { Route as SectorGuideRouteImport } from './routes/sector-guide'
+import { Route as Review360RouteImport } from './routes/review360'
 import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as LearningStyleRouteImport } from './routes/learning-style'
@@ -27,6 +28,8 @@ import { Route as AcademicMajorRouteImport } from './routes/academic-major'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ReportIndexRouteImport } from './routes/report.index'
+import { Route as ReviewSubmitCodeRouteImport } from './routes/review-submit.$code'
+import { Route as ReviewResultsCodeRouteImport } from './routes/review-results.$code'
 import { Route as ResourcesCoachingVsCareerCounselingRouteImport } from './routes/resources.coaching-vs-career-counseling'
 import { Route as ResourcesCareerPathTermsRouteImport } from './routes/resources.career-path-terms'
 import { Route as ReportCodeRouteImport } from './routes/report.$code'
@@ -50,6 +53,11 @@ const SelfDiscoveryRoute = SelfDiscoveryRouteImport.update({
 const SectorGuideRoute = SectorGuideRouteImport.update({
   id: '/sector-guide',
   path: '/sector-guide',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Review360Route = Review360RouteImport.update({
+  id: '/review360',
+  path: '/review360',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ResourcesRoute = ResourcesRouteImport.update({
@@ -122,6 +130,16 @@ const ReportIndexRoute = ReportIndexRouteImport.update({
   path: '/report/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ReviewSubmitCodeRoute = ReviewSubmitCodeRouteImport.update({
+  id: '/review-submit/$code',
+  path: '/review-submit/$code',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReviewResultsCodeRoute = ReviewResultsCodeRouteImport.update({
+  id: '/review-results/$code',
+  path: '/review-results/$code',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ResourcesCoachingVsCareerCounselingRoute =
   ResourcesCoachingVsCareerCounselingRouteImport.update({
     id: '/coaching-vs-career-counseling',
@@ -159,6 +177,7 @@ export interface FileRoutesByFullPath {
   '/learning-style': typeof LearningStyleRoute
   '/privacy': typeof PrivacyRoute
   '/resources': typeof ResourcesRouteWithChildren
+  '/review360': typeof Review360Route
   '/sector-guide': typeof SectorGuideRoute
   '/self-discovery': typeof SelfDiscoveryRoute
   '/terms': typeof TermsRoute
@@ -167,6 +186,8 @@ export interface FileRoutesByFullPath {
   '/report/$code': typeof ReportCodeRoute
   '/resources/career-path-terms': typeof ResourcesCareerPathTermsRoute
   '/resources/coaching-vs-career-counseling': typeof ResourcesCoachingVsCareerCounselingRoute
+  '/review-results/$code': typeof ReviewResultsCodeRoute
+  '/review-submit/$code': typeof ReviewSubmitCodeRoute
   '/report/': typeof ReportIndexRoute
 }
 export interface FileRoutesByTo {
@@ -183,6 +204,7 @@ export interface FileRoutesByTo {
   '/learning-style': typeof LearningStyleRoute
   '/privacy': typeof PrivacyRoute
   '/resources': typeof ResourcesRouteWithChildren
+  '/review360': typeof Review360Route
   '/sector-guide': typeof SectorGuideRoute
   '/self-discovery': typeof SelfDiscoveryRoute
   '/terms': typeof TermsRoute
@@ -191,6 +213,8 @@ export interface FileRoutesByTo {
   '/report/$code': typeof ReportCodeRoute
   '/resources/career-path-terms': typeof ResourcesCareerPathTermsRoute
   '/resources/coaching-vs-career-counseling': typeof ResourcesCoachingVsCareerCounselingRoute
+  '/review-results/$code': typeof ReviewResultsCodeRoute
+  '/review-submit/$code': typeof ReviewSubmitCodeRoute
   '/report': typeof ReportIndexRoute
 }
 export interface FileRoutesById {
@@ -208,6 +232,7 @@ export interface FileRoutesById {
   '/learning-style': typeof LearningStyleRoute
   '/privacy': typeof PrivacyRoute
   '/resources': typeof ResourcesRouteWithChildren
+  '/review360': typeof Review360Route
   '/sector-guide': typeof SectorGuideRoute
   '/self-discovery': typeof SelfDiscoveryRoute
   '/terms': typeof TermsRoute
@@ -216,6 +241,8 @@ export interface FileRoutesById {
   '/report/$code': typeof ReportCodeRoute
   '/resources/career-path-terms': typeof ResourcesCareerPathTermsRoute
   '/resources/coaching-vs-career-counseling': typeof ResourcesCoachingVsCareerCounselingRoute
+  '/review-results/$code': typeof ReviewResultsCodeRoute
+  '/review-submit/$code': typeof ReviewSubmitCodeRoute
   '/report/': typeof ReportIndexRoute
 }
 export interface FileRouteTypes {
@@ -234,6 +261,7 @@ export interface FileRouteTypes {
     | '/learning-style'
     | '/privacy'
     | '/resources'
+    | '/review360'
     | '/sector-guide'
     | '/self-discovery'
     | '/terms'
@@ -242,6 +270,8 @@ export interface FileRouteTypes {
     | '/report/$code'
     | '/resources/career-path-terms'
     | '/resources/coaching-vs-career-counseling'
+    | '/review-results/$code'
+    | '/review-submit/$code'
     | '/report/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -258,6 +288,7 @@ export interface FileRouteTypes {
     | '/learning-style'
     | '/privacy'
     | '/resources'
+    | '/review360'
     | '/sector-guide'
     | '/self-discovery'
     | '/terms'
@@ -266,6 +297,8 @@ export interface FileRouteTypes {
     | '/report/$code'
     | '/resources/career-path-terms'
     | '/resources/coaching-vs-career-counseling'
+    | '/review-results/$code'
+    | '/review-submit/$code'
     | '/report'
   id:
     | '__root__'
@@ -282,6 +315,7 @@ export interface FileRouteTypes {
     | '/learning-style'
     | '/privacy'
     | '/resources'
+    | '/review360'
     | '/sector-guide'
     | '/self-discovery'
     | '/terms'
@@ -290,6 +324,8 @@ export interface FileRouteTypes {
     | '/report/$code'
     | '/resources/career-path-terms'
     | '/resources/coaching-vs-career-counseling'
+    | '/review-results/$code'
+    | '/review-submit/$code'
     | '/report/'
   fileRoutesById: FileRoutesById
 }
@@ -307,12 +343,15 @@ export interface RootRouteChildren {
   LearningStyleRoute: typeof LearningStyleRoute
   PrivacyRoute: typeof PrivacyRoute
   ResourcesRoute: typeof ResourcesRouteWithChildren
+  Review360Route: typeof Review360Route
   SectorGuideRoute: typeof SectorGuideRoute
   SelfDiscoveryRoute: typeof SelfDiscoveryRoute
   TermsRoute: typeof TermsRoute
   WellbeingCheckRoute: typeof WellbeingCheckRoute
   IdpCodeRoute: typeof IdpCodeRoute
   ReportCodeRoute: typeof ReportCodeRoute
+  ReviewResultsCodeRoute: typeof ReviewResultsCodeRoute
+  ReviewSubmitCodeRoute: typeof ReviewSubmitCodeRoute
   ReportIndexRoute: typeof ReportIndexRoute
 }
 
@@ -344,6 +383,13 @@ declare module '@tanstack/react-router' {
       path: '/sector-guide'
       fullPath: '/sector-guide'
       preLoaderRoute: typeof SectorGuideRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/review360': {
+      id: '/review360'
+      path: '/review360'
+      fullPath: '/review360'
+      preLoaderRoute: typeof Review360RouteImport
       parentRoute: typeof rootRouteImport
     }
     '/resources': {
@@ -444,6 +490,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ReportIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/review-submit/$code': {
+      id: '/review-submit/$code'
+      path: '/review-submit/$code'
+      fullPath: '/review-submit/$code'
+      preLoaderRoute: typeof ReviewSubmitCodeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/review-results/$code': {
+      id: '/review-results/$code'
+      path: '/review-results/$code'
+      fullPath: '/review-results/$code'
+      preLoaderRoute: typeof ReviewResultsCodeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/resources/coaching-vs-career-counseling': {
       id: '/resources/coaching-vs-career-counseling'
       path: '/coaching-vs-career-counseling'
@@ -504,12 +564,15 @@ const rootRouteChildren: RootRouteChildren = {
   LearningStyleRoute: LearningStyleRoute,
   PrivacyRoute: PrivacyRoute,
   ResourcesRoute: ResourcesRouteWithChildren,
+  Review360Route: Review360Route,
   SectorGuideRoute: SectorGuideRoute,
   SelfDiscoveryRoute: SelfDiscoveryRoute,
   TermsRoute: TermsRoute,
   WellbeingCheckRoute: WellbeingCheckRoute,
   IdpCodeRoute: IdpCodeRoute,
   ReportCodeRoute: ReportCodeRoute,
+  ReviewResultsCodeRoute: ReviewResultsCodeRoute,
+  ReviewSubmitCodeRoute: ReviewSubmitCodeRoute,
   ReportIndexRoute: ReportIndexRoute,
 }
 export const routeTree = rootRouteImport
