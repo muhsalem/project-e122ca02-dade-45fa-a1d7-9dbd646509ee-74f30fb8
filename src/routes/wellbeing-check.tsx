@@ -67,8 +67,11 @@ function WellbeingPage() {
           <h1 className="mt-4 text-3xl text-primary md:text-4xl">الفحص النفسي المختصر</h1>
           <p className="mt-3 leading-8 text-muted-foreground">
             مقاييس فرز عالمية موثّقة: <strong>PHQ-2</strong> (الاكتئاب) و<strong>GAD-2</strong> (القلق) ومقياس <strong>القلق المهني</strong>.
-            هذا فحص أولي، وليس تشخيصاً طبياً.
           </p>
+          <div className="mx-auto mt-5 max-w-2xl rounded-xl border border-amber-500/40 bg-amber-50 p-4 text-right text-sm leading-7 text-amber-900 dark:bg-amber-950/20 dark:text-amber-200">
+            <strong>إخلاء مسؤولية:</strong> هذا الفحص <strong>فرز أولي</strong> فقط، وليس تشخيصاً طبياً أو نفسياً.
+            لا يُغني عن مراجعة طبيب أو معالج مرخّص. النتائج اجتهادية وقد تتأثر بحالتك المؤقتة يوم الإجابة.
+          </div>
         </div>
 
         {!res && (

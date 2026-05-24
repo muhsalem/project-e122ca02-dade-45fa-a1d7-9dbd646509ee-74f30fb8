@@ -31,6 +31,7 @@ export function Footer() {
           <ul className="space-y-3 text-sm text-muted-foreground">
             <li><Link to="/terms" className="hover:text-primary">الشروط والأحكام</Link></li>
             <li><Link to="/privacy" className="hover:text-primary">سياسة الخصوصية</Link></li>
+            <li><Link to="/ethics" className="hover:text-primary">الميثاق الأخلاقي والقيمي</Link></li>
             <li className="flex items-center gap-2"><Mail className="h-4 w-4 text-gold" /><span>info@busala.app</span></li>
             <li className="flex items-center gap-2"><Phone className="h-4 w-4 text-gold" /><span>+966 50 000 0000</span></li>
           </ul>
