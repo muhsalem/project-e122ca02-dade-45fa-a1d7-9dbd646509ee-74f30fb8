@@ -478,7 +478,7 @@ function RatingsTab() {
         <div>
           <label className="text-sm font-medium text-primary">المرشد / الكوتش</label>
           <select value={coach} onChange={(e) => setCoach(e.target.value)} className="mt-2 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
-            {COACHES.map((c) => <option key={c} value={c}>{c}</option>)}
+            {coachOptions.map((c) => <option key={c} value={c}>{c}</option>)}
           </select>
         </div>
 
