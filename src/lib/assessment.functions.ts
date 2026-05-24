@@ -173,6 +173,7 @@ export const submitAssessment = createServerFn({ method: "POST" })
       name: data.name ?? null,
       age: data.age ?? null,
       stage: data.stage ?? null,
+      group_code: data.group_code ?? null,
       answers: data.answers,
       report,
     });
