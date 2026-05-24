@@ -278,10 +278,11 @@ function CareerTypePage() {
   const [track, setTrack] = useState<Track | null>(null);
   const [nature, setNature] = useState<Nature | null>(null);
   const [answers, setAnswers] = useState<Record<string, { type: Type; label: string }>>({});
+  const [riasec, setRiasec] = useState<Record<RiasecDim, number>>({ R: 0, I: 0, A: 0, S: 0, E: 0, C: 0 });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const META_STEPS = 3; // meta + track + nature
+  const META_STEPS = 4; // meta + track + nature + RIASEC
   const totalSteps = META_STEPS + QUESTIONS.length;
   const progress = Math.round(((step + 1) / totalSteps) * 100);
 
