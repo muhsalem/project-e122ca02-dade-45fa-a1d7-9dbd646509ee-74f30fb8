@@ -408,6 +408,19 @@ function RatingsTab() {
   };
   useEffect(() => { loadSummary(); }, []);
 
+  useEffect(() => {
+    fetchCoaches({})
+      .then((r) => {
+        const names = (r.coaches ?? []).map((c: { full_name: string }) => c.full_name);
+        if (names.length > 0) {
+          setCoachOptions(names);
+          setCoach(names[0]);
+        }
+      })
+      .catch(() => {});
+  }, [fetchCoaches]);
+
+
   const canSubmit = overall > 0 && clarity > 0 && professionalism > 0 && usefulness > 0 && !loading;
 
   const onSubmit = async (e: React.FormEvent) => {
