@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WellbeingCheckRouteImport } from './routes/wellbeing-check'
 import { Route as TermsRouteImport } from './routes/terms'
+import { Route as SkillsGapRouteImport } from './routes/skills-gap'
 import { Route as SelfDiscoveryRouteImport } from './routes/self-discovery'
 import { Route as SectorGuideRouteImport } from './routes/sector-guide'
 import { Route as Review360RouteImport } from './routes/review360'
@@ -27,6 +28,7 @@ import { Route as CounselorRouteImport } from './routes/counselor'
 import { Route as ComprehensiveAssessmentRouteImport } from './routes/comprehensive-assessment'
 import { Route as ClarityCheckRouteImport } from './routes/clarity-check'
 import { Route as CareerTypeAssessmentRouteImport } from './routes/career-type-assessment'
+import { Route as CareerLadderRouteImport } from './routes/career-ladder'
 import { Route as BookingRouteImport } from './routes/booking'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AcademicMajorRouteImport } from './routes/academic-major'
@@ -35,8 +37,10 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as ReportIndexRouteImport } from './routes/report.index'
 import { Route as ReviewSubmitCodeRouteImport } from './routes/review-submit.$code'
 import { Route as ReviewResultsCodeRouteImport } from './routes/review-results.$code'
+import { Route as ResourcesHowToChooseMajorRouteImport } from './routes/resources.how-to-choose-major'
 import { Route as ResourcesCoachingVsCareerCounselingRouteImport } from './routes/resources.coaching-vs-career-counseling'
 import { Route as ResourcesCareerPathTermsRouteImport } from './routes/resources.career-path-terms'
+import { Route as ResourcesCareerChangeStrategiesRouteImport } from './routes/resources.career-change-strategies'
 import { Route as ReportCodeRouteImport } from './routes/report.$code'
 import { Route as IdpCodeRouteImport } from './routes/idp.$code'
 
@@ -48,6 +52,11 @@ const WellbeingCheckRoute = WellbeingCheckRouteImport.update({
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
   path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SkillsGapRoute = SkillsGapRouteImport.update({
+  id: '/skills-gap',
+  path: '/skills-gap',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SelfDiscoveryRoute = SelfDiscoveryRouteImport.update({
@@ -130,6 +139,11 @@ const CareerTypeAssessmentRoute = CareerTypeAssessmentRouteImport.update({
   path: '/career-type-assessment',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CareerLadderRoute = CareerLadderRouteImport.update({
+  id: '/career-ladder',
+  path: '/career-ladder',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BookingRoute = BookingRouteImport.update({
   id: '/booking',
   path: '/booking',
@@ -170,6 +184,12 @@ const ReviewResultsCodeRoute = ReviewResultsCodeRouteImport.update({
   path: '/review-results/$code',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ResourcesHowToChooseMajorRoute =
+  ResourcesHowToChooseMajorRouteImport.update({
+    id: '/how-to-choose-major',
+    path: '/how-to-choose-major',
+    getParentRoute: () => ResourcesRoute,
+  } as any)
 const ResourcesCoachingVsCareerCounselingRoute =
   ResourcesCoachingVsCareerCounselingRouteImport.update({
     id: '/coaching-vs-career-counseling',
@@ -180,6 +200,12 @@ const ResourcesCareerPathTermsRoute =
   ResourcesCareerPathTermsRouteImport.update({
     id: '/career-path-terms',
     path: '/career-path-terms',
+    getParentRoute: () => ResourcesRoute,
+  } as any)
+const ResourcesCareerChangeStrategiesRoute =
+  ResourcesCareerChangeStrategiesRouteImport.update({
+    id: '/career-change-strategies',
+    path: '/career-change-strategies',
     getParentRoute: () => ResourcesRoute,
   } as any)
 const ReportCodeRoute = ReportCodeRouteImport.update({
@@ -199,6 +225,7 @@ export interface FileRoutesByFullPath {
   '/academic-major': typeof AcademicMajorRoute
   '/auth': typeof AuthRoute
   '/booking': typeof BookingRoute
+  '/career-ladder': typeof CareerLadderRoute
   '/career-type-assessment': typeof CareerTypeAssessmentRoute
   '/clarity-check': typeof ClarityCheckRoute
   '/comprehensive-assessment': typeof ComprehensiveAssessmentRoute
@@ -215,12 +242,15 @@ export interface FileRoutesByFullPath {
   '/review360': typeof Review360Route
   '/sector-guide': typeof SectorGuideRoute
   '/self-discovery': typeof SelfDiscoveryRoute
+  '/skills-gap': typeof SkillsGapRoute
   '/terms': typeof TermsRoute
   '/wellbeing-check': typeof WellbeingCheckRoute
   '/idp/$code': typeof IdpCodeRoute
   '/report/$code': typeof ReportCodeRoute
+  '/resources/career-change-strategies': typeof ResourcesCareerChangeStrategiesRoute
   '/resources/career-path-terms': typeof ResourcesCareerPathTermsRoute
   '/resources/coaching-vs-career-counseling': typeof ResourcesCoachingVsCareerCounselingRoute
+  '/resources/how-to-choose-major': typeof ResourcesHowToChooseMajorRoute
   '/review-results/$code': typeof ReviewResultsCodeRoute
   '/review-submit/$code': typeof ReviewSubmitCodeRoute
   '/report/': typeof ReportIndexRoute
@@ -231,6 +261,7 @@ export interface FileRoutesByTo {
   '/academic-major': typeof AcademicMajorRoute
   '/auth': typeof AuthRoute
   '/booking': typeof BookingRoute
+  '/career-ladder': typeof CareerLadderRoute
   '/career-type-assessment': typeof CareerTypeAssessmentRoute
   '/clarity-check': typeof ClarityCheckRoute
   '/comprehensive-assessment': typeof ComprehensiveAssessmentRoute
@@ -247,12 +278,15 @@ export interface FileRoutesByTo {
   '/review360': typeof Review360Route
   '/sector-guide': typeof SectorGuideRoute
   '/self-discovery': typeof SelfDiscoveryRoute
+  '/skills-gap': typeof SkillsGapRoute
   '/terms': typeof TermsRoute
   '/wellbeing-check': typeof WellbeingCheckRoute
   '/idp/$code': typeof IdpCodeRoute
   '/report/$code': typeof ReportCodeRoute
+  '/resources/career-change-strategies': typeof ResourcesCareerChangeStrategiesRoute
   '/resources/career-path-terms': typeof ResourcesCareerPathTermsRoute
   '/resources/coaching-vs-career-counseling': typeof ResourcesCoachingVsCareerCounselingRoute
+  '/resources/how-to-choose-major': typeof ResourcesHowToChooseMajorRoute
   '/review-results/$code': typeof ReviewResultsCodeRoute
   '/review-submit/$code': typeof ReviewSubmitCodeRoute
   '/report': typeof ReportIndexRoute
@@ -264,6 +298,7 @@ export interface FileRoutesById {
   '/academic-major': typeof AcademicMajorRoute
   '/auth': typeof AuthRoute
   '/booking': typeof BookingRoute
+  '/career-ladder': typeof CareerLadderRoute
   '/career-type-assessment': typeof CareerTypeAssessmentRoute
   '/clarity-check': typeof ClarityCheckRoute
   '/comprehensive-assessment': typeof ComprehensiveAssessmentRoute
@@ -280,12 +315,15 @@ export interface FileRoutesById {
   '/review360': typeof Review360Route
   '/sector-guide': typeof SectorGuideRoute
   '/self-discovery': typeof SelfDiscoveryRoute
+  '/skills-gap': typeof SkillsGapRoute
   '/terms': typeof TermsRoute
   '/wellbeing-check': typeof WellbeingCheckRoute
   '/idp/$code': typeof IdpCodeRoute
   '/report/$code': typeof ReportCodeRoute
+  '/resources/career-change-strategies': typeof ResourcesCareerChangeStrategiesRoute
   '/resources/career-path-terms': typeof ResourcesCareerPathTermsRoute
   '/resources/coaching-vs-career-counseling': typeof ResourcesCoachingVsCareerCounselingRoute
+  '/resources/how-to-choose-major': typeof ResourcesHowToChooseMajorRoute
   '/review-results/$code': typeof ReviewResultsCodeRoute
   '/review-submit/$code': typeof ReviewSubmitCodeRoute
   '/report/': typeof ReportIndexRoute
@@ -298,6 +336,7 @@ export interface FileRouteTypes {
     | '/academic-major'
     | '/auth'
     | '/booking'
+    | '/career-ladder'
     | '/career-type-assessment'
     | '/clarity-check'
     | '/comprehensive-assessment'
@@ -314,12 +353,15 @@ export interface FileRouteTypes {
     | '/review360'
     | '/sector-guide'
     | '/self-discovery'
+    | '/skills-gap'
     | '/terms'
     | '/wellbeing-check'
     | '/idp/$code'
     | '/report/$code'
+    | '/resources/career-change-strategies'
     | '/resources/career-path-terms'
     | '/resources/coaching-vs-career-counseling'
+    | '/resources/how-to-choose-major'
     | '/review-results/$code'
     | '/review-submit/$code'
     | '/report/'
@@ -330,6 +372,7 @@ export interface FileRouteTypes {
     | '/academic-major'
     | '/auth'
     | '/booking'
+    | '/career-ladder'
     | '/career-type-assessment'
     | '/clarity-check'
     | '/comprehensive-assessment'
@@ -346,12 +389,15 @@ export interface FileRouteTypes {
     | '/review360'
     | '/sector-guide'
     | '/self-discovery'
+    | '/skills-gap'
     | '/terms'
     | '/wellbeing-check'
     | '/idp/$code'
     | '/report/$code'
+    | '/resources/career-change-strategies'
     | '/resources/career-path-terms'
     | '/resources/coaching-vs-career-counseling'
+    | '/resources/how-to-choose-major'
     | '/review-results/$code'
     | '/review-submit/$code'
     | '/report'
@@ -362,6 +408,7 @@ export interface FileRouteTypes {
     | '/academic-major'
     | '/auth'
     | '/booking'
+    | '/career-ladder'
     | '/career-type-assessment'
     | '/clarity-check'
     | '/comprehensive-assessment'
@@ -378,12 +425,15 @@ export interface FileRouteTypes {
     | '/review360'
     | '/sector-guide'
     | '/self-discovery'
+    | '/skills-gap'
     | '/terms'
     | '/wellbeing-check'
     | '/idp/$code'
     | '/report/$code'
+    | '/resources/career-change-strategies'
     | '/resources/career-path-terms'
     | '/resources/coaching-vs-career-counseling'
+    | '/resources/how-to-choose-major'
     | '/review-results/$code'
     | '/review-submit/$code'
     | '/report/'
@@ -395,6 +445,7 @@ export interface RootRouteChildren {
   AcademicMajorRoute: typeof AcademicMajorRoute
   AuthRoute: typeof AuthRoute
   BookingRoute: typeof BookingRoute
+  CareerLadderRoute: typeof CareerLadderRoute
   CareerTypeAssessmentRoute: typeof CareerTypeAssessmentRoute
   ClarityCheckRoute: typeof ClarityCheckRoute
   ComprehensiveAssessmentRoute: typeof ComprehensiveAssessmentRoute
@@ -411,6 +462,7 @@ export interface RootRouteChildren {
   Review360Route: typeof Review360Route
   SectorGuideRoute: typeof SectorGuideRoute
   SelfDiscoveryRoute: typeof SelfDiscoveryRoute
+  SkillsGapRoute: typeof SkillsGapRoute
   TermsRoute: typeof TermsRoute
   WellbeingCheckRoute: typeof WellbeingCheckRoute
   IdpCodeRoute: typeof IdpCodeRoute
@@ -434,6 +486,13 @@ declare module '@tanstack/react-router' {
       path: '/terms'
       fullPath: '/terms'
       preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/skills-gap': {
+      id: '/skills-gap'
+      path: '/skills-gap'
+      fullPath: '/skills-gap'
+      preLoaderRoute: typeof SkillsGapRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/self-discovery': {
@@ -548,6 +607,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CareerTypeAssessmentRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/career-ladder': {
+      id: '/career-ladder'
+      path: '/career-ladder'
+      fullPath: '/career-ladder'
+      preLoaderRoute: typeof CareerLadderRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/booking': {
       id: '/booking'
       path: '/booking'
@@ -604,6 +670,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ReviewResultsCodeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/resources/how-to-choose-major': {
+      id: '/resources/how-to-choose-major'
+      path: '/how-to-choose-major'
+      fullPath: '/resources/how-to-choose-major'
+      preLoaderRoute: typeof ResourcesHowToChooseMajorRouteImport
+      parentRoute: typeof ResourcesRoute
+    }
     '/resources/coaching-vs-career-counseling': {
       id: '/resources/coaching-vs-career-counseling'
       path: '/coaching-vs-career-counseling'
@@ -616,6 +689,13 @@ declare module '@tanstack/react-router' {
       path: '/career-path-terms'
       fullPath: '/resources/career-path-terms'
       preLoaderRoute: typeof ResourcesCareerPathTermsRouteImport
+      parentRoute: typeof ResourcesRoute
+    }
+    '/resources/career-change-strategies': {
+      id: '/resources/career-change-strategies'
+      path: '/career-change-strategies'
+      fullPath: '/resources/career-change-strategies'
+      preLoaderRoute: typeof ResourcesCareerChangeStrategiesRouteImport
       parentRoute: typeof ResourcesRoute
     }
     '/report/$code': {
@@ -636,14 +716,18 @@ declare module '@tanstack/react-router' {
 }
 
 interface ResourcesRouteChildren {
+  ResourcesCareerChangeStrategiesRoute: typeof ResourcesCareerChangeStrategiesRoute
   ResourcesCareerPathTermsRoute: typeof ResourcesCareerPathTermsRoute
   ResourcesCoachingVsCareerCounselingRoute: typeof ResourcesCoachingVsCareerCounselingRoute
+  ResourcesHowToChooseMajorRoute: typeof ResourcesHowToChooseMajorRoute
 }
 
 const ResourcesRouteChildren: ResourcesRouteChildren = {
+  ResourcesCareerChangeStrategiesRoute: ResourcesCareerChangeStrategiesRoute,
   ResourcesCareerPathTermsRoute: ResourcesCareerPathTermsRoute,
   ResourcesCoachingVsCareerCounselingRoute:
     ResourcesCoachingVsCareerCounselingRoute,
+  ResourcesHowToChooseMajorRoute: ResourcesHowToChooseMajorRoute,
 }
 
 const ResourcesRouteWithChildren = ResourcesRoute._addFileChildren(
@@ -656,6 +740,7 @@ const rootRouteChildren: RootRouteChildren = {
   AcademicMajorRoute: AcademicMajorRoute,
   AuthRoute: AuthRoute,
   BookingRoute: BookingRoute,
+  CareerLadderRoute: CareerLadderRoute,
   CareerTypeAssessmentRoute: CareerTypeAssessmentRoute,
   ClarityCheckRoute: ClarityCheckRoute,
   ComprehensiveAssessmentRoute: ComprehensiveAssessmentRoute,
@@ -672,6 +757,7 @@ const rootRouteChildren: RootRouteChildren = {
   Review360Route: Review360Route,
   SectorGuideRoute: SectorGuideRoute,
   SelfDiscoveryRoute: SelfDiscoveryRoute,
+  SkillsGapRoute: SkillsGapRoute,
   TermsRoute: TermsRoute,
   WellbeingCheckRoute: WellbeingCheckRoute,
   IdpCodeRoute: IdpCodeRoute,
