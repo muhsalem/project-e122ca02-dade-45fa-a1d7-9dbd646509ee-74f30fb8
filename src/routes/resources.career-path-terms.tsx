@@ -328,7 +328,7 @@ function CareerPathTermsArticle() {
             جاهز تكتشف أي نوع يناسبك؟
           </h2>
           <p className="mx-auto mb-6 max-w-2xl text-foreground/70">
-            ابدأ بتقييم نوع المسار المهني أو التقييم الشامل لتعرف توجهك بدقة،
+            ابدأ بتقييم نوع المسار المهني أو اكتشاف ذاتك لتعرف توجهك بدقة،
             ثم ناقش النتائج مع مرشد مهني.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-3">
@@ -340,10 +340,10 @@ function CareerPathTermsArticle() {
               <ArrowLeft className="h-4 w-4" />
             </Link>
             <Link
-              to="/deep-assessment"
+              to="/self-discovery"
               className="inline-flex items-center gap-2 rounded-md border border-border bg-background px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-card"
             >
-              التقييم الشامل
+              اكتشاف ذاتك
             </Link>
             <Link
               to="/assessments"
