@@ -219,7 +219,7 @@ function LaborMarketPage() {
             </Link>
             <Link to="/sector-guide" className="inline-flex items-center gap-2 rounded-md border border-border px-5 py-2.5 text-sm">
               <Globe className="h-4 w-4" />
-              دليل القطاع والصناعات
+              دليل القطاعات والصناعات
             </Link>
             <Link to="/booking" className="inline-flex items-center gap-2 rounded-md border border-gold/40 bg-gold/10 px-5 py-2.5 text-sm font-medium text-primary">
               ناقش بياناتك مع مرشد

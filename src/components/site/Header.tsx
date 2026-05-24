@@ -4,17 +4,16 @@ import { Menu, X, Compass } from "lucide-react";
 
 const nav = [
   { to: "/", label: "الرئيسية" },
+  { to: "/about", label: "من نحن" },
   { to: "/self-discovery", label: "اكتشاف ذاتك" },
   { to: "/learning-style", label: "اكتشف نمط تعلمك" },
   { to: "/academic-major", label: "اكتشف تخصصك الدراسي" },
-  
-  { to: "/career-type-assessment", label: "اكتشف مسماك المهني المناسب لك" },
-  { to: "/sector-guide", label: "دليل القطاع والصناعات" },
+  { to: "/career-type-assessment", label: "اكتشف مسارك المهنى" },
+  { to: "/sector-guide", label: "دليل القطاعات والصناعات" },
   { to: "/labor-market", label: "ذكاء سوق العمل" },
   { to: "/comprehensive-assessment", label: "التقييم الشامل" },
-  { to: "/counselor", label: "بوابة المرشد والكوتش المهني" },
+  { to: "/counselor", label: "الإرشاد المهني والكوتش" },
   { to: "/resources", label: "الموارد" },
-  { to: "/about", label: "من نحن" },
 ] as const;
 
 export function Header() {
