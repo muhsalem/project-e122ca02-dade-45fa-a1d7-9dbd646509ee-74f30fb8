@@ -15,6 +15,7 @@ import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as LearningStyleRouteImport } from './routes/learning-style'
 import { Route as LaborMarketRouteImport } from './routes/labor-market'
 import { Route as CounselorRouteImport } from './routes/counselor'
+import { Route as ComprehensiveAssessmentRouteImport } from './routes/comprehensive-assessment'
 import { Route as CareerTypeAssessmentRouteImport } from './routes/career-type-assessment'
 import { Route as BookingRouteImport } from './routes/booking'
 import { Route as AcademicMajorRouteImport } from './routes/academic-major'
@@ -53,6 +54,11 @@ const LaborMarketRoute = LaborMarketRouteImport.update({
 const CounselorRoute = CounselorRouteImport.update({
   id: '/counselor',
   path: '/counselor',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ComprehensiveAssessmentRoute = ComprehensiveAssessmentRouteImport.update({
+  id: '/comprehensive-assessment',
+  path: '/comprehensive-assessment',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CareerTypeAssessmentRoute = CareerTypeAssessmentRouteImport.update({
@@ -109,6 +115,7 @@ export interface FileRoutesByFullPath {
   '/academic-major': typeof AcademicMajorRoute
   '/booking': typeof BookingRoute
   '/career-type-assessment': typeof CareerTypeAssessmentRoute
+  '/comprehensive-assessment': typeof ComprehensiveAssessmentRoute
   '/counselor': typeof CounselorRoute
   '/labor-market': typeof LaborMarketRoute
   '/learning-style': typeof LearningStyleRoute
@@ -126,6 +133,7 @@ export interface FileRoutesByTo {
   '/academic-major': typeof AcademicMajorRoute
   '/booking': typeof BookingRoute
   '/career-type-assessment': typeof CareerTypeAssessmentRoute
+  '/comprehensive-assessment': typeof ComprehensiveAssessmentRoute
   '/counselor': typeof CounselorRoute
   '/labor-market': typeof LaborMarketRoute
   '/learning-style': typeof LearningStyleRoute
@@ -144,6 +152,7 @@ export interface FileRoutesById {
   '/academic-major': typeof AcademicMajorRoute
   '/booking': typeof BookingRoute
   '/career-type-assessment': typeof CareerTypeAssessmentRoute
+  '/comprehensive-assessment': typeof ComprehensiveAssessmentRoute
   '/counselor': typeof CounselorRoute
   '/labor-market': typeof LaborMarketRoute
   '/learning-style': typeof LearningStyleRoute
@@ -163,6 +172,7 @@ export interface FileRouteTypes {
     | '/academic-major'
     | '/booking'
     | '/career-type-assessment'
+    | '/comprehensive-assessment'
     | '/counselor'
     | '/labor-market'
     | '/learning-style'
@@ -180,6 +190,7 @@ export interface FileRouteTypes {
     | '/academic-major'
     | '/booking'
     | '/career-type-assessment'
+    | '/comprehensive-assessment'
     | '/counselor'
     | '/labor-market'
     | '/learning-style'
@@ -197,6 +208,7 @@ export interface FileRouteTypes {
     | '/academic-major'
     | '/booking'
     | '/career-type-assessment'
+    | '/comprehensive-assessment'
     | '/counselor'
     | '/labor-market'
     | '/learning-style'
@@ -215,6 +227,7 @@ export interface RootRouteChildren {
   AcademicMajorRoute: typeof AcademicMajorRoute
   BookingRoute: typeof BookingRoute
   CareerTypeAssessmentRoute: typeof CareerTypeAssessmentRoute
+  ComprehensiveAssessmentRoute: typeof ComprehensiveAssessmentRoute
   CounselorRoute: typeof CounselorRoute
   LaborMarketRoute: typeof LaborMarketRoute
   LearningStyleRoute: typeof LearningStyleRoute
@@ -267,6 +280,13 @@ declare module '@tanstack/react-router' {
       path: '/counselor'
       fullPath: '/counselor'
       preLoaderRoute: typeof CounselorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/comprehensive-assessment': {
+      id: '/comprehensive-assessment'
+      path: '/comprehensive-assessment'
+      fullPath: '/comprehensive-assessment'
+      preLoaderRoute: typeof ComprehensiveAssessmentRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/career-type-assessment': {
@@ -356,6 +376,7 @@ const rootRouteChildren: RootRouteChildren = {
   AcademicMajorRoute: AcademicMajorRoute,
   BookingRoute: BookingRoute,
   CareerTypeAssessmentRoute: CareerTypeAssessmentRoute,
+  ComprehensiveAssessmentRoute: ComprehensiveAssessmentRoute,
   CounselorRoute: CounselorRoute,
   LaborMarketRoute: LaborMarketRoute,
   LearningStyleRoute: LearningStyleRoute,
