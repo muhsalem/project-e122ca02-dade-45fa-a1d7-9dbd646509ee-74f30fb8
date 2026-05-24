@@ -65,6 +65,7 @@ function CounselorPage() {
       </section>
 
       <DirectorySection />
+      <BookingSection />
       <RatingsSection />
     </>
   );
