@@ -361,14 +361,14 @@ function CareerTypePage() {
         <div className="mb-8 text-center">
           <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-1.5 text-sm">
             <Briefcase className="h-4 w-4 text-gold" />
-            <span>تقييم نوع المسار المهني</span>
+            <span>تقييم تشخيصي شامل مرتبط بـ ISCO-08 و ASCO</span>
           </div>
           <h1 className="mb-2 font-serif text-3xl font-bold text-primary md:text-4xl">
-            اختر مسارك ثم طبيعة عملك
+            اكتشف مسماك المهني المناسب لك
           </h1>
           <p className="mx-auto max-w-2xl text-foreground/70">
-            على مستويين: أولاً مسارك (وظيفة / ريادة أعمال / عمل حر / نشاط عام)،
-            ثم طبيعة عملك (مهنة / حِرفة)، ثم 12 سؤالًا تشخيصيًا تكشف ميلك الحقيقي.
+            تقييم مدمج: مسارك (وظيفة/ريادة/عمل حر/نشاط) + طبيعة العمل (مهنة/حِرفة) + ميولك RIASEC،
+            ثم ربط نتيجتك بمسمى مهني وفق التصنيف الدولي ISCO-08 والتصنيف العربي المعياري للمهن ASCO.
           </p>
         </div>
 
