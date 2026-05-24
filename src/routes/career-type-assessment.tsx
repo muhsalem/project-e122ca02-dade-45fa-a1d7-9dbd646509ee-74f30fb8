@@ -313,10 +313,12 @@ function CareerTypePage() {
   const qIndex = step - META_STEPS; // -1 means we're in meta
   const currentQuestion = qIndex >= 0 && qIndex < QUESTIONS.length ? QUESTIONS[qIndex] : null;
 
+  const riasecComplete = RIASEC_DIMS.every((d) => riasec[d.key] > 0);
   const canNext = (() => {
     if (step === 0) return name.trim().length > 0;
     if (step === 1) return !!track;
     if (step === 2) return !!nature;
+    if (step === 3) return riasecComplete;
     if (currentQuestion) return !!answers[currentQuestion.id];
     return false;
   })();
