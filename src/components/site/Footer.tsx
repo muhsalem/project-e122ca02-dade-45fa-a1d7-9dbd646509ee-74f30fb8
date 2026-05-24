@@ -20,6 +20,8 @@ export function Footer() {
           <h4 className="mb-4 font-serif text-base text-primary">روابط</h4>
           <ul className="space-y-2 text-sm text-muted-foreground">
             <li><Link to="/career-type-assessment" className="hover:text-primary">التقييمات المهنية</Link></li>
+            <li><Link to="/career-ladder" className="hover:text-primary">سلالم المسارات المهنية</Link></li>
+            <li><Link to="/skills-gap" className="hover:text-primary">تحليل فجوة المهارات</Link></li>
             <li><Link to="/booking" className="hover:text-primary">حجز جلسة كوتشينج</Link></li>
             <li><Link to="/resources" className="hover:text-primary">الموارد والمقالات</Link></li>
             <li><Link to="/journal" className="hover:text-primary">اليوميات التأملية</Link></li>
