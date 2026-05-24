@@ -21,16 +21,26 @@ import { submitCareerType } from "@/lib/career-type.functions";
 export const Route = createFileRoute("/career-type-assessment")({
   head: () => ({
     meta: [
-      { title: "تقييم نوع المسار المهني — Job / Entrepreneur / Freelance / Occupation | بوصلة" },
+      { title: "اكتشف مسماك المهني المناسب لك — ISCO-08 و ASCO | بوصلة" },
       {
         name: "description",
         content:
-          "تقييم تشخيصي على مستويين: اختر مسارك (وظيفة / ريادة أعمال / عمل حر / نشاط عام) ثم طبيعة العمل (مهنة احترافية / حِرفة)، مع تقرير شامل وكود مميز للمناقشة مع مرشد مهني.",
+          "تقييم تشخيصي شامل يدمج ميول RIASEC مع تحديد نوع المسار (وظيفة/ريادة/عمل حر/نشاط) وطبيعة العمل (مهنة/حِرفة)، ويربط نتيجتك بمسمى مهني وفق التصنيف الدولي ISCO-08 والتصنيف العربي المعياري للمهن ASCO.",
       },
     ],
   }),
   component: CareerTypePage,
 });
+
+type RiasecDim = "R" | "I" | "A" | "S" | "E" | "C";
+const RIASEC_DIMS: { key: RiasecDim; ar: string; en: string; desc: string }[] = [
+  { key: "R", ar: "الواقعي", en: "Realistic", desc: "أعمال يدوية/تقنية/آلات" },
+  { key: "I", ar: "الاستقصائي", en: "Investigative", desc: "بحث وتحليل وحل مشكلات" },
+  { key: "A", ar: "الفني", en: "Artistic", desc: "إبداع وتعبير وتصميم" },
+  { key: "S", ar: "الاجتماعي", en: "Social", desc: "مساعدة وتعليم الآخرين" },
+  { key: "E", ar: "المبادر", en: "Enterprising", desc: "إقناع وقيادة ومبيعات" },
+  { key: "C", ar: "التقليدي", en: "Conventional", desc: "تنظيم بيانات وإجراءات" },
+];
 
 type Type =
   | "occupation"
@@ -268,10 +278,11 @@ function CareerTypePage() {
   const [track, setTrack] = useState<Track | null>(null);
   const [nature, setNature] = useState<Nature | null>(null);
   const [answers, setAnswers] = useState<Record<string, { type: Type; label: string }>>({});
+  const [riasec, setRiasec] = useState<Record<RiasecDim, number>>({ R: 0, I: 0, A: 0, S: 0, E: 0, C: 0 });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const META_STEPS = 3; // meta + track + nature
+  const META_STEPS = 4; // meta + track + nature + RIASEC
   const totalSteps = META_STEPS + QUESTIONS.length;
   const progress = Math.round(((step + 1) / totalSteps) * 100);
 
@@ -302,10 +313,12 @@ function CareerTypePage() {
   const qIndex = step - META_STEPS; // -1 means we're in meta
   const currentQuestion = qIndex >= 0 && qIndex < QUESTIONS.length ? QUESTIONS[qIndex] : null;
 
+  const riasecComplete = RIASEC_DIMS.every((d) => riasec[d.key] > 0);
   const canNext = (() => {
     if (step === 0) return name.trim().length > 0;
     if (step === 1) return !!track;
     if (step === 2) return !!nature;
+    if (step === 3) return riasecComplete;
     if (currentQuestion) return !!answers[currentQuestion.id];
     return false;
   })();
@@ -328,6 +341,7 @@ function CareerTypePage() {
           track,
           nature,
           scores,
+          riasec,
         },
       });
       navigate({ to: "/report/$code", params: { code: res.code } });
@@ -347,14 +361,14 @@ function CareerTypePage() {
         <div className="mb-8 text-center">
           <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-1.5 text-sm">
             <Briefcase className="h-4 w-4 text-gold" />
-            <span>تقييم نوع المسار المهني</span>
+            <span>تقييم تشخيصي شامل مرتبط بـ ISCO-08 و ASCO</span>
           </div>
           <h1 className="mb-2 font-serif text-3xl font-bold text-primary md:text-4xl">
-            اختر مسارك ثم طبيعة عملك
+            اكتشف مسماك المهني المناسب لك
           </h1>
           <p className="mx-auto max-w-2xl text-foreground/70">
-            على مستويين: أولاً مسارك (وظيفة / ريادة أعمال / عمل حر / نشاط عام)،
-            ثم طبيعة عملك (مهنة / حِرفة)، ثم 12 سؤالًا تشخيصيًا تكشف ميلك الحقيقي.
+            تقييم مدمج: مسارك (وظيفة/ريادة/عمل حر/نشاط) + طبيعة العمل (مهنة/حِرفة) + ميولك RIASEC،
+            ثم ربط نتيجتك بمسمى مهني وفق التصنيف الدولي ISCO-08 والتصنيف العربي المعياري للمهن ASCO.
           </p>
         </div>
 
@@ -493,7 +507,53 @@ function CareerTypePage() {
             </div>
           )}
 
-          {/* Question steps */}
+          {/* Step 3: RIASEC mini */}
+          {step === 3 && (
+            <div className="space-y-4">
+              <div className="text-xs font-semibold text-gold">المستوى الثالث</div>
+              <h2 className="font-serif text-2xl font-bold text-primary">
+                ميولك المهنية (RIASEC — Holland)
+              </h2>
+              <p className="text-sm text-foreground/70">
+                قيّم مدى ميلك إلى كلٍ من الأبعاد الستة (1 = منخفض جدًا، 5 = مرتفع جدًا). هذه الميول
+                ستُربط لاحقًا بمسمى مهني محدد وفق ISCO-08 و ASCO.
+              </p>
+              <div className="space-y-3">
+                {RIASEC_DIMS.map((d) => (
+                  <div key={d.key} className="rounded-xl border border-border bg-background p-4">
+                    <div className="mb-2 flex items-baseline justify-between">
+                      <div>
+                        <span className="font-semibold text-foreground">{d.ar}</span>{" "}
+                        <span className="text-xs text-foreground/50">({d.en})</span>
+                        <div className="text-xs text-foreground/60">{d.desc}</div>
+                      </div>
+                      <span className="text-xs text-foreground/60">{riasec[d.key] || "—"}/5</span>
+                    </div>
+                    <div className="grid grid-cols-5 gap-2">
+                      {[1, 2, 3, 4, 5].map((v) => {
+                        const sel = riasec[d.key] === v;
+                        return (
+                          <button
+                            key={v}
+                            onClick={() => setRiasec({ ...riasec, [d.key]: v })}
+                            className={`rounded-md border py-2 text-sm font-medium transition-all ${
+                              sel
+                                ? "border-primary bg-primary text-primary-foreground"
+                                : "border-border bg-card hover:border-primary/40"
+                            }`}
+                          >
+                            {v}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+
           {currentQuestion && (
             <div className="space-y-4">
               <div className="text-xs text-foreground/60">

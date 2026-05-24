@@ -15,9 +15,9 @@ import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as LearningStyleRouteImport } from './routes/learning-style'
 import { Route as LaborMarketRouteImport } from './routes/labor-market'
 import { Route as CounselorRouteImport } from './routes/counselor'
+import { Route as ComprehensiveAssessmentRouteImport } from './routes/comprehensive-assessment'
 import { Route as CareerTypeAssessmentRouteImport } from './routes/career-type-assessment'
 import { Route as BookingRouteImport } from './routes/booking'
-import { Route as AssessmentsRouteImport } from './routes/assessments'
 import { Route as AcademicMajorRouteImport } from './routes/academic-major'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
@@ -56,6 +56,11 @@ const CounselorRoute = CounselorRouteImport.update({
   path: '/counselor',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ComprehensiveAssessmentRoute = ComprehensiveAssessmentRouteImport.update({
+  id: '/comprehensive-assessment',
+  path: '/comprehensive-assessment',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CareerTypeAssessmentRoute = CareerTypeAssessmentRouteImport.update({
   id: '/career-type-assessment',
   path: '/career-type-assessment',
@@ -64,11 +69,6 @@ const CareerTypeAssessmentRoute = CareerTypeAssessmentRouteImport.update({
 const BookingRoute = BookingRouteImport.update({
   id: '/booking',
   path: '/booking',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AssessmentsRoute = AssessmentsRouteImport.update({
-  id: '/assessments',
-  path: '/assessments',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AcademicMajorRoute = AcademicMajorRouteImport.update({
@@ -113,9 +113,9 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/academic-major': typeof AcademicMajorRoute
-  '/assessments': typeof AssessmentsRoute
   '/booking': typeof BookingRoute
   '/career-type-assessment': typeof CareerTypeAssessmentRoute
+  '/comprehensive-assessment': typeof ComprehensiveAssessmentRoute
   '/counselor': typeof CounselorRoute
   '/labor-market': typeof LaborMarketRoute
   '/learning-style': typeof LearningStyleRoute
@@ -131,9 +131,9 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/academic-major': typeof AcademicMajorRoute
-  '/assessments': typeof AssessmentsRoute
   '/booking': typeof BookingRoute
   '/career-type-assessment': typeof CareerTypeAssessmentRoute
+  '/comprehensive-assessment': typeof ComprehensiveAssessmentRoute
   '/counselor': typeof CounselorRoute
   '/labor-market': typeof LaborMarketRoute
   '/learning-style': typeof LearningStyleRoute
@@ -150,9 +150,9 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/academic-major': typeof AcademicMajorRoute
-  '/assessments': typeof AssessmentsRoute
   '/booking': typeof BookingRoute
   '/career-type-assessment': typeof CareerTypeAssessmentRoute
+  '/comprehensive-assessment': typeof ComprehensiveAssessmentRoute
   '/counselor': typeof CounselorRoute
   '/labor-market': typeof LaborMarketRoute
   '/learning-style': typeof LearningStyleRoute
@@ -170,9 +170,9 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/academic-major'
-    | '/assessments'
     | '/booking'
     | '/career-type-assessment'
+    | '/comprehensive-assessment'
     | '/counselor'
     | '/labor-market'
     | '/learning-style'
@@ -188,9 +188,9 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/academic-major'
-    | '/assessments'
     | '/booking'
     | '/career-type-assessment'
+    | '/comprehensive-assessment'
     | '/counselor'
     | '/labor-market'
     | '/learning-style'
@@ -206,9 +206,9 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/academic-major'
-    | '/assessments'
     | '/booking'
     | '/career-type-assessment'
+    | '/comprehensive-assessment'
     | '/counselor'
     | '/labor-market'
     | '/learning-style'
@@ -225,9 +225,9 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   AcademicMajorRoute: typeof AcademicMajorRoute
-  AssessmentsRoute: typeof AssessmentsRoute
   BookingRoute: typeof BookingRoute
   CareerTypeAssessmentRoute: typeof CareerTypeAssessmentRoute
+  ComprehensiveAssessmentRoute: typeof ComprehensiveAssessmentRoute
   CounselorRoute: typeof CounselorRoute
   LaborMarketRoute: typeof LaborMarketRoute
   LearningStyleRoute: typeof LearningStyleRoute
@@ -282,6 +282,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CounselorRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/comprehensive-assessment': {
+      id: '/comprehensive-assessment'
+      path: '/comprehensive-assessment'
+      fullPath: '/comprehensive-assessment'
+      preLoaderRoute: typeof ComprehensiveAssessmentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/career-type-assessment': {
       id: '/career-type-assessment'
       path: '/career-type-assessment'
@@ -294,13 +301,6 @@ declare module '@tanstack/react-router' {
       path: '/booking'
       fullPath: '/booking'
       preLoaderRoute: typeof BookingRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/assessments': {
-      id: '/assessments'
-      path: '/assessments'
-      fullPath: '/assessments'
-      preLoaderRoute: typeof AssessmentsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/academic-major': {
@@ -374,9 +374,9 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   AcademicMajorRoute: AcademicMajorRoute,
-  AssessmentsRoute: AssessmentsRoute,
   BookingRoute: BookingRoute,
   CareerTypeAssessmentRoute: CareerTypeAssessmentRoute,
+  ComprehensiveAssessmentRoute: ComprehensiveAssessmentRoute,
   CounselorRoute: CounselorRoute,
   LaborMarketRoute: LaborMarketRoute,
   LearningStyleRoute: LearningStyleRoute,
@@ -389,13 +389,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

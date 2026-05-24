@@ -8,9 +8,10 @@ const nav = [
   { to: "/learning-style", label: "اكتشف نمط تعلمك" },
   { to: "/academic-major", label: "اكتشف تخصصك الدراسي" },
   
+  { to: "/career-type-assessment", label: "اكتشف مسماك المهني المناسب لك" },
   { to: "/sector-guide", label: "دليل القطاع والصناعات" },
   { to: "/labor-market", label: "ذكاء سوق العمل" },
-  { to: "/assessments", label: "ميولك (RIASEC)" },
+  { to: "/comprehensive-assessment", label: "التقييم الشامل" },
   { to: "/counselor", label: "لوحة المرشد" },
   { to: "/booking", label: "حجز جلسة" },
   { to: "/resources", label: "الموارد" },

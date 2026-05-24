@@ -346,7 +346,7 @@ function CareerPathTermsArticle() {
               اكتشاف ذاتك
             </Link>
             <Link
-              to="/assessments"
+              to="/career-type-assessment"
               className="inline-flex items-center gap-2 rounded-md border border-border bg-background px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-card"
             >
               اختبار RIASEC
