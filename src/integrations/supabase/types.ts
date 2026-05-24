@@ -20,6 +20,7 @@ export type Database = {
           answers: Json
           code: string
           created_at: string
+          group_code: string | null
           id: string
           name: string | null
           report: string
@@ -30,6 +31,7 @@ export type Database = {
           answers: Json
           code: string
           created_at?: string
+          group_code?: string | null
           id?: string
           name?: string | null
           report: string
@@ -40,6 +42,7 @@ export type Database = {
           answers?: Json
           code?: string
           created_at?: string
+          group_code?: string | null
           id?: string
           name?: string | null
           report?: string
