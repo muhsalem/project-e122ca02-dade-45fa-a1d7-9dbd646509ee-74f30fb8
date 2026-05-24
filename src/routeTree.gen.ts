@@ -17,7 +17,6 @@ import { Route as LaborMarketRouteImport } from './routes/labor-market'
 import { Route as CounselorRouteImport } from './routes/counselor'
 import { Route as CareerTypeAssessmentRouteImport } from './routes/career-type-assessment'
 import { Route as BookingRouteImport } from './routes/booking'
-import { Route as AssessmentsRouteImport } from './routes/assessments'
 import { Route as AcademicMajorRouteImport } from './routes/academic-major'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
@@ -66,11 +65,6 @@ const BookingRoute = BookingRouteImport.update({
   path: '/booking',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AssessmentsRoute = AssessmentsRouteImport.update({
-  id: '/assessments',
-  path: '/assessments',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AcademicMajorRoute = AcademicMajorRouteImport.update({
   id: '/academic-major',
   path: '/academic-major',
@@ -113,7 +107,6 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/academic-major': typeof AcademicMajorRoute
-  '/assessments': typeof AssessmentsRoute
   '/booking': typeof BookingRoute
   '/career-type-assessment': typeof CareerTypeAssessmentRoute
   '/counselor': typeof CounselorRoute
@@ -131,7 +124,6 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/academic-major': typeof AcademicMajorRoute
-  '/assessments': typeof AssessmentsRoute
   '/booking': typeof BookingRoute
   '/career-type-assessment': typeof CareerTypeAssessmentRoute
   '/counselor': typeof CounselorRoute
@@ -150,7 +142,6 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/academic-major': typeof AcademicMajorRoute
-  '/assessments': typeof AssessmentsRoute
   '/booking': typeof BookingRoute
   '/career-type-assessment': typeof CareerTypeAssessmentRoute
   '/counselor': typeof CounselorRoute
@@ -170,7 +161,6 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/academic-major'
-    | '/assessments'
     | '/booking'
     | '/career-type-assessment'
     | '/counselor'
@@ -188,7 +178,6 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/academic-major'
-    | '/assessments'
     | '/booking'
     | '/career-type-assessment'
     | '/counselor'
@@ -206,7 +195,6 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/academic-major'
-    | '/assessments'
     | '/booking'
     | '/career-type-assessment'
     | '/counselor'
@@ -225,7 +213,6 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   AcademicMajorRoute: typeof AcademicMajorRoute
-  AssessmentsRoute: typeof AssessmentsRoute
   BookingRoute: typeof BookingRoute
   CareerTypeAssessmentRoute: typeof CareerTypeAssessmentRoute
   CounselorRoute: typeof CounselorRoute
@@ -294,13 +281,6 @@ declare module '@tanstack/react-router' {
       path: '/booking'
       fullPath: '/booking'
       preLoaderRoute: typeof BookingRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/assessments': {
-      id: '/assessments'
-      path: '/assessments'
-      fullPath: '/assessments'
-      preLoaderRoute: typeof AssessmentsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/academic-major': {
@@ -374,7 +354,6 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   AcademicMajorRoute: AcademicMajorRoute,
-  AssessmentsRoute: AssessmentsRoute,
   BookingRoute: BookingRoute,
   CareerTypeAssessmentRoute: CareerTypeAssessmentRoute,
   CounselorRoute: CounselorRoute,
@@ -389,3 +368,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
