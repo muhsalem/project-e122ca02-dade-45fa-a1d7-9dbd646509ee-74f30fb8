@@ -72,7 +72,8 @@ function IDPPage() {
   if (!plan) return null;
 
   return (
-    <ContentProtection>
+    <>
+      <ContentProtection />
       <section className="container-page py-12">
         <div className="mx-auto max-w-4xl">
           <div className="text-center">
