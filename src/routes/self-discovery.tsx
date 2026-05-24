@@ -5,7 +5,7 @@ import { ArrowLeft, ArrowRight, Loader2, Sparkles, Brain, Check } from "lucide-r
 import { useServerFn } from "@tanstack/react-start";
 import { submitAssessment } from "@/lib/assessment.functions";
 
-export const Route = createFileRoute("/deep-assessment")({
+export const Route = createFileRoute("/self-discovery")({
   head: () => ({
     meta: [
       { title: "التقييم المهنى الشامل بالذكاء الاصطناعي — بوصلة" },
