@@ -5,6 +5,7 @@ const SectionSchema = z.object({
   name: z.string().min(1).max(100).optional(),
   age: z.string().max(20).optional(),
   stage: z.string().max(100).optional(),
+  group_code: z.string().min(1).max(32).regex(/^[A-Z0-9_-]+$/).optional(),
   answers: z.record(z.string(), z.string().max(3000)),
   sections: z.array(z.object({
     title: z.string().max(100),
