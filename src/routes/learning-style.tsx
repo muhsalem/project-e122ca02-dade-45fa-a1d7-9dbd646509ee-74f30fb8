@@ -7,8 +7,8 @@ import { submitLearningStyle } from "@/lib/learning-style.functions";
 export const Route = createFileRoute("/learning-style")({
   head: () => ({
     meta: [
-      { title: "تقييم نمط التعلم الشامل بالذكاء الاصطناعي — بوصلة" },
-      { name: "description", content: "تقييم متكامل لأنماط التعلم يجمع نماذج VARK وKolb وHoney & Mumford وFelder–Silverman والذكاءات المتعددة وGregorc وPEPS والأساليب المعرفية، مع تقرير شامل وكود لمناقشته مع مرشد نفسي." },
+      { title: "اكتشف نمط تعلمك وتخصصك الدراسي بالذكاء الاصطناعي — بوصلة" },
+      { name: "description", content: "تقييم متكامل يكشف نمط تعلمك وفق 9 نماذج عالمية ويقترح أنسب التخصصات الدراسية الجامعية لك، مع تقرير شامل وكود لمناقشته مع مرشد نفسي." },
     ],
   }),
   component: LearningStylePage,
