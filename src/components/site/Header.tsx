@@ -5,7 +5,8 @@ import { Menu, X, Compass } from "lucide-react";
 const nav = [
   { to: "/", label: "الرئيسية" },
   { to: "/deep-assessment", label: "التقييم الشامل" },
-  { to: "/learning-style", label: "نمط التعلم والتخصص" },
+  { to: "/learning-style", label: "اكتشف نمط تعلمك" },
+  { to: "/academic-major", label: "اكتشف تخصصك الدراسي" },
   
   { to: "/sector-guide", label: "دليل القطاع والصناعات" },
   { to: "/labor-market", label: "ذكاء سوق العمل" },
