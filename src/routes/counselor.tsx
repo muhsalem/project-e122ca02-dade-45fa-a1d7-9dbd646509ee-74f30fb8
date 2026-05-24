@@ -16,6 +16,8 @@ import {
   MapPin,
   ChevronDown,
   ChevronUp,
+  Calendar,
+  Clock,
 } from "lucide-react";
 import { listApprovedCoaches } from "@/lib/coach.functions";
 import { submitCoachRating, getCoachRatingsSummary } from "@/lib/coach-rating.functions";
