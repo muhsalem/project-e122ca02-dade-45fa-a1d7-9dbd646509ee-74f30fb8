@@ -14,6 +14,7 @@ const nav = [
   { to: "/comprehensive-assessment", label: "التقييم الشامل" },
   { to: "/counselor", label: "لوحة المرشد" },
   { to: "/booking", label: "حجز جلسة" },
+  { to: "/join-as-coach", label: "انضم كمرشد" },
   { to: "/resources", label: "الموارد" },
   { to: "/about", label: "من نحن" },
 ] as const;
