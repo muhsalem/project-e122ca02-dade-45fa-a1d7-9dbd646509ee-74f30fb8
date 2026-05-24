@@ -394,7 +394,7 @@ const SECTIONS: Section[] = [
 
 const TOTAL_STEPS = 1 + SECTIONS.length;
 
-function DeepAssessmentPage() {
+function SelfDiscoveryPage() {
   const navigate = useNavigate();
   const submitFn = useServerFn(submitAssessment);
   const [step, setStep] = useState(0);
