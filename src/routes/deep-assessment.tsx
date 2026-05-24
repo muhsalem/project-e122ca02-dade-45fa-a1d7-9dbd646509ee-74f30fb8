@@ -398,7 +398,7 @@ function DeepAssessmentPage() {
   const navigate = useNavigate();
   const submitFn = useServerFn(submitAssessment);
   const [step, setStep] = useState(0);
-  const [meta, setMeta] = useState({ name: "", age: "", stage: "" });
+  const [meta, setMeta] = useState({ name: "", age: "", stage: "", groupCode: "" });
   const [selections, setSelections] = useState<Record<string, string[]>>({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
