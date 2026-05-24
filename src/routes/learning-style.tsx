@@ -505,11 +505,11 @@ function LearningStylePage() {
         <div className="container-page py-12 text-center">
           <span className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/10 px-4 py-1.5 text-xs font-medium text-primary">
             <Sparkles className="h-3.5 w-3.5 text-gold" />
-            تقييم أنماط التعلم الشامل
+            اكتشف نمط تعلمك وتخصصك الدراسي
           </span>
-          <h1 className="mt-4 text-3xl text-primary md:text-4xl">اكتشف نمط تعلمك الفريد</h1>
+          <h1 className="mt-4 text-3xl text-primary md:text-4xl">اكتشف نمط تعلمك وتخصصك الدراسي</h1>
           <p className="mx-auto mt-3 max-w-2xl text-sm text-muted-foreground">
-            تقييم متكامل يجمع 9 نماذج عالمية (VARK، Kolb، Honey & Mumford، Felder–Silverman، الذكاءات المتعددة، Gregorc، Dunn & Dunn، PEPS، الأساليب المعرفية) ويُصدر تقريرًا تفصيليًا بكود لمناقشته مع مرشدك النفسي.
+            تقييم متكامل يجمع 9 نماذج عالمية لأنماط التعلم (VARK، Kolb، Honey & Mumford، Felder–Silverman، الذكاءات المتعددة، Gregorc، Dunn & Dunn، PEPS، الأساليب المعرفية) إضافة إلى قسم خاص باكتشاف التخصص الدراسي المناسب لك، ويُصدر تقريرًا تفصيليًا بكود لمناقشته مع مرشدك النفسي.
           </p>
         </div>
       </section>
