@@ -22,6 +22,7 @@ export function Footer() {
             <li><Link to="/career-type-assessment" className="hover:text-primary">التقييمات المهنية</Link></li>
             <li><Link to="/booking" className="hover:text-primary">حجز جلسة كوتشينج</Link></li>
             <li><Link to="/resources" className="hover:text-primary">الموارد والمقالات</Link></li>
+            <li><Link to="/journal" className="hover:text-primary">اليوميات التأملية</Link></li>
             <li><Link to="/about" className="hover:text-primary">عن المنصة</Link></li>
           </ul>
         </div>
