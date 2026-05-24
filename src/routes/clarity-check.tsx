@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { submitClarityScore, getClarityComparison } from "@/lib/clarity.functions";
+import { useAuth } from "@/hooks/use-auth";
 import { toast } from "sonner";
 import { Compass, TrendingUp } from "lucide-react";
 
@@ -36,13 +37,14 @@ function ClarityPage() {
 
   const submit = useServerFn(submitClarityScore);
   const compare = useServerFn(getClarityComparison);
+  const { user } = useAuth();
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!code.trim()) { toast.error("أدخل كود التقرير أو معرّفك الشخصي"); return; }
     setBusy(true);
     try {
-      const r = await submit({ data: { code: code.trim(), phase, ...(values as any) } });
+      const r = await submit({ data: { code: code.trim(), phase, ...(values as any), userId: user?.id } });
       setResult(r);
       const c = await compare({ data: { code: code.trim() } });
       setComp(c);

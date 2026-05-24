@@ -12,6 +12,7 @@ const Schema = z.object({
   career_anx_q1: ScaleItem,
   career_anx_q2: ScaleItem,
   career_anx_q3: ScaleItem,
+  userId: z.string().uuid().optional(),
 });
 
 export const submitWellbeing = createServerFn({ method: "POST" })
@@ -27,13 +28,15 @@ export const submitWellbeing = createServerFn({ method: "POST" })
     const risk: "low" | "moderate" | "high" =
       phq2 >= 5 || gad2 >= 5 ? "high" : referral || carAnx >= 6 ? "moderate" : "low";
 
+    const { userId, ...rest } = data;
     const { error } = await supabaseAdmin.from("wellbeing_screenings").insert({
-      ...data,
+      ...rest,
       phq2_total: phq2,
       gad2_total: gad2,
       career_anx_total: carAnx,
       referral_needed: referral,
       risk_level: risk,
+      user_id: userId ?? null,
     });
     if (error) {
       console.error("Wellbeing insert error:", error);
