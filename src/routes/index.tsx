@@ -33,7 +33,7 @@ function HomePage() {
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
-                to="/assessments"
+                to="/career-type-assessment"
                 className="inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3 text-sm font-medium text-primary-foreground shadow-[var(--shadow-soft)] transition-opacity hover:opacity-90"
               >
                 ابدأ التقييم المجاني
@@ -193,7 +193,7 @@ function HomePage() {
             خطوة واحدة تفصلك عن وضوح كامل في مسارك المهني.
           </p>
           <Link
-            to="/assessments"
+            to="/career-type-assessment"
             className="mt-8 inline-flex items-center gap-2 rounded-md bg-primary px-8 py-3.5 text-sm font-medium text-primary-foreground hover:opacity-90"
           >
             ابدأ التقييم المجاني
