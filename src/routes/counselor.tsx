@@ -16,6 +16,8 @@ import {
   MapPin,
   ChevronDown,
   ChevronUp,
+  Calendar,
+  Clock,
 } from "lucide-react";
 import { listApprovedCoaches } from "@/lib/coach.functions";
 import { submitCoachRating, getCoachRatingsSummary } from "@/lib/coach-rating.functions";
@@ -63,6 +65,7 @@ function CounselorPage() {
       </section>
 
       <DirectorySection />
+      <BookingSection />
       <RatingsSection />
     </>
   );
@@ -440,6 +443,134 @@ function RatingsSection() {
                     </div>
                   </aside>
                 </div>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function BookingSection() {
+  const fetchCoaches = useServerFn(listApprovedCoaches);
+  const [open, setOpen] = useState(false);
+  const [coachOptions, setCoachOptions] = useState<{ id: string; name: string }[]>([]);
+  const [coach, setCoach] = useState("");
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [notes, setNotes] = useState("");
+  const [done, setDone] = useState(false);
+
+  const TIMES = ["10:00", "12:00", "14:00", "16:00", "18:00", "20:00"];
+
+  useEffect(() => {
+    fetchCoaches({})
+      .then((r) => {
+        const list = (r.coaches ?? []).map((c: { id: string; full_name: string }) => ({ id: c.id, name: c.full_name }));
+        setCoachOptions(list);
+        if (list.length > 0) setCoach(list[0].name);
+      })
+      .catch(() => {});
+  }, [fetchCoaches]);
+
+  const canSubmit = coach && date && time && name.trim() && email.trim();
+
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!canSubmit) return;
+    setDone(true);
+  };
+
+  const reset = () => {
+    setDone(false);
+    setDate(""); setTime(""); setName(""); setEmail(""); setPhone(""); setNotes("");
+  };
+
+  return (
+    <section className="container-page pb-6">
+      <div className="mx-auto max-w-5xl">
+        <div className="rounded-2xl border border-border bg-card shadow-[var(--shadow-soft)] overflow-hidden">
+          <button
+            onClick={() => setOpen((p) => !p)}
+            className="flex w-full items-center justify-between px-6 py-4 text-right hover:bg-secondary/30 transition-colors"
+          >
+            <div className="flex items-center gap-2">
+              <Calendar className="h-5 w-5 text-gold" />
+              <h2 className="font-serif text-lg text-primary">احجز جلسة مع مرشد أو كوتش مهني</h2>
+            </div>
+            {open ? <ChevronUp className="h-5 w-5 text-muted-foreground" /> : <ChevronDown className="h-5 w-5 text-muted-foreground" />}
+          </button>
+
+          {open && (
+            <div className="border-t border-border px-6 pb-6 pt-6">
+              {done ? (
+                <div className="py-10 text-center">
+                  <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-gold/20 text-gold">
+                    <Check className="h-7 w-7" />
+                  </div>
+                  <h3 className="mt-5 font-serif text-2xl text-primary">تم استلام طلب الحجز</h3>
+                  <p className="mt-3 text-muted-foreground">
+                    سنتواصل معك خلال 24 ساعة لتأكيد جلستك مع <span className="font-semibold text-primary">{coach}</span> بتاريخ {date} الساعة {time}.
+                  </p>
+                  <button onClick={reset} className="mt-6 rounded-md border border-border px-4 py-2 text-sm">حجز جلسة أخرى</button>
+                </div>
+              ) : coachOptions.length === 0 ? (
+                <div className="rounded-md border border-dashed border-border p-6 text-center text-sm text-muted-foreground">
+                  لا يوجد مرشدون معتمدون للحجز حاليًا.
+                </div>
+              ) : (
+                <form onSubmit={onSubmit} className="grid gap-5 md:grid-cols-2">
+                  <div className="md:col-span-2">
+                    <label className="text-sm font-medium text-primary">المرشد / الكوتش</label>
+                    <select value={coach} onChange={(e) => setCoach(e.target.value)} className="mt-2 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
+                      {coachOptions.map((c) => <option key={c.id} value={c.name}>{c.name}</option>)}
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="text-sm font-medium text-primary inline-flex items-center gap-1"><Calendar className="h-3.5 w-3.5" /> التاريخ</label>
+                    <input type="date" value={date} onChange={(e) => setDate(e.target.value)} className="mt-2 w-full rounded-md border border-input bg-background px-3 py-2 text-sm" />
+                  </div>
+
+                  <div>
+                    <label className="text-sm font-medium text-primary inline-flex items-center gap-1"><Clock className="h-3.5 w-3.5" /> الوقت</label>
+                    <div className="mt-2 flex flex-wrap gap-2">
+                      {TIMES.map((t) => (
+                        <button key={t} type="button" onClick={() => setTime(t)}
+                          className={`rounded-md border px-3 py-1.5 text-xs ${time === t ? "border-primary bg-primary text-primary-foreground" : "border-border bg-background hover:border-primary"}`}>
+                          {t}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="text-xs text-muted-foreground">الاسم</label>
+                    <input value={name} onChange={(e) => setName(e.target.value)} className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 text-sm" />
+                  </div>
+                  <div>
+                    <label className="text-xs text-muted-foreground">البريد الإلكتروني</label>
+                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 text-sm" />
+                  </div>
+                  <div className="md:col-span-2">
+                    <label className="text-xs text-muted-foreground">رقم الجوال (اختياري)</label>
+                    <input value={phone} onChange={(e) => setPhone(e.target.value)} className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 text-sm" />
+                  </div>
+                  <div className="md:col-span-2">
+                    <label className="text-xs text-muted-foreground">ملاحظات (اختياري)</label>
+                    <textarea value={notes} onChange={(e) => setNotes(e.target.value)} rows={3} className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 text-sm" placeholder="حدثنا باختصار عن هدفك من الجلسة" />
+                  </div>
+
+                  <div className="md:col-span-2">
+                    <button type="submit" disabled={!canSubmit} className="inline-flex items-center gap-2 rounded-md bg-primary px-6 py-2.5 text-sm font-medium text-primary-foreground disabled:opacity-40">
+                      <Calendar className="h-4 w-4" /> تأكيد طلب الحجز
+                    </button>
+                  </div>
+                </form>
               )}
             </div>
           )}
