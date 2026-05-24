@@ -531,6 +531,22 @@ function DeepAssessmentPage() {
                     <option value="أخرى">أخرى</option>
                   </select>
                 </div>
+                <div className="md:col-span-2 rounded-lg border border-dashed border-gold/40 bg-gold/5 p-4">
+                  <label className="flex items-center gap-2 text-sm font-medium text-primary">
+                    <Users className="h-4 w-4 text-gold" />
+                    كود المجموعة / المدرسة (اختياري)
+                  </label>
+                  <p className="mt-1 text-xs text-muted-foreground">
+                    إذا كنت ضمن مجموعة طلاب يتابعهم مرشد أو مدرسة، أدخل الكود الذي أعطاك إياه ليظهر تقريرك في لوحته.
+                  </p>
+                  <input
+                    value={meta.groupCode}
+                    onChange={(e) => setMeta({ ...meta, groupCode: e.target.value.toUpperCase() })}
+                    maxLength={32}
+                    className="mt-3 w-full rounded-md border border-input bg-background px-3 py-2 text-sm font-mono focus:border-primary focus:outline-none"
+                    placeholder="مثال: SCHOOL-2026-A"
+                  />
+                </div>
               </div>
             </div>
           ) : currentSection ? (
