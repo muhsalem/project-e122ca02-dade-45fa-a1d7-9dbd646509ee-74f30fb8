@@ -507,7 +507,53 @@ function CareerTypePage() {
             </div>
           )}
 
-          {/* Question steps */}
+          {/* Step 3: RIASEC mini */}
+          {step === 3 && (
+            <div className="space-y-4">
+              <div className="text-xs font-semibold text-gold">المستوى الثالث</div>
+              <h2 className="font-serif text-2xl font-bold text-primary">
+                ميولك المهنية (RIASEC — Holland)
+              </h2>
+              <p className="text-sm text-foreground/70">
+                قيّم مدى ميلك إلى كلٍ من الأبعاد الستة (1 = منخفض جدًا، 5 = مرتفع جدًا). هذه الميول
+                ستُربط لاحقًا بمسمى مهني محدد وفق ISCO-08 و ASCO.
+              </p>
+              <div className="space-y-3">
+                {RIASEC_DIMS.map((d) => (
+                  <div key={d.key} className="rounded-xl border border-border bg-background p-4">
+                    <div className="mb-2 flex items-baseline justify-between">
+                      <div>
+                        <span className="font-semibold text-foreground">{d.ar}</span>{" "}
+                        <span className="text-xs text-foreground/50">({d.en})</span>
+                        <div className="text-xs text-foreground/60">{d.desc}</div>
+                      </div>
+                      <span className="text-xs text-foreground/60">{riasec[d.key] || "—"}/5</span>
+                    </div>
+                    <div className="grid grid-cols-5 gap-2">
+                      {[1, 2, 3, 4, 5].map((v) => {
+                        const sel = riasec[d.key] === v;
+                        return (
+                          <button
+                            key={v}
+                            onClick={() => setRiasec({ ...riasec, [d.key]: v })}
+                            className={`rounded-md border py-2 text-sm font-medium transition-all ${
+                              sel
+                                ? "border-primary bg-primary text-primary-foreground"
+                                : "border-border bg-card hover:border-primary/40"
+                            }`}
+                          >
+                            {v}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+
           {currentQuestion && (
             <div className="space-y-4">
               <div className="text-xs text-foreground/60">
