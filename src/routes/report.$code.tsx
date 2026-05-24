@@ -16,8 +16,8 @@ export const Route = createFileRoute("/report/$code")({
   notFoundComponent: () => (
     <div className="container-page py-20 text-center">
       <h1 className="font-serif text-3xl text-primary">التقرير غير موجود</h1>
-      <p className="mt-2 text-muted-foreground">تأكد من الكود أو ابدأ تقييمًا جديدًا.</p>
-      <Link to="/deep-assessment" className="mt-6 inline-block rounded-md bg-primary px-4 py-2 text-sm text-primary-foreground">ابدأ التقييم</Link>
+      <p className="mt-2 text-muted-foreground">تأكد من الكود أو ابدأ اكتشاف ذاتك من جديد.</p>
+      <Link to="/self-discovery" className="mt-6 inline-block rounded-md bg-primary px-4 py-2 text-sm text-primary-foreground">ابدأ اكتشاف ذاتك</Link>
     </div>
   ),
   errorComponent: () => (
@@ -71,8 +71,8 @@ function ReportPage() {
     return (
       <div className="container-page py-20 text-center">
         <h1 className="font-serif text-3xl text-primary">التقرير غير موجود</h1>
-        <p className="mt-2 text-muted-foreground">تأكد من الكود ({code}) أو ابدأ تقييمًا جديدًا.</p>
-        <Link to="/deep-assessment" className="mt-6 inline-block rounded-md bg-primary px-4 py-2 text-sm text-primary-foreground">ابدأ التقييم</Link>
+        <p className="mt-2 text-muted-foreground">تأكد من الكود ({code}) أو ابدأ اكتشاف ذاتك من جديد.</p>
+        <Link to="/self-discovery" className="mt-6 inline-block rounded-md bg-primary px-4 py-2 text-sm text-primary-foreground">ابدأ اكتشاف ذاتك</Link>
       </div>
     );
   }

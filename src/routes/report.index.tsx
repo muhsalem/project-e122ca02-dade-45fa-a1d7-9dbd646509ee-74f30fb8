@@ -20,7 +20,7 @@ function ReportLookupPage() {
       <div className="mx-auto max-w-md text-center">
         <h1 className="font-serif text-3xl text-primary">افتح تقريرك بالكود</h1>
         <p className="mt-2 text-sm text-muted-foreground">
-          أدخل الكود الذي حصلت عليه بعد إكمال التقييم الشامل.
+          أدخل الكود الذي حصلت عليه بعد إكمال اكتشاف ذاتك.
         </p>
         <form
           onSubmit={(e) => {
@@ -44,7 +44,7 @@ function ReportLookupPage() {
         </form>
         <div className="mt-6 text-sm text-muted-foreground">
           لم تقم بالتقييم بعد؟{" "}
-          <Link to="/deep-assessment" className="text-primary underline">ابدأ الآن</Link>
+          <Link to="/self-discovery" className="text-primary underline">ابدأ الآن</Link>
         </div>
       </div>
     </section>

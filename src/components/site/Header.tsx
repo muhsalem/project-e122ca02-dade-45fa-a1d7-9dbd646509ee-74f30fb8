@@ -4,7 +4,7 @@ import { Menu, X, Compass } from "lucide-react";
 
 const nav = [
   { to: "/", label: "الرئيسية" },
-  { to: "/deep-assessment", label: "التقييم الشامل" },
+  { to: "/self-discovery", label: "اكتشاف ذاتك" },
   { to: "/learning-style", label: "اكتشف نمط تعلمك" },
   { to: "/academic-major", label: "اكتشف تخصصك الدراسي" },
   

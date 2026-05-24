@@ -92,7 +92,7 @@ export const submitAssessment = createServerFn({ method: "POST" })
         max_tokens: 8192,
         messages: [
           { role: "system", content: systemPrompt },
-          { role: "user", content: `إليك إجابات المتدرب على التقييم الشامل. قم بتحليلها وإصدار التقرير وفق الهيكل المحدد:\n\n${userPayload}` },
+          { role: "user", content: `إليك إجابات المتدرب على اكتشاف ذاتك. قم بتحليلها وإصدار التقرير وفق الهيكل المحدد:\n\n${userPayload}` },
         ],
       }),
     });
