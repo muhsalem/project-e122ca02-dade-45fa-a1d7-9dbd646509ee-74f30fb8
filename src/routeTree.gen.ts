@@ -15,6 +15,7 @@ import { Route as SkillsGapRouteImport } from './routes/skills-gap'
 import { Route as SelfDiscoveryRouteImport } from './routes/self-discovery'
 import { Route as SectorGuideRouteImport } from './routes/sector-guide'
 import { Route as SchoolsRouteImport } from './routes/schools'
+import { Route as ScholarshipsRouteImport } from './routes/scholarships'
 import { Route as Review360RouteImport } from './routes/review360'
 import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as ProfileRouteImport } from './routes/profile'
@@ -38,6 +39,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as ReportIndexRouteImport } from './routes/report.index'
 import { Route as ReviewSubmitCodeRouteImport } from './routes/review-submit.$code'
 import { Route as ReviewResultsCodeRouteImport } from './routes/review-results.$code'
+import { Route as ResourcesParentGuideRouteImport } from './routes/resources.parent-guide'
 import { Route as ResourcesHowToChooseMajorRouteImport } from './routes/resources.how-to-choose-major'
 import { Route as ResourcesCoachingVsCareerCounselingRouteImport } from './routes/resources.coaching-vs-career-counseling'
 import { Route as ResourcesCareerPathTermsRouteImport } from './routes/resources.career-path-terms'
@@ -73,6 +75,11 @@ const SectorGuideRoute = SectorGuideRouteImport.update({
 const SchoolsRoute = SchoolsRouteImport.update({
   id: '/schools',
   path: '/schools',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ScholarshipsRoute = ScholarshipsRouteImport.update({
+  id: '/scholarships',
+  path: '/scholarships',
   getParentRoute: () => rootRouteImport,
 } as any)
 const Review360Route = Review360RouteImport.update({
@@ -190,6 +197,11 @@ const ReviewResultsCodeRoute = ReviewResultsCodeRouteImport.update({
   path: '/review-results/$code',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ResourcesParentGuideRoute = ResourcesParentGuideRouteImport.update({
+  id: '/parent-guide',
+  path: '/parent-guide',
+  getParentRoute: () => ResourcesRoute,
+} as any)
 const ResourcesHowToChooseMajorRoute =
   ResourcesHowToChooseMajorRouteImport.update({
     id: '/how-to-choose-major',
@@ -246,6 +258,7 @@ export interface FileRoutesByFullPath {
   '/profile': typeof ProfileRoute
   '/resources': typeof ResourcesRouteWithChildren
   '/review360': typeof Review360Route
+  '/scholarships': typeof ScholarshipsRoute
   '/schools': typeof SchoolsRoute
   '/sector-guide': typeof SectorGuideRoute
   '/self-discovery': typeof SelfDiscoveryRoute
@@ -258,6 +271,7 @@ export interface FileRoutesByFullPath {
   '/resources/career-path-terms': typeof ResourcesCareerPathTermsRoute
   '/resources/coaching-vs-career-counseling': typeof ResourcesCoachingVsCareerCounselingRoute
   '/resources/how-to-choose-major': typeof ResourcesHowToChooseMajorRoute
+  '/resources/parent-guide': typeof ResourcesParentGuideRoute
   '/review-results/$code': typeof ReviewResultsCodeRoute
   '/review-submit/$code': typeof ReviewSubmitCodeRoute
   '/report/': typeof ReportIndexRoute
@@ -283,6 +297,7 @@ export interface FileRoutesByTo {
   '/profile': typeof ProfileRoute
   '/resources': typeof ResourcesRouteWithChildren
   '/review360': typeof Review360Route
+  '/scholarships': typeof ScholarshipsRoute
   '/schools': typeof SchoolsRoute
   '/sector-guide': typeof SectorGuideRoute
   '/self-discovery': typeof SelfDiscoveryRoute
@@ -295,6 +310,7 @@ export interface FileRoutesByTo {
   '/resources/career-path-terms': typeof ResourcesCareerPathTermsRoute
   '/resources/coaching-vs-career-counseling': typeof ResourcesCoachingVsCareerCounselingRoute
   '/resources/how-to-choose-major': typeof ResourcesHowToChooseMajorRoute
+  '/resources/parent-guide': typeof ResourcesParentGuideRoute
   '/review-results/$code': typeof ReviewResultsCodeRoute
   '/review-submit/$code': typeof ReviewSubmitCodeRoute
   '/report': typeof ReportIndexRoute
@@ -321,6 +337,7 @@ export interface FileRoutesById {
   '/profile': typeof ProfileRoute
   '/resources': typeof ResourcesRouteWithChildren
   '/review360': typeof Review360Route
+  '/scholarships': typeof ScholarshipsRoute
   '/schools': typeof SchoolsRoute
   '/sector-guide': typeof SectorGuideRoute
   '/self-discovery': typeof SelfDiscoveryRoute
@@ -333,6 +350,7 @@ export interface FileRoutesById {
   '/resources/career-path-terms': typeof ResourcesCareerPathTermsRoute
   '/resources/coaching-vs-career-counseling': typeof ResourcesCoachingVsCareerCounselingRoute
   '/resources/how-to-choose-major': typeof ResourcesHowToChooseMajorRoute
+  '/resources/parent-guide': typeof ResourcesParentGuideRoute
   '/review-results/$code': typeof ReviewResultsCodeRoute
   '/review-submit/$code': typeof ReviewSubmitCodeRoute
   '/report/': typeof ReportIndexRoute
@@ -360,6 +378,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/resources'
     | '/review360'
+    | '/scholarships'
     | '/schools'
     | '/sector-guide'
     | '/self-discovery'
@@ -372,6 +391,7 @@ export interface FileRouteTypes {
     | '/resources/career-path-terms'
     | '/resources/coaching-vs-career-counseling'
     | '/resources/how-to-choose-major'
+    | '/resources/parent-guide'
     | '/review-results/$code'
     | '/review-submit/$code'
     | '/report/'
@@ -397,6 +417,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/resources'
     | '/review360'
+    | '/scholarships'
     | '/schools'
     | '/sector-guide'
     | '/self-discovery'
@@ -409,6 +430,7 @@ export interface FileRouteTypes {
     | '/resources/career-path-terms'
     | '/resources/coaching-vs-career-counseling'
     | '/resources/how-to-choose-major'
+    | '/resources/parent-guide'
     | '/review-results/$code'
     | '/review-submit/$code'
     | '/report'
@@ -434,6 +456,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/resources'
     | '/review360'
+    | '/scholarships'
     | '/schools'
     | '/sector-guide'
     | '/self-discovery'
@@ -446,6 +469,7 @@ export interface FileRouteTypes {
     | '/resources/career-path-terms'
     | '/resources/coaching-vs-career-counseling'
     | '/resources/how-to-choose-major'
+    | '/resources/parent-guide'
     | '/review-results/$code'
     | '/review-submit/$code'
     | '/report/'
@@ -472,6 +496,7 @@ export interface RootRouteChildren {
   ProfileRoute: typeof ProfileRoute
   ResourcesRoute: typeof ResourcesRouteWithChildren
   Review360Route: typeof Review360Route
+  ScholarshipsRoute: typeof ScholarshipsRoute
   SchoolsRoute: typeof SchoolsRoute
   SectorGuideRoute: typeof SectorGuideRoute
   SelfDiscoveryRoute: typeof SelfDiscoveryRoute
@@ -527,6 +552,13 @@ declare module '@tanstack/react-router' {
       path: '/schools'
       fullPath: '/schools'
       preLoaderRoute: typeof SchoolsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/scholarships': {
+      id: '/scholarships'
+      path: '/scholarships'
+      fullPath: '/scholarships'
+      preLoaderRoute: typeof ScholarshipsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/review360': {
@@ -690,6 +722,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ReviewResultsCodeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/resources/parent-guide': {
+      id: '/resources/parent-guide'
+      path: '/parent-guide'
+      fullPath: '/resources/parent-guide'
+      preLoaderRoute: typeof ResourcesParentGuideRouteImport
+      parentRoute: typeof ResourcesRoute
+    }
     '/resources/how-to-choose-major': {
       id: '/resources/how-to-choose-major'
       path: '/how-to-choose-major'
@@ -740,6 +779,7 @@ interface ResourcesRouteChildren {
   ResourcesCareerPathTermsRoute: typeof ResourcesCareerPathTermsRoute
   ResourcesCoachingVsCareerCounselingRoute: typeof ResourcesCoachingVsCareerCounselingRoute
   ResourcesHowToChooseMajorRoute: typeof ResourcesHowToChooseMajorRoute
+  ResourcesParentGuideRoute: typeof ResourcesParentGuideRoute
 }
 
 const ResourcesRouteChildren: ResourcesRouteChildren = {
@@ -748,6 +788,7 @@ const ResourcesRouteChildren: ResourcesRouteChildren = {
   ResourcesCoachingVsCareerCounselingRoute:
     ResourcesCoachingVsCareerCounselingRoute,
   ResourcesHowToChooseMajorRoute: ResourcesHowToChooseMajorRoute,
+  ResourcesParentGuideRoute: ResourcesParentGuideRoute,
 }
 
 const ResourcesRouteWithChildren = ResourcesRoute._addFileChildren(
@@ -775,6 +816,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProfileRoute: ProfileRoute,
   ResourcesRoute: ResourcesRouteWithChildren,
   Review360Route: Review360Route,
+  ScholarshipsRoute: ScholarshipsRoute,
   SchoolsRoute: SchoolsRoute,
   SectorGuideRoute: SectorGuideRoute,
   SelfDiscoveryRoute: SelfDiscoveryRoute,
@@ -790,3 +832,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
