@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SectorGuideRouteImport } from './routes/sector-guide'
 import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as LearningStyleRouteImport } from './routes/learning-style'
 import { Route as DeepAssessmentRouteImport } from './routes/deep-assessment'
@@ -22,6 +23,11 @@ import { Route as ReportIndexRouteImport } from './routes/report.index'
 import { Route as ResourcesCoachingVsCareerCounselingRouteImport } from './routes/resources.coaching-vs-career-counseling'
 import { Route as ReportCodeRouteImport } from './routes/report.$code'
 
+const SectorGuideRoute = SectorGuideRouteImport.update({
+  id: '/sector-guide',
+  path: '/sector-guide',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ResourcesRoute = ResourcesRouteImport.update({
   id: '/resources',
   path: '/resources',
@@ -94,6 +100,7 @@ export interface FileRoutesByFullPath {
   '/deep-assessment': typeof DeepAssessmentRoute
   '/learning-style': typeof LearningStyleRoute
   '/resources': typeof ResourcesRouteWithChildren
+  '/sector-guide': typeof SectorGuideRoute
   '/report/$code': typeof ReportCodeRoute
   '/resources/coaching-vs-career-counseling': typeof ResourcesCoachingVsCareerCounselingRoute
   '/report/': typeof ReportIndexRoute
@@ -108,6 +115,7 @@ export interface FileRoutesByTo {
   '/deep-assessment': typeof DeepAssessmentRoute
   '/learning-style': typeof LearningStyleRoute
   '/resources': typeof ResourcesRouteWithChildren
+  '/sector-guide': typeof SectorGuideRoute
   '/report/$code': typeof ReportCodeRoute
   '/resources/coaching-vs-career-counseling': typeof ResourcesCoachingVsCareerCounselingRoute
   '/report': typeof ReportIndexRoute
@@ -123,6 +131,7 @@ export interface FileRoutesById {
   '/deep-assessment': typeof DeepAssessmentRoute
   '/learning-style': typeof LearningStyleRoute
   '/resources': typeof ResourcesRouteWithChildren
+  '/sector-guide': typeof SectorGuideRoute
   '/report/$code': typeof ReportCodeRoute
   '/resources/coaching-vs-career-counseling': typeof ResourcesCoachingVsCareerCounselingRoute
   '/report/': typeof ReportIndexRoute
@@ -139,6 +148,7 @@ export interface FileRouteTypes {
     | '/deep-assessment'
     | '/learning-style'
     | '/resources'
+    | '/sector-guide'
     | '/report/$code'
     | '/resources/coaching-vs-career-counseling'
     | '/report/'
@@ -153,6 +163,7 @@ export interface FileRouteTypes {
     | '/deep-assessment'
     | '/learning-style'
     | '/resources'
+    | '/sector-guide'
     | '/report/$code'
     | '/resources/coaching-vs-career-counseling'
     | '/report'
@@ -167,6 +178,7 @@ export interface FileRouteTypes {
     | '/deep-assessment'
     | '/learning-style'
     | '/resources'
+    | '/sector-guide'
     | '/report/$code'
     | '/resources/coaching-vs-career-counseling'
     | '/report/'
@@ -182,12 +194,20 @@ export interface RootRouteChildren {
   DeepAssessmentRoute: typeof DeepAssessmentRoute
   LearningStyleRoute: typeof LearningStyleRoute
   ResourcesRoute: typeof ResourcesRouteWithChildren
+  SectorGuideRoute: typeof SectorGuideRoute
   ReportCodeRoute: typeof ReportCodeRoute
   ReportIndexRoute: typeof ReportIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/sector-guide': {
+      id: '/sector-guide'
+      path: '/sector-guide'
+      fullPath: '/sector-guide'
+      preLoaderRoute: typeof SectorGuideRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/resources': {
       id: '/resources'
       path: '/resources'
@@ -298,9 +318,20 @@ const rootRouteChildren: RootRouteChildren = {
   DeepAssessmentRoute: DeepAssessmentRoute,
   LearningStyleRoute: LearningStyleRoute,
   ResourcesRoute: ResourcesRouteWithChildren,
+  SectorGuideRoute: SectorGuideRoute,
   ReportCodeRoute: ReportCodeRoute,
   ReportIndexRoute: ReportIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
