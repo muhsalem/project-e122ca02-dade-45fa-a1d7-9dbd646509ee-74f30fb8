@@ -27,15 +27,17 @@ export function Footer() {
         </div>
 
         <div>
-          <h4 className="mb-4 font-serif text-base text-primary">تواصل معنا</h4>
+          <h4 className="mb-4 font-serif text-base text-primary">قانوني وتواصل</h4>
           <ul className="space-y-3 text-sm text-muted-foreground">
+            <li><Link to="/terms" className="hover:text-primary">الشروط والأحكام</Link></li>
+            <li><Link to="/privacy" className="hover:text-primary">سياسة الخصوصية</Link></li>
             <li className="flex items-center gap-2"><Mail className="h-4 w-4 text-gold" /><span>info@busala.app</span></li>
             <li className="flex items-center gap-2"><Phone className="h-4 w-4 text-gold" /><span>+966 50 000 0000</span></li>
           </ul>
         </div>
       </div>
       <div className="border-t border-border py-6 text-center text-xs text-muted-foreground">
-        © {new Date().getFullYear()} بوصلة — جميع الحقوق محفوظة.
+        © {new Date().getFullYear()} بوصلة® — جميع الحقوق محفوظة. المحتوى والتصاميم والأكواد ملكية فكرية محمية، يُمنع النسخ أو إعادة الاستخدام دون إذن خطي.
       </div>
     </footer>
   );
