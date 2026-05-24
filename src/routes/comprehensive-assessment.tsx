@@ -37,6 +37,7 @@ const FIELDS: Field[] = [
 function ComprehensivePage() {
   const navigate = useNavigate();
   const submit = useServerFn(submitComprehensive);
+  const { user } = useAuth();
 
   const [name, setName] = useState("");
   const [codes, setCodes] = useState<Record<string, string>>({});
@@ -56,6 +57,7 @@ function ComprehensivePage() {
           learningStyleCode: codes.learningStyleCode?.trim() || "",
           academicMajorCode: codes.academicMajorCode?.trim() || "",
           careerTitleCode: codes.careerTitleCode?.trim() || "",
+          userId: user?.id,
         },
       });
       navigate({ to: "/report/$code", params: { code: res.code } });
