@@ -245,6 +245,90 @@ export type Database = {
         }
         Relationships: []
       }
+      review_requests: {
+        Row: {
+          code: string
+          context: string | null
+          created_at: string
+          expires_at: string
+          id: string
+          subject_email: string | null
+          subject_name: string
+        }
+        Insert: {
+          code: string
+          context?: string | null
+          created_at?: string
+          expires_at?: string
+          id?: string
+          subject_email?: string | null
+          subject_name: string
+        }
+        Update: {
+          code?: string
+          context?: string | null
+          created_at?: string
+          expires_at?: string
+          id?: string
+          subject_email?: string | null
+          subject_name?: string
+        }
+        Relationships: []
+      }
+      review_responses: {
+        Row: {
+          adaptability: number
+          communication: number
+          created_at: string
+          id: string
+          improvement_text: string | null
+          leadership: number
+          problem_solving: number
+          request_code: string
+          responsibility: number
+          reviewer_relation: string
+          strengths: number
+          strengths_text: string | null
+          suggested_career: string | null
+          teamwork: number
+          work_ethic: number
+        }
+        Insert: {
+          adaptability: number
+          communication: number
+          created_at?: string
+          id?: string
+          improvement_text?: string | null
+          leadership: number
+          problem_solving: number
+          request_code: string
+          responsibility: number
+          reviewer_relation: string
+          strengths: number
+          strengths_text?: string | null
+          suggested_career?: string | null
+          teamwork: number
+          work_ethic: number
+        }
+        Update: {
+          adaptability?: number
+          communication?: number
+          created_at?: string
+          id?: string
+          improvement_text?: string | null
+          leadership?: number
+          problem_solving?: number
+          request_code?: string
+          responsibility?: number
+          reviewer_relation?: string
+          strengths?: number
+          strengths_text?: string | null
+          suggested_career?: string | null
+          teamwork?: number
+          work_ethic?: number
+        }
+        Relationships: []
+      }
       wellbeing_screenings: {
         Row: {
           career_anx_q1: number
