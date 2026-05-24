@@ -125,6 +125,13 @@ export const submitCareerType = createServerFn({ method: "POST" })
     const userTrack = trackLabel[data.track];
     const userNature = natureLabel[data.nature];
 
+    const riasecRanked = data.riasec
+      ? Object.entries(data.riasec)
+          .sort((a, b) => b[1] - a[1])
+          .map(([k]) => k)
+          .join("")
+      : null;
+
     const userPayload = JSON.stringify(
       {
         meta: { name: data.name, age: data.age, stage: data.stage },
@@ -132,6 +139,8 @@ export const submitCareerType = createServerFn({ method: "POST" })
         scores: data.scores,
         dominant,
         secondary,
+        riasec: data.riasec,
+        hollandCode: riasecRanked?.slice(0, 3),
         answers: data.answers,
       },
       null,
