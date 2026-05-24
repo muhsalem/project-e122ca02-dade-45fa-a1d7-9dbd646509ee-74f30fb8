@@ -12,7 +12,9 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as SectorGuideRouteImport } from './routes/sector-guide'
 import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as LearningStyleRouteImport } from './routes/learning-style'
+import { Route as LaborMarketRouteImport } from './routes/labor-market'
 import { Route as DeepAssessmentRouteImport } from './routes/deep-assessment'
+import { Route as CounselorRouteImport } from './routes/counselor'
 import { Route as CareerTypeAssessmentRouteImport } from './routes/career-type-assessment'
 import { Route as CareerPathRouteImport } from './routes/career-path'
 import { Route as BookingRouteImport } from './routes/booking'
@@ -38,9 +40,19 @@ const LearningStyleRoute = LearningStyleRouteImport.update({
   path: '/learning-style',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LaborMarketRoute = LaborMarketRouteImport.update({
+  id: '/labor-market',
+  path: '/labor-market',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DeepAssessmentRoute = DeepAssessmentRouteImport.update({
   id: '/deep-assessment',
   path: '/deep-assessment',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CounselorRoute = CounselorRouteImport.update({
+  id: '/counselor',
+  path: '/counselor',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CareerTypeAssessmentRoute = CareerTypeAssessmentRouteImport.update({
@@ -97,7 +109,9 @@ export interface FileRoutesByFullPath {
   '/booking': typeof BookingRoute
   '/career-path': typeof CareerPathRoute
   '/career-type-assessment': typeof CareerTypeAssessmentRoute
+  '/counselor': typeof CounselorRoute
   '/deep-assessment': typeof DeepAssessmentRoute
+  '/labor-market': typeof LaborMarketRoute
   '/learning-style': typeof LearningStyleRoute
   '/resources': typeof ResourcesRouteWithChildren
   '/sector-guide': typeof SectorGuideRoute
@@ -112,7 +126,9 @@ export interface FileRoutesByTo {
   '/booking': typeof BookingRoute
   '/career-path': typeof CareerPathRoute
   '/career-type-assessment': typeof CareerTypeAssessmentRoute
+  '/counselor': typeof CounselorRoute
   '/deep-assessment': typeof DeepAssessmentRoute
+  '/labor-market': typeof LaborMarketRoute
   '/learning-style': typeof LearningStyleRoute
   '/resources': typeof ResourcesRouteWithChildren
   '/sector-guide': typeof SectorGuideRoute
@@ -128,7 +144,9 @@ export interface FileRoutesById {
   '/booking': typeof BookingRoute
   '/career-path': typeof CareerPathRoute
   '/career-type-assessment': typeof CareerTypeAssessmentRoute
+  '/counselor': typeof CounselorRoute
   '/deep-assessment': typeof DeepAssessmentRoute
+  '/labor-market': typeof LaborMarketRoute
   '/learning-style': typeof LearningStyleRoute
   '/resources': typeof ResourcesRouteWithChildren
   '/sector-guide': typeof SectorGuideRoute
@@ -145,7 +163,9 @@ export interface FileRouteTypes {
     | '/booking'
     | '/career-path'
     | '/career-type-assessment'
+    | '/counselor'
     | '/deep-assessment'
+    | '/labor-market'
     | '/learning-style'
     | '/resources'
     | '/sector-guide'
@@ -160,7 +180,9 @@ export interface FileRouteTypes {
     | '/booking'
     | '/career-path'
     | '/career-type-assessment'
+    | '/counselor'
     | '/deep-assessment'
+    | '/labor-market'
     | '/learning-style'
     | '/resources'
     | '/sector-guide'
@@ -175,7 +197,9 @@ export interface FileRouteTypes {
     | '/booking'
     | '/career-path'
     | '/career-type-assessment'
+    | '/counselor'
     | '/deep-assessment'
+    | '/labor-market'
     | '/learning-style'
     | '/resources'
     | '/sector-guide'
@@ -191,7 +215,9 @@ export interface RootRouteChildren {
   BookingRoute: typeof BookingRoute
   CareerPathRoute: typeof CareerPathRoute
   CareerTypeAssessmentRoute: typeof CareerTypeAssessmentRoute
+  CounselorRoute: typeof CounselorRoute
   DeepAssessmentRoute: typeof DeepAssessmentRoute
+  LaborMarketRoute: typeof LaborMarketRoute
   LearningStyleRoute: typeof LearningStyleRoute
   ResourcesRoute: typeof ResourcesRouteWithChildren
   SectorGuideRoute: typeof SectorGuideRoute
@@ -222,11 +248,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LearningStyleRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/labor-market': {
+      id: '/labor-market'
+      path: '/labor-market'
+      fullPath: '/labor-market'
+      preLoaderRoute: typeof LaborMarketRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/deep-assessment': {
       id: '/deep-assessment'
       path: '/deep-assessment'
       fullPath: '/deep-assessment'
       preLoaderRoute: typeof DeepAssessmentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/counselor': {
+      id: '/counselor'
+      path: '/counselor'
+      fullPath: '/counselor'
+      preLoaderRoute: typeof CounselorRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/career-type-assessment': {
@@ -315,7 +355,9 @@ const rootRouteChildren: RootRouteChildren = {
   BookingRoute: BookingRoute,
   CareerPathRoute: CareerPathRoute,
   CareerTypeAssessmentRoute: CareerTypeAssessmentRoute,
+  CounselorRoute: CounselorRoute,
   DeepAssessmentRoute: DeepAssessmentRoute,
+  LaborMarketRoute: LaborMarketRoute,
   LearningStyleRoute: LearningStyleRoute,
   ResourcesRoute: ResourcesRouteWithChildren,
   SectorGuideRoute: SectorGuideRoute,
