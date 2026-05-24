@@ -16,6 +16,14 @@ const Schema = z.object({
     profession: z.number().min(0).max(100),
     craft: z.number().min(0).max(100),
   }),
+  riasec: z.object({
+    R: z.number().min(0).max(5),
+    I: z.number().min(0).max(5),
+    A: z.number().min(0).max(5),
+    S: z.number().min(0).max(5),
+    E: z.number().min(0).max(5),
+    C: z.number().min(0).max(5),
+  }).optional(),
 });
 
 function generateCode() {
