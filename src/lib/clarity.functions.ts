@@ -9,6 +9,7 @@ const Schema = z.object({
   q3_decision_confidence: z.number().int().min(1).max(10),
   q4_action_plan: z.number().int().min(1).max(10),
   q5_future_optimism: z.number().int().min(1).max(10),
+  userId: z.string().uuid().optional(),
 });
 
 export const submitClarityScore = createServerFn({ method: "POST" })
@@ -18,9 +19,11 @@ export const submitClarityScore = createServerFn({ method: "POST" })
     const total =
       data.q1_self_awareness + data.q2_career_options + data.q3_decision_confidence +
       data.q4_action_plan + data.q5_future_optimism;
+    const { userId, ...rest } = data;
     const { error } = await supabaseAdmin.from("clarity_scores").insert({
-      ...data,
+      ...rest,
       total_score: total,
+      user_id: userId ?? null,
     });
     if (error) {
       console.error("Clarity insert error:", error);

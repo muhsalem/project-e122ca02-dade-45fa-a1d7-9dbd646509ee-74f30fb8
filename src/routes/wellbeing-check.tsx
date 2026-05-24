@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { submitWellbeing } from "@/lib/wellbeing.functions";
+import { useAuth } from "@/hooks/use-auth";
 import { toast } from "sonner";
 import { Heart, AlertTriangle, CheckCircle2 } from "lucide-react";
 
@@ -38,6 +39,7 @@ function WellbeingPage() {
   const [busy, setBusy] = useState(false);
   const [res, setRes] = useState<{ phq2: number; gad2: number; carAnx: number; referral: boolean; risk: string } | null>(null);
   const submit = useServerFn(submitWellbeing);
+  const { user } = useAuth();
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -45,7 +47,7 @@ function WellbeingPage() {
     if (QUESTIONS.some((q) => vals[q.k] === undefined)) { toast.error("أكمل جميع الأسئلة"); return; }
     setBusy(true);
     try {
-      const r = await submit({ data: { code: code.trim(), ...(vals as any) } });
+      const r = await submit({ data: { code: code.trim(), ...(vals as any), userId: user?.id } });
       setRes(r);
     } catch (err: any) {
       toast.error(err?.message ?? "خطأ");
