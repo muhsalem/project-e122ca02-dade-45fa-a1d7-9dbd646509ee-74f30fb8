@@ -21,6 +21,7 @@ import { Route as MyAssessmentsRouteImport } from './routes/my-assessments'
 import { Route as LearningStyleRouteImport } from './routes/learning-style'
 import { Route as LaborMarketRouteImport } from './routes/labor-market'
 import { Route as JoinAsCoachRouteImport } from './routes/join-as-coach'
+import { Route as EthicsRouteImport } from './routes/ethics'
 import { Route as CounselorRouteImport } from './routes/counselor'
 import { Route as ComprehensiveAssessmentRouteImport } from './routes/comprehensive-assessment'
 import { Route as ClarityCheckRouteImport } from './routes/clarity-check'
@@ -96,6 +97,11 @@ const LaborMarketRoute = LaborMarketRouteImport.update({
 const JoinAsCoachRoute = JoinAsCoachRouteImport.update({
   id: '/join-as-coach',
   path: '/join-as-coach',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EthicsRoute = EthicsRouteImport.update({
+  id: '/ethics',
+  path: '/ethics',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CounselorRoute = CounselorRouteImport.update({
@@ -191,6 +197,7 @@ export interface FileRoutesByFullPath {
   '/clarity-check': typeof ClarityCheckRoute
   '/comprehensive-assessment': typeof ComprehensiveAssessmentRoute
   '/counselor': typeof CounselorRoute
+  '/ethics': typeof EthicsRoute
   '/join-as-coach': typeof JoinAsCoachRoute
   '/labor-market': typeof LaborMarketRoute
   '/learning-style': typeof LearningStyleRoute
@@ -221,6 +228,7 @@ export interface FileRoutesByTo {
   '/clarity-check': typeof ClarityCheckRoute
   '/comprehensive-assessment': typeof ComprehensiveAssessmentRoute
   '/counselor': typeof CounselorRoute
+  '/ethics': typeof EthicsRoute
   '/join-as-coach': typeof JoinAsCoachRoute
   '/labor-market': typeof LaborMarketRoute
   '/learning-style': typeof LearningStyleRoute
@@ -252,6 +260,7 @@ export interface FileRoutesById {
   '/clarity-check': typeof ClarityCheckRoute
   '/comprehensive-assessment': typeof ComprehensiveAssessmentRoute
   '/counselor': typeof CounselorRoute
+  '/ethics': typeof EthicsRoute
   '/join-as-coach': typeof JoinAsCoachRoute
   '/labor-market': typeof LaborMarketRoute
   '/learning-style': typeof LearningStyleRoute
@@ -284,6 +293,7 @@ export interface FileRouteTypes {
     | '/clarity-check'
     | '/comprehensive-assessment'
     | '/counselor'
+    | '/ethics'
     | '/join-as-coach'
     | '/labor-market'
     | '/learning-style'
@@ -314,6 +324,7 @@ export interface FileRouteTypes {
     | '/clarity-check'
     | '/comprehensive-assessment'
     | '/counselor'
+    | '/ethics'
     | '/join-as-coach'
     | '/labor-market'
     | '/learning-style'
@@ -344,6 +355,7 @@ export interface FileRouteTypes {
     | '/clarity-check'
     | '/comprehensive-assessment'
     | '/counselor'
+    | '/ethics'
     | '/join-as-coach'
     | '/labor-market'
     | '/learning-style'
@@ -375,6 +387,7 @@ export interface RootRouteChildren {
   ClarityCheckRoute: typeof ClarityCheckRoute
   ComprehensiveAssessmentRoute: typeof ComprehensiveAssessmentRoute
   CounselorRoute: typeof CounselorRoute
+  EthicsRoute: typeof EthicsRoute
   JoinAsCoachRoute: typeof JoinAsCoachRoute
   LaborMarketRoute: typeof LaborMarketRoute
   LearningStyleRoute: typeof LearningStyleRoute
@@ -478,6 +491,13 @@ declare module '@tanstack/react-router' {
       path: '/join-as-coach'
       fullPath: '/join-as-coach'
       preLoaderRoute: typeof JoinAsCoachRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ethics': {
+      id: '/ethics'
+      path: '/ethics'
+      fullPath: '/ethics'
+      preLoaderRoute: typeof EthicsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/counselor': {
@@ -620,6 +640,7 @@ const rootRouteChildren: RootRouteChildren = {
   ClarityCheckRoute: ClarityCheckRoute,
   ComprehensiveAssessmentRoute: ComprehensiveAssessmentRoute,
   CounselorRoute: CounselorRoute,
+  EthicsRoute: EthicsRoute,
   JoinAsCoachRoute: JoinAsCoachRoute,
   LaborMarketRoute: LaborMarketRoute,
   LearningStyleRoute: LearningStyleRoute,
