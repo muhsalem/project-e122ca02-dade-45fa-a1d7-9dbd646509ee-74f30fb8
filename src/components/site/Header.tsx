@@ -65,18 +65,20 @@ export function Header() {
               <ChevronDown className="h-4 w-4" />
             </button>
             {discoveryOpen && (
-              <div className="absolute right-0 top-full z-50 mt-2 w-64 rounded-md border border-border bg-background p-2 shadow-lg">
-                {discoveryGroup.items.map((item) => (
-                  <Link
-                    key={item.to}
-                    to={item.to}
-                    onClick={() => setDiscoveryOpen(false)}
-                    className="block rounded px-3 py-2 text-sm text-foreground/80 hover:bg-muted hover:text-primary"
-                    activeProps={{ className: "text-primary font-semibold bg-muted" }}
-                  >
-                    {item.label}
-                  </Link>
-                ))}
+              <div className="absolute right-0 top-full z-50 w-64 pt-2">
+                <div className="rounded-md border border-border bg-background p-2 shadow-lg">
+                  {discoveryGroup.items.map((item) => (
+                    <Link
+                      key={item.to}
+                      to={item.to}
+                      onClick={() => setDiscoveryOpen(false)}
+                      className="block rounded px-3 py-2 text-sm text-foreground/80 hover:bg-muted hover:text-primary"
+                      activeProps={{ className: "text-primary font-semibold bg-muted" }}
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
               </div>
             )}
           </div>
