@@ -41,6 +41,8 @@ import { Route as ReviewSubmitCodeRouteImport } from './routes/review-submit.$co
 import { Route as ReviewResultsCodeRouteImport } from './routes/review-results.$code'
 import { Route as ResourcesParentGuideRouteImport } from './routes/resources.parent-guide'
 import { Route as ResourcesHowToChooseMajorRouteImport } from './routes/resources.how-to-choose-major'
+import { Route as ResourcesGrowModelRouteImport } from './routes/resources.grow-model'
+import { Route as ResourcesCvWritingRouteImport } from './routes/resources.cv-writing'
 import { Route as ResourcesCoachingVsCareerCounselingRouteImport } from './routes/resources.coaching-vs-career-counseling'
 import { Route as ResourcesCareerPathTermsRouteImport } from './routes/resources.career-path-terms'
 import { Route as ResourcesCareerChangeStrategiesRouteImport } from './routes/resources.career-change-strategies'
@@ -208,6 +210,16 @@ const ResourcesHowToChooseMajorRoute =
     path: '/how-to-choose-major',
     getParentRoute: () => ResourcesRoute,
   } as any)
+const ResourcesGrowModelRoute = ResourcesGrowModelRouteImport.update({
+  id: '/grow-model',
+  path: '/grow-model',
+  getParentRoute: () => ResourcesRoute,
+} as any)
+const ResourcesCvWritingRoute = ResourcesCvWritingRouteImport.update({
+  id: '/cv-writing',
+  path: '/cv-writing',
+  getParentRoute: () => ResourcesRoute,
+} as any)
 const ResourcesCoachingVsCareerCounselingRoute =
   ResourcesCoachingVsCareerCounselingRouteImport.update({
     id: '/coaching-vs-career-counseling',
@@ -270,6 +282,8 @@ export interface FileRoutesByFullPath {
   '/resources/career-change-strategies': typeof ResourcesCareerChangeStrategiesRoute
   '/resources/career-path-terms': typeof ResourcesCareerPathTermsRoute
   '/resources/coaching-vs-career-counseling': typeof ResourcesCoachingVsCareerCounselingRoute
+  '/resources/cv-writing': typeof ResourcesCvWritingRoute
+  '/resources/grow-model': typeof ResourcesGrowModelRoute
   '/resources/how-to-choose-major': typeof ResourcesHowToChooseMajorRoute
   '/resources/parent-guide': typeof ResourcesParentGuideRoute
   '/review-results/$code': typeof ReviewResultsCodeRoute
@@ -309,6 +323,8 @@ export interface FileRoutesByTo {
   '/resources/career-change-strategies': typeof ResourcesCareerChangeStrategiesRoute
   '/resources/career-path-terms': typeof ResourcesCareerPathTermsRoute
   '/resources/coaching-vs-career-counseling': typeof ResourcesCoachingVsCareerCounselingRoute
+  '/resources/cv-writing': typeof ResourcesCvWritingRoute
+  '/resources/grow-model': typeof ResourcesGrowModelRoute
   '/resources/how-to-choose-major': typeof ResourcesHowToChooseMajorRoute
   '/resources/parent-guide': typeof ResourcesParentGuideRoute
   '/review-results/$code': typeof ReviewResultsCodeRoute
@@ -349,6 +365,8 @@ export interface FileRoutesById {
   '/resources/career-change-strategies': typeof ResourcesCareerChangeStrategiesRoute
   '/resources/career-path-terms': typeof ResourcesCareerPathTermsRoute
   '/resources/coaching-vs-career-counseling': typeof ResourcesCoachingVsCareerCounselingRoute
+  '/resources/cv-writing': typeof ResourcesCvWritingRoute
+  '/resources/grow-model': typeof ResourcesGrowModelRoute
   '/resources/how-to-choose-major': typeof ResourcesHowToChooseMajorRoute
   '/resources/parent-guide': typeof ResourcesParentGuideRoute
   '/review-results/$code': typeof ReviewResultsCodeRoute
@@ -390,6 +408,8 @@ export interface FileRouteTypes {
     | '/resources/career-change-strategies'
     | '/resources/career-path-terms'
     | '/resources/coaching-vs-career-counseling'
+    | '/resources/cv-writing'
+    | '/resources/grow-model'
     | '/resources/how-to-choose-major'
     | '/resources/parent-guide'
     | '/review-results/$code'
@@ -429,6 +449,8 @@ export interface FileRouteTypes {
     | '/resources/career-change-strategies'
     | '/resources/career-path-terms'
     | '/resources/coaching-vs-career-counseling'
+    | '/resources/cv-writing'
+    | '/resources/grow-model'
     | '/resources/how-to-choose-major'
     | '/resources/parent-guide'
     | '/review-results/$code'
@@ -468,6 +490,8 @@ export interface FileRouteTypes {
     | '/resources/career-change-strategies'
     | '/resources/career-path-terms'
     | '/resources/coaching-vs-career-counseling'
+    | '/resources/cv-writing'
+    | '/resources/grow-model'
     | '/resources/how-to-choose-major'
     | '/resources/parent-guide'
     | '/review-results/$code'
@@ -736,6 +760,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResourcesHowToChooseMajorRouteImport
       parentRoute: typeof ResourcesRoute
     }
+    '/resources/grow-model': {
+      id: '/resources/grow-model'
+      path: '/grow-model'
+      fullPath: '/resources/grow-model'
+      preLoaderRoute: typeof ResourcesGrowModelRouteImport
+      parentRoute: typeof ResourcesRoute
+    }
+    '/resources/cv-writing': {
+      id: '/resources/cv-writing'
+      path: '/cv-writing'
+      fullPath: '/resources/cv-writing'
+      preLoaderRoute: typeof ResourcesCvWritingRouteImport
+      parentRoute: typeof ResourcesRoute
+    }
     '/resources/coaching-vs-career-counseling': {
       id: '/resources/coaching-vs-career-counseling'
       path: '/coaching-vs-career-counseling'
@@ -778,6 +816,8 @@ interface ResourcesRouteChildren {
   ResourcesCareerChangeStrategiesRoute: typeof ResourcesCareerChangeStrategiesRoute
   ResourcesCareerPathTermsRoute: typeof ResourcesCareerPathTermsRoute
   ResourcesCoachingVsCareerCounselingRoute: typeof ResourcesCoachingVsCareerCounselingRoute
+  ResourcesCvWritingRoute: typeof ResourcesCvWritingRoute
+  ResourcesGrowModelRoute: typeof ResourcesGrowModelRoute
   ResourcesHowToChooseMajorRoute: typeof ResourcesHowToChooseMajorRoute
   ResourcesParentGuideRoute: typeof ResourcesParentGuideRoute
 }
@@ -787,6 +827,8 @@ const ResourcesRouteChildren: ResourcesRouteChildren = {
   ResourcesCareerPathTermsRoute: ResourcesCareerPathTermsRoute,
   ResourcesCoachingVsCareerCounselingRoute:
     ResourcesCoachingVsCareerCounselingRoute,
+  ResourcesCvWritingRoute: ResourcesCvWritingRoute,
+  ResourcesGrowModelRoute: ResourcesGrowModelRoute,
   ResourcesHowToChooseMajorRoute: ResourcesHowToChooseMajorRoute,
   ResourcesParentGuideRoute: ResourcesParentGuideRoute,
 }
@@ -832,3 +874,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
