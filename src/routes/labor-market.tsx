@@ -1,5 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
 import { DollarSign, Briefcase, TrendingUp, MapPin, Database, Building2 } from "lucide-react";
+
 
 export const Route = createFileRoute("/labor-market")({
   head: () => ({
@@ -50,7 +52,24 @@ const TOP_CITIES = [
   { city: "الدوحة", country: "قطر", openings: "~16,000", sectors: "طاقة، إنشاءات، تقنية، خدمات" },
 ];
 
+const COUNTRIES = [
+  { code: "sa", flag: "🇸🇦", name: "السعودية", currency: "SAR" },
+  { code: "ae", flag: "🇦🇪", name: "الإمارات", currency: "AED" },
+  { code: "eg", flag: "🇪🇬", name: "مصر", currency: "EGP" },
+] as const;
+
+type CountryCode = typeof COUNTRIES[number]["code"];
+
 function LaborMarketPage() {
+  const [country, setCountry] = useState<CountryCode>("sa");
+  const active = COUNTRIES.find((c) => c.code === country)!;
+
+  const getRow = (s: typeof SALARIES[number]) => ({
+    junior: s[`junior_${country}` as const],
+    mid: s[`mid_${country}` as const],
+    senior: s[`senior_${country}` as const],
+  });
+
   return (
     <>
       <section className="border-b border-border bg-secondary/40">
@@ -66,61 +85,70 @@ function LaborMarketPage() {
         </div>
       </section>
 
-      {/* جدول الرواتب */}
+      {/* الرواتب — اختيار الدولة */}
       <section className="container-page py-12">
         <div className="flex items-center gap-3">
           <DollarSign className="h-6 w-6 text-gold" />
           <h2 className="font-serif text-2xl text-primary">نطاقات الرواتب الشهرية حسب الدور والخبرة</h2>
         </div>
         <p className="mt-2 text-sm text-muted-foreground">
-          الأرقام بالعملة المحلية: <strong>SAR</strong> للسعودية، <strong>AED</strong> للإمارات، <strong>EGP</strong> لمصر. الشريحة الوسطى هي الأكثر تمثيلاً للسوق.
+          اختر الدولة لعرض نطاقات الرواتب بالعملة المحلية. الشريحة الوسطى هي الأكثر تمثيلاً للسوق.
         </p>
 
+        <div className="mt-5 flex flex-wrap gap-2">
+          {COUNTRIES.map((c) => {
+            const isActive = c.code === country;
+            return (
+              <button
+                key={c.code}
+                onClick={() => setCountry(c.code)}
+                className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm transition ${
+                  isActive
+                    ? "border-gold bg-gold/15 text-primary font-medium shadow-[var(--shadow-soft)]"
+                    : "border-border bg-card text-muted-foreground hover:border-gold/40 hover:text-primary"
+                }`}
+              >
+                <span className="text-base">{c.flag}</span>
+                {c.name}
+                <span className="font-mono text-[10px] opacity-70">{c.currency}</span>
+              </button>
+            );
+          })}
+        </div>
+
         <div className="mt-6 overflow-x-auto rounded-2xl border border-border bg-card shadow-[var(--shadow-soft)]">
-          <table className="w-full min-w-[1100px] text-xs">
-            <thead className="bg-secondary/60 text-[11px] text-muted-foreground">
+          <table className="w-full min-w-[560px] text-sm">
+            <thead className="bg-secondary/60 text-xs text-muted-foreground">
               <tr>
-                <th rowSpan={2} className="px-3 py-3 text-right">الدور</th>
-                <th rowSpan={2} className="px-3 py-3 text-right">ISCO</th>
-                <th colSpan={3} className="border-r border-border px-3 py-2 text-center">🇸🇦 السعودية (SAR)</th>
-                <th colSpan={3} className="border-r border-border px-3 py-2 text-center">🇦🇪 الإمارات (AED)</th>
-                <th colSpan={3} className="px-3 py-2 text-center">🇪🇬 مصر (EGP)</th>
-              </tr>
-              <tr className="text-[10px]">
-                <th className="px-2 py-2 text-center">مبتدئ</th>
-                <th className="px-2 py-2 text-center">متوسط</th>
-                <th className="border-r border-border px-2 py-2 text-center">خبير</th>
-                <th className="px-2 py-2 text-center">مبتدئ</th>
-                <th className="px-2 py-2 text-center">متوسط</th>
-                <th className="border-r border-border px-2 py-2 text-center">خبير</th>
-                <th className="px-2 py-2 text-center">مبتدئ</th>
-                <th className="px-2 py-2 text-center">متوسط</th>
-                <th className="px-2 py-2 text-center">خبير</th>
+                <th className="px-4 py-3 text-right">الدور</th>
+                <th className="px-3 py-3 text-right">ISCO</th>
+                <th className="px-3 py-3 text-center">مبتدئ</th>
+                <th className="px-3 py-3 text-center">متوسط</th>
+                <th className="px-3 py-3 text-center">خبير</th>
               </tr>
             </thead>
             <tbody>
-              {SALARIES.map((s) => (
-                <tr key={s.role} className="border-t border-border">
-                  <td className="px-3 py-3 font-medium text-foreground">{s.role}</td>
-                  <td className="px-3 py-3 font-mono text-primary">{s.isco}</td>
-                  <td className="px-2 py-3 text-center font-mono">{s.junior_sa}</td>
-                  <td className="px-2 py-3 text-center font-mono font-semibold text-gold">{s.mid_sa}</td>
-                  <td className="border-r border-border px-2 py-3 text-center font-mono">{s.senior_sa}</td>
-                  <td className="px-2 py-3 text-center font-mono">{s.junior_ae}</td>
-                  <td className="px-2 py-3 text-center font-mono font-semibold text-gold">{s.mid_ae}</td>
-                  <td className="border-r border-border px-2 py-3 text-center font-mono">{s.senior_ae}</td>
-                  <td className="px-2 py-3 text-center font-mono">{s.junior_eg}</td>
-                  <td className="px-2 py-3 text-center font-mono font-semibold text-gold">{s.mid_eg}</td>
-                  <td className="px-2 py-3 text-center font-mono">{s.senior_eg}</td>
-                </tr>
-              ))}
+              {SALARIES.map((s) => {
+                const r = getRow(s);
+                return (
+                  <tr key={s.role} className="border-t border-border">
+                    <td className="px-4 py-3 font-medium text-foreground">{s.role}</td>
+                    <td className="px-3 py-3 font-mono text-xs text-primary">{s.isco}</td>
+                    <td className="px-3 py-3 text-center font-mono text-xs">{r.junior}</td>
+                    <td className="px-3 py-3 text-center font-mono text-xs font-semibold text-gold">{r.mid}</td>
+                    <td className="px-3 py-3 text-center font-mono text-xs">{r.senior}</td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
         <p className="mt-3 text-xs text-muted-foreground">
-          المصادر: Bayt Salary Guide 2025، Cooper Fitch Salary Guide ME، Robert Half Middle East، GASTAT (السعودية)، CAPMAS (مصر)، Wuzzuf Salary Data.
+          عرض حالي: <strong className="text-primary">{active.flag} {active.name}</strong> — جميع الأرقام بالـ <strong>{active.currency}</strong> شهرياً.
+          المصادر: Bayt Salary Guide 2025، Cooper Fitch ME، Robert Half ME، GASTAT، CAPMAS، Wuzzuf.
         </p>
       </section>
+
 
       {/* إحصائيات وظائف فعلية */}
       <section className="border-y border-border bg-secondary/30 py-12">
