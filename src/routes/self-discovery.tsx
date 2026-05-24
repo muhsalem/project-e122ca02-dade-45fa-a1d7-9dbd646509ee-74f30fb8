@@ -1,6 +1,7 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Users } from "lucide-react";
+import { ComplementaryTools } from "@/components/site/ComplementaryTools";
 import { ArrowLeft, ArrowRight, Loader2, Sparkles, Brain, Check } from "lucide-react";
 import { useServerFn } from "@tanstack/react-start";
 import { submitAssessment } from "@/lib/assessment.functions";

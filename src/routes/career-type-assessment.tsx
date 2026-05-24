@@ -1,5 +1,6 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useState, useMemo } from "react";
+import { ComplementaryTools } from "@/components/site/ComplementaryTools";
 import {
   ArrowLeft,
   ArrowRight,
