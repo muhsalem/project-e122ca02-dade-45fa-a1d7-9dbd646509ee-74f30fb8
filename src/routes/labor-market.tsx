@@ -214,8 +214,8 @@ function LaborMarketPage() {
           </ol>
 
           <div className="mt-8 flex flex-wrap gap-3">
-            <Link to="/deep-assessment" className="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground">
-              ابدأ التقييم الشامل
+            <Link to="/self-discovery" className="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground">
+              ابدأ اكتشاف ذاتك
             </Link>
             <Link to="/sector-guide" className="inline-flex items-center gap-2 rounded-md border border-border px-5 py-2.5 text-sm">
               <Globe className="h-4 w-4" />
