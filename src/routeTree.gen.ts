@@ -18,6 +18,7 @@ import { Route as CounselorRouteImport } from './routes/counselor'
 import { Route as CareerTypeAssessmentRouteImport } from './routes/career-type-assessment'
 import { Route as BookingRouteImport } from './routes/booking'
 import { Route as AssessmentsRouteImport } from './routes/assessments'
+import { Route as AcademicMajorRouteImport } from './routes/academic-major'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ReportIndexRouteImport } from './routes/report.index'
@@ -70,6 +71,11 @@ const AssessmentsRoute = AssessmentsRouteImport.update({
   path: '/assessments',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AcademicMajorRoute = AcademicMajorRouteImport.update({
+  id: '/academic-major',
+  path: '/academic-major',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
@@ -106,6 +112,7 @@ const ReportCodeRoute = ReportCodeRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/academic-major': typeof AcademicMajorRoute
   '/assessments': typeof AssessmentsRoute
   '/booking': typeof BookingRoute
   '/career-type-assessment': typeof CareerTypeAssessmentRoute
@@ -123,6 +130,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/academic-major': typeof AcademicMajorRoute
   '/assessments': typeof AssessmentsRoute
   '/booking': typeof BookingRoute
   '/career-type-assessment': typeof CareerTypeAssessmentRoute
@@ -141,6 +149,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/academic-major': typeof AcademicMajorRoute
   '/assessments': typeof AssessmentsRoute
   '/booking': typeof BookingRoute
   '/career-type-assessment': typeof CareerTypeAssessmentRoute
@@ -160,6 +169,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/academic-major'
     | '/assessments'
     | '/booking'
     | '/career-type-assessment'
@@ -177,6 +187,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/about'
+    | '/academic-major'
     | '/assessments'
     | '/booking'
     | '/career-type-assessment'
@@ -194,6 +205,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/about'
+    | '/academic-major'
     | '/assessments'
     | '/booking'
     | '/career-type-assessment'
@@ -212,6 +224,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  AcademicMajorRoute: typeof AcademicMajorRoute
   AssessmentsRoute: typeof AssessmentsRoute
   BookingRoute: typeof BookingRoute
   CareerTypeAssessmentRoute: typeof CareerTypeAssessmentRoute
@@ -290,6 +303,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AssessmentsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/academic-major': {
+      id: '/academic-major'
+      path: '/academic-major'
+      fullPath: '/academic-major'
+      preLoaderRoute: typeof AcademicMajorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/about': {
       id: '/about'
       path: '/about'
@@ -353,6 +373,7 @@ const ResourcesRouteWithChildren = ResourcesRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  AcademicMajorRoute: AcademicMajorRoute,
   AssessmentsRoute: AssessmentsRoute,
   BookingRoute: BookingRoute,
   CareerTypeAssessmentRoute: CareerTypeAssessmentRoute,
