@@ -15,7 +15,9 @@ import { Route as SelfDiscoveryRouteImport } from './routes/self-discovery'
 import { Route as SectorGuideRouteImport } from './routes/sector-guide'
 import { Route as Review360RouteImport } from './routes/review360'
 import { Route as ResourcesRouteImport } from './routes/resources'
+import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as MyAssessmentsRouteImport } from './routes/my-assessments'
 import { Route as LearningStyleRouteImport } from './routes/learning-style'
 import { Route as LaborMarketRouteImport } from './routes/labor-market'
 import { Route as JoinAsCoachRouteImport } from './routes/join-as-coach'
@@ -24,6 +26,7 @@ import { Route as ComprehensiveAssessmentRouteImport } from './routes/comprehens
 import { Route as ClarityCheckRouteImport } from './routes/clarity-check'
 import { Route as CareerTypeAssessmentRouteImport } from './routes/career-type-assessment'
 import { Route as BookingRouteImport } from './routes/booking'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AcademicMajorRouteImport } from './routes/academic-major'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
@@ -65,9 +68,19 @@ const ResourcesRoute = ResourcesRouteImport.update({
   path: '/resources',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PrivacyRoute = PrivacyRouteImport.update({
   id: '/privacy',
   path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MyAssessmentsRoute = MyAssessmentsRouteImport.update({
+  id: '/my-assessments',
+  path: '/my-assessments',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LearningStyleRoute = LearningStyleRouteImport.update({
@@ -108,6 +121,11 @@ const CareerTypeAssessmentRoute = CareerTypeAssessmentRouteImport.update({
 const BookingRoute = BookingRouteImport.update({
   id: '/booking',
   path: '/booking',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AcademicMajorRoute = AcademicMajorRouteImport.update({
@@ -167,6 +185,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/academic-major': typeof AcademicMajorRoute
+  '/auth': typeof AuthRoute
   '/booking': typeof BookingRoute
   '/career-type-assessment': typeof CareerTypeAssessmentRoute
   '/clarity-check': typeof ClarityCheckRoute
@@ -175,7 +194,9 @@ export interface FileRoutesByFullPath {
   '/join-as-coach': typeof JoinAsCoachRoute
   '/labor-market': typeof LaborMarketRoute
   '/learning-style': typeof LearningStyleRoute
+  '/my-assessments': typeof MyAssessmentsRoute
   '/privacy': typeof PrivacyRoute
+  '/profile': typeof ProfileRoute
   '/resources': typeof ResourcesRouteWithChildren
   '/review360': typeof Review360Route
   '/sector-guide': typeof SectorGuideRoute
@@ -194,6 +215,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/academic-major': typeof AcademicMajorRoute
+  '/auth': typeof AuthRoute
   '/booking': typeof BookingRoute
   '/career-type-assessment': typeof CareerTypeAssessmentRoute
   '/clarity-check': typeof ClarityCheckRoute
@@ -202,7 +224,9 @@ export interface FileRoutesByTo {
   '/join-as-coach': typeof JoinAsCoachRoute
   '/labor-market': typeof LaborMarketRoute
   '/learning-style': typeof LearningStyleRoute
+  '/my-assessments': typeof MyAssessmentsRoute
   '/privacy': typeof PrivacyRoute
+  '/profile': typeof ProfileRoute
   '/resources': typeof ResourcesRouteWithChildren
   '/review360': typeof Review360Route
   '/sector-guide': typeof SectorGuideRoute
@@ -222,6 +246,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/academic-major': typeof AcademicMajorRoute
+  '/auth': typeof AuthRoute
   '/booking': typeof BookingRoute
   '/career-type-assessment': typeof CareerTypeAssessmentRoute
   '/clarity-check': typeof ClarityCheckRoute
@@ -230,7 +255,9 @@ export interface FileRoutesById {
   '/join-as-coach': typeof JoinAsCoachRoute
   '/labor-market': typeof LaborMarketRoute
   '/learning-style': typeof LearningStyleRoute
+  '/my-assessments': typeof MyAssessmentsRoute
   '/privacy': typeof PrivacyRoute
+  '/profile': typeof ProfileRoute
   '/resources': typeof ResourcesRouteWithChildren
   '/review360': typeof Review360Route
   '/sector-guide': typeof SectorGuideRoute
@@ -251,6 +278,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/academic-major'
+    | '/auth'
     | '/booking'
     | '/career-type-assessment'
     | '/clarity-check'
@@ -259,7 +287,9 @@ export interface FileRouteTypes {
     | '/join-as-coach'
     | '/labor-market'
     | '/learning-style'
+    | '/my-assessments'
     | '/privacy'
+    | '/profile'
     | '/resources'
     | '/review360'
     | '/sector-guide'
@@ -278,6 +308,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/academic-major'
+    | '/auth'
     | '/booking'
     | '/career-type-assessment'
     | '/clarity-check'
@@ -286,7 +317,9 @@ export interface FileRouteTypes {
     | '/join-as-coach'
     | '/labor-market'
     | '/learning-style'
+    | '/my-assessments'
     | '/privacy'
+    | '/profile'
     | '/resources'
     | '/review360'
     | '/sector-guide'
@@ -305,6 +338,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/academic-major'
+    | '/auth'
     | '/booking'
     | '/career-type-assessment'
     | '/clarity-check'
@@ -313,7 +347,9 @@ export interface FileRouteTypes {
     | '/join-as-coach'
     | '/labor-market'
     | '/learning-style'
+    | '/my-assessments'
     | '/privacy'
+    | '/profile'
     | '/resources'
     | '/review360'
     | '/sector-guide'
@@ -333,6 +369,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   AcademicMajorRoute: typeof AcademicMajorRoute
+  AuthRoute: typeof AuthRoute
   BookingRoute: typeof BookingRoute
   CareerTypeAssessmentRoute: typeof CareerTypeAssessmentRoute
   ClarityCheckRoute: typeof ClarityCheckRoute
@@ -341,7 +378,9 @@ export interface RootRouteChildren {
   JoinAsCoachRoute: typeof JoinAsCoachRoute
   LaborMarketRoute: typeof LaborMarketRoute
   LearningStyleRoute: typeof LearningStyleRoute
+  MyAssessmentsRoute: typeof MyAssessmentsRoute
   PrivacyRoute: typeof PrivacyRoute
+  ProfileRoute: typeof ProfileRoute
   ResourcesRoute: typeof ResourcesRouteWithChildren
   Review360Route: typeof Review360Route
   SectorGuideRoute: typeof SectorGuideRoute
@@ -399,11 +438,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResourcesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/privacy': {
       id: '/privacy'
       path: '/privacy'
       fullPath: '/privacy'
       preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/my-assessments': {
+      id: '/my-assessments'
+      path: '/my-assessments'
+      fullPath: '/my-assessments'
+      preLoaderRoute: typeof MyAssessmentsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/learning-style': {
@@ -460,6 +513,13 @@ declare module '@tanstack/react-router' {
       path: '/booking'
       fullPath: '/booking'
       preLoaderRoute: typeof BookingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/academic-major': {
@@ -554,6 +614,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   AcademicMajorRoute: AcademicMajorRoute,
+  AuthRoute: AuthRoute,
   BookingRoute: BookingRoute,
   CareerTypeAssessmentRoute: CareerTypeAssessmentRoute,
   ClarityCheckRoute: ClarityCheckRoute,
@@ -562,7 +623,9 @@ const rootRouteChildren: RootRouteChildren = {
   JoinAsCoachRoute: JoinAsCoachRoute,
   LaborMarketRoute: LaborMarketRoute,
   LearningStyleRoute: LearningStyleRoute,
+  MyAssessmentsRoute: MyAssessmentsRoute,
   PrivacyRoute: PrivacyRoute,
+  ProfileRoute: ProfileRoute,
   ResourcesRoute: ResourcesRouteWithChildren,
   Review360Route: Review360Route,
   SectorGuideRoute: SectorGuideRoute,
@@ -578,13 +641,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

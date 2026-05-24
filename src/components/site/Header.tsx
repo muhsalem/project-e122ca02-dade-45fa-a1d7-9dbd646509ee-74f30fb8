@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { Menu, X, Compass, ChevronDown } from "lucide-react";
+import { Menu, X, Compass, ChevronDown, User as UserIcon } from "lucide-react";
+import { useAuth } from "@/hooks/use-auth";
 
 const nav = [
   { to: "/", label: "الرئيسية" },
@@ -28,6 +29,7 @@ const navAfter = [
 export function Header() {
   const [open, setOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const { isAuthenticated } = useAuth();
 
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur-md">
@@ -50,7 +52,6 @@ export function Header() {
             </Link>
           ))}
 
-          {/* Dropdown */}
           <div
             className="relative"
             onMouseEnter={() => setDropdownOpen(true)}
@@ -94,12 +95,30 @@ export function Header() {
           ))}
         </nav>
 
-        <Link
-          to="/booking"
-          className="hidden shrink-0 whitespace-nowrap rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90 md:inline-flex"
-        >
-          ابدأ رحلتك
-        </Link>
+        <div className="hidden items-center gap-2 md:flex">
+          {isAuthenticated ? (
+            <Link
+              to="/profile"
+              className="inline-flex items-center gap-1.5 rounded-md border border-border px-3 py-2 text-sm font-medium transition-colors hover:bg-muted"
+            >
+              <UserIcon className="h-4 w-4" />
+              ملفي
+            </Link>
+          ) : (
+            <Link
+              to="/auth"
+              className="inline-flex items-center rounded-md border border-border px-3 py-2 text-sm font-medium transition-colors hover:bg-muted"
+            >
+              دخول
+            </Link>
+          )}
+          <Link
+            to="/booking"
+            className="shrink-0 whitespace-nowrap rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
+          >
+            ابدأ رحلتك
+          </Link>
+        </div>
 
         <button
           className="md:hidden"
@@ -147,6 +166,13 @@ export function Header() {
                 {item.label}
               </Link>
             ))}
+            <Link
+              to={isAuthenticated ? "/profile" : "/auth"}
+              onClick={() => setOpen(false)}
+              className="mt-2 border-t border-border pt-3 py-3 text-foreground/80"
+            >
+              {isAuthenticated ? "ملفي الشخصي" : "تسجيل الدخول"}
+            </Link>
           </nav>
         </div>
       )}

@@ -7,6 +7,7 @@ const Schema = z.object({
   learningStyleCode: z.string().max(32).regex(/^LSA-[A-Z0-9-]+$/).optional().or(z.literal("")),
   academicMajorCode: z.string().max(32).regex(/^MAJ-[A-Z0-9-]+$/).optional().or(z.literal("")),
   careerTitleCode: z.string().max(32).regex(/^CPT-[A-Z0-9-]+$/).optional().or(z.literal("")),
+  userId: z.string().uuid().optional(),
 });
 
 function generateCode() {
@@ -121,6 +122,7 @@ export const submitComprehensive = createServerFn({ method: "POST" })
       name: userName,
       answers: { __sources: fetched.map((f) => ({ label: f.label, code: f.code })) },
       report,
+      user_id: data.userId ?? null,
     });
     if (insErr) {
       console.error("Insert error:", insErr);

@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { Loader2, Sparkles, Layers, ArrowLeft, Brain, BookOpen, GraduationCap, Briefcase, Building2 } from "lucide-react";
 import { submitComprehensive } from "@/lib/comprehensive.functions";
+import { useAuth } from "@/hooks/use-auth";
 
 export const Route = createFileRoute("/comprehensive-assessment")({
   head: () => ({
@@ -36,6 +37,7 @@ const FIELDS: Field[] = [
 function ComprehensivePage() {
   const navigate = useNavigate();
   const submit = useServerFn(submitComprehensive);
+  const { user } = useAuth();
 
   const [name, setName] = useState("");
   const [codes, setCodes] = useState<Record<string, string>>({});
@@ -55,6 +57,7 @@ function ComprehensivePage() {
           learningStyleCode: codes.learningStyleCode?.trim() || "",
           academicMajorCode: codes.academicMajorCode?.trim() || "",
           careerTitleCode: codes.careerTitleCode?.trim() || "",
+          userId: user?.id,
         },
       });
       navigate({ to: "/report/$code", params: { code: res.code } });
