@@ -221,6 +221,29 @@ function AcademicMajorPage() {
         </div>
       </section>
 
+      <section className="container-page pt-8">
+        <div className="mx-auto max-w-3xl rounded-2xl border border-gold/30 bg-gradient-to-br from-gold/5 to-primary/5 p-5">
+          <div className="flex items-center gap-2">
+            <GraduationCap className="h-5 w-5 text-gold" />
+            <h2 className="font-serif text-base text-primary">يعتمد التقرير على التصنيف الدولي ISCED (UNESCO)</h2>
+          </div>
+          <p className="mt-2 text-xs leading-6 text-muted-foreground">
+            سيُصنّف كل تخصص مرشّح وفق <strong>ISCED-F 2013</strong> (مجالات التعليم) و<strong>ISCED 2011</strong> (مستويات التعليم)،
+            ويُحدَّد المستوى المناسب لك تلقائياً حسب مرحلتك الحالية.
+          </p>
+          <div className="mt-4 grid gap-2 text-[11px] sm:grid-cols-2">
+            <div className="rounded-lg border border-border bg-card p-3">
+              <p className="font-semibold text-primary">مستويات ISCED 2011</p>
+              <p className="mt-1 leading-5 text-muted-foreground">3 ثانوي • 4 ما بعد ثانوي • 5 دبلوم تقني • 6 بكالوريوس • 7 ماجستير • 8 دكتوراه</p>
+            </div>
+            <div className="rounded-lg border border-border bg-card p-3">
+              <p className="font-semibold text-primary">مجالات ISCED-F 2013</p>
+              <p className="mt-1 leading-5 text-muted-foreground">01 تربية • 02 إنسانيات وفنون • 03 اجتماعيات • 04 أعمال وقانون • 05 علوم طبيعية • 06 تقنية معلومات • 07 هندسة • 08 زراعة • 09 صحة • 10 خدمات</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="container-page py-12">
         <div className="mx-auto max-w-3xl">
           <div className="mb-3 flex items-center justify-between text-xs text-muted-foreground">
