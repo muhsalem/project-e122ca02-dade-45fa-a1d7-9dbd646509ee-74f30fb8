@@ -14,6 +14,7 @@ import { Route as SectorGuideRouteImport } from './routes/sector-guide'
 import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as LearningStyleRouteImport } from './routes/learning-style'
 import { Route as LaborMarketRouteImport } from './routes/labor-market'
+import { Route as JoinAsCoachRouteImport } from './routes/join-as-coach'
 import { Route as CounselorRouteImport } from './routes/counselor'
 import { Route as ComprehensiveAssessmentRouteImport } from './routes/comprehensive-assessment'
 import { Route as CareerTypeAssessmentRouteImport } from './routes/career-type-assessment'
@@ -49,6 +50,11 @@ const LearningStyleRoute = LearningStyleRouteImport.update({
 const LaborMarketRoute = LaborMarketRouteImport.update({
   id: '/labor-market',
   path: '/labor-market',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JoinAsCoachRoute = JoinAsCoachRouteImport.update({
+  id: '/join-as-coach',
+  path: '/join-as-coach',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CounselorRoute = CounselorRouteImport.update({
@@ -117,6 +123,7 @@ export interface FileRoutesByFullPath {
   '/career-type-assessment': typeof CareerTypeAssessmentRoute
   '/comprehensive-assessment': typeof ComprehensiveAssessmentRoute
   '/counselor': typeof CounselorRoute
+  '/join-as-coach': typeof JoinAsCoachRoute
   '/labor-market': typeof LaborMarketRoute
   '/learning-style': typeof LearningStyleRoute
   '/resources': typeof ResourcesRouteWithChildren
@@ -135,6 +142,7 @@ export interface FileRoutesByTo {
   '/career-type-assessment': typeof CareerTypeAssessmentRoute
   '/comprehensive-assessment': typeof ComprehensiveAssessmentRoute
   '/counselor': typeof CounselorRoute
+  '/join-as-coach': typeof JoinAsCoachRoute
   '/labor-market': typeof LaborMarketRoute
   '/learning-style': typeof LearningStyleRoute
   '/resources': typeof ResourcesRouteWithChildren
@@ -154,6 +162,7 @@ export interface FileRoutesById {
   '/career-type-assessment': typeof CareerTypeAssessmentRoute
   '/comprehensive-assessment': typeof ComprehensiveAssessmentRoute
   '/counselor': typeof CounselorRoute
+  '/join-as-coach': typeof JoinAsCoachRoute
   '/labor-market': typeof LaborMarketRoute
   '/learning-style': typeof LearningStyleRoute
   '/resources': typeof ResourcesRouteWithChildren
@@ -174,6 +183,7 @@ export interface FileRouteTypes {
     | '/career-type-assessment'
     | '/comprehensive-assessment'
     | '/counselor'
+    | '/join-as-coach'
     | '/labor-market'
     | '/learning-style'
     | '/resources'
@@ -192,6 +202,7 @@ export interface FileRouteTypes {
     | '/career-type-assessment'
     | '/comprehensive-assessment'
     | '/counselor'
+    | '/join-as-coach'
     | '/labor-market'
     | '/learning-style'
     | '/resources'
@@ -210,6 +221,7 @@ export interface FileRouteTypes {
     | '/career-type-assessment'
     | '/comprehensive-assessment'
     | '/counselor'
+    | '/join-as-coach'
     | '/labor-market'
     | '/learning-style'
     | '/resources'
@@ -229,6 +241,7 @@ export interface RootRouteChildren {
   CareerTypeAssessmentRoute: typeof CareerTypeAssessmentRoute
   ComprehensiveAssessmentRoute: typeof ComprehensiveAssessmentRoute
   CounselorRoute: typeof CounselorRoute
+  JoinAsCoachRoute: typeof JoinAsCoachRoute
   LaborMarketRoute: typeof LaborMarketRoute
   LearningStyleRoute: typeof LearningStyleRoute
   ResourcesRoute: typeof ResourcesRouteWithChildren
@@ -273,6 +286,13 @@ declare module '@tanstack/react-router' {
       path: '/labor-market'
       fullPath: '/labor-market'
       preLoaderRoute: typeof LaborMarketRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/join-as-coach': {
+      id: '/join-as-coach'
+      path: '/join-as-coach'
+      fullPath: '/join-as-coach'
+      preLoaderRoute: typeof JoinAsCoachRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/counselor': {
@@ -378,6 +398,7 @@ const rootRouteChildren: RootRouteChildren = {
   CareerTypeAssessmentRoute: CareerTypeAssessmentRoute,
   ComprehensiveAssessmentRoute: ComprehensiveAssessmentRoute,
   CounselorRoute: CounselorRoute,
+  JoinAsCoachRoute: JoinAsCoachRoute,
   LaborMarketRoute: LaborMarketRoute,
   LearningStyleRoute: LearningStyleRoute,
   ResourcesRoute: ResourcesRouteWithChildren,
@@ -389,3 +410,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
