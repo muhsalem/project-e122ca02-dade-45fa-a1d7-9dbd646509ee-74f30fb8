@@ -12,9 +12,7 @@ const nav = [
   { to: "/sector-guide", label: "دليل القطاع والصناعات" },
   { to: "/labor-market", label: "ذكاء سوق العمل" },
   { to: "/comprehensive-assessment", label: "التقييم الشامل" },
-  { to: "/counselor", label: "لوحة المرشد" },
-  { to: "/booking", label: "حجز جلسة" },
-  { to: "/join-as-coach", label: "انضم كمرشد" },
+  { to: "/counselor", label: "بوابة المرشد والكوتش المهني" },
   { to: "/resources", label: "الموارد" },
   { to: "/about", label: "من نحن" },
 ] as const;
