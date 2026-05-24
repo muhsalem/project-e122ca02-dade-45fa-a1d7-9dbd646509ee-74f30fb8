@@ -25,6 +25,7 @@ export type Database = {
           name: string | null
           report: string
           stage: string | null
+          user_id: string | null
         }
         Insert: {
           age?: string | null
@@ -36,6 +37,7 @@ export type Database = {
           name?: string | null
           report: string
           stage?: string | null
+          user_id?: string | null
         }
         Update: {
           age?: string | null
@@ -47,6 +49,7 @@ export type Database = {
           name?: string | null
           report?: string
           stage?: string | null
+          user_id?: string | null
         }
         Relationships: []
       }
@@ -62,6 +65,7 @@ export type Database = {
           q4_action_plan: number
           q5_future_optimism: number
           total_score: number
+          user_id: string | null
         }
         Insert: {
           code: string
@@ -74,6 +78,7 @@ export type Database = {
           q4_action_plan: number
           q5_future_optimism: number
           total_score: number
+          user_id?: string | null
         }
         Update: {
           code?: string
@@ -86,6 +91,7 @@ export type Database = {
           q4_action_plan?: number
           q5_future_optimism?: number
           total_score?: number
+          user_id?: string | null
         }
         Relationships: []
       }
@@ -213,6 +219,7 @@ export type Database = {
           skills_to_develop: Json
           success_metrics: string | null
           updated_at: string
+          user_id: string | null
           weekly_actions: Json
         }
         Insert: {
@@ -227,6 +234,7 @@ export type Database = {
           skills_to_develop?: Json
           success_metrics?: string | null
           updated_at?: string
+          user_id?: string | null
           weekly_actions?: Json
         }
         Update: {
@@ -241,6 +249,7 @@ export type Database = {
           skills_to_develop?: Json
           success_metrics?: string | null
           updated_at?: string
+          user_id?: string | null
           weekly_actions?: Json
         }
         Relationships: []
@@ -406,6 +415,7 @@ export type Database = {
           phq2_total: number
           referral_needed: boolean
           risk_level: string
+          user_id: string | null
         }
         Insert: {
           career_anx_q1: number
@@ -423,6 +433,7 @@ export type Database = {
           phq2_total: number
           referral_needed?: boolean
           risk_level: string
+          user_id?: string | null
         }
         Update: {
           career_anx_q1?: number
@@ -440,6 +451,7 @@ export type Database = {
           phq2_total?: number
           referral_needed?: boolean
           risk_level?: string
+          user_id?: string | null
         }
         Relationships: []
       }
