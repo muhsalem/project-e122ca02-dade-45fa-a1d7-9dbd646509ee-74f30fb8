@@ -21,16 +21,26 @@ import { submitCareerType } from "@/lib/career-type.functions";
 export const Route = createFileRoute("/career-type-assessment")({
   head: () => ({
     meta: [
-      { title: "تقييم نوع المسار المهني — Job / Entrepreneur / Freelance / Occupation | بوصلة" },
+      { title: "اكتشف مسماك المهني المناسب لك — ISCO-08 و ASCO | بوصلة" },
       {
         name: "description",
         content:
-          "تقييم تشخيصي على مستويين: اختر مسارك (وظيفة / ريادة أعمال / عمل حر / نشاط عام) ثم طبيعة العمل (مهنة احترافية / حِرفة)، مع تقرير شامل وكود مميز للمناقشة مع مرشد مهني.",
+          "تقييم تشخيصي شامل يدمج ميول RIASEC مع تحديد نوع المسار (وظيفة/ريادة/عمل حر/نشاط) وطبيعة العمل (مهنة/حِرفة)، ويربط نتيجتك بمسمى مهني وفق التصنيف الدولي ISCO-08 والتصنيف العربي المعياري للمهن ASCO.",
       },
     ],
   }),
   component: CareerTypePage,
 });
+
+type RiasecDim = "R" | "I" | "A" | "S" | "E" | "C";
+const RIASEC_DIMS: { key: RiasecDim; ar: string; en: string; desc: string }[] = [
+  { key: "R", ar: "الواقعي", en: "Realistic", desc: "أعمال يدوية/تقنية/آلات" },
+  { key: "I", ar: "الاستقصائي", en: "Investigative", desc: "بحث وتحليل وحل مشكلات" },
+  { key: "A", ar: "الفني", en: "Artistic", desc: "إبداع وتعبير وتصميم" },
+  { key: "S", ar: "الاجتماعي", en: "Social", desc: "مساعدة وتعليم الآخرين" },
+  { key: "E", ar: "المبادر", en: "Enterprising", desc: "إقناع وقيادة ومبيعات" },
+  { key: "C", ar: "التقليدي", en: "Conventional", desc: "تنظيم بيانات وإجراءات" },
+];
 
 type Type =
   | "occupation"
