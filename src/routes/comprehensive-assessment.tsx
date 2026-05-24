@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
-import { Loader2, Sparkles, Layers, ArrowLeft } from "lucide-react";
+import { Loader2, Sparkles, Layers, ArrowLeft, Brain, BookOpen, GraduationCap, Briefcase, Building2 } from "lucide-react";
 import { submitComprehensive } from "@/lib/comprehensive.functions";
 
 export const Route = createFileRoute("/comprehensive-assessment")({
@@ -83,8 +83,44 @@ function ComprehensivePage() {
         </div>
       </section>
 
+      <section className="container-page py-10">
+        <div className="mx-auto max-w-5xl">
+          <h2 className="mb-2 text-center font-serif text-2xl text-primary">ابدأ من هنا — تقييمات الاكتشاف</h2>
+          <p className="mx-auto mb-6 max-w-2xl text-center text-sm text-muted-foreground">
+            أكمل التقييمات أدناه للحصول على أكواد التقارير، ثم أدخلها في الأسفل لإنشاء تقريرك الموحّد. يمكنك أيضًا تصفح دليل القطاعات للتعرف على بيئة العمل.
+          </p>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+            {[
+              { to: "/self-discovery", label: "اكتشف ذاتك", icon: Brain, desc: "شخصيتك وميولك" },
+              { to: "/learning-style", label: "نمط تعلمك", icon: BookOpen, desc: "كيف تتعلم بأفضل شكل" },
+              { to: "/academic-major", label: "تخصصك الدراسي", icon: GraduationCap, desc: "ISCED + توصيات" },
+              { to: "/career-type-assessment", label: "مسارك المهني", icon: Briefcase, desc: "المسمى الأنسب" },
+              { to: "/sector-guide", label: "دليل القطاعات", icon: Building2, desc: "تعرّف على الصناعات" },
+            ].map((c) => {
+              const Icon = c.icon;
+              return (
+                <Link
+                  key={c.to}
+                  to={c.to}
+                  className="group rounded-2xl border border-border bg-card p-5 text-center transition-all hover:-translate-y-1 hover:border-gold hover:shadow-lg"
+                >
+                  <div className="mx-auto mb-3 inline-flex h-12 w-12 items-center justify-center rounded-full bg-gold/10 text-gold transition-colors group-hover:bg-gold group-hover:text-primary-foreground">
+                    <Icon className="h-6 w-6" />
+                  </div>
+                  <div className="font-semibold text-primary">{c.label}</div>
+                  <div className="mt-1 text-xs text-muted-foreground">{c.desc}</div>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
       <section className="container-page py-12">
         <div className="mx-auto max-w-2xl rounded-2xl border border-border bg-card p-6 md:p-8">
+          <h2 className="mb-1 font-serif text-xl text-primary">ادمج تقاريرك في تقرير واحد</h2>
+          <p className="mb-5 text-sm text-muted-foreground">أدخل أكواد التقارير التي حصلت عليها من التقييمات أعلاه.</p>
+
           <div className="mb-4">
             <label className="mb-1 block text-sm font-medium">اسمك (اختياري)</label>
             <input
