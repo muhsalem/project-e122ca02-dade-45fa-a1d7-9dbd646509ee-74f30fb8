@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SectorGuideRouteImport } from './routes/sector-guide'
 import { Route as ResourcesRouteImport } from './routes/resources'
+import { Route as RateCoachRouteImport } from './routes/rate-coach'
 import { Route as LearningStyleRouteImport } from './routes/learning-style'
 import { Route as LaborMarketRouteImport } from './routes/labor-market'
 import { Route as DeepAssessmentRouteImport } from './routes/deep-assessment'
@@ -33,6 +34,11 @@ const SectorGuideRoute = SectorGuideRouteImport.update({
 const ResourcesRoute = ResourcesRouteImport.update({
   id: '/resources',
   path: '/resources',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RateCoachRoute = RateCoachRouteImport.update({
+  id: '/rate-coach',
+  path: '/rate-coach',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LearningStyleRoute = LearningStyleRouteImport.update({
@@ -113,6 +119,7 @@ export interface FileRoutesByFullPath {
   '/deep-assessment': typeof DeepAssessmentRoute
   '/labor-market': typeof LaborMarketRoute
   '/learning-style': typeof LearningStyleRoute
+  '/rate-coach': typeof RateCoachRoute
   '/resources': typeof ResourcesRouteWithChildren
   '/sector-guide': typeof SectorGuideRoute
   '/report/$code': typeof ReportCodeRoute
@@ -130,6 +137,7 @@ export interface FileRoutesByTo {
   '/deep-assessment': typeof DeepAssessmentRoute
   '/labor-market': typeof LaborMarketRoute
   '/learning-style': typeof LearningStyleRoute
+  '/rate-coach': typeof RateCoachRoute
   '/resources': typeof ResourcesRouteWithChildren
   '/sector-guide': typeof SectorGuideRoute
   '/report/$code': typeof ReportCodeRoute
@@ -148,6 +156,7 @@ export interface FileRoutesById {
   '/deep-assessment': typeof DeepAssessmentRoute
   '/labor-market': typeof LaborMarketRoute
   '/learning-style': typeof LearningStyleRoute
+  '/rate-coach': typeof RateCoachRoute
   '/resources': typeof ResourcesRouteWithChildren
   '/sector-guide': typeof SectorGuideRoute
   '/report/$code': typeof ReportCodeRoute
@@ -167,6 +176,7 @@ export interface FileRouteTypes {
     | '/deep-assessment'
     | '/labor-market'
     | '/learning-style'
+    | '/rate-coach'
     | '/resources'
     | '/sector-guide'
     | '/report/$code'
@@ -184,6 +194,7 @@ export interface FileRouteTypes {
     | '/deep-assessment'
     | '/labor-market'
     | '/learning-style'
+    | '/rate-coach'
     | '/resources'
     | '/sector-guide'
     | '/report/$code'
@@ -201,6 +212,7 @@ export interface FileRouteTypes {
     | '/deep-assessment'
     | '/labor-market'
     | '/learning-style'
+    | '/rate-coach'
     | '/resources'
     | '/sector-guide'
     | '/report/$code'
@@ -219,6 +231,7 @@ export interface RootRouteChildren {
   DeepAssessmentRoute: typeof DeepAssessmentRoute
   LaborMarketRoute: typeof LaborMarketRoute
   LearningStyleRoute: typeof LearningStyleRoute
+  RateCoachRoute: typeof RateCoachRoute
   ResourcesRoute: typeof ResourcesRouteWithChildren
   SectorGuideRoute: typeof SectorGuideRoute
   ReportCodeRoute: typeof ReportCodeRoute
@@ -239,6 +252,13 @@ declare module '@tanstack/react-router' {
       path: '/resources'
       fullPath: '/resources'
       preLoaderRoute: typeof ResourcesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/rate-coach': {
+      id: '/rate-coach'
+      path: '/rate-coach'
+      fullPath: '/rate-coach'
+      preLoaderRoute: typeof RateCoachRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/learning-style': {
@@ -360,6 +380,7 @@ const rootRouteChildren: RootRouteChildren = {
   DeepAssessmentRoute: DeepAssessmentRoute,
   LaborMarketRoute: LaborMarketRoute,
   LearningStyleRoute: LearningStyleRoute,
+  RateCoachRoute: RateCoachRoute,
   ResourcesRoute: ResourcesRouteWithChildren,
   SectorGuideRoute: SectorGuideRoute,
   ReportCodeRoute: ReportCodeRoute,
