@@ -22,6 +22,7 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ReportIndexRouteImport } from './routes/report.index'
 import { Route as ResourcesCoachingVsCareerCounselingRouteImport } from './routes/resources.coaching-vs-career-counseling'
+import { Route as ResourcesCareerPathTermsRouteImport } from './routes/resources.career-path-terms'
 import { Route as ReportCodeRouteImport } from './routes/report.$code'
 
 const SectorGuideRoute = SectorGuideRouteImport.update({
@@ -90,6 +91,12 @@ const ResourcesCoachingVsCareerCounselingRoute =
     path: '/coaching-vs-career-counseling',
     getParentRoute: () => ResourcesRoute,
   } as any)
+const ResourcesCareerPathTermsRoute =
+  ResourcesCareerPathTermsRouteImport.update({
+    id: '/career-path-terms',
+    path: '/career-path-terms',
+    getParentRoute: () => ResourcesRoute,
+  } as any)
 const ReportCodeRoute = ReportCodeRouteImport.update({
   id: '/report/$code',
   path: '/report/$code',
@@ -109,6 +116,7 @@ export interface FileRoutesByFullPath {
   '/resources': typeof ResourcesRouteWithChildren
   '/sector-guide': typeof SectorGuideRoute
   '/report/$code': typeof ReportCodeRoute
+  '/resources/career-path-terms': typeof ResourcesCareerPathTermsRoute
   '/resources/coaching-vs-career-counseling': typeof ResourcesCoachingVsCareerCounselingRoute
   '/report/': typeof ReportIndexRoute
 }
@@ -125,6 +133,7 @@ export interface FileRoutesByTo {
   '/resources': typeof ResourcesRouteWithChildren
   '/sector-guide': typeof SectorGuideRoute
   '/report/$code': typeof ReportCodeRoute
+  '/resources/career-path-terms': typeof ResourcesCareerPathTermsRoute
   '/resources/coaching-vs-career-counseling': typeof ResourcesCoachingVsCareerCounselingRoute
   '/report': typeof ReportIndexRoute
 }
@@ -142,6 +151,7 @@ export interface FileRoutesById {
   '/resources': typeof ResourcesRouteWithChildren
   '/sector-guide': typeof SectorGuideRoute
   '/report/$code': typeof ReportCodeRoute
+  '/resources/career-path-terms': typeof ResourcesCareerPathTermsRoute
   '/resources/coaching-vs-career-counseling': typeof ResourcesCoachingVsCareerCounselingRoute
   '/report/': typeof ReportIndexRoute
 }
@@ -160,6 +170,7 @@ export interface FileRouteTypes {
     | '/resources'
     | '/sector-guide'
     | '/report/$code'
+    | '/resources/career-path-terms'
     | '/resources/coaching-vs-career-counseling'
     | '/report/'
   fileRoutesByTo: FileRoutesByTo
@@ -176,6 +187,7 @@ export interface FileRouteTypes {
     | '/resources'
     | '/sector-guide'
     | '/report/$code'
+    | '/resources/career-path-terms'
     | '/resources/coaching-vs-career-counseling'
     | '/report'
   id:
@@ -192,6 +204,7 @@ export interface FileRouteTypes {
     | '/resources'
     | '/sector-guide'
     | '/report/$code'
+    | '/resources/career-path-terms'
     | '/resources/coaching-vs-career-counseling'
     | '/report/'
   fileRoutesById: FileRoutesById
@@ -305,6 +318,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResourcesCoachingVsCareerCounselingRouteImport
       parentRoute: typeof ResourcesRoute
     }
+    '/resources/career-path-terms': {
+      id: '/resources/career-path-terms'
+      path: '/career-path-terms'
+      fullPath: '/resources/career-path-terms'
+      preLoaderRoute: typeof ResourcesCareerPathTermsRouteImport
+      parentRoute: typeof ResourcesRoute
+    }
     '/report/$code': {
       id: '/report/$code'
       path: '/report/$code'
@@ -316,10 +336,12 @@ declare module '@tanstack/react-router' {
 }
 
 interface ResourcesRouteChildren {
+  ResourcesCareerPathTermsRoute: typeof ResourcesCareerPathTermsRoute
   ResourcesCoachingVsCareerCounselingRoute: typeof ResourcesCoachingVsCareerCounselingRoute
 }
 
 const ResourcesRouteChildren: ResourcesRouteChildren = {
+  ResourcesCareerPathTermsRoute: ResourcesCareerPathTermsRoute,
   ResourcesCoachingVsCareerCounselingRoute:
     ResourcesCoachingVsCareerCounselingRoute,
 }
