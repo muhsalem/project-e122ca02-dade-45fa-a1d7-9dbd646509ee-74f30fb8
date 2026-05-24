@@ -81,7 +81,7 @@ function AssessmentsPage() {
           </p>
           <div className="mx-auto mt-6 max-w-xl rounded-md border border-gold/30 bg-gold/5 p-3 text-sm">
             تريد تحليلاً أعمق بالذكاء الاصطناعي يشمل الوعي الذاتي والمهارات والأحلام والطموح؟{" "}
-            <Link to="/deep-assessment" className="font-semibold text-primary underline">جرّب التقييم الشامل</Link>
+            <Link to="/self-discovery" className="font-semibold text-primary underline">جرّب اكتشاف ذاتك</Link>
           </div>
         </div>
       </section>
