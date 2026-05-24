@@ -63,7 +63,7 @@ function CounselorPage() {
             ثم صُغ <span className="font-semibold text-primary">خطتك التنفيذية</span> مع كوتش مهني متخصص.
           </p>
 
-          <div className="mt-6 inline-flex flex-wrap justify-center gap-2 rounded-full border border-border bg-background p-1 shadow-[var(--shadow-soft)]">
+          <div className="mx-auto mt-6 flex max-w-2xl gap-2 rounded-full border border-border bg-background p-1 shadow-[var(--shadow-soft)]">
             {tabs.map((t) => {
               const Icon = t.icon;
               const active = tab === t.key;
@@ -71,14 +71,14 @@ function CounselorPage() {
                 <button
                   key={t.key}
                   onClick={() => setTab(t.key)}
-                  className={`inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-xs font-medium transition-colors ${
+                  className={`flex flex-1 items-center justify-center gap-1.5 rounded-full px-3 py-2.5 text-xs font-medium transition-colors ${
                     active
                       ? "bg-primary text-primary-foreground"
                       : "text-muted-foreground hover:text-primary"
                   }`}
                 >
-                  <Icon className="h-3.5 w-3.5" />
-                  {t.label}
+                  <Icon className="h-3.5 w-3.5 shrink-0" />
+                  <span className="truncate">{t.label}</span>
                 </button>
               );
             })}
