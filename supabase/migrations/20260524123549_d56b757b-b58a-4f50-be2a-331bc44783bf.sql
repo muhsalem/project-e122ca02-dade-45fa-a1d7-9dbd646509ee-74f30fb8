@@ -1,0 +1,1 @@
+DROP POLICY "Anyone can submit a rating" ON public.coach_ratings;

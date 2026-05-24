@@ -12,6 +12,7 @@ const nav = [
   { to: "/assessments", label: "ميولك (RIASEC)" },
   { to: "/counselor", label: "لوحة المرشد" },
   { to: "/booking", label: "حجز جلسة" },
+  { to: "/rate-coach", label: "قيّم المرشد" },
   { to: "/resources", label: "الموارد" },
   { to: "/about", label: "من نحن" },
 ] as const;
