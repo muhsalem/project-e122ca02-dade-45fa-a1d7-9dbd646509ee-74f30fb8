@@ -55,3 +55,18 @@ export const submitCoachApplication = createServerFn({ method: "POST" })
 
     return { id: row.id, status: "pending" as const };
   });
+
+export const listApprovedCoaches = createServerFn({ method: "GET" })
+  .handler(async () => {
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data, error } = await supabaseAdmin
+      .from("coaches")
+      .select("id, full_name, photo_url, country, city, bio, specializations, experience_years, hourly_price, currency, languages, linkedin_url, website_url")
+      .eq("status", "approved")
+      .order("created_at", { ascending: false });
+    if (error) {
+      console.error("List coaches error:", error);
+      return { coaches: [] };
+    }
+    return { coaches: data ?? [] };
+  });
