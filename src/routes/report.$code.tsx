@@ -4,6 +4,7 @@ import { Copy, Check, Printer, ArrowLeft, Loader2 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { supabase } from "@/integrations/supabase/client";
 import { ContentProtection } from "@/components/site/ContentProtection";
+import { MarketPulseInsights } from "@/components/site/MarketPulseInsights";
 
 export const Route = createFileRoute("/report/$code")({
   head: ({ params }) => ({
@@ -125,6 +126,7 @@ function ReportPage() {
       <article className="container-page py-12 relative z-10">
         <div className="report-content mx-auto max-w-3xl text-base leading-relaxed text-foreground">
           <ReactMarkdown>{data.report}</ReactMarkdown>
+          <MarketPulseInsights reportText={data.report} />
         </div>
         <p className="mx-auto mt-10 max-w-3xl border-t border-border pt-4 text-center text-xs text-muted-foreground">
           © {new Date().getFullYear()} بوصلة® — هذا التقرير سري وشخصي. الكود {code} لمالكه فقط. يُمنع النسخ أو إعادة النشر دون إذن خطي.
