@@ -580,7 +580,7 @@ function BookingSection() {
   );
 }
 
-
+function StarRow({ label, value, onChange }: { label: string; value: number; onChange: (v: number) => void }) {
   return (
     <div>
       <div className="flex items-center justify-between">
