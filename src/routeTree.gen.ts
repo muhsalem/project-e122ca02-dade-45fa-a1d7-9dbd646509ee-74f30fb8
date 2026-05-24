@@ -14,6 +14,7 @@ import { Route as TermsRouteImport } from './routes/terms'
 import { Route as SkillsGapRouteImport } from './routes/skills-gap'
 import { Route as SelfDiscoveryRouteImport } from './routes/self-discovery'
 import { Route as SectorGuideRouteImport } from './routes/sector-guide'
+import { Route as SchoolsRouteImport } from './routes/schools'
 import { Route as Review360RouteImport } from './routes/review360'
 import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as ProfileRouteImport } from './routes/profile'
@@ -67,6 +68,11 @@ const SelfDiscoveryRoute = SelfDiscoveryRouteImport.update({
 const SectorGuideRoute = SectorGuideRouteImport.update({
   id: '/sector-guide',
   path: '/sector-guide',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SchoolsRoute = SchoolsRouteImport.update({
+  id: '/schools',
+  path: '/schools',
   getParentRoute: () => rootRouteImport,
 } as any)
 const Review360Route = Review360RouteImport.update({
@@ -240,6 +246,7 @@ export interface FileRoutesByFullPath {
   '/profile': typeof ProfileRoute
   '/resources': typeof ResourcesRouteWithChildren
   '/review360': typeof Review360Route
+  '/schools': typeof SchoolsRoute
   '/sector-guide': typeof SectorGuideRoute
   '/self-discovery': typeof SelfDiscoveryRoute
   '/skills-gap': typeof SkillsGapRoute
@@ -276,6 +283,7 @@ export interface FileRoutesByTo {
   '/profile': typeof ProfileRoute
   '/resources': typeof ResourcesRouteWithChildren
   '/review360': typeof Review360Route
+  '/schools': typeof SchoolsRoute
   '/sector-guide': typeof SectorGuideRoute
   '/self-discovery': typeof SelfDiscoveryRoute
   '/skills-gap': typeof SkillsGapRoute
@@ -313,6 +321,7 @@ export interface FileRoutesById {
   '/profile': typeof ProfileRoute
   '/resources': typeof ResourcesRouteWithChildren
   '/review360': typeof Review360Route
+  '/schools': typeof SchoolsRoute
   '/sector-guide': typeof SectorGuideRoute
   '/self-discovery': typeof SelfDiscoveryRoute
   '/skills-gap': typeof SkillsGapRoute
@@ -351,6 +360,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/resources'
     | '/review360'
+    | '/schools'
     | '/sector-guide'
     | '/self-discovery'
     | '/skills-gap'
@@ -387,6 +397,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/resources'
     | '/review360'
+    | '/schools'
     | '/sector-guide'
     | '/self-discovery'
     | '/skills-gap'
@@ -423,6 +434,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/resources'
     | '/review360'
+    | '/schools'
     | '/sector-guide'
     | '/self-discovery'
     | '/skills-gap'
@@ -460,6 +472,7 @@ export interface RootRouteChildren {
   ProfileRoute: typeof ProfileRoute
   ResourcesRoute: typeof ResourcesRouteWithChildren
   Review360Route: typeof Review360Route
+  SchoolsRoute: typeof SchoolsRoute
   SectorGuideRoute: typeof SectorGuideRoute
   SelfDiscoveryRoute: typeof SelfDiscoveryRoute
   SkillsGapRoute: typeof SkillsGapRoute
@@ -507,6 +520,13 @@ declare module '@tanstack/react-router' {
       path: '/sector-guide'
       fullPath: '/sector-guide'
       preLoaderRoute: typeof SectorGuideRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/schools': {
+      id: '/schools'
+      path: '/schools'
+      fullPath: '/schools'
+      preLoaderRoute: typeof SchoolsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/review360': {
@@ -755,6 +775,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProfileRoute: ProfileRoute,
   ResourcesRoute: ResourcesRouteWithChildren,
   Review360Route: Review360Route,
+  SchoolsRoute: SchoolsRoute,
   SectorGuideRoute: SectorGuideRoute,
   SelfDiscoveryRoute: SelfDiscoveryRoute,
   SkillsGapRoute: SkillsGapRoute,
