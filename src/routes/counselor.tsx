@@ -36,11 +36,21 @@ export const Route = createFileRoute("/counselor")({
 /* ======================= Page Shell ============================= */
 /* ================================================================ */
 
+type TabKey = "counselor" | "coach" | "join";
+
 function CounselorPage() {
+  const [tab, setTab] = useState<TabKey>("counselor");
+
+  const tabs: { key: TabKey; label: string; icon: typeof GraduationCap }[] = [
+    { key: "counselor", label: "مرشد مهني معتمد", icon: GraduationCap },
+    { key: "coach", label: "كوتش مهني — احجز جلسة", icon: Calendar },
+    { key: "join", label: "انضم كمرشد أو كوتش", icon: UserPlus },
+  ];
+
   return (
     <>
       <section className="border-b border-border bg-secondary/40">
-        <div className="container-page py-12 text-center">
+        <div className="container-page py-10 text-center">
           <span className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/10 px-4 py-1.5 text-xs font-medium text-primary">
             <GraduationCap className="h-3.5 w-3.5 text-gold" />
             دليل المرشدين والكوتشز
@@ -49,25 +59,95 @@ function CounselorPage() {
             تعرف على الكوتشين والمرشدين المهنيين
           </h1>
           <p className="mx-auto mt-3 max-w-2xl text-sm text-muted-foreground">
-            تصفح ملفات المرشدين والكوتشز المعتمدين، اطلع على تقييماتهم، واحجز جلستك المهنية بكل سهولة.
+            ابدأ النقاش مع <span className="font-semibold text-primary">مرشد مهني معتمد</span> لاستكشاف خياراتك،
+            ثم صُغ <span className="font-semibold text-primary">خطتك التنفيذية</span> مع كوتش مهني متخصص.
           </p>
 
-          <div className="mt-5 flex justify-center">
-            <Link
-              to="/join-as-coach"
-              className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gradient-to-r from-primary to-gold px-5 py-2 text-xs font-medium text-primary-foreground hover:opacity-90"
-            >
-              <UserPlus className="h-3.5 w-3.5" />
-              انضم كمرشد أو كوتش مهني
-            </Link>
+          <div className="mt-6 inline-flex flex-wrap justify-center gap-2 rounded-full border border-border bg-background p-1 shadow-[var(--shadow-soft)]">
+            {tabs.map((t) => {
+              const Icon = t.icon;
+              const active = tab === t.key;
+              return (
+                <button
+                  key={t.key}
+                  onClick={() => setTab(t.key)}
+                  className={`inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-xs font-medium transition-colors ${
+                    active
+                      ? "bg-primary text-primary-foreground"
+                      : "text-muted-foreground hover:text-primary"
+                  }`}
+                >
+                  <Icon className="h-3.5 w-3.5" />
+                  {t.label}
+                </button>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      <DirectorySection />
-      <BookingSection />
-      <RatingsSection />
+      {tab === "counselor" && (
+        <>
+          <RoleIntro
+            title="المرشد المهني المعتمد"
+            subtitle="مرحلة النقاش والاستكشاف"
+            description="يساعدك المرشد المهني المعتمد على فهم ميولك ومهاراتك، ومناقشة خياراتك المهنية بموضوعية قبل اتخاذ القرار. هذه الجلسات حوارية تشخيصية تركّز على وضوح الرؤية."
+          />
+          <DirectorySection />
+          <RatingsSection />
+        </>
+      )}
+
+      {tab === "coach" && (
+        <>
+          <RoleIntro
+            title="الكوتش المهني"
+            subtitle="مرحلة صياغة الخطة والتنفيذ"
+            description="بعد وضوح الرؤية مع المرشد، يأتي دور الكوتش المهني لمساعدتك على بناء خطة عمل تفصيلية، وتحديد الأهداف، ومتابعة تنفيذها خطوة بخطوة."
+          />
+          <BookingSection />
+        </>
+      )}
+
+      {tab === "join" && <JoinSection />}
     </>
+  );
+}
+
+function RoleIntro({ title, subtitle, description }: { title: string; subtitle: string; description: string }) {
+  return (
+    <section className="container-page pt-10">
+      <div className="mx-auto max-w-5xl rounded-2xl border border-border bg-card p-6 shadow-[var(--shadow-soft)]">
+        <div className="flex items-center gap-2">
+          <span className="rounded-full bg-gold/15 px-2.5 py-0.5 text-[11px] font-medium text-gold">{subtitle}</span>
+          <h2 className="font-serif text-xl text-primary">{title}</h2>
+        </div>
+        <p className="mt-2 text-sm text-muted-foreground">{description}</p>
+      </div>
+    </section>
+  );
+}
+
+function JoinSection() {
+  return (
+    <section className="container-page py-12">
+      <div className="mx-auto max-w-3xl rounded-2xl border border-border bg-card p-8 text-center shadow-[var(--shadow-soft)]">
+        <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-gold/15 text-gold">
+          <UserPlus className="h-7 w-7" />
+        </div>
+        <h2 className="mt-4 font-serif text-2xl text-primary">انضم إلى دليل بوصلة كمرشد أو كوتش مهني</h2>
+        <p className="mx-auto mt-3 max-w-xl text-sm text-muted-foreground">
+          إن كنت مرشدًا مهنيًا معتمدًا أو كوتشًا متخصصًا، انضم إلى منصتنا لاستقبال الحجوزات والوصول إلى آلاف الباحثين عن التوجيه المهني.
+        </p>
+        <Link
+          to="/join-as-coach"
+          className="mt-6 inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gradient-to-r from-primary to-gold px-6 py-2.5 text-sm font-medium text-primary-foreground hover:opacity-90"
+        >
+          <UserPlus className="h-4 w-4" />
+          ابدأ التسجيل الآن
+        </Link>
+      </div>
+    </section>
   );
 }
 
