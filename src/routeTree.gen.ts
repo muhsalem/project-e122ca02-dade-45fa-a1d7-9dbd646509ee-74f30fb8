@@ -17,6 +17,7 @@ import { Route as Review360RouteImport } from './routes/review360'
 import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as MyAssessmentsRouteImport } from './routes/my-assessments'
 import { Route as LearningStyleRouteImport } from './routes/learning-style'
 import { Route as LaborMarketRouteImport } from './routes/labor-market'
 import { Route as JoinAsCoachRouteImport } from './routes/join-as-coach'
@@ -75,6 +76,11 @@ const ProfileRoute = ProfileRouteImport.update({
 const PrivacyRoute = PrivacyRouteImport.update({
   id: '/privacy',
   path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MyAssessmentsRoute = MyAssessmentsRouteImport.update({
+  id: '/my-assessments',
+  path: '/my-assessments',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LearningStyleRoute = LearningStyleRouteImport.update({
@@ -188,6 +194,7 @@ export interface FileRoutesByFullPath {
   '/join-as-coach': typeof JoinAsCoachRoute
   '/labor-market': typeof LaborMarketRoute
   '/learning-style': typeof LearningStyleRoute
+  '/my-assessments': typeof MyAssessmentsRoute
   '/privacy': typeof PrivacyRoute
   '/profile': typeof ProfileRoute
   '/resources': typeof ResourcesRouteWithChildren
@@ -217,6 +224,7 @@ export interface FileRoutesByTo {
   '/join-as-coach': typeof JoinAsCoachRoute
   '/labor-market': typeof LaborMarketRoute
   '/learning-style': typeof LearningStyleRoute
+  '/my-assessments': typeof MyAssessmentsRoute
   '/privacy': typeof PrivacyRoute
   '/profile': typeof ProfileRoute
   '/resources': typeof ResourcesRouteWithChildren
@@ -247,6 +255,7 @@ export interface FileRoutesById {
   '/join-as-coach': typeof JoinAsCoachRoute
   '/labor-market': typeof LaborMarketRoute
   '/learning-style': typeof LearningStyleRoute
+  '/my-assessments': typeof MyAssessmentsRoute
   '/privacy': typeof PrivacyRoute
   '/profile': typeof ProfileRoute
   '/resources': typeof ResourcesRouteWithChildren
@@ -278,6 +287,7 @@ export interface FileRouteTypes {
     | '/join-as-coach'
     | '/labor-market'
     | '/learning-style'
+    | '/my-assessments'
     | '/privacy'
     | '/profile'
     | '/resources'
@@ -307,6 +317,7 @@ export interface FileRouteTypes {
     | '/join-as-coach'
     | '/labor-market'
     | '/learning-style'
+    | '/my-assessments'
     | '/privacy'
     | '/profile'
     | '/resources'
@@ -336,6 +347,7 @@ export interface FileRouteTypes {
     | '/join-as-coach'
     | '/labor-market'
     | '/learning-style'
+    | '/my-assessments'
     | '/privacy'
     | '/profile'
     | '/resources'
@@ -366,6 +378,7 @@ export interface RootRouteChildren {
   JoinAsCoachRoute: typeof JoinAsCoachRoute
   LaborMarketRoute: typeof LaborMarketRoute
   LearningStyleRoute: typeof LearningStyleRoute
+  MyAssessmentsRoute: typeof MyAssessmentsRoute
   PrivacyRoute: typeof PrivacyRoute
   ProfileRoute: typeof ProfileRoute
   ResourcesRoute: typeof ResourcesRouteWithChildren
@@ -437,6 +450,13 @@ declare module '@tanstack/react-router' {
       path: '/privacy'
       fullPath: '/privacy'
       preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/my-assessments': {
+      id: '/my-assessments'
+      path: '/my-assessments'
+      fullPath: '/my-assessments'
+      preLoaderRoute: typeof MyAssessmentsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/learning-style': {
@@ -603,6 +623,7 @@ const rootRouteChildren: RootRouteChildren = {
   JoinAsCoachRoute: JoinAsCoachRoute,
   LaborMarketRoute: LaborMarketRoute,
   LearningStyleRoute: LearningStyleRoute,
+  MyAssessmentsRoute: MyAssessmentsRoute,
   PrivacyRoute: PrivacyRoute,
   ProfileRoute: ProfileRoute,
   ResourcesRoute: ResourcesRouteWithChildren,
