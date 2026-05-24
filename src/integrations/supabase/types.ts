@@ -50,6 +50,51 @@ export type Database = {
         }
         Relationships: []
       }
+      coach_ratings: {
+        Row: {
+          clarity: number
+          coach_name: string
+          comment: string | null
+          created_at: string
+          id: string
+          overall: number
+          professionalism: number
+          reviewer_email: string | null
+          reviewer_name: string | null
+          session_date: string | null
+          usefulness: number
+          would_recommend: boolean
+        }
+        Insert: {
+          clarity: number
+          coach_name: string
+          comment?: string | null
+          created_at?: string
+          id?: string
+          overall: number
+          professionalism: number
+          reviewer_email?: string | null
+          reviewer_name?: string | null
+          session_date?: string | null
+          usefulness: number
+          would_recommend?: boolean
+        }
+        Update: {
+          clarity?: number
+          coach_name?: string
+          comment?: string | null
+          created_at?: string
+          id?: string
+          overall?: number
+          professionalism?: number
+          reviewer_email?: string | null
+          reviewer_name?: string | null
+          session_date?: string | null
+          usefulness?: number
+          would_recommend?: boolean
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
