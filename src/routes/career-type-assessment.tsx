@@ -341,6 +341,7 @@ function CareerTypePage() {
           track,
           nature,
           scores,
+          riasec,
         },
       });
       navigate({ to: "/report/$code", params: { code: res.code } });
