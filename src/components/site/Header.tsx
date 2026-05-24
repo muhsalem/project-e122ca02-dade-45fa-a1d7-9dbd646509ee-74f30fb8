@@ -9,6 +9,7 @@ const discoveryGroup = {
     { to: "/learning-style", label: "اكتشف نمط تعلمك" },
     { to: "/academic-major", label: "اكتشف تخصصك الدراسي" },
     { to: "/career-type-assessment", label: "اكتشف مسارك المهنى" },
+    { to: "/sector-guide", label: "دليل القطاعات والصناعات" },
   ],
 } as const;
 
