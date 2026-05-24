@@ -185,8 +185,22 @@ export const submitCareerType = createServerFn({ method: "POST" })
       code = generateCode();
     }
 
+    const riasecLines = data.riasec
+      ? [
+          ``,
+          `### ميولك RIASEC`,
+          `- R الواقعي: **${data.riasec.R}/5**`,
+          `- I الاستقصائي: **${data.riasec.I}/5**`,
+          `- A الفني: **${data.riasec.A}/5**`,
+          `- S الاجتماعي: **${data.riasec.S}/5**`,
+          `- E المبادر: **${data.riasec.E}/5**`,
+          `- C التقليدي: **${data.riasec.C}/5**`,
+          `- **الكود الثلاثي (Holland):** ${riasecRanked?.slice(0, 3)}`,
+        ]
+      : [];
+
     const header = [
-      `# تقرير اكتشاف نوع المسار المهني`,
+      `# تقرير اكتشاف المسمى المهني المناسب`,
       ``,
       `**الاسم:** ${data.name ?? "غير محدد"}  `,
       `**العمر:** ${data.age ?? "غير محدد"}  `,
@@ -208,6 +222,7 @@ export const submitCareerType = createServerFn({ method: "POST" })
       ``,
       `**النمط الغالب:** ${dominant}  `,
       `**النمط الثانوي:** ${secondary}`,
+      ...riasecLines,
       ``,
       `---`,
       ``,
