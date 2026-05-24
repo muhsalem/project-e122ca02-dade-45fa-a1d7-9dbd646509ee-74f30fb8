@@ -178,3 +178,30 @@
   border-color: var(--primary);
   box-shadow: 0 0 0 1px var(--primary);
 }
+
+/* علامة مائية للتقارير على الشاشة وعند الطباعة */
+.watermark-report {
+  position: relative;
+  isolation: isolate;
+}
+.watermark-report::before {
+  content: "بوصلة — © " attr(data-year) " — سري";
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-serif);
+  font-size: clamp(3rem, 10vw, 7rem);
+  color: color-mix(in oklab, var(--primary) 8%, transparent);
+  transform: rotate(-30deg);
+  pointer-events: none;
+  z-index: 0;
+  white-space: nowrap;
+  user-select: none;
+}
+@media print {
+  .watermark-report::before {
+    position: fixed;
+    color: rgba(0, 0, 0, 0.08);
+  }
+}

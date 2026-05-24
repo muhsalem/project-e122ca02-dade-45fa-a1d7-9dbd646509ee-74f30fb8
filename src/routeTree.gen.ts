@@ -9,9 +9,11 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as SelfDiscoveryRouteImport } from './routes/self-discovery'
 import { Route as SectorGuideRouteImport } from './routes/sector-guide'
 import { Route as ResourcesRouteImport } from './routes/resources'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as LearningStyleRouteImport } from './routes/learning-style'
 import { Route as LaborMarketRouteImport } from './routes/labor-market'
 import { Route as JoinAsCoachRouteImport } from './routes/join-as-coach'
@@ -27,6 +29,11 @@ import { Route as ResourcesCoachingVsCareerCounselingRouteImport } from './route
 import { Route as ResourcesCareerPathTermsRouteImport } from './routes/resources.career-path-terms'
 import { Route as ReportCodeRouteImport } from './routes/report.$code'
 
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SelfDiscoveryRoute = SelfDiscoveryRouteImport.update({
   id: '/self-discovery',
   path: '/self-discovery',
@@ -40,6 +47,11 @@ const SectorGuideRoute = SectorGuideRouteImport.update({
 const ResourcesRoute = ResourcesRouteImport.update({
   id: '/resources',
   path: '/resources',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LearningStyleRoute = LearningStyleRouteImport.update({
@@ -126,9 +138,11 @@ export interface FileRoutesByFullPath {
   '/join-as-coach': typeof JoinAsCoachRoute
   '/labor-market': typeof LaborMarketRoute
   '/learning-style': typeof LearningStyleRoute
+  '/privacy': typeof PrivacyRoute
   '/resources': typeof ResourcesRouteWithChildren
   '/sector-guide': typeof SectorGuideRoute
   '/self-discovery': typeof SelfDiscoveryRoute
+  '/terms': typeof TermsRoute
   '/report/$code': typeof ReportCodeRoute
   '/resources/career-path-terms': typeof ResourcesCareerPathTermsRoute
   '/resources/coaching-vs-career-counseling': typeof ResourcesCoachingVsCareerCounselingRoute
@@ -145,9 +159,11 @@ export interface FileRoutesByTo {
   '/join-as-coach': typeof JoinAsCoachRoute
   '/labor-market': typeof LaborMarketRoute
   '/learning-style': typeof LearningStyleRoute
+  '/privacy': typeof PrivacyRoute
   '/resources': typeof ResourcesRouteWithChildren
   '/sector-guide': typeof SectorGuideRoute
   '/self-discovery': typeof SelfDiscoveryRoute
+  '/terms': typeof TermsRoute
   '/report/$code': typeof ReportCodeRoute
   '/resources/career-path-terms': typeof ResourcesCareerPathTermsRoute
   '/resources/coaching-vs-career-counseling': typeof ResourcesCoachingVsCareerCounselingRoute
@@ -165,9 +181,11 @@ export interface FileRoutesById {
   '/join-as-coach': typeof JoinAsCoachRoute
   '/labor-market': typeof LaborMarketRoute
   '/learning-style': typeof LearningStyleRoute
+  '/privacy': typeof PrivacyRoute
   '/resources': typeof ResourcesRouteWithChildren
   '/sector-guide': typeof SectorGuideRoute
   '/self-discovery': typeof SelfDiscoveryRoute
+  '/terms': typeof TermsRoute
   '/report/$code': typeof ReportCodeRoute
   '/resources/career-path-terms': typeof ResourcesCareerPathTermsRoute
   '/resources/coaching-vs-career-counseling': typeof ResourcesCoachingVsCareerCounselingRoute
@@ -186,9 +204,11 @@ export interface FileRouteTypes {
     | '/join-as-coach'
     | '/labor-market'
     | '/learning-style'
+    | '/privacy'
     | '/resources'
     | '/sector-guide'
     | '/self-discovery'
+    | '/terms'
     | '/report/$code'
     | '/resources/career-path-terms'
     | '/resources/coaching-vs-career-counseling'
@@ -205,9 +225,11 @@ export interface FileRouteTypes {
     | '/join-as-coach'
     | '/labor-market'
     | '/learning-style'
+    | '/privacy'
     | '/resources'
     | '/sector-guide'
     | '/self-discovery'
+    | '/terms'
     | '/report/$code'
     | '/resources/career-path-terms'
     | '/resources/coaching-vs-career-counseling'
@@ -224,9 +246,11 @@ export interface FileRouteTypes {
     | '/join-as-coach'
     | '/labor-market'
     | '/learning-style'
+    | '/privacy'
     | '/resources'
     | '/sector-guide'
     | '/self-discovery'
+    | '/terms'
     | '/report/$code'
     | '/resources/career-path-terms'
     | '/resources/coaching-vs-career-counseling'
@@ -244,15 +268,24 @@ export interface RootRouteChildren {
   JoinAsCoachRoute: typeof JoinAsCoachRoute
   LaborMarketRoute: typeof LaborMarketRoute
   LearningStyleRoute: typeof LearningStyleRoute
+  PrivacyRoute: typeof PrivacyRoute
   ResourcesRoute: typeof ResourcesRouteWithChildren
   SectorGuideRoute: typeof SectorGuideRoute
   SelfDiscoveryRoute: typeof SelfDiscoveryRoute
+  TermsRoute: typeof TermsRoute
   ReportCodeRoute: typeof ReportCodeRoute
   ReportIndexRoute: typeof ReportIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/self-discovery': {
       id: '/self-discovery'
       path: '/self-discovery'
@@ -272,6 +305,13 @@ declare module '@tanstack/react-router' {
       path: '/resources'
       fullPath: '/resources'
       preLoaderRoute: typeof ResourcesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/learning-style': {
@@ -401,9 +441,11 @@ const rootRouteChildren: RootRouteChildren = {
   JoinAsCoachRoute: JoinAsCoachRoute,
   LaborMarketRoute: LaborMarketRoute,
   LearningStyleRoute: LearningStyleRoute,
+  PrivacyRoute: PrivacyRoute,
   ResourcesRoute: ResourcesRouteWithChildren,
   SectorGuideRoute: SectorGuideRoute,
   SelfDiscoveryRoute: SelfDiscoveryRoute,
+  TermsRoute: TermsRoute,
   ReportCodeRoute: ReportCodeRoute,
   ReportIndexRoute: ReportIndexRoute,
 }
