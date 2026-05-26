@@ -31,6 +31,9 @@ type Question = {
   type: "single" | "multi";
   options: string[];
   maxSelect?: number;
+  reverse?: boolean;         // عبارة معكوسة الترميز (Reverse-coded)
+  attentionCheck?: boolean;  // عبارة فحص انتباه
+  expected?: string;         // الإجابة المتوقعة لعبارات فحص الانتباه
 };
 type Section = { key: string; title: string; intro: string; questions: Question[] };
 
