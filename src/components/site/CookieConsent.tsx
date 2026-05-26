@@ -42,13 +42,13 @@ export function CookieConsent() {
           <p>
             نستخدم ملفات تعريف الارتباط (Cookies) الضرورية لتشغيل المنصة فقط، ولا
             نُفعّل أي تتبّع تسويقي دون موافقتك. للمزيد راجع{" "}
-            <Link to="/cookies" className="text-primary underline">
+            <a href="/terms#cookies" className="text-primary underline">
               سياسة الكوكيز
-            </Link>{" "}
+            </a>{" "}
             و{" "}
-            <Link to="/privacy" className="text-primary underline">
+            <a href="/terms#privacy" className="text-primary underline">
               سياسة الخصوصية
-            </Link>{" "}
+            </a>{" "}
             المتوافقة مع نظام حماية البيانات الشخصية السعودي (PDPL) واللائحة
             الأوروبية (GDPR).
           </p>

@@ -204,7 +204,7 @@ function BookingPage() {
             </div>
             <p className="mt-3 text-[11px] text-muted-foreground">
               ملاحظة: نوصي بعدم استخدام بطاقات ائتمانية ذات فوائد ربوية. تفاصيل أكثر في{" "}
-              <a href="/ethics" className="text-primary underline">ميثاق الالتزام</a>.
+              <a href="/terms#ethics" className="text-primary underline">ميثاق الالتزام</a>.
             </p>
           </div>
 

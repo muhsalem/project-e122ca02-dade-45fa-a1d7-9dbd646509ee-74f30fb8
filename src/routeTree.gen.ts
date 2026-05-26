@@ -18,15 +18,12 @@ import { Route as SchoolsRouteImport } from './routes/schools'
 import { Route as Review360RouteImport } from './routes/review360'
 import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as ProfileRouteImport } from './routes/profile'
-import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as MyAssessmentsRouteImport } from './routes/my-assessments'
 import { Route as LearningStyleRouteImport } from './routes/learning-style'
 import { Route as LaborMarketRouteImport } from './routes/labor-market'
 import { Route as JoinAsCoachRouteImport } from './routes/join-as-coach'
 import { Route as InstitutionsRouteImport } from './routes/institutions'
-import { Route as EthicsRouteImport } from './routes/ethics'
 import { Route as CounselorRouteImport } from './routes/counselor'
-import { Route as CookiesRouteImport } from './routes/cookies'
 import { Route as ComprehensiveAssessmentRouteImport } from './routes/comprehensive-assessment'
 import { Route as CognitiveProfileRouteImport } from './routes/cognitive-profile'
 import { Route as ClarityCheckRouteImport } from './routes/clarity-check'
@@ -98,11 +95,6 @@ const ProfileRoute = ProfileRouteImport.update({
   path: '/profile',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PrivacyRoute = PrivacyRouteImport.update({
-  id: '/privacy',
-  path: '/privacy',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const MyAssessmentsRoute = MyAssessmentsRouteImport.update({
   id: '/my-assessments',
   path: '/my-assessments',
@@ -128,19 +120,9 @@ const InstitutionsRoute = InstitutionsRouteImport.update({
   path: '/institutions',
   getParentRoute: () => rootRouteImport,
 } as any)
-const EthicsRoute = EthicsRouteImport.update({
-  id: '/ethics',
-  path: '/ethics',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const CounselorRoute = CounselorRouteImport.update({
   id: '/counselor',
   path: '/counselor',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CookiesRoute = CookiesRouteImport.update({
-  id: '/cookies',
-  path: '/cookies',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ComprehensiveAssessmentRoute = ComprehensiveAssessmentRouteImport.update({
@@ -287,15 +269,12 @@ export interface FileRoutesByFullPath {
   '/clarity-check': typeof ClarityCheckRoute
   '/cognitive-profile': typeof CognitiveProfileRoute
   '/comprehensive-assessment': typeof ComprehensiveAssessmentRoute
-  '/cookies': typeof CookiesRoute
   '/counselor': typeof CounselorRoute
-  '/ethics': typeof EthicsRoute
   '/institutions': typeof InstitutionsRoute
   '/join-as-coach': typeof JoinAsCoachRoute
   '/labor-market': typeof LaborMarketRoute
   '/learning-style': typeof LearningStyleRoute
   '/my-assessments': typeof MyAssessmentsRoute
-  '/privacy': typeof PrivacyRoute
   '/profile': typeof ProfileRoute
   '/resources': typeof ResourcesRouteWithChildren
   '/review360': typeof Review360Route
@@ -332,15 +311,12 @@ export interface FileRoutesByTo {
   '/clarity-check': typeof ClarityCheckRoute
   '/cognitive-profile': typeof CognitiveProfileRoute
   '/comprehensive-assessment': typeof ComprehensiveAssessmentRoute
-  '/cookies': typeof CookiesRoute
   '/counselor': typeof CounselorRoute
-  '/ethics': typeof EthicsRoute
   '/institutions': typeof InstitutionsRoute
   '/join-as-coach': typeof JoinAsCoachRoute
   '/labor-market': typeof LaborMarketRoute
   '/learning-style': typeof LearningStyleRoute
   '/my-assessments': typeof MyAssessmentsRoute
-  '/privacy': typeof PrivacyRoute
   '/profile': typeof ProfileRoute
   '/resources': typeof ResourcesRouteWithChildren
   '/review360': typeof Review360Route
@@ -378,15 +354,12 @@ export interface FileRoutesById {
   '/clarity-check': typeof ClarityCheckRoute
   '/cognitive-profile': typeof CognitiveProfileRoute
   '/comprehensive-assessment': typeof ComprehensiveAssessmentRoute
-  '/cookies': typeof CookiesRoute
   '/counselor': typeof CounselorRoute
-  '/ethics': typeof EthicsRoute
   '/institutions': typeof InstitutionsRoute
   '/join-as-coach': typeof JoinAsCoachRoute
   '/labor-market': typeof LaborMarketRoute
   '/learning-style': typeof LearningStyleRoute
   '/my-assessments': typeof MyAssessmentsRoute
-  '/privacy': typeof PrivacyRoute
   '/profile': typeof ProfileRoute
   '/resources': typeof ResourcesRouteWithChildren
   '/review360': typeof Review360Route
@@ -425,15 +398,12 @@ export interface FileRouteTypes {
     | '/clarity-check'
     | '/cognitive-profile'
     | '/comprehensive-assessment'
-    | '/cookies'
     | '/counselor'
-    | '/ethics'
     | '/institutions'
     | '/join-as-coach'
     | '/labor-market'
     | '/learning-style'
     | '/my-assessments'
-    | '/privacy'
     | '/profile'
     | '/resources'
     | '/review360'
@@ -470,15 +440,12 @@ export interface FileRouteTypes {
     | '/clarity-check'
     | '/cognitive-profile'
     | '/comprehensive-assessment'
-    | '/cookies'
     | '/counselor'
-    | '/ethics'
     | '/institutions'
     | '/join-as-coach'
     | '/labor-market'
     | '/learning-style'
     | '/my-assessments'
-    | '/privacy'
     | '/profile'
     | '/resources'
     | '/review360'
@@ -515,15 +482,12 @@ export interface FileRouteTypes {
     | '/clarity-check'
     | '/cognitive-profile'
     | '/comprehensive-assessment'
-    | '/cookies'
     | '/counselor'
-    | '/ethics'
     | '/institutions'
     | '/join-as-coach'
     | '/labor-market'
     | '/learning-style'
     | '/my-assessments'
-    | '/privacy'
     | '/profile'
     | '/resources'
     | '/review360'
@@ -561,15 +525,12 @@ export interface RootRouteChildren {
   ClarityCheckRoute: typeof ClarityCheckRoute
   CognitiveProfileRoute: typeof CognitiveProfileRoute
   ComprehensiveAssessmentRoute: typeof ComprehensiveAssessmentRoute
-  CookiesRoute: typeof CookiesRoute
   CounselorRoute: typeof CounselorRoute
-  EthicsRoute: typeof EthicsRoute
   InstitutionsRoute: typeof InstitutionsRoute
   JoinAsCoachRoute: typeof JoinAsCoachRoute
   LaborMarketRoute: typeof LaborMarketRoute
   LearningStyleRoute: typeof LearningStyleRoute
   MyAssessmentsRoute: typeof MyAssessmentsRoute
-  PrivacyRoute: typeof PrivacyRoute
   ProfileRoute: typeof ProfileRoute
   ResourcesRoute: typeof ResourcesRouteWithChildren
   Review360Route: typeof Review360Route
@@ -651,13 +612,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProfileRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/privacy': {
-      id: '/privacy'
-      path: '/privacy'
-      fullPath: '/privacy'
-      preLoaderRoute: typeof PrivacyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/my-assessments': {
       id: '/my-assessments'
       path: '/my-assessments'
@@ -693,25 +647,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof InstitutionsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/ethics': {
-      id: '/ethics'
-      path: '/ethics'
-      fullPath: '/ethics'
-      preLoaderRoute: typeof EthicsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/counselor': {
       id: '/counselor'
       path: '/counselor'
       fullPath: '/counselor'
       preLoaderRoute: typeof CounselorRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/cookies': {
-      id: '/cookies'
-      path: '/cookies'
-      fullPath: '/cookies'
-      preLoaderRoute: typeof CookiesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/comprehensive-assessment': {
@@ -931,15 +871,12 @@ const rootRouteChildren: RootRouteChildren = {
   ClarityCheckRoute: ClarityCheckRoute,
   CognitiveProfileRoute: CognitiveProfileRoute,
   ComprehensiveAssessmentRoute: ComprehensiveAssessmentRoute,
-  CookiesRoute: CookiesRoute,
   CounselorRoute: CounselorRoute,
-  EthicsRoute: EthicsRoute,
   InstitutionsRoute: InstitutionsRoute,
   JoinAsCoachRoute: JoinAsCoachRoute,
   LaborMarketRoute: LaborMarketRoute,
   LearningStyleRoute: LearningStyleRoute,
   MyAssessmentsRoute: MyAssessmentsRoute,
-  PrivacyRoute: PrivacyRoute,
   ProfileRoute: ProfileRoute,
   ResourcesRoute: ResourcesRouteWithChildren,
   Review360Route: Review360Route,
