@@ -461,16 +461,66 @@ function SelfDiscoveryPage() {
 
   const canProceed = () => {
     if (step === 0) return meta.stage.trim().length > 0;
+    if (isReflectionStep) {
+      // Require at least 10 characters in each GROW field to ensure meaningful reflection.
+      return GROW_QUESTIONS.every((g) => (reflection[g.id] ?? "").trim().length >= 10);
+    }
     if (!currentSection) return false;
     return currentSection.questions.every((q) => (selections[q.id]?.length ?? 0) > 0);
+  };
+
+  // Compute psychometric quality metrics (Validity Checks) from Likert answers + total time.
+  const computeQuality = () => {
+    const validity = SECTIONS.find((s) => s.key === "validity");
+    const likertItems = validity?.questions ?? [];
+    const values = likertItems.map((q) => {
+      const v = selections[q.id]?.[0] ?? "";
+      const n = parseInt(v.replace(/[^0-9]/g, "")) || 0;
+      // Reverse-coded: invert score on a 1–5 scale.
+      return q.reverse ? 6 - n : n;
+    }).filter((n) => n > 0);
+
+    // 1) Attention check passed?
+    const attn = likertItems.find((q) => q.attentionCheck);
+    const attentionPassed = attn ? (selections[attn.id]?.[0] === attn.expected) : true;
+
+    // 2) Straight-lining: same value repeated across all Likert items.
+    const uniqueVals = new Set(likertItems.map((q) => selections[q.id]?.[0] ?? ""));
+    const straightLining = likertItems.length > 0 && uniqueVals.size <= 1;
+
+    // 3) Response speed: total time per question (excluding meta + reflection steps).
+    const totalAnswered = Object.values(selections).reduce((acc, v) => acc + (v.length > 0 ? 1 : 0), 0);
+    const elapsedMs = startTimeRef.current ? (Date.now() - startTimeRef.current) : 0;
+    const msPerQ = totalAnswered > 0 ? elapsedMs / totalAnswered : 0;
+    const rushed = msPerQ > 0 && msPerQ < 1500; // أقل من 1.5 ثانية لكل سؤال = إجابات متسرعة
+
+    // Confidence band (qualitative — no false precision)
+    let band: "high" | "moderate" | "low" = "high";
+    const flags: string[] = [];
+    if (!attentionPassed) { band = "low"; flags.push("لم يجتز فحص الانتباه"); }
+    if (straightLining) { band = "low"; flags.push("نمط إجابة متطابق (Straight-lining)"); }
+    if (rushed) { band = band === "low" ? "low" : "moderate"; flags.push("سرعة استجابة عالية جداً"); }
+
+    return { attentionPassed, straightLining, rushed, msPerQ: Math.round(msPerQ), band, flags, likertMean: values.length ? Number((values.reduce((a, b) => a + b, 0) / values.length).toFixed(2)) : 0 };
   };
 
   const submit = async () => {
     setLoading(true);
     setError(null);
     try {
+      const quality = computeQuality();
       const answers: Record<string, string> = {};
       for (const k of Object.keys(selections)) answers[k] = selections[k].join("، ");
+      // Reflection answers + quality summary injected as meta-answers for the AI.
+      for (const g of GROW_QUESTIONS) {
+        answers[g.id] = (reflection[g.id] ?? "").trim();
+      }
+      answers["_quality_band"] = quality.band; // high / moderate / low
+      answers["_quality_flags"] = quality.flags.join(" | ") || "لا توجد تنبيهات";
+      answers["_quality_ms_per_question"] = String(quality.msPerQ);
+      answers["_quality_attention_passed"] = quality.attentionPassed ? "نعم" : "لا";
+      answers["_quality_likert_mean"] = String(quality.likertMean);
+
       const sections = SECTIONS.map((s) => ({
         title: s.title,
         items: s.questions.map((q) => ({
@@ -478,6 +528,22 @@ function SelfDiscoveryPage() {
           a: (selections[q.id] ?? []).join("، ") || "—",
         })),
       }));
+      // Append reflection section and quality summary section.
+      sections.push({
+        title: "التأمل التدريبي (نموذج GROW)",
+        items: GROW_QUESTIONS.map((g) => ({ q: g.label, a: (reflection[g.id] ?? "").trim() || "—" })),
+      });
+      sections.push({
+        title: "مؤشرات جودة الاستجابة (Validity Indicators)",
+        items: [
+          { q: "شريط الثقة في النتيجة", a: quality.band === "high" ? "ثقة عالية" : quality.band === "moderate" ? "ثقة متوسطة" : "ثقة منخفضة — راجع الإجابات" },
+          { q: "اجتياز فحص الانتباه", a: quality.attentionPassed ? "نعم" : "لا" },
+          { q: "نمط إجابة متطابق (Straight-lining)", a: quality.straightLining ? "نعم — تنبيه" : "لا" },
+          { q: "متوسط الزمن لكل سؤال (مللي ثانية)", a: String(quality.msPerQ) },
+          { q: "تنبيهات الجودة", a: quality.flags.join(" | ") || "لا توجد" },
+        ],
+      });
+
       const res = await submitFn({
         data: {
           name: meta.name || undefined,
