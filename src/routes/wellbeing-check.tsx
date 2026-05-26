@@ -92,6 +92,46 @@ function WellbeingPage() {
                 className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm" maxLength={64} />
             </div>
 
+            <div className="space-y-3 rounded-xl border border-border bg-secondary/30 p-4 text-sm leading-7">
+              <label className="flex items-start gap-2">
+                <input
+                  type="checkbox"
+                  checked={isMinor}
+                  onChange={(e) => setIsMinor(e.target.checked)}
+                  className="mt-1 h-4 w-4"
+                />
+                <span>عمري <strong>أقل من ١٨ سنة</strong>.</span>
+              </label>
+              {isMinor && (
+                <label className="flex items-start gap-2 rounded-md border border-amber-500/40 bg-amber-50/60 p-3 dark:bg-amber-950/20">
+                  <input
+                    type="checkbox"
+                    checked={parentConsent}
+                    onChange={(e) => setParentConsent(e.target.checked)}
+                    className="mt-1 h-4 w-4"
+                  />
+                  <span>
+                    أُقرّ بأنّ <strong>وليّ أمري قد اطّلع على هذا الفحص ووافق</strong> على
+                    إجرائه ومعالجة إجاباتي.
+                  </span>
+                </label>
+              )}
+              <label className="flex items-start gap-2">
+                <input
+                  type="checkbox"
+                  checked={storeConsent}
+                  onChange={(e) => setStoreConsent(e.target.checked)}
+                  className="mt-1 h-4 w-4"
+                />
+                <span>
+                  أوافق صراحةً على معالجة وحفظ هذه <strong>البيانات النفسيّة الحسّاسة</strong>
+                  لإصدار النتيجة، مع علمي بحقّي في طلب حذفها لاحقاً عبر{" "}
+                  <a className="text-primary underline" href="mailto:dpo@bosla.app">dpo@bosla.app</a>.
+                </span>
+              </label>
+            </div>
+
+
             {QUESTIONS.map((q, i) => (
               <div key={q.k} className="border-t border-border pt-5">
                 <p className="mb-3 text-sm">
