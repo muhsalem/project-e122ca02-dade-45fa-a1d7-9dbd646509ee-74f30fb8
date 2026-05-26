@@ -775,6 +775,50 @@ function LearningStylePage() {
             </div>
           ) : null}
 
+          {!loading && isLastStep && profilePreview && canProceed() && (
+            <div className="mt-6 rounded-2xl border-2 border-gold/50 bg-gold/5 p-6 shadow-[var(--shadow-soft)]">
+              <div className="mb-4 flex items-center gap-2">
+                <Sparkles className="h-5 w-5 text-gold" />
+                <h3 className="font-serif text-xl text-primary">نتيجتك المحسوبة بدقة (قبل التقرير)</h3>
+              </div>
+              <p className="text-xs text-muted-foreground mb-4">
+                هذه النتيجة محسوبة رياضياً من إجاباتك وفق منهجية Fleming (VARK) و Kolb LSI، وليست تخميناً من الذكاء الاصطناعي.
+              </p>
+              <div className="grid gap-4 md:grid-cols-2">
+                <div className="rounded-xl border border-border bg-background p-4">
+                  <div className="text-xs font-medium text-gold mb-1">VARK — نمطك الحسي السائد</div>
+                  <div className="font-serif text-lg text-primary">{profilePreview.vark.label}</div>
+                  <div className="mt-3 grid grid-cols-4 gap-1 text-center text-xs">
+                    {(["V", "A", "R", "K"] as const).map((k) => {
+                      const val = profilePreview.vark[k];
+                      const max = Math.max(profilePreview.vark.V, profilePreview.vark.A, profilePreview.vark.R, profilePreview.vark.K, 1);
+                      return (
+                        <div key={k}>
+                          <div className="h-16 flex items-end justify-center">
+                            <div className="w-6 rounded-t bg-gold/70" style={{ height: `${(val / max) * 100}%` }} />
+                          </div>
+                          <div className="mt-1 font-mono">{k}={val}</div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+                <div className="rounded-xl border border-border bg-background p-4">
+                  <div className="text-xs font-medium text-gold mb-1">Kolb — نمط دورة التعلم</div>
+                  <div className="font-serif text-lg text-primary">{profilePreview.kolb.styleAr} ({profilePreview.kolb.style})</div>
+                  <p className="mt-2 text-xs leading-6 text-muted-foreground">{profilePreview.kolb.description}</p>
+                  <div className="mt-3 grid grid-cols-2 gap-2 text-xs text-foreground">
+                    <div>AC−CE = <span className="font-mono text-primary">{profilePreview.kolb.ac_minus_ce}</span></div>
+                    <div>AE−RO = <span className="font-mono text-primary">{profilePreview.kolb.ae_minus_ro}</span></div>
+                  </div>
+                </div>
+              </div>
+              <p className="mt-4 text-xs text-muted-foreground">
+                اضغط <strong className="text-primary">«إصدار التقرير»</strong> أدناه ليُكمل الذكاء الاصطناعي التحليل التفصيلي والاستراتيجيات المخصصة لنمطك.
+              </p>
+            </div>
+          )}
+
           {error && (
             <div className="mt-4 rounded-md border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive">
               {error}
