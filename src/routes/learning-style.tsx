@@ -490,6 +490,73 @@ const SECTIONS: Section[] = [
 
 const TOTAL_STEPS = 1 + SECTIONS.length;
 
+// =====================================================================
+// Deterministic Scoring (لا يعتمد على الذكاء الاصطناعي)
+// VARK: تتبع منهجية Fleming — multimodal إذا فرق الأعلى/التالي ≤ 1.
+// Kolb: محورا (AC-CE) و (AE-RO) → 4 أنماط: Diverging / Assimilating /
+// Converging / Accommodating بحسب موقع المتعلم في المصفوفة الرباعية.
+// =====================================================================
+type StyleProfile = {
+  vark: { V: number; A: number; R: number; K: number; dominant: string; isMultimodal: boolean; label: string };
+  kolb: { CE: number; RO: number; AC: number; AE: number; ac_minus_ce: number; ae_minus_ro: number; style: string; styleAr: string; description: string };
+};
+
+function computeStyleProfile(selections: Record<string, string[]>): StyleProfile {
+  const vark = { V: 0, A: 0, R: 0, K: 0 } as Record<"V" | "A" | "R" | "K", number>;
+  const kolb = { CE: 0, RO: 0, AC: 0, AE: 0 } as Record<"CE" | "RO" | "AC" | "AE", number>;
+
+  for (const section of SECTIONS) {
+    if (section.key !== "vark" && section.key !== "kolb") continue;
+    for (const q of section.questions) {
+      if (!q.tags) continue;
+      const picks = selections[q.id] ?? [];
+      for (const pick of picks) {
+        const idx = q.options.indexOf(pick);
+        if (idx < 0) continue;
+        const tag = q.tags[idx];
+        if (section.key === "vark" && (tag === "V" || tag === "A" || tag === "R" || tag === "K")) vark[tag] += 1;
+        else if (section.key === "kolb" && (tag === "CE" || tag === "RO" || tag === "AC" || tag === "AE")) kolb[tag] += 1;
+      }
+    }
+  }
+
+  // ---- VARK dominant ----
+  const varkEntries = (Object.entries(vark) as Array<[keyof typeof vark, number]>).sort((a, b) => b[1] - a[1]);
+  const top = varkEntries[0];
+  const second = varkEntries[1];
+  const isMultimodal = top && second ? (top[1] - second[1]) <= 1 && top[1] > 0 : false;
+  const VARK_LABELS: Record<string, string> = {
+    V: "البصري (Visual)", A: "السمعي (Aural)", R: "القرائي-الكتابي (Read/Write)", K: "الحركي (Kinesthetic)",
+  };
+  const dominant = top?.[0] ?? "V";
+  const label = isMultimodal
+    ? `متعدد القنوات (Multimodal) — ${varkEntries.filter((e) => e[1] >= (top?.[1] ?? 0) - 1).map((e) => VARK_LABELS[e[0]]).join(" + ")}`
+    : VARK_LABELS[dominant];
+
+  // ---- Kolb axes & style ----
+  const ac_minus_ce = kolb.AC - kolb.CE;
+  const ae_minus_ro = kolb.AE - kolb.RO;
+  let style: string, styleAr: string, description: string;
+  if (ac_minus_ce >= 0 && ae_minus_ro >= 0) {
+    style = "Converging"; styleAr = "المتقارب";
+    description = "تفكير مجرد + تجريب نشط. قوي في تطبيق النظريات على مشكلات عملية. مناسب للهندسة والتقنية والمسارات التطبيقية.";
+  } else if (ac_minus_ce >= 0 && ae_minus_ro < 0) {
+    style = "Assimilating"; styleAr = "المستوعب";
+    description = "تفكير مجرد + ملاحظة تأملية. قوي في بناء النماذج النظرية والاستدلال المنطقي. مناسب للبحث العلمي والتحليل والتخطيط.";
+  } else if (ac_minus_ce < 0 && ae_minus_ro >= 0) {
+    style = "Accommodating"; styleAr = "المتكيّف";
+    description = "تجربة محسوسة + تجريب نشط. قوي في التنفيذ الميداني والتعلم من التجربة المباشرة. مناسب للقيادة الميدانية وريادة الأعمال والمبيعات.";
+  } else {
+    style = "Diverging"; styleAr = "المتباعد";
+    description = "تجربة محسوسة + ملاحظة تأملية. قوي في توليد أفكار من زوايا متعددة والإبداع. مناسب للفنون والإرشاد والعمل الاجتماعي والإعلام.";
+  }
+
+  return {
+    vark: { ...vark, dominant, isMultimodal, label },
+    kolb: { ...kolb, ac_minus_ce, ae_minus_ro, style, styleAr, description },
+  };
+}
+
 function LearningStylePage() {
   const navigate = useNavigate();
   const submitFn = useServerFn(submitLearningStyle);
@@ -501,6 +568,8 @@ function LearningStylePage() {
 
   const progress = (step / TOTAL_STEPS) * 100;
   const currentSection = step > 0 ? SECTIONS[step - 1] : null;
+  const isLastStep = step === TOTAL_STEPS - 1;
+  const profilePreview = isLastStep ? computeStyleProfile(selections) : null;
 
   const toggle = (q: Question, opt: string) => {
     setSelections((prev) => {
