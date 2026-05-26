@@ -76,8 +76,10 @@ function WellbeingPage() {
             مقاييس فرز عالمية موثّقة: <strong>PHQ-2</strong> (الاكتئاب) و<strong>GAD-2</strong> (القلق) ومقياس <strong>القلق المهني</strong>.
           </p>
           <div className="mx-auto mt-5 max-w-2xl rounded-xl border border-amber-500/40 bg-amber-50 p-4 text-right text-sm leading-7 text-amber-900 dark:bg-amber-950/20 dark:text-amber-200">
-            <strong>إخلاء مسؤولية:</strong> هذا الفحص <strong>فرز أولي</strong> فقط، وليس تشخيصاً طبياً أو نفسياً.
-            لا يُغني عن مراجعة طبيب أو معالج مرخّص. النتائج اجتهادية وقد تتأثر بحالتك المؤقتة يوم الإجابة.
+            <strong>تنبيه قانوني وطبّي:</strong> هذا الفحص <strong>أداة فرز أوّليّة</strong> فقط،
+            وليس تشخيصاً طبياً ولا نفسيّاً، ولا يُغني عن مراجعة طبيب أو معالج مرخّص. النتائج
+            اجتهاديّة وقد تتأثّر بحالتك يوم الإجابة. تُعالَج إجاباتك بصفتها
+            <strong> بيانات شخصيّة حسّاسة</strong> وفق نظام حماية البيانات الشخصيّة السعودي (PDPL).
           </div>
         </div>
 
