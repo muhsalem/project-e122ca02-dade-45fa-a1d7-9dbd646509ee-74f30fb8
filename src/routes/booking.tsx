@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { Check, Calendar, Clock, User } from "lucide-react";
+import { Check, Calendar, Clock, User, ShieldCheck, Users } from "lucide-react";
 
 export const Route = createFileRoute("/booking")({
   head: () => ({
@@ -28,6 +28,8 @@ function BookingPage() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [notes, setNotes] = useState("");
+  const [genderPref, setGenderPref] = useState<"same" | "any">("same");
+  const [payment, setPayment] = useState<string>("mada");
   const [submitted, setSubmitted] = useState(false);
 
   const onSubmit = (e: React.FormEvent) => {
