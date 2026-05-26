@@ -13,6 +13,10 @@ const discoveryGroup = {
   items: [
     { to: "/self-discovery", label: "اكتشف ذاتك" },
     { to: "/learning-style", label: "اكتشف نمط تعلمك" },
+    { to: "/values-mapper", label: "خريطة القيم والمعنى" },
+    { to: "/strengths-finder", label: "كوكبة نقاط قوتك" },
+    { to: "/cognitive-profile", label: "بروفايلك المعرفي" },
+    { to: "/burnout-check", label: "مؤشر الاحتراق المهني" },
     { to: "/academic-major", label: "اكتشف تخصصك الدراسي" },
     { to: "/career-type-assessment", label: "اكتشف مسارك المهني" },
     { to: "/sector-guide", label: "دليل القطاعات والصناعات" },
@@ -23,6 +27,8 @@ const navAfter = [
   { to: "/labor-market", label: "نبض السوق" },
   { to: "/career-twin", label: "توأم المسار" },
   { to: "/comprehensive-assessment", label: "التقييم الشامل" },
+  { to: "/career-readiness", label: "شهادة الجاهزية" },
+  { to: "/institutions", label: "للمؤسسات" },
   { to: "/counselor", label: "الإرشاد المهني والكوتش" },
   { to: "/resources", label: "الموارد" },
 ] as const;
