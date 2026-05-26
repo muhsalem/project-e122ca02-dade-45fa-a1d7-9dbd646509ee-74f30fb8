@@ -98,6 +98,7 @@ function RootComponent() {
           <Outlet />
         </main>
         <Footer />
+        <CookieConsent />
       </div>
     </QueryClientProvider>
   );
