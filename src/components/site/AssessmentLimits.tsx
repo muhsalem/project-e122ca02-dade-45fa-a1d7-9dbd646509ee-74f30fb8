@@ -32,7 +32,7 @@ export function AssessmentLimits({ tool }: { tool: string }) {
         </li>
       </ul>
       <p className="mt-3 border-t border-border pt-3 text-[11px] text-muted-foreground">
-        مصداقية علمية: نعتمد أُطراً معتمدة دولياً (Holland RIASEC, Big Five-inspired, MBTI-informed, ICF Coaching Competencies, ISCO-08, GICS).
+        مصداقية علمية: نعتمد أُطراً علمية معتمدة دولياً (Holland RIASEC، Big Five / HEXACO، PHQ-2 و GAD-2 من Kroenke et al.، ICF Coaching Competencies، ISCO-08، GICS). لا نعتمد على نماذج ذات موثوقيّة سيكومتريّة ضعيفة (مثل MBTI أو "أنماط التعلم" كآليّة تدريس) إلا للاسترشاد العام.
       </p>
     </aside>
   );
