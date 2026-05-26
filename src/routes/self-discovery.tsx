@@ -1,10 +1,19 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
-import { useState } from "react";
-import { Users } from "lucide-react";
+import { useState, useRef } from "react";
+import { Users, ShieldCheck, Target } from "lucide-react";
 import { ComplementaryTools } from "@/components/site/ComplementaryTools";
 import { ArrowLeft, ArrowRight, Loader2, Sparkles, Brain, Check } from "lucide-react";
 import { useServerFn } from "@tanstack/react-start";
 import { submitAssessment } from "@/lib/assessment.functions";
+
+// 5-point Likert scale shared across the psychometric validity section.
+const LIKERT_5: string[] = [
+  "١ — لا أوافق إطلاقاً",
+  "٢ — لا أوافق",
+  "٣ — محايد",
+  "٤ — أوافق",
+  "٥ — أوافق بشدة",
+];
 
 export const Route = createFileRoute("/self-discovery")({
   head: () => ({
