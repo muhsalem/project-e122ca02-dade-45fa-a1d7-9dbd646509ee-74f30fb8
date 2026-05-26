@@ -281,7 +281,7 @@ function SectorGuidePage() {
           </div>
           <p className="mt-4 rounded-md bg-secondary/60 p-3 text-[11px] text-foreground/70">
             هذا تصنيف اجتهادي مبسّط للاسترشاد فقط. للقضايا التفصيليّة راجع مرجعاً شرعياً موثوقاً. تفاصيل أكثر في{" "}
-            <Link to="/ethics" className="text-primary underline">ميثاق الالتزام</Link>.
+            <a href="/terms#ethics" className="text-primary underline">ميثاق الالتزام</a>.
           </p>
         </div>
 

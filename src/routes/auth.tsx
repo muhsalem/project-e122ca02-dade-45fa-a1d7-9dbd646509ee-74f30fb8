@@ -145,7 +145,7 @@ function AuthPage() {
           </Button>
 
           <p className="mt-6 text-center text-xs text-muted-foreground">
-            بإنشاء حساب فأنت توافق على <Link to="/terms" className="text-primary hover:underline">الشروط</Link> و<Link to="/privacy" className="text-primary hover:underline">سياسة الخصوصية</Link>
+            بإنشاء حساب فأنت توافق على <Link to="/terms" className="text-primary hover:underline">الشروط</Link> و<a href="/terms#privacy" className="text-primary hover:underline">سياسة الخصوصية</a>
           </p>
         </CardContent>
       </Card>
