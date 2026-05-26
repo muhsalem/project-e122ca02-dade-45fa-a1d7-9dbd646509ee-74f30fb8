@@ -43,7 +43,7 @@ function HomePage() {
                 to="/booking"
                 className="inline-flex items-center gap-2 rounded-md border border-primary/20 bg-card px-6 py-3 text-sm font-medium text-primary hover:bg-secondary"
               >
-                احجز جلسة كوتشينج
+                احجز جلسة إرشاد أو كوتشينج
               </Link>
             </div>
 
