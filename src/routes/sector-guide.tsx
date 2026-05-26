@@ -245,6 +245,47 @@ function SectorGuidePage() {
           </p>
         </div>
 
+        {/* تصنيف شرعي للقطاعات والمهن */}
+        <div className="mx-auto mb-8 max-w-3xl rounded-2xl border border-gold/30 bg-gradient-to-br from-secondary/40 to-card p-6">
+          <h2 className="font-serif text-lg font-bold text-primary">
+            التصنيف الشرعي للمهن والقطاعات
+          </h2>
+          <p className="mt-1 text-xs text-foreground/70">
+            مرجع سريع لتقييم القطاع قبل اختياره. عند ظهور تعارض، نقترح عليك بديلاً حلالاً مكافئاً في نفس المجال.
+          </p>
+          <div className="mt-4 grid gap-3 md:grid-cols-2">
+            <div className="rounded-lg border border-emerald-700/40 bg-emerald-950/20 p-3">
+              <div className="text-xs font-bold text-emerald-400">١. مباحة بالأصل</div>
+              <p className="mt-1 text-xs text-foreground/80">
+                الهندسة، الطب، التعليم، الزراعة، تقنية المعلومات، النقل، الصناعات التحويلية الحلال، الخدمات المهنية.
+              </p>
+            </div>
+            <div className="rounded-lg border border-amber-700/40 bg-amber-950/20 p-3">
+              <div className="text-xs font-bold text-amber-400">٢. مشتبهة — تحتاج تدقيقاً</div>
+              <p className="mt-1 text-xs text-foreground/80">
+                التسويق والإعلان (حسب المنتج)، التأمين التجاري، الإعلام، السياحة والترفيه، بعض المنتجات المالية المركّبة.
+              </p>
+            </div>
+            <div className="rounded-lg border border-orange-700/40 bg-orange-950/20 p-3">
+              <div className="text-xs font-bold text-orange-400">٣. محرّمة لعارض (الغش/الغرر)</div>
+              <p className="mt-1 text-xs text-foreground/80">
+                وظائف فيها كذب إعلاني، غرر فاحش، احتكار، رشاوى، أو ترويج لمنتجات مضرّة.
+              </p>
+            </div>
+            <div className="rounded-lg border border-red-700/40 bg-red-950/20 p-3">
+              <div className="text-xs font-bold text-red-400">٤. محرّمة لذاتها</div>
+              <p className="mt-1 text-xs text-foreground/80">
+                البنوك الربوية (الفائدة)، الخمور، القمار والميسر، المخدّرات، إنتاج/ترويج المحرّمات، الأندية الليلية.
+              </p>
+            </div>
+          </div>
+          <p className="mt-4 rounded-md bg-secondary/60 p-3 text-[11px] text-foreground/70">
+            هذا تصنيف اجتهادي مبسّط للاسترشاد فقط. للقضايا التفصيليّة راجع مرجعاً شرعياً موثوقاً. تفاصيل أكثر في{" "}
+            <Link to="/ethics" className="text-primary underline">ميثاق الالتزام</Link>.
+          </p>
+        </div>
+
+
         {/* Progress */}
         <div className="mx-auto mb-6 max-w-3xl">
           <div className="mb-2 flex justify-between text-xs text-foreground/60">
