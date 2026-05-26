@@ -705,8 +705,6 @@ function SelfDiscoveryPage() {
         </div>
       </section>
 
-      <ComplementaryTools tools={["review360", "wellbeing"]} title="أدوات مدمجة ضمن اكتشف ذاتك" />
-
       <section className="container-page py-12">
         <div className="mx-auto max-w-3xl">
           <div className="mb-3 flex items-center justify-between text-xs text-muted-foreground">
