@@ -1,10 +1,19 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
-import { useState } from "react";
-import { Users } from "lucide-react";
+import { useState, useRef } from "react";
+import { Users, ShieldCheck, Target } from "lucide-react";
 import { ComplementaryTools } from "@/components/site/ComplementaryTools";
 import { ArrowLeft, ArrowRight, Loader2, Sparkles, Brain, Check } from "lucide-react";
 import { useServerFn } from "@tanstack/react-start";
 import { submitAssessment } from "@/lib/assessment.functions";
+
+// 5-point Likert scale shared across the psychometric validity section.
+const LIKERT_5: string[] = [
+  "١ — لا أوافق إطلاقاً",
+  "٢ — لا أوافق",
+  "٣ — محايد",
+  "٤ — أوافق",
+  "٥ — أوافق بشدة",
+];
 
 export const Route = createFileRoute("/self-discovery")({
   head: () => ({
@@ -22,6 +31,9 @@ type Question = {
   type: "single" | "multi";
   options: string[];
   maxSelect?: number;
+  reverse?: boolean;         // عبارة معكوسة الترميز (Reverse-coded)
+  attentionCheck?: boolean;  // عبارة فحص انتباه
+  expected?: string;         // الإجابة المتوقعة لعبارات فحص الانتباه
 };
 type Section = { key: string; title: string; intro: string; questions: Question[] };
 
@@ -391,9 +403,33 @@ const SECTIONS: Section[] = [
       },
     ],
   },
+  {
+    key: "validity",
+    title: "وحدة القياس النفسي المتقدمة",
+    intro: "عبارات مقننة على سلم ليكرت الخماسي. أجب بصدق وبدون تفكير زائد — يوجد سؤال انتباه واحد للتحقق من جودة الإجابات.",
+    questions: [
+      { id: "lk_efficacy_1", q: "أستطيع عادةً حل المشكلات الصعبة إذا بذلت الجهد الكافي.", type: "single", options: LIKERT_5 },
+      { id: "lk_efficacy_2_rev", q: "أشعر أنني عاجز عن تحقيق أهدافي مهما حاولت.", type: "single", options: LIKERT_5, reverse: true },
+      { id: "lk_openness_1", q: "أستمتع باستكشاف أفكار وتجارب جديدة حتى لو كانت غير مألوفة.", type: "single", options: LIKERT_5 },
+      { id: "lk_consc_1", q: "أُنجز ما أبدأ به وألتزم بالمواعيد التي أحددها لنفسي.", type: "single", options: LIKERT_5 },
+      { id: "lk_attention", q: "للتأكد من تركيزك في الإجابة، اختر «٤ — أوافق» في هذا السؤال تحديداً.", type: "single", options: LIKERT_5, attentionCheck: true, expected: "٤ — أوافق" },
+      { id: "lk_consc_2_rev", q: "كثيراً ما أؤجل المهام المهمة حتى آخر لحظة.", type: "single", options: LIKERT_5, reverse: true },
+      { id: "lk_social_1", q: "أرتاح للتعامل مع أشخاص جدد في بيئات العمل.", type: "single", options: LIKERT_5 },
+      { id: "lk_emotion_1_rev", q: "أفقد توازني بسرعة عند مواجهة ضغط مفاجئ.", type: "single", options: LIKERT_5, reverse: true },
+    ],
+  },
 ];
 
-const TOTAL_STEPS = 1 + SECTIONS.length;
+// Step layout: [0 = meta] + SECTIONS + [reflection step]
+const REFLECTION_STEP_OFFSET = 1 + SECTIONS.length; // index of GROW reflection step
+const TOTAL_STEPS = 1 + SECTIONS.length + 1;        // +1 for reflection
+
+const GROW_QUESTIONS: { id: string; label: string; placeholder: string }[] = [
+  { id: "grow_goal", label: "G — الهدف: ما الذي تتمنى أن تخرج به من هذا التقرير لحياتك المهنية؟", placeholder: "مثال: أريد توضيح المسار المهني الأنسب لي خلال 3 أشهر..." },
+  { id: "grow_reality", label: "R — الواقع: أين رأيت أبرز سمة من سماتك في تجاربك السابقة (دراسة، عمل، تطوع)؟", placeholder: "مثال: في مشروع التخرج برزت قدرتي على..." },
+  { id: "grow_options", label: "O — الخيارات: ما 3 مسارات أو خيارات تتماشى مع ما تعرفه عن نفسك حتى الآن؟", placeholder: "1) ... 2) ... 3) ..." },
+  { id: "grow_will", label: "W — الإرادة: ما الخطوة الأولى الملموسة التي ستنفذها خلال 7 أيام من اليوم؟", placeholder: "مثال: سأحجز جلسة مع مرشد مهني وأقرأ عن مجال..." },
+];
 
 function SelfDiscoveryPage() {
   const navigate = useNavigate();
@@ -401,11 +437,17 @@ function SelfDiscoveryPage() {
   const [step, setStep] = useState(0);
   const [meta, setMeta] = useState({ name: "", age: "", stage: "", groupCode: "" });
   const [selections, setSelections] = useState<Record<string, string[]>>({});
+  const [reflection, setReflection] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Response-time tracking — start when user leaves the meta step.
+  const startTimeRef = useRef<number | null>(null);
+  if (step > 0 && startTimeRef.current === null) startTimeRef.current = Date.now();
+
   const progress = (step / TOTAL_STEPS) * 100;
-  const currentSection = step > 0 ? SECTIONS[step - 1] : null;
+  const isReflectionStep = step === REFLECTION_STEP_OFFSET;
+  const currentSection = step > 0 && !isReflectionStep ? SECTIONS[step - 1] : null;
 
   const toggle = (q: Question, opt: string) => {
     setSelections((prev) => {
@@ -419,16 +461,66 @@ function SelfDiscoveryPage() {
 
   const canProceed = () => {
     if (step === 0) return meta.stage.trim().length > 0;
+    if (isReflectionStep) {
+      // Require at least 10 characters in each GROW field to ensure meaningful reflection.
+      return GROW_QUESTIONS.every((g) => (reflection[g.id] ?? "").trim().length >= 10);
+    }
     if (!currentSection) return false;
     return currentSection.questions.every((q) => (selections[q.id]?.length ?? 0) > 0);
+  };
+
+  // Compute psychometric quality metrics (Validity Checks) from Likert answers + total time.
+  const computeQuality = () => {
+    const validity = SECTIONS.find((s) => s.key === "validity");
+    const likertItems = validity?.questions ?? [];
+    const values = likertItems.map((q) => {
+      const v = selections[q.id]?.[0] ?? "";
+      const n = parseInt(v.replace(/[^0-9]/g, "")) || 0;
+      // Reverse-coded: invert score on a 1–5 scale.
+      return q.reverse ? 6 - n : n;
+    }).filter((n) => n > 0);
+
+    // 1) Attention check passed?
+    const attn = likertItems.find((q) => q.attentionCheck);
+    const attentionPassed = attn ? (selections[attn.id]?.[0] === attn.expected) : true;
+
+    // 2) Straight-lining: same value repeated across all Likert items.
+    const uniqueVals = new Set(likertItems.map((q) => selections[q.id]?.[0] ?? ""));
+    const straightLining = likertItems.length > 0 && uniqueVals.size <= 1;
+
+    // 3) Response speed: total time per question (excluding meta + reflection steps).
+    const totalAnswered = Object.values(selections).reduce((acc, v) => acc + (v.length > 0 ? 1 : 0), 0);
+    const elapsedMs = startTimeRef.current ? (Date.now() - startTimeRef.current) : 0;
+    const msPerQ = totalAnswered > 0 ? elapsedMs / totalAnswered : 0;
+    const rushed = msPerQ > 0 && msPerQ < 1500; // أقل من 1.5 ثانية لكل سؤال = إجابات متسرعة
+
+    // Confidence band (qualitative — no false precision)
+    let band: "high" | "moderate" | "low" = "high";
+    const flags: string[] = [];
+    if (!attentionPassed) { band = "low"; flags.push("لم يجتز فحص الانتباه"); }
+    if (straightLining) { band = "low"; flags.push("نمط إجابة متطابق (Straight-lining)"); }
+    if (rushed) { band = band === "low" ? "low" : "moderate"; flags.push("سرعة استجابة عالية جداً"); }
+
+    return { attentionPassed, straightLining, rushed, msPerQ: Math.round(msPerQ), band, flags, likertMean: values.length ? Number((values.reduce((a, b) => a + b, 0) / values.length).toFixed(2)) : 0 };
   };
 
   const submit = async () => {
     setLoading(true);
     setError(null);
     try {
+      const quality = computeQuality();
       const answers: Record<string, string> = {};
       for (const k of Object.keys(selections)) answers[k] = selections[k].join("، ");
+      // Reflection answers + quality summary injected as meta-answers for the AI.
+      for (const g of GROW_QUESTIONS) {
+        answers[g.id] = (reflection[g.id] ?? "").trim();
+      }
+      answers["_quality_band"] = quality.band; // high / moderate / low
+      answers["_quality_flags"] = quality.flags.join(" | ") || "لا توجد تنبيهات";
+      answers["_quality_ms_per_question"] = String(quality.msPerQ);
+      answers["_quality_attention_passed"] = quality.attentionPassed ? "نعم" : "لا";
+      answers["_quality_likert_mean"] = String(quality.likertMean);
+
       const sections = SECTIONS.map((s) => ({
         title: s.title,
         items: s.questions.map((q) => ({
@@ -436,6 +528,22 @@ function SelfDiscoveryPage() {
           a: (selections[q.id] ?? []).join("، ") || "—",
         })),
       }));
+      // Append reflection section and quality summary section.
+      sections.push({
+        title: "التأمل التدريبي (نموذج GROW)",
+        items: GROW_QUESTIONS.map((g) => ({ q: g.label, a: (reflection[g.id] ?? "").trim() || "—" })),
+      });
+      sections.push({
+        title: "مؤشرات جودة الاستجابة (Validity Indicators)",
+        items: [
+          { q: "شريط الثقة في النتيجة", a: quality.band === "high" ? "ثقة عالية" : quality.band === "moderate" ? "ثقة متوسطة" : "ثقة منخفضة — راجع الإجابات" },
+          { q: "اجتياز فحص الانتباه", a: quality.attentionPassed ? "نعم" : "لا" },
+          { q: "نمط إجابة متطابق (Straight-lining)", a: quality.straightLining ? "نعم — تنبيه" : "لا" },
+          { q: "متوسط الزمن لكل سؤال (مللي ثانية)", a: String(quality.msPerQ) },
+          { q: "تنبيهات الجودة", a: quality.flags.join(" | ") || "لا توجد" },
+        ],
+      });
+
       const res = await submitFn({
         data: {
           name: meta.name || undefined,
@@ -593,6 +701,47 @@ function SelfDiscoveryPage() {
                           {cur.length}{q.maxSelect ? `/${q.maxSelect}` : ""} مختار
                         </div>
                       )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          ) : isReflectionStep ? (
+            <div className="mt-8 rounded-2xl border border-border bg-card p-8 shadow-[var(--shadow-soft)]">
+              <div className="mb-6 flex items-start gap-3">
+                <Target className="mt-1 h-6 w-6 shrink-0 text-gold" />
+                <div>
+                  <span className="text-xs font-medium text-gold">الخطوة الأخيرة — التأمل التدريبي</span>
+                  <h2 className="mt-1 font-serif text-2xl text-primary">نموذج GROW للكوتشينج</h2>
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    قبل إصدار التقرير، خذ دقيقتين للإجابة على 4 أسئلة تأملية معتمدة في الكوتشينج المهني (ICF). إجاباتك ستُدمج مع تحليل الذكاء الاصطناعي لتقرير أعمق وأكثر شخصية.
+                  </p>
+                </div>
+              </div>
+
+              <div className="mb-4 rounded-lg border border-gold/30 bg-gold/5 p-3 text-xs text-primary">
+                <ShieldCheck className="ml-1 inline h-3.5 w-3.5 text-gold" />
+                إجاباتك التأملية لن تُشارك إلا معك ومع مرشدك المهني عبر كود التقرير. (الحد الأدنى: 10 أحرف لكل سؤال)
+              </div>
+
+              <div className="space-y-6">
+                {GROW_QUESTIONS.map((g, i) => {
+                  const val = reflection[g.id] ?? "";
+                  return (
+                    <div key={g.id}>
+                      <label className="block text-sm font-medium text-foreground">
+                        {i + 1}. {g.label}
+                      </label>
+                      <textarea
+                        value={val}
+                        onChange={(e) => setReflection((p) => ({ ...p, [g.id]: e.target.value.slice(0, 1500) }))}
+                        rows={3}
+                        className="mt-2 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus:border-primary focus:outline-none"
+                        placeholder={g.placeholder}
+                      />
+                      <div className="mt-1 text-left text-xs text-muted-foreground">
+                        {val.trim().length}/1500 — {val.trim().length >= 10 ? "✓ مكتمل" : "اكتب 10 أحرف على الأقل"}
+                      </div>
                     </div>
                   );
                 })}
