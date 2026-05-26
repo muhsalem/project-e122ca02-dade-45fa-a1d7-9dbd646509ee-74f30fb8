@@ -706,6 +706,47 @@ function SelfDiscoveryPage() {
                 })}
               </div>
             </div>
+          ) : isReflectionStep ? (
+            <div className="mt-8 rounded-2xl border border-border bg-card p-8 shadow-[var(--shadow-soft)]">
+              <div className="mb-6 flex items-start gap-3">
+                <Target className="mt-1 h-6 w-6 shrink-0 text-gold" />
+                <div>
+                  <span className="text-xs font-medium text-gold">الخطوة الأخيرة — التأمل التدريبي</span>
+                  <h2 className="mt-1 font-serif text-2xl text-primary">نموذج GROW للكوتشينج</h2>
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    قبل إصدار التقرير، خذ دقيقتين للإجابة على 4 أسئلة تأملية معتمدة في الكوتشينج المهني (ICF). إجاباتك ستُدمج مع تحليل الذكاء الاصطناعي لتقرير أعمق وأكثر شخصية.
+                  </p>
+                </div>
+              </div>
+
+              <div className="mb-4 rounded-lg border border-gold/30 bg-gold/5 p-3 text-xs text-primary">
+                <ShieldCheck className="ml-1 inline h-3.5 w-3.5 text-gold" />
+                إجاباتك التأملية لن تُشارك إلا معك ومع مرشدك المهني عبر كود التقرير. (الحد الأدنى: 10 أحرف لكل سؤال)
+              </div>
+
+              <div className="space-y-6">
+                {GROW_QUESTIONS.map((g, i) => {
+                  const val = reflection[g.id] ?? "";
+                  return (
+                    <div key={g.id}>
+                      <label className="block text-sm font-medium text-foreground">
+                        {i + 1}. {g.label}
+                      </label>
+                      <textarea
+                        value={val}
+                        onChange={(e) => setReflection((p) => ({ ...p, [g.id]: e.target.value.slice(0, 1500) }))}
+                        rows={3}
+                        className="mt-2 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus:border-primary focus:outline-none"
+                        placeholder={g.placeholder}
+                      />
+                      <div className="mt-1 text-left text-xs text-muted-foreground">
+                        {val.trim().length}/1500 — {val.trim().length >= 10 ? "✓ مكتمل" : "اكتب 10 أحرف على الأقل"}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
           ) : null}
 
           {error && (
