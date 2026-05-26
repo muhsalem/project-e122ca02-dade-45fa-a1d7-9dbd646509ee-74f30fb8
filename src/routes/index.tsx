@@ -134,6 +134,103 @@ function HomePage() {
         </div>
       </section>
 
+      {/* BURNOUT — صحوة وانطلاقة جديدة */}
+      <section className="relative overflow-hidden border-b border-border bg-gradient-to-br from-[#2a1810] via-primary to-[#1a0f08] text-primary-foreground">
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute -top-24 -right-24 h-96 w-96 rounded-full bg-gold/30 blur-3xl" />
+          <div className="absolute -bottom-24 -left-24 h-96 w-96 rounded-full bg-orange-500/20 blur-3xl" />
+        </div>
+        <div className="container-page relative py-20 lg:py-24">
+          <div className="grid items-center gap-12 lg:grid-cols-5">
+            <div className="lg:col-span-3">
+              <span className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/10 px-4 py-1.5 text-xs font-medium text-gold">
+                <Flame className="h-3.5 w-3.5" />
+                مساحة آمنة لمن أنهكه الطريق
+              </span>
+              <h2 className="mt-6 font-serif text-3xl leading-tight md:text-5xl">
+                مُتعَب؟ مُستنزَف؟
+                <br />
+                <span className="text-gold">هذا ليس نهايتك… بل بداية وعيك.</span>
+              </h2>
+              <p className="mt-6 max-w-2xl text-lg leading-9 text-primary-foreground/85">
+                الاحتراق المهني ليس ضعفاً، بل إشارة من داخلك بأن المسار الذي تسير فيه
+                لم يعد يشبهك. آلاف الناجحين مرّوا من هنا، ثم نهضوا أقوى وأوضح وأكثر
+                توافقاً مع ذواتهم. اليوم دورك: قِف لحظة، اقرأ نفسك بصدق، ثم أعد رسم
+                خريطتك من جديد.
+              </p>
+              <ul className="mt-8 grid gap-3 text-sm text-primary-foreground/80 sm:grid-cols-2">
+                {[
+                  "قياس علمي لمستوى الإنهاك خلال 5 دقائق",
+                  "تقرير شخصي بأسباب الاستنزاف ومحفزاته",
+                  "خطة تعافٍ تدريجية تبدأ من اليوم",
+                  "جسر مباشر لإعادة اكتشاف ذاتك ومسارك",
+                ].map((t) => (
+                  <li key={t} className="flex items-start gap-2">
+                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gold" />
+                    <span>{t}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-10 flex flex-wrap gap-3">
+                <Link
+                  to="/burnout-check"
+                  className="inline-flex items-center gap-2 rounded-md bg-gold px-6 py-3.5 text-sm font-semibold text-gold-foreground shadow-[var(--shadow-elegant)] hover:opacity-90"
+                >
+                  ابدأ مؤشر الاحتراق المهني
+                  <ArrowLeft className="h-4 w-4" />
+                </Link>
+                <Link
+                  to="/self-discovery"
+                  className="inline-flex items-center gap-2 rounded-md border border-primary-foreground/30 bg-primary-foreground/5 px-6 py-3.5 text-sm font-medium text-primary-foreground hover:bg-primary-foreground/10"
+                >
+                  أعد اكتشاف ذاتك من جديد
+                </Link>
+              </div>
+              <p className="mt-6 max-w-xl text-sm italic leading-7 text-primary-foreground/60">
+                «أعظم تحوّلات الإنسان تبدأ من اللحظة التي يعترف فيها بإرهاقه،
+                ثم يختار أن يبدأ من جديد.»
+              </p>
+            </div>
+
+            <div className="lg:col-span-2">
+              <div className="relative">
+                <div className="absolute -inset-2 rounded-3xl bg-gradient-to-br from-gold/40 to-orange-500/20 blur-2xl" />
+                <div className="relative rounded-3xl border border-gold/20 bg-primary-foreground/5 p-8 backdrop-blur-sm">
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gold/20 text-gold">
+                      <HeartPulse className="h-6 w-6" />
+                    </div>
+                    <div>
+                      <p className="text-xs uppercase tracking-widest text-gold">رحلة التعافي</p>
+                      <p className="font-serif text-lg">من الإنهاك إلى الوضوح</p>
+                    </div>
+                  </div>
+                  <ol className="mt-6 space-y-5">
+                    {[
+                      { n: "1", t: "اعترِف", d: "اقرأ مؤشراتك بصدق دون لوم." },
+                      { n: "2", t: "افهَم", d: "اكتشف جذور الاستنزاف الحقيقية." },
+                      { n: "3", t: "أعِد التعريف", d: "ابنِ صورة جديدة عن ذاتك وقيمك." },
+                      { n: "4", t: "انطلق", d: "ارسم مساراً يحترم طاقتك ومعناك." },
+                    ].map((s) => (
+                      <li key={s.n} className="flex gap-4">
+                        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-gold/40 font-serif text-sm text-gold">
+                          {s.n}
+                        </span>
+                        <div>
+                          <p className="font-serif text-base text-primary-foreground">{s.t}</p>
+                          <p className="mt-0.5 text-xs leading-6 text-primary-foreground/70">{s.d}</p>
+                        </div>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
       {/* JOURNEY */}
       <section className="border-b border-border bg-primary text-primary-foreground">
         <div className="container-page py-20">
