@@ -157,7 +157,7 @@ export const submitAssessment = createServerFn({ method: "POST" })
 
     let answerLog = "";
     if (data.sections && data.sections.length) {
-      answerLog = `\n\n---\n\n## ١٢. ملخص إجاباتك النهائية حسب المحاور\n\n`;
+      answerLog = `\n\n---\n\n## ١٦. ملخص إجاباتك النهائية حسب المحاور\n\n`;
       for (const s of data.sections) {
         answerLog += `### ${s.title}\n`;
         for (const it of s.items) {
