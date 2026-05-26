@@ -1,7 +1,6 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useState, useRef } from "react";
 import { Users, ShieldCheck, Target } from "lucide-react";
-import { ComplementaryTools } from "@/components/site/ComplementaryTools";
 import { ArrowLeft, ArrowRight, Loader2, Sparkles, Brain, Check } from "lucide-react";
 import { useServerFn } from "@tanstack/react-start";
 import { submitAssessment } from "@/lib/assessment.functions";
@@ -705,8 +704,6 @@ function SelfDiscoveryPage() {
           </p>
         </div>
       </section>
-
-      <ComplementaryTools tools={["review360", "wellbeing"]} title="أدوات مدمجة ضمن اكتشف ذاتك" />
 
       <section className="container-page py-12">
         <div className="mx-auto max-w-3xl">
