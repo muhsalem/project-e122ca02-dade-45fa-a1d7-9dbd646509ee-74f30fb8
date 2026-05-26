@@ -13,7 +13,7 @@ const discoveryGroup = {
   items: [
     { to: "/self-discovery", label: "اكتشف ذاتك" },
     { to: "/learning-style", label: "اكتشف نمط تعلمك" },
-    { to: "/burnout-check", label: "مؤشر الاحتراق المهني" },
+    
     { to: "/academic-major", label: "اكتشف تخصصك الدراسي" },
     { to: "/career-type-assessment", label: "اكتشف مسارك المهني" },
     { to: "/sector-guide", label: "دليل القطاعات والصناعات" },
