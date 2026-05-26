@@ -59,7 +59,7 @@ function BookingPage() {
     <>
       <section className="border-b border-border bg-secondary/40">
         <div className="container-page py-16 text-center">
-          <h1 className="text-4xl text-primary md:text-5xl">احجز جلستك</h1>
+          <h1 className="text-4xl text-primary md:text-5xl">حجز جلسة إرشاد أو كوتشينج</h1>
           <p className="mx-auto mt-4 max-w-xl text-muted-foreground">
             خطوات بسيطة للحجز مع أحد مرشدينا المعتمدين دولياً.
           </p>
