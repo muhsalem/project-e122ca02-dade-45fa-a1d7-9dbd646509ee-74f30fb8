@@ -10,9 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WellbeingCheckRouteImport } from './routes/wellbeing-check'
-import { Route as ValuesMapperRouteImport } from './routes/values-mapper'
 import { Route as TermsRouteImport } from './routes/terms'
-import { Route as StrengthsFinderRouteImport } from './routes/strengths-finder'
 import { Route as SkillsGapRouteImport } from './routes/skills-gap'
 import { Route as SelfDiscoveryRouteImport } from './routes/self-discovery'
 import { Route as SectorGuideRouteImport } from './routes/sector-guide'
@@ -61,19 +59,9 @@ const WellbeingCheckRoute = WellbeingCheckRouteImport.update({
   path: '/wellbeing-check',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ValuesMapperRoute = ValuesMapperRouteImport.update({
-  id: '/values-mapper',
-  path: '/values-mapper',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
   path: '/terms',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const StrengthsFinderRoute = StrengthsFinderRouteImport.update({
-  id: '/strengths-finder',
-  path: '/strengths-finder',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SkillsGapRoute = SkillsGapRouteImport.update({
@@ -322,9 +310,7 @@ export interface FileRoutesByFullPath {
   '/sector-guide': typeof SectorGuideRoute
   '/self-discovery': typeof SelfDiscoveryRoute
   '/skills-gap': typeof SkillsGapRoute
-  '/strengths-finder': typeof StrengthsFinderRoute
   '/terms': typeof TermsRoute
-  '/values-mapper': typeof ValuesMapperRoute
   '/wellbeing-check': typeof WellbeingCheckRoute
   '/idp/$code': typeof IdpCodeRoute
   '/report/$code': typeof ReportCodeRoute
@@ -370,9 +356,7 @@ export interface FileRoutesByTo {
   '/sector-guide': typeof SectorGuideRoute
   '/self-discovery': typeof SelfDiscoveryRoute
   '/skills-gap': typeof SkillsGapRoute
-  '/strengths-finder': typeof StrengthsFinderRoute
   '/terms': typeof TermsRoute
-  '/values-mapper': typeof ValuesMapperRoute
   '/wellbeing-check': typeof WellbeingCheckRoute
   '/idp/$code': typeof IdpCodeRoute
   '/report/$code': typeof ReportCodeRoute
@@ -419,9 +403,7 @@ export interface FileRoutesById {
   '/sector-guide': typeof SectorGuideRoute
   '/self-discovery': typeof SelfDiscoveryRoute
   '/skills-gap': typeof SkillsGapRoute
-  '/strengths-finder': typeof StrengthsFinderRoute
   '/terms': typeof TermsRoute
-  '/values-mapper': typeof ValuesMapperRoute
   '/wellbeing-check': typeof WellbeingCheckRoute
   '/idp/$code': typeof IdpCodeRoute
   '/report/$code': typeof ReportCodeRoute
@@ -469,9 +451,7 @@ export interface FileRouteTypes {
     | '/sector-guide'
     | '/self-discovery'
     | '/skills-gap'
-    | '/strengths-finder'
     | '/terms'
-    | '/values-mapper'
     | '/wellbeing-check'
     | '/idp/$code'
     | '/report/$code'
@@ -517,9 +497,7 @@ export interface FileRouteTypes {
     | '/sector-guide'
     | '/self-discovery'
     | '/skills-gap'
-    | '/strengths-finder'
     | '/terms'
-    | '/values-mapper'
     | '/wellbeing-check'
     | '/idp/$code'
     | '/report/$code'
@@ -565,9 +543,7 @@ export interface FileRouteTypes {
     | '/sector-guide'
     | '/self-discovery'
     | '/skills-gap'
-    | '/strengths-finder'
     | '/terms'
-    | '/values-mapper'
     | '/wellbeing-check'
     | '/idp/$code'
     | '/report/$code'
@@ -614,9 +590,7 @@ export interface RootRouteChildren {
   SectorGuideRoute: typeof SectorGuideRoute
   SelfDiscoveryRoute: typeof SelfDiscoveryRoute
   SkillsGapRoute: typeof SkillsGapRoute
-  StrengthsFinderRoute: typeof StrengthsFinderRoute
   TermsRoute: typeof TermsRoute
-  ValuesMapperRoute: typeof ValuesMapperRoute
   WellbeingCheckRoute: typeof WellbeingCheckRoute
   IdpCodeRoute: typeof IdpCodeRoute
   ReportCodeRoute: typeof ReportCodeRoute
@@ -634,25 +608,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WellbeingCheckRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/values-mapper': {
-      id: '/values-mapper'
-      path: '/values-mapper'
-      fullPath: '/values-mapper'
-      preLoaderRoute: typeof ValuesMapperRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/terms': {
       id: '/terms'
       path: '/terms'
       fullPath: '/terms'
       preLoaderRoute: typeof TermsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/strengths-finder': {
-      id: '/strengths-finder'
-      path: '/strengths-finder'
-      fullPath: '/strengths-finder'
-      preLoaderRoute: typeof StrengthsFinderRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/skills-gap': {
@@ -1008,9 +968,7 @@ const rootRouteChildren: RootRouteChildren = {
   SectorGuideRoute: SectorGuideRoute,
   SelfDiscoveryRoute: SelfDiscoveryRoute,
   SkillsGapRoute: SkillsGapRoute,
-  StrengthsFinderRoute: StrengthsFinderRoute,
   TermsRoute: TermsRoute,
-  ValuesMapperRoute: ValuesMapperRoute,
   WellbeingCheckRoute: WellbeingCheckRoute,
   IdpCodeRoute: IdpCodeRoute,
   ReportCodeRoute: ReportCodeRoute,

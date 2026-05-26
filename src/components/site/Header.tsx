@@ -11,8 +11,8 @@ const nav = [
 const discoveryGroup = {
   label: "اكتشف",
   items: [
-    { to: "/self-discovery", label: "اكتشف ذاتك (شامل القيم ونقاط القوة)" },
-    { to: "/learning-style", label: "اكتشف نمط تعلمك (شامل البروفايل المعرفي)" },
+    { to: "/self-discovery", label: "اكتشف ذاتك" },
+    { to: "/learning-style", label: "اكتشف نمط تعلمك" },
     { to: "/burnout-check", label: "مؤشر الاحتراق المهني" },
     { to: "/academic-major", label: "اكتشف تخصصك الدراسي" },
     { to: "/career-type-assessment", label: "اكتشف مسارك المهني" },
