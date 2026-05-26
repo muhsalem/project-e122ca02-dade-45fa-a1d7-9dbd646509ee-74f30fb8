@@ -78,7 +78,7 @@ function EthicsPage() {
         <h2 className="font-serif text-2xl text-primary">٨. التطوير المستمر للميثاق</h2>
         <p>
           نُحدّث هذا الميثاق كلما اتسعت خدمات المنصة، ونرحّب بالملاحظات على:{" "}
-          <a className="text-primary underline" href="mailto:ethics@busala.app">ethics@busala.app</a>
+          <a className="text-primary underline" href="mailto:ethics@bosla.app">ethics@bosla.app</a>
         </p>
 
         <p className="mt-8 rounded-xl border border-border bg-secondary/40 p-5 text-sm">
