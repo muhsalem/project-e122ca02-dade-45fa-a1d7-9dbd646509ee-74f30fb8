@@ -5,8 +5,8 @@ import { Check, Calendar, Clock, User } from "lucide-react";
 export const Route = createFileRoute("/booking")({
   head: () => ({
     meta: [
-      { title: "حجز جلسة كوتشينج — بوصلة" },
-      { name: "description", content: "احجز جلسة إرشاد مهني فردية مع مرشد معتمد." },
+      { title: "حجز جلسة إرشاد أو كوتشينج — بوصلة" },
+      { name: "description", content: "احجز جلسة إرشاد مهني أو كوتشينج فردية مع مرشد معتمد." },
     ],
   }),
   component: BookingPage,
@@ -59,7 +59,7 @@ function BookingPage() {
     <>
       <section className="border-b border-border bg-secondary/40">
         <div className="container-page py-16 text-center">
-          <h1 className="text-4xl text-primary md:text-5xl">احجز جلستك</h1>
+          <h1 className="text-4xl text-primary md:text-5xl">حجز جلسة إرشاد أو كوتشينج</h1>
           <p className="mx-auto mt-4 max-w-xl text-muted-foreground">
             خطوات بسيطة للحجز مع أحد مرشدينا المعتمدين دولياً.
           </p>

@@ -22,7 +22,7 @@ function CookiesPage() {
     <article className="container-page max-w-3xl py-16 leading-relaxed">
       <h1 className="font-serif text-4xl text-primary">سياسة ملفات تعريف الارتباط</h1>
       <p className="mt-2 text-sm text-muted-foreground">
-        آخر تحديث: {new Date().toLocaleDateString("ar-EG")}
+        آخر تحديث: مايو 2026
       </p>
 
       <section className="mt-8 space-y-5 text-foreground/90">

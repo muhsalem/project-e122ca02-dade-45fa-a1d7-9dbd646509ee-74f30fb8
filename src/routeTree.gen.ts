@@ -22,7 +22,6 @@ import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as MyAssessmentsRouteImport } from './routes/my-assessments'
 import { Route as LearningStyleRouteImport } from './routes/learning-style'
 import { Route as LaborMarketRouteImport } from './routes/labor-market'
-import { Route as JournalRouteImport } from './routes/journal'
 import { Route as JoinAsCoachRouteImport } from './routes/join-as-coach'
 import { Route as InstitutionsRouteImport } from './routes/institutions'
 import { Route as EthicsRouteImport } from './routes/ethics'
@@ -117,11 +116,6 @@ const LearningStyleRoute = LearningStyleRouteImport.update({
 const LaborMarketRoute = LaborMarketRouteImport.update({
   id: '/labor-market',
   path: '/labor-market',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const JournalRoute = JournalRouteImport.update({
-  id: '/journal',
-  path: '/journal',
   getParentRoute: () => rootRouteImport,
 } as any)
 const JoinAsCoachRoute = JoinAsCoachRouteImport.update({
@@ -298,7 +292,6 @@ export interface FileRoutesByFullPath {
   '/ethics': typeof EthicsRoute
   '/institutions': typeof InstitutionsRoute
   '/join-as-coach': typeof JoinAsCoachRoute
-  '/journal': typeof JournalRoute
   '/labor-market': typeof LaborMarketRoute
   '/learning-style': typeof LearningStyleRoute
   '/my-assessments': typeof MyAssessmentsRoute
@@ -344,7 +337,6 @@ export interface FileRoutesByTo {
   '/ethics': typeof EthicsRoute
   '/institutions': typeof InstitutionsRoute
   '/join-as-coach': typeof JoinAsCoachRoute
-  '/journal': typeof JournalRoute
   '/labor-market': typeof LaborMarketRoute
   '/learning-style': typeof LearningStyleRoute
   '/my-assessments': typeof MyAssessmentsRoute
@@ -391,7 +383,6 @@ export interface FileRoutesById {
   '/ethics': typeof EthicsRoute
   '/institutions': typeof InstitutionsRoute
   '/join-as-coach': typeof JoinAsCoachRoute
-  '/journal': typeof JournalRoute
   '/labor-market': typeof LaborMarketRoute
   '/learning-style': typeof LearningStyleRoute
   '/my-assessments': typeof MyAssessmentsRoute
@@ -439,7 +430,6 @@ export interface FileRouteTypes {
     | '/ethics'
     | '/institutions'
     | '/join-as-coach'
-    | '/journal'
     | '/labor-market'
     | '/learning-style'
     | '/my-assessments'
@@ -485,7 +475,6 @@ export interface FileRouteTypes {
     | '/ethics'
     | '/institutions'
     | '/join-as-coach'
-    | '/journal'
     | '/labor-market'
     | '/learning-style'
     | '/my-assessments'
@@ -531,7 +520,6 @@ export interface FileRouteTypes {
     | '/ethics'
     | '/institutions'
     | '/join-as-coach'
-    | '/journal'
     | '/labor-market'
     | '/learning-style'
     | '/my-assessments'
@@ -578,7 +566,6 @@ export interface RootRouteChildren {
   EthicsRoute: typeof EthicsRoute
   InstitutionsRoute: typeof InstitutionsRoute
   JoinAsCoachRoute: typeof JoinAsCoachRoute
-  JournalRoute: typeof JournalRoute
   LaborMarketRoute: typeof LaborMarketRoute
   LearningStyleRoute: typeof LearningStyleRoute
   MyAssessmentsRoute: typeof MyAssessmentsRoute
@@ -690,13 +677,6 @@ declare module '@tanstack/react-router' {
       path: '/labor-market'
       fullPath: '/labor-market'
       preLoaderRoute: typeof LaborMarketRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/journal': {
-      id: '/journal'
-      path: '/journal'
-      fullPath: '/journal'
-      preLoaderRoute: typeof JournalRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/join-as-coach': {
@@ -956,7 +936,6 @@ const rootRouteChildren: RootRouteChildren = {
   EthicsRoute: EthicsRoute,
   InstitutionsRoute: InstitutionsRoute,
   JoinAsCoachRoute: JoinAsCoachRoute,
-  JournalRoute: JournalRoute,
   LaborMarketRoute: LaborMarketRoute,
   LearningStyleRoute: LearningStyleRoute,
   MyAssessmentsRoute: MyAssessmentsRoute,
