@@ -591,8 +591,17 @@ function LearningStylePage() {
     setLoading(true);
     setError(null);
     try {
+      const profile = computeStyleProfile(selections);
       const answers: Record<string, string> = {};
       for (const k of Object.keys(selections)) answers[k] = selections[k].join("، ");
+      // Inject deterministic profile so AI elaborates without re-guessing
+      answers["_vark_dominant"] = profile.vark.label;
+      answers["_vark_scores"] = `V=${profile.vark.V}, A=${profile.vark.A}, R=${profile.vark.R}, K=${profile.vark.K}`;
+      answers["_vark_multimodal"] = profile.vark.isMultimodal ? "نعم" : "لا";
+      answers["_kolb_style"] = `${profile.kolb.style} — ${profile.kolb.styleAr}`;
+      answers["_kolb_scores"] = `CE=${profile.kolb.CE}, RO=${profile.kolb.RO}, AC=${profile.kolb.AC}, AE=${profile.kolb.AE}`;
+      answers["_kolb_axes"] = `AC-CE=${profile.kolb.ac_minus_ce}, AE-RO=${profile.kolb.ae_minus_ro}`;
+
       const sections = SECTIONS.map((s) => ({
         title: s.title,
         items: s.questions.map((q) => ({
@@ -600,6 +609,18 @@ function LearningStylePage() {
           a: (selections[q.id] ?? []).join("، ") || "—",
         })),
       }));
+      sections.unshift({
+        title: "النتيجة المحسوبة بدقة (Deterministic Scoring)",
+        items: [
+          { q: "VARK — النمط السائد", a: profile.vark.label },
+          { q: "VARK — التوزيع", a: `V=${profile.vark.V} | A=${profile.vark.A} | R=${profile.vark.R} | K=${profile.vark.K}` },
+          { q: "Kolb — نمط التعلم", a: `${profile.kolb.styleAr} (${profile.kolb.style})` },
+          { q: "Kolb — التوزيع", a: `CE=${profile.kolb.CE} | RO=${profile.kolb.RO} | AC=${profile.kolb.AC} | AE=${profile.kolb.AE}` },
+          { q: "Kolb — المحاور", a: `AC−CE = ${profile.kolb.ac_minus_ce} | AE−RO = ${profile.kolb.ae_minus_ro}` },
+          { q: "وصف موجز", a: profile.kolb.description },
+        ],
+      });
+
       const res = await submitFn({
         data: {
           name: meta.name || undefined,
