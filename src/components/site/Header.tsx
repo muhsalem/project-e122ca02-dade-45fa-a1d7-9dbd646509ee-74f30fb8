@@ -21,6 +21,7 @@ const discoveryGroup = {
 
 const navAfter = [
   { to: "/labor-market", label: "نبض السوق" },
+  { to: "/career-twin", label: "توأم المسار" },
   { to: "/comprehensive-assessment", label: "التقييم الشامل" },
   { to: "/counselor", label: "الإرشاد المهني والكوتش" },
   { to: "/resources", label: "الموارد" },
