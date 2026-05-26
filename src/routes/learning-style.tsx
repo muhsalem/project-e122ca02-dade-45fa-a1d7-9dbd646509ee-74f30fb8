@@ -391,10 +391,18 @@ function LearningStylePage() {
             <Sparkles className="h-3.5 w-3.5 text-gold" />
             تقييم أنماط التعلم الشامل
           </span>
-          <h1 className="mt-4 text-3xl text-primary md:text-4xl">اكتشف نمط تعلمك الفريد</h1>
+          <h1 className="mt-4 text-3xl text-primary md:text-4xl">اكتشف تفضيلاتك في التعلّم</h1>
           <p className="mx-auto mt-3 max-w-2xl text-sm text-muted-foreground">
-            تقييم متكامل يجمع 9 نماذج عالمية (VARK، Kolb، Honey & Mumford، Felder–Silverman، الذكاءات المتعددة، Gregorc، Dunn & Dunn، PEPS، الأساليب المعرفية) ويُصدر تقريرًا تفصيليًا بكود لمناقشته مع مرشدك النفسي.
+            استبيان استرشادي يركّز على نموذجَي <strong>VARK</strong> (القنوات الحسيّة) و
+            <strong> Kolb</strong> (دورة التعلّم التجريبي)، مع لمحات من نماذج أخرى للإثراء فقط،
+            ويُصدر تقريراً تفصيلياً بكود لمناقشته مع مرشدك.
           </p>
+          <div className="mx-auto mt-5 max-w-2xl rounded-xl border border-amber-500/40 bg-amber-50 p-3 text-right text-xs leading-6 text-amber-900 dark:bg-amber-950/20 dark:text-amber-200">
+            <strong>تنبيه علمي:</strong> الأدبيات الحديثة (Pashler et al., 2008؛ مراجعة كامبردج 2020) لا تدعم
+            فكرة <em>مطابقة أسلوب التدريس لنمط المتعلّم</em> كآليّة لرفع التحصيل. نعرض النتائج هنا كـ
+            <strong> تفضيلات شخصيّة استكشافيّة</strong> تُعينك على تنويع استراتيجياتك، لا كتصنيف
+            ثابت أو وصفة تدريسيّة.
+          </div>
         </div>
       </section>
 
