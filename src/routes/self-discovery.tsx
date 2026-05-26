@@ -403,9 +403,33 @@ const SECTIONS: Section[] = [
       },
     ],
   },
+  {
+    key: "validity",
+    title: "وحدة القياس النفسي المتقدمة",
+    intro: "عبارات مقننة على سلم ليكرت الخماسي. أجب بصدق وبدون تفكير زائد — يوجد سؤال انتباه واحد للتحقق من جودة الإجابات.",
+    questions: [
+      { id: "lk_efficacy_1", q: "أستطيع عادةً حل المشكلات الصعبة إذا بذلت الجهد الكافي.", type: "single", options: LIKERT_5 },
+      { id: "lk_efficacy_2_rev", q: "أشعر أنني عاجز عن تحقيق أهدافي مهما حاولت.", type: "single", options: LIKERT_5, reverse: true },
+      { id: "lk_openness_1", q: "أستمتع باستكشاف أفكار وتجارب جديدة حتى لو كانت غير مألوفة.", type: "single", options: LIKERT_5 },
+      { id: "lk_consc_1", q: "أُنجز ما أبدأ به وألتزم بالمواعيد التي أحددها لنفسي.", type: "single", options: LIKERT_5 },
+      { id: "lk_attention", q: "للتأكد من تركيزك في الإجابة، اختر «٤ — أوافق» في هذا السؤال تحديداً.", type: "single", options: LIKERT_5, attentionCheck: true, expected: "٤ — أوافق" },
+      { id: "lk_consc_2_rev", q: "كثيراً ما أؤجل المهام المهمة حتى آخر لحظة.", type: "single", options: LIKERT_5, reverse: true },
+      { id: "lk_social_1", q: "أرتاح للتعامل مع أشخاص جدد في بيئات العمل.", type: "single", options: LIKERT_5 },
+      { id: "lk_emotion_1_rev", q: "أفقد توازني بسرعة عند مواجهة ضغط مفاجئ.", type: "single", options: LIKERT_5, reverse: true },
+    ],
+  },
 ];
 
-const TOTAL_STEPS = 1 + SECTIONS.length;
+// Step layout: [0 = meta] + SECTIONS + [reflection step]
+const REFLECTION_STEP_OFFSET = 1 + SECTIONS.length; // index of GROW reflection step
+const TOTAL_STEPS = 1 + SECTIONS.length + 1;        // +1 for reflection
+
+const GROW_QUESTIONS: { id: string; label: string; placeholder: string }[] = [
+  { id: "grow_goal", label: "G — الهدف: ما الذي تتمنى أن تخرج به من هذا التقرير لحياتك المهنية؟", placeholder: "مثال: أريد توضيح المسار المهني الأنسب لي خلال 3 أشهر..." },
+  { id: "grow_reality", label: "R — الواقع: أين رأيت أبرز سمة من سماتك في تجاربك السابقة (دراسة، عمل، تطوع)؟", placeholder: "مثال: في مشروع التخرج برزت قدرتي على..." },
+  { id: "grow_options", label: "O — الخيارات: ما 3 مسارات أو خيارات تتماشى مع ما تعرفه عن نفسك حتى الآن؟", placeholder: "1) ... 2) ... 3) ..." },
+  { id: "grow_will", label: "W — الإرادة: ما الخطوة الأولى الملموسة التي ستنفذها خلال 7 أيام من اليوم؟", placeholder: "مثال: سأحجز جلسة مع مرشد مهني وأقرأ عن مجال..." },
+];
 
 function SelfDiscoveryPage() {
   const navigate = useNavigate();
@@ -413,11 +437,17 @@ function SelfDiscoveryPage() {
   const [step, setStep] = useState(0);
   const [meta, setMeta] = useState({ name: "", age: "", stage: "", groupCode: "" });
   const [selections, setSelections] = useState<Record<string, string[]>>({});
+  const [reflection, setReflection] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Response-time tracking — start when user leaves the meta step.
+  const startTimeRef = useRef<number | null>(null);
+  if (step > 0 && startTimeRef.current === null) startTimeRef.current = Date.now();
+
   const progress = (step / TOTAL_STEPS) * 100;
-  const currentSection = step > 0 ? SECTIONS[step - 1] : null;
+  const isReflectionStep = step === REFLECTION_STEP_OFFSET;
+  const currentSection = step > 0 && !isReflectionStep ? SECTIONS[step - 1] : null;
 
   const toggle = (q: Question, opt: string) => {
     setSelections((prev) => {
