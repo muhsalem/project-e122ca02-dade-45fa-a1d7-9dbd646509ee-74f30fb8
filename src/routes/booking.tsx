@@ -144,6 +144,70 @@ function BookingPage() {
             </div>
           </div>
 
+          {/* GENDER PREFERENCE — مراعاة الضوابط الشرعية */}
+          <div className="rounded-xl border border-border bg-secondary/30 p-5">
+            <h2 className="flex items-center gap-2 font-serif text-base text-primary">
+              <Users className="h-5 w-5 text-gold" /> تفضيل جنس المُرشِد (الضوابط الشرعية)
+            </h2>
+            <p className="mt-1 text-xs text-muted-foreground">
+              نلتزم بعدم الخلوة. الجلسات الافتراضية من نفس الجنس، وإن اخترت غير ذلك تُسجَّل الجلسة وتكون احترافيّة مع التزام الحشمة.
+            </p>
+            <div className="mt-3 grid gap-2 md:grid-cols-2">
+              {[
+                { id: "same", label: "من نفس جنسي (افتراضي)" },
+                { id: "any", label: "لا تفضيل — مع تسجيل الجلسة" },
+              ].map((g) => (
+                <button
+                  type="button"
+                  key={g.id}
+                  onClick={() => setGenderPref(g.id as "same" | "any")}
+                  className={`rounded-lg border px-3 py-2.5 text-right text-sm transition ${
+                    genderPref === g.id
+                      ? "border-primary bg-primary/5"
+                      : "border-border bg-card hover:border-primary/40"
+                  }`}
+                >
+                  {g.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* PAYMENT — متوافقة شرعياً */}
+          <div className="rounded-xl border border-border bg-secondary/30 p-5">
+            <h2 className="flex items-center gap-2 font-serif text-base text-primary">
+              <ShieldCheck className="h-5 w-5 text-gold" /> طريقة الدفع (متوافقة مع الضوابط الشرعية)
+            </h2>
+            <p className="mt-1 text-xs text-muted-foreground">
+              لا نتعامل بالفوائد الربوية. اختر إحدى البوابات المتوافقة:
+            </p>
+            <div className="mt-3 grid gap-2 md:grid-cols-2">
+              {[
+                { id: "mada", label: "مدى / Apple Pay" },
+                { id: "stcpay", label: "STC Pay" },
+                { id: "bank", label: "تحويل بنكي (بنك إسلامي)" },
+                { id: "tabby", label: "تابي — دفعة واحدة (بدون تقسيط)" },
+              ].map((p) => (
+                <button
+                  type="button"
+                  key={p.id}
+                  onClick={() => setPayment(p.id)}
+                  className={`rounded-lg border px-3 py-2.5 text-right text-sm transition ${
+                    payment === p.id
+                      ? "border-primary bg-primary/5"
+                      : "border-border bg-card hover:border-primary/40"
+                  }`}
+                >
+                  {p.label}
+                </button>
+              ))}
+            </div>
+            <p className="mt-3 text-[11px] text-muted-foreground">
+              ملاحظة: نوصي بعدم استخدام بطاقات ائتمانية ذات فوائد ربوية. تفاصيل أكثر في{" "}
+              <a href="/ethics" className="text-primary underline">ميثاق الالتزام</a>.
+            </p>
+          </div>
+
           <button
             type="submit"
             disabled={!coach || !date || !time}
