@@ -230,6 +230,97 @@ function HomePage() {
         </div>
       </section>
 
+      {/* SKILLS GAP — اعرف فجوتك تَعبُر إليها */}
+      <section className="border-b border-border bg-secondary/40">
+        <div className="container-page py-20 lg:py-24">
+          <div className="grid items-center gap-12 lg:grid-cols-5">
+            <div className="lg:col-span-2 order-2 lg:order-1">
+              <div className="relative">
+                <div className="absolute -inset-2 rounded-3xl bg-gradient-to-br from-gold/20 to-primary/15 blur-2xl" />
+                <div className="relative rounded-3xl border border-border bg-card p-8 shadow-[var(--shadow-soft)]">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-xs uppercase tracking-widest text-gold">مثال على التحليل</p>
+                      <p className="mt-1 font-serif text-lg text-primary">مهندس بيانات → قائد فريق</p>
+                    </div>
+                    <Gauge className="h-8 w-8 text-gold" />
+                  </div>
+                  <div className="mt-6 space-y-4">
+                    {[
+                      { s: "SQL متقدم", v: 92, c: "bg-emerald-500" },
+                      { s: "تصميم الأنظمة", v: 65, c: "bg-gold" },
+                      { s: "قيادة الفِرق", v: 38, c: "bg-orange-500" },
+                      { s: "التواصل الاستراتيجي", v: 45, c: "bg-orange-500" },
+                    ].map((k) => (
+                      <div key={k.s}>
+                        <div className="flex items-center justify-between text-sm">
+                          <span className="text-primary">{k.s}</span>
+                          <span className="text-muted-foreground">{k.v}%</span>
+                        </div>
+                        <div className="mt-1.5 h-2 overflow-hidden rounded-full bg-muted">
+                          <div className={`h-full ${k.c}`} style={{ width: `${k.v}%` }} />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mt-6 rounded-xl border border-dashed border-gold/40 bg-gold/5 p-4 text-xs leading-6 text-primary">
+                    <span className="font-semibold text-gold">التوصية:</span>
+                    {" "}ركّز على مهارات القيادة والتواصل خلال 90 يوماً لتجاوز الفجوة.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="lg:col-span-3 order-1 lg:order-2">
+              <span className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/10 px-4 py-1.5 text-xs font-medium text-primary">
+                <TrendingUp className="h-3.5 w-3.5 text-gold" />
+                خرائط دقيقة بين ما تملكه وما تحتاجه
+              </span>
+              <h2 className="mt-6 font-serif text-3xl leading-tight text-primary md:text-5xl">
+                الفجوة ليست عيباً…
+                <br />
+                <span className="text-gold">بل خريطة طريقك القادم.</span>
+              </h2>
+              <p className="mt-6 max-w-2xl text-lg leading-9 text-muted-foreground">
+                تحليل فجوة المهارات يُريك بدقّة أين تقف اليوم، وأين يجب أن تكون
+                للوصول إلى دورك المستهدف. لا تخمين، لا حشو دورات عشوائية —
+                خطة تطوير ذكية مبنية على بياناتك أنت ومتطلبات السوق الحقيقية.
+              </p>
+              <ul className="mt-8 grid gap-3 text-sm text-muted-foreground sm:grid-cols-2">
+                {[
+                  "مقارنة مهاراتك بمتطلبات الدور المستهدف",
+                  "تحديد المهارات الحرجة ذات الأولوية القصوى",
+                  "خطة تطوير 90 يوماً بمصادر تعلّم موثوقة",
+                  "تتبّع تقدّمك ومراجعة الفجوة دورياً",
+                ].map((t) => (
+                  <li key={t} className="flex items-start gap-2">
+                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gold" />
+                    <span>{t}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-10 flex flex-wrap gap-3">
+                <Link
+                  to="/skills-gap"
+                  className="inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-[var(--shadow-soft)] hover:opacity-90"
+                >
+                  ابدأ تحليل فجوة المهارات
+                  <ArrowLeft className="h-4 w-4" />
+                </Link>
+                <Link
+                  to="/career-readiness"
+                  className="inline-flex items-center gap-2 rounded-md border border-primary/20 bg-card px-6 py-3.5 text-sm font-medium text-primary hover:bg-secondary"
+                >
+                  تحقّق من شهادة الجاهزية
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+
 
       {/* JOURNEY */}
       <section className="border-b border-border bg-primary text-primary-foreground">
