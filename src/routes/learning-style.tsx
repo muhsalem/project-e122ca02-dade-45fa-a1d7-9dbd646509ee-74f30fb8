@@ -20,88 +20,252 @@ type Question = {
   type: "single" | "multi";
   options: string[];
   maxSelect?: number;
+  // Tag per option for deterministic scoring.
+  // VARK: "V" | "A" | "R" | "K"   |   Kolb: "CE" | "RO" | "AC" | "AE"
+  tags?: string[];
 };
 type Section = { key: string; title: string; intro: string; questions: Question[] };
 
 const SECTIONS: Section[] = [
   {
     key: "vark",
-    title: "نموذج VARK (القنوات الحسية)",
-    intro: "كيف تستقبل المعلومة وتعالجها؟",
+    title: "نموذج VARK (Fleming) — القنوات الحسية",
+    intro: "10 مواقف من استبيان VARK الرسمي. لكل سؤال يُسمح باختيار أكثر من إجابة إن انطبقت عليك (وفق منهجية Fleming).",
     questions: [
       {
-        id: "vark_learn_best",
-        q: "أتعلم أفضل عندما:",
-        type: "single",
+        id: "vark_q1",
+        q: "1) تساعد شخصاً يحب السفر للوصول إلى مطار/فندق/محطة. ستقوم بـ:",
+        type: "multi", maxSelect: 4,
         options: [
-          "أشاهد رسومًا/مخططات/فيديو (بصري)",
-          "أستمع لشرح أو محاضرة أو نقاش (سمعي)",
-          "أقرأ نصًا وأكتب ملخصات (قرائي-كتابي)",
-          "أجرّب بيدي وأتحرك وأطبّق (حركي)",
+          "أرسم له خريطة على ورقة",
+          "أخبره بالاتجاهات شفوياً",
+          "أكتب له التعليمات خطوة بخطوة",
+          "أذهب معه أو أوصله بنفسي",
         ],
+        tags: ["V", "A", "R", "K"],
       },
       {
-        id: "vark_remember",
-        q: "أتذكر المعلومة أكثر عندما:",
-        type: "single",
+        id: "vark_q2",
+        q: "2) موقع إلكتروني يعرض فيديو يشرح موضوعاً صعباً. الأرجح أن تختار:",
+        type: "multi", maxSelect: 4,
         options: [
-          "أتخيلها كصورة أو خريطة ذهنية",
-          "أعيدها بصوت مرتفع أو أناقشها",
-          "أكتبها بأسلوبي وأراجع ملاحظاتي",
-          "أمارسها عمليًا أو أربطها بحركة",
+          "صور وفيديوهات ورسوم متحركة",
+          "ملف صوتي/بودكاست",
+          "مقالة مكتوبة بتفصيل",
+          "تجربة تفاعلية تشاركية",
         ],
+        tags: ["V", "A", "R", "K"],
       },
       {
-        id: "vark_directions",
-        q: "حين أتعلم طريقة لمكان جديد أفضّل:",
-        type: "single",
-        options: ["خريطة مرسومة", "شخص يصف لي الطريق", "تعليمات مكتوبة خطوة بخطوة", "أن أمشي/أقود بنفسي لأحفظه"],
+        id: "vark_q3",
+        q: "3) خطّطت لرحلة لمجموعة. تريد رأيهم في الخطة. ستفعل:",
+        type: "multi", maxSelect: 4,
+        options: [
+          "أعرض خريطة ورسوماً للأماكن",
+          "أصف لهم الأماكن شفوياً",
+          "أعطيهم خطة مكتوبة بالتفاصيل",
+          "أرتب جولة استكشافية فعلية",
+        ],
+        tags: ["V", "A", "R", "K"],
       },
       {
-        id: "vark_explain",
-        q: "حين أشرح فكرة للآخرين، أميل إلى:",
-        type: "single",
-        options: ["الرسم وتوضيح بصري", "الشرح الشفوي والقصص", "إعطاء مستند مكتوب", "تجربة عملية وتطبيق مباشر"],
+        id: "vark_q4",
+        q: "4) تطبخ طبقاً مميزاً للضيوف. الأقرب لك:",
+        type: "multi", maxSelect: 4,
+        options: [
+          "أتابع وصفة بالصور",
+          "أسأل أصدقاءً عن الاقتراحات",
+          "أتبع وصفة مكتوبة من كتاب",
+          "أطبخ شيئاً اعتدت عليه دون وصفة",
+        ],
+        tags: ["V", "A", "R", "K"],
+      },
+      {
+        id: "vark_q5",
+        q: "5) مجموعة سياحية تعرفت عليها تريد التعرف على المنتزهات الوطنية. ستقترح عليهم:",
+        type: "multi", maxSelect: 4,
+        options: [
+          "أريهم خرائط ولوحات معلومات",
+          "أتحدث عن تجربتي في المنتزهات",
+          "أعطيهم كتيباً أو مقالات",
+          "آخذهم في جولة فعلية لمنتزه",
+        ],
+        tags: ["V", "A", "R", "K"],
+      },
+      {
+        id: "vark_q6",
+        q: "6) ستشتري كاميرا/هاتف جديد. غير السعر ما يحسم اختيارك:",
+        type: "multi", maxSelect: 4,
+        options: [
+          "تصميمه الأنيق ومظهره",
+          "نصيحة بائع أو صديق",
+          "مراجعات مكتوبة ومواصفات",
+          "تجربته بيدي قبل الشراء",
+        ],
+        tags: ["V", "A", "R", "K"],
+      },
+      {
+        id: "vark_q7",
+        q: "7) تتذكر تعلمك لشيء جديد (مثل ركوب الدراجة) بأنك تعلمته بأفضل صورة من:",
+        type: "multi", maxSelect: 4,
+        options: [
+          "مشاهدة شخص يفعلها",
+          "استماع لشخص يشرحها",
+          "قراءة دليل/تعليمات",
+          "ممارستها فوراً بمحاولة وخطأ",
+        ],
+        tags: ["V", "A", "R", "K"],
+      },
+      {
+        id: "vark_q8",
+        q: "8) لديك مشكلة في ركبتك. تفضل أن يستخدم الطبيب:",
+        type: "multi", maxSelect: 4,
+        options: [
+          "صور/أشعة لشرح حالتك",
+          "شرح شفوي مفصل",
+          "كتيب طبي مكتوب",
+          "نموذج عظمي يعرض الإصابة عليه",
+        ],
+        tags: ["V", "A", "R", "K"],
+      },
+      {
+        id: "vark_q9",
+        q: "9) ستتعلم برنامجاً جديداً (لعبة أو تطبيق). ستـ:",
+        type: "multi", maxSelect: 4,
+        options: [
+          "أتابع رسوماً توضيحية وفيديو",
+          "أستمع لشخص يشرحه لي",
+          "أقرأ التعليمات المرفقة",
+          "أبدأ التجريب وأكتشف بنفسي",
+        ],
+        tags: ["V", "A", "R", "K"],
+      },
+      {
+        id: "vark_q10",
+        q: "10) تذكّرت كلمات قصيدة/أغنية. الأرجح بسبب:",
+        type: "multi", maxSelect: 4,
+        options: [
+          "تخيلت مشاهد القصيدة",
+          "سمعتها بصوت مرتفع مراراً",
+          "قرأتها مكتوبة عدة مرات",
+          "ربطتها بحركة أو إيقاع جسدي",
+        ],
+        tags: ["V", "A", "R", "K"],
       },
     ],
   },
   {
     key: "kolb",
-    title: "نموذج كولب Kolb LSI",
-    intro: "كيف تمر بدورة التعلم التجريبي؟",
+    title: "نموذج Kolb LSI 3.1 — دورة التعلم التجريبي",
+    intro: "9 مواقف بصياغة الاختيار القسري (Forced Choice). رتّب — في كل سؤال، اختر العبارة الأقرب إليك. النتيجة ستحدد نمطك على محوري Kolb: (AC↔CE) و (AE↔RO).",
     questions: [
       {
-        id: "kolb_approach",
-        q: "أقرب طريقة تتعامل بها مع موضوع جديد:",
+        id: "kolb_q1",
+        q: "1) حين أتعلم:",
         type: "single",
         options: [
-          "أعيش التجربة وأحس بها أولًا (CE)",
-          "أتأمل وأراقب من بعيد قبل أن أتصرف (RO)",
-          "أبني نموذجًا مفاهيميًا منطقيًا (AC)",
-          "أجرّب وأطبّق وأرى النتيجة (AE)",
+          "أحب التعامل مع مشاعري وأنخرط عاطفياً",
+          "أحب الملاحظة والاستماع بهدوء",
+          "أحب التفكير في الأفكار وتحليلها",
+          "أحب التجربة العملية والتطبيق",
         ],
+        tags: ["CE", "RO", "AC", "AE"],
       },
       {
-        id: "kolb_strength",
-        q: "نقطة قوتك الأبرز عند التعلم:",
+        id: "kolb_q2",
+        q: "2) أتعلم أفضل عندما:",
         type: "single",
         options: [
-          "توليد أفكار متعددة من زوايا مختلفة (متباعد)",
-          "بناء نماذج ونظريات مترابطة (مستوعب)",
-          "تطبيق الأفكار لحل مشكلات محددة (متقارب)",
-          "التكيّف السريع والتعلم بالتجربة (متكيف)",
+          "أعتمد على حدسي ومشاعري",
+          "أراقب بعناية وأستمع",
+          "أعتمد على المنطق والأفكار المنظمة",
+          "أعمل وأطبق وأنفذ شيئاً",
         ],
+        tags: ["CE", "RO", "AC", "AE"],
       },
       {
-        id: "kolb_pref",
-        q: "في ورشة عمل تفضّل:",
+        id: "kolb_q3",
+        q: "3) حين أتعلم:",
         type: "single",
         options: [
-          "العصف الذهني والنقاش المفتوح",
-          "محاضرة منظمة بمراجع وقراءات",
-          "حل مشكلات وتمارين عملية محددة",
-          "مشاريع ميدانية وتجارب حية",
+          "تكون لي مشاعر قوية وردود فعل",
+          "أكون هادئاً ومحتفظاً بمسافة",
+          "أميل للاستدلال المنطقي",
+          "أكون مسؤولاً عن أشيائي وأنفذ",
         ],
+        tags: ["CE", "RO", "AC", "AE"],
+      },
+      {
+        id: "kolb_q4",
+        q: "4) أنا أتعلم عبر:",
+        type: "single",
+        options: [
+          "الإحساس والشعور",
+          "المشاهدة والملاحظة",
+          "التفكير والتحليل",
+          "الفعل والتجريب",
+        ],
+        tags: ["CE", "RO", "AC", "AE"],
+      },
+      {
+        id: "kolb_q5",
+        q: "5) عند التعلم:",
+        type: "single",
+        options: [
+          "أنفتح على تجارب جديدة",
+          "أنظر لكل جوانب القضية",
+          "أحب تحليل الأشياء وتجزئتها",
+          "أحب التجربة على أرض الواقع",
+        ],
+        tags: ["CE", "RO", "AC", "AE"],
+      },
+      {
+        id: "kolb_q6",
+        q: "6) عند التعلم أكون:",
+        type: "single",
+        options: [
+          "شخصاً حدسياً (Intuitive)",
+          "شخصاً مراقباً (Observing)",
+          "شخصاً منطقياً (Logical)",
+          "شخصاً فعّالاً (Active)",
+        ],
+        tags: ["CE", "RO", "AC", "AE"],
+      },
+      {
+        id: "kolb_q7",
+        q: "7) أتعلم أفضل من خلال:",
+        type: "single",
+        options: [
+          "العلاقات الشخصية والتفاعل",
+          "الملاحظة المنظمة من بعيد",
+          "النظريات العقلانية والنماذج",
+          "فرصة لتجربة الأشياء والتطبيق",
+        ],
+        tags: ["CE", "RO", "AC", "AE"],
+      },
+      {
+        id: "kolb_q8",
+        q: "8) عند التعلم:",
+        type: "single",
+        options: [
+          "أشعر بانخراط شخصي تام",
+          "أحتاج وقتاً قبل أن أعمل",
+          "أحب الأفكار والنظريات",
+          "أحب رؤية النتائج من عملي",
+        ],
+        tags: ["CE", "RO", "AC", "AE"],
+      },
+      {
+        id: "kolb_q9",
+        q: "9) أتعلم أفضل عندما:",
+        type: "single",
+        options: [
+          "أعتمد على إحساسي",
+          "أعتمد على ملاحظاتي",
+          "أعتمد على أفكاري المنظمة",
+          "أجرّب الأمور بنفسي",
+        ],
+        tags: ["CE", "RO", "AC", "AE"],
       },
     ],
   },
@@ -326,6 +490,73 @@ const SECTIONS: Section[] = [
 
 const TOTAL_STEPS = 1 + SECTIONS.length;
 
+// =====================================================================
+// Deterministic Scoring (لا يعتمد على الذكاء الاصطناعي)
+// VARK: تتبع منهجية Fleming — multimodal إذا فرق الأعلى/التالي ≤ 1.
+// Kolb: محورا (AC-CE) و (AE-RO) → 4 أنماط: Diverging / Assimilating /
+// Converging / Accommodating بحسب موقع المتعلم في المصفوفة الرباعية.
+// =====================================================================
+type StyleProfile = {
+  vark: { V: number; A: number; R: number; K: number; dominant: string; isMultimodal: boolean; label: string };
+  kolb: { CE: number; RO: number; AC: number; AE: number; ac_minus_ce: number; ae_minus_ro: number; style: string; styleAr: string; description: string };
+};
+
+function computeStyleProfile(selections: Record<string, string[]>): StyleProfile {
+  const vark = { V: 0, A: 0, R: 0, K: 0 } as Record<"V" | "A" | "R" | "K", number>;
+  const kolb = { CE: 0, RO: 0, AC: 0, AE: 0 } as Record<"CE" | "RO" | "AC" | "AE", number>;
+
+  for (const section of SECTIONS) {
+    if (section.key !== "vark" && section.key !== "kolb") continue;
+    for (const q of section.questions) {
+      if (!q.tags) continue;
+      const picks = selections[q.id] ?? [];
+      for (const pick of picks) {
+        const idx = q.options.indexOf(pick);
+        if (idx < 0) continue;
+        const tag = q.tags[idx];
+        if (section.key === "vark" && (tag === "V" || tag === "A" || tag === "R" || tag === "K")) vark[tag] += 1;
+        else if (section.key === "kolb" && (tag === "CE" || tag === "RO" || tag === "AC" || tag === "AE")) kolb[tag] += 1;
+      }
+    }
+  }
+
+  // ---- VARK dominant ----
+  const varkEntries = (Object.entries(vark) as Array<[keyof typeof vark, number]>).sort((a, b) => b[1] - a[1]);
+  const top = varkEntries[0];
+  const second = varkEntries[1];
+  const isMultimodal = top && second ? (top[1] - second[1]) <= 1 && top[1] > 0 : false;
+  const VARK_LABELS: Record<string, string> = {
+    V: "البصري (Visual)", A: "السمعي (Aural)", R: "القرائي-الكتابي (Read/Write)", K: "الحركي (Kinesthetic)",
+  };
+  const dominant = top?.[0] ?? "V";
+  const label = isMultimodal
+    ? `متعدد القنوات (Multimodal) — ${varkEntries.filter((e) => e[1] >= (top?.[1] ?? 0) - 1).map((e) => VARK_LABELS[e[0]]).join(" + ")}`
+    : VARK_LABELS[dominant];
+
+  // ---- Kolb axes & style ----
+  const ac_minus_ce = kolb.AC - kolb.CE;
+  const ae_minus_ro = kolb.AE - kolb.RO;
+  let style: string, styleAr: string, description: string;
+  if (ac_minus_ce >= 0 && ae_minus_ro >= 0) {
+    style = "Converging"; styleAr = "المتقارب";
+    description = "تفكير مجرد + تجريب نشط. قوي في تطبيق النظريات على مشكلات عملية. مناسب للهندسة والتقنية والمسارات التطبيقية.";
+  } else if (ac_minus_ce >= 0 && ae_minus_ro < 0) {
+    style = "Assimilating"; styleAr = "المستوعب";
+    description = "تفكير مجرد + ملاحظة تأملية. قوي في بناء النماذج النظرية والاستدلال المنطقي. مناسب للبحث العلمي والتحليل والتخطيط.";
+  } else if (ac_minus_ce < 0 && ae_minus_ro >= 0) {
+    style = "Accommodating"; styleAr = "المتكيّف";
+    description = "تجربة محسوسة + تجريب نشط. قوي في التنفيذ الميداني والتعلم من التجربة المباشرة. مناسب للقيادة الميدانية وريادة الأعمال والمبيعات.";
+  } else {
+    style = "Diverging"; styleAr = "المتباعد";
+    description = "تجربة محسوسة + ملاحظة تأملية. قوي في توليد أفكار من زوايا متعددة والإبداع. مناسب للفنون والإرشاد والعمل الاجتماعي والإعلام.";
+  }
+
+  return {
+    vark: { ...vark, dominant, isMultimodal, label },
+    kolb: { ...kolb, ac_minus_ce, ae_minus_ro, style, styleAr, description },
+  };
+}
+
 function LearningStylePage() {
   const navigate = useNavigate();
   const submitFn = useServerFn(submitLearningStyle);
@@ -337,6 +568,8 @@ function LearningStylePage() {
 
   const progress = (step / TOTAL_STEPS) * 100;
   const currentSection = step > 0 ? SECTIONS[step - 1] : null;
+  const isLastStep = step === TOTAL_STEPS - 1;
+  const profilePreview = isLastStep ? computeStyleProfile(selections) : null;
 
   const toggle = (q: Question, opt: string) => {
     setSelections((prev) => {
@@ -358,8 +591,17 @@ function LearningStylePage() {
     setLoading(true);
     setError(null);
     try {
+      const profile = computeStyleProfile(selections);
       const answers: Record<string, string> = {};
       for (const k of Object.keys(selections)) answers[k] = selections[k].join("، ");
+      // Inject deterministic profile so AI elaborates without re-guessing
+      answers["_vark_dominant"] = profile.vark.label;
+      answers["_vark_scores"] = `V=${profile.vark.V}, A=${profile.vark.A}, R=${profile.vark.R}, K=${profile.vark.K}`;
+      answers["_vark_multimodal"] = profile.vark.isMultimodal ? "نعم" : "لا";
+      answers["_kolb_style"] = `${profile.kolb.style} — ${profile.kolb.styleAr}`;
+      answers["_kolb_scores"] = `CE=${profile.kolb.CE}, RO=${profile.kolb.RO}, AC=${profile.kolb.AC}, AE=${profile.kolb.AE}`;
+      answers["_kolb_axes"] = `AC-CE=${profile.kolb.ac_minus_ce}, AE-RO=${profile.kolb.ae_minus_ro}`;
+
       const sections = SECTIONS.map((s) => ({
         title: s.title,
         items: s.questions.map((q) => ({
@@ -367,6 +609,18 @@ function LearningStylePage() {
           a: (selections[q.id] ?? []).join("، ") || "—",
         })),
       }));
+      sections.unshift({
+        title: "النتيجة المحسوبة بدقة (Deterministic Scoring)",
+        items: [
+          { q: "VARK — النمط السائد", a: profile.vark.label },
+          { q: "VARK — التوزيع", a: `V=${profile.vark.V} | A=${profile.vark.A} | R=${profile.vark.R} | K=${profile.vark.K}` },
+          { q: "Kolb — نمط التعلم", a: `${profile.kolb.styleAr} (${profile.kolb.style})` },
+          { q: "Kolb — التوزيع", a: `CE=${profile.kolb.CE} | RO=${profile.kolb.RO} | AC=${profile.kolb.AC} | AE=${profile.kolb.AE}` },
+          { q: "Kolb — المحاور", a: `AC−CE = ${profile.kolb.ac_minus_ce} | AE−RO = ${profile.kolb.ae_minus_ro}` },
+          { q: "وصف موجز", a: profile.kolb.description },
+        ],
+      });
+
       const res = await submitFn({
         data: {
           name: meta.name || undefined,
@@ -520,6 +774,50 @@ function LearningStylePage() {
               </div>
             </div>
           ) : null}
+
+          {!loading && isLastStep && profilePreview && canProceed() && (
+            <div className="mt-6 rounded-2xl border-2 border-gold/50 bg-gold/5 p-6 shadow-[var(--shadow-soft)]">
+              <div className="mb-4 flex items-center gap-2">
+                <Sparkles className="h-5 w-5 text-gold" />
+                <h3 className="font-serif text-xl text-primary">نتيجتك المحسوبة بدقة (قبل التقرير)</h3>
+              </div>
+              <p className="text-xs text-muted-foreground mb-4">
+                هذه النتيجة محسوبة رياضياً من إجاباتك وفق منهجية Fleming (VARK) و Kolb LSI، وليست تخميناً من الذكاء الاصطناعي.
+              </p>
+              <div className="grid gap-4 md:grid-cols-2">
+                <div className="rounded-xl border border-border bg-background p-4">
+                  <div className="text-xs font-medium text-gold mb-1">VARK — نمطك الحسي السائد</div>
+                  <div className="font-serif text-lg text-primary">{profilePreview.vark.label}</div>
+                  <div className="mt-3 grid grid-cols-4 gap-1 text-center text-xs">
+                    {(["V", "A", "R", "K"] as const).map((k) => {
+                      const val = profilePreview.vark[k];
+                      const max = Math.max(profilePreview.vark.V, profilePreview.vark.A, profilePreview.vark.R, profilePreview.vark.K, 1);
+                      return (
+                        <div key={k}>
+                          <div className="h-16 flex items-end justify-center">
+                            <div className="w-6 rounded-t bg-gold/70" style={{ height: `${(val / max) * 100}%` }} />
+                          </div>
+                          <div className="mt-1 font-mono">{k}={val}</div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+                <div className="rounded-xl border border-border bg-background p-4">
+                  <div className="text-xs font-medium text-gold mb-1">Kolb — نمط دورة التعلم</div>
+                  <div className="font-serif text-lg text-primary">{profilePreview.kolb.styleAr} ({profilePreview.kolb.style})</div>
+                  <p className="mt-2 text-xs leading-6 text-muted-foreground">{profilePreview.kolb.description}</p>
+                  <div className="mt-3 grid grid-cols-2 gap-2 text-xs text-foreground">
+                    <div>AC−CE = <span className="font-mono text-primary">{profilePreview.kolb.ac_minus_ce}</span></div>
+                    <div>AE−RO = <span className="font-mono text-primary">{profilePreview.kolb.ae_minus_ro}</span></div>
+                  </div>
+                </div>
+              </div>
+              <p className="mt-4 text-xs text-muted-foreground">
+                اضغط <strong className="text-primary">«إصدار التقرير»</strong> أدناه ليُكمل الذكاء الاصطناعي التحليل التفصيلي والاستراتيجيات المخصصة لنمطك.
+              </p>
+            </div>
+          )}
 
           {error && (
             <div className="mt-4 rounded-md border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive">
