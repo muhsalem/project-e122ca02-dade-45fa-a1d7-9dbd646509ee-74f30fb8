@@ -30,6 +30,7 @@ import { Route as CookiesRouteImport } from './routes/cookies'
 import { Route as ComprehensiveAssessmentRouteImport } from './routes/comprehensive-assessment'
 import { Route as ClarityCheckRouteImport } from './routes/clarity-check'
 import { Route as CareerTypeAssessmentRouteImport } from './routes/career-type-assessment'
+import { Route as CareerTwinRouteImport } from './routes/career-twin'
 import { Route as CareerLadderRouteImport } from './routes/career-ladder'
 import { Route as BookingRouteImport } from './routes/booking'
 import { Route as AuthRouteImport } from './routes/auth'
@@ -154,6 +155,11 @@ const CareerTypeAssessmentRoute = CareerTypeAssessmentRouteImport.update({
   path: '/career-type-assessment',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CareerTwinRoute = CareerTwinRouteImport.update({
+  id: '/career-twin',
+  path: '/career-twin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CareerLadderRoute = CareerLadderRouteImport.update({
   id: '/career-ladder',
   path: '/career-ladder',
@@ -256,6 +262,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/booking': typeof BookingRoute
   '/career-ladder': typeof CareerLadderRoute
+  '/career-twin': typeof CareerTwinRoute
   '/career-type-assessment': typeof CareerTypeAssessmentRoute
   '/clarity-check': typeof ClarityCheckRoute
   '/comprehensive-assessment': typeof ComprehensiveAssessmentRoute
@@ -297,6 +304,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/booking': typeof BookingRoute
   '/career-ladder': typeof CareerLadderRoute
+  '/career-twin': typeof CareerTwinRoute
   '/career-type-assessment': typeof CareerTypeAssessmentRoute
   '/clarity-check': typeof ClarityCheckRoute
   '/comprehensive-assessment': typeof ComprehensiveAssessmentRoute
@@ -339,6 +347,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/booking': typeof BookingRoute
   '/career-ladder': typeof CareerLadderRoute
+  '/career-twin': typeof CareerTwinRoute
   '/career-type-assessment': typeof CareerTypeAssessmentRoute
   '/clarity-check': typeof ClarityCheckRoute
   '/comprehensive-assessment': typeof ComprehensiveAssessmentRoute
@@ -382,6 +391,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/booking'
     | '/career-ladder'
+    | '/career-twin'
     | '/career-type-assessment'
     | '/clarity-check'
     | '/comprehensive-assessment'
@@ -423,6 +433,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/booking'
     | '/career-ladder'
+    | '/career-twin'
     | '/career-type-assessment'
     | '/clarity-check'
     | '/comprehensive-assessment'
@@ -464,6 +475,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/booking'
     | '/career-ladder'
+    | '/career-twin'
     | '/career-type-assessment'
     | '/clarity-check'
     | '/comprehensive-assessment'
@@ -506,6 +518,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   BookingRoute: typeof BookingRoute
   CareerLadderRoute: typeof CareerLadderRoute
+  CareerTwinRoute: typeof CareerTwinRoute
   CareerTypeAssessmentRoute: typeof CareerTypeAssessmentRoute
   ClarityCheckRoute: typeof ClarityCheckRoute
   ComprehensiveAssessmentRoute: typeof ComprehensiveAssessmentRoute
@@ -683,6 +696,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CareerTypeAssessmentRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/career-twin': {
+      id: '/career-twin'
+      path: '/career-twin'
+      fullPath: '/career-twin'
+      preLoaderRoute: typeof CareerTwinRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/career-ladder': {
       id: '/career-ladder'
       path: '/career-ladder'
@@ -844,6 +864,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   BookingRoute: BookingRoute,
   CareerLadderRoute: CareerLadderRoute,
+  CareerTwinRoute: CareerTwinRoute,
   CareerTypeAssessmentRoute: CareerTypeAssessmentRoute,
   ClarityCheckRoute: ClarityCheckRoute,
   ComprehensiveAssessmentRoute: ComprehensiveAssessmentRoute,
