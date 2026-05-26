@@ -40,12 +40,17 @@ function WellbeingPage() {
   const [vals, setVals] = useState<Record<string, number>>({});
   const [busy, setBusy] = useState(false);
   const [res, setRes] = useState<{ phq2: number; gad2: number; carAnx: number; referral: boolean; risk: string } | null>(null);
+  const [isMinor, setIsMinor] = useState(false);
+  const [parentConsent, setParentConsent] = useState(false);
+  const [storeConsent, setStoreConsent] = useState(false);
   const submit = useServerFn(submitWellbeing);
   const { user } = useAuth();
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!code.trim()) { toast.error("أدخل معرّفك أو بريدك"); return; }
+    if (isMinor && !parentConsent) { toast.error("يلزم تأكيد موافقة وليّ الأمر للمستخدمين دون ١٨ سنة"); return; }
+    if (!storeConsent) { toast.error("الفحص بيانات نفسيّة حسّاسة — يلزم موافقتك الصريحة على الحفظ المؤقّت لإصدار النتيجة."); return; }
     if (QUESTIONS.some((q) => vals[q.k] === undefined)) { toast.error("أكمل جميع الأسئلة"); return; }
     setBusy(true);
     try {
