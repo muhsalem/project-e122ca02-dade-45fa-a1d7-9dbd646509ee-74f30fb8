@@ -641,22 +641,36 @@ function CareerTypePage() {
           </div>
         </div>
 
-        {/* Live mini-scores */}
+        {/* Live qualitative tendencies (not normed scores) */}
         {Object.keys(answers).length > 0 && qIndex >= 0 && (
           <div className="mx-auto mt-6 max-w-3xl rounded-xl border border-border bg-card p-4">
-            <div className="mb-2 text-xs font-semibold text-foreground/70">
-              ميولك حتى الآن
+            <div className="mb-1 text-xs font-semibold text-foreground/70">
+              ملامحك الاستكشافيّة حتى الآن
+            </div>
+            <div className="mb-3 text-[11px] text-muted-foreground">
+              مؤشّر اتّجاه (Tendency) وليس درجة سيكومتريّة مُقنّنة — للاسترشاد فقط.
             </div>
             <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
-              {(Object.keys(scores) as Type[]).map((k) => (
-                <div key={k} className="rounded-lg bg-background p-3">
-                  <div className={`text-xs ${TYPE_INFO[k].color}`}>
-                    {TYPE_INFO[k].en}
+              {(Object.keys(scores) as Type[]).map((k) => {
+                const v = scores[k];
+                const level =
+                  v >= 60 ? "ميل واضح" : v >= 35 ? "ميل متوسّط" : v > 0 ? "ميل خفيف" : "لا يظهر";
+                const bar = Math.min(100, Math.max(0, v));
+                return (
+                  <div key={k} className="rounded-lg bg-background p-3">
+                    <div className={`text-xs ${TYPE_INFO[k].color}`}>{TYPE_INFO[k].en}</div>
+                    <div className="text-[10px] text-foreground/60">{TYPE_INFO[k].ar}</div>
+                    <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-secondary">
+                      <div
+                        className="h-full bg-primary/70"
+                        style={{ width: `${bar}%` }}
+                        aria-hidden
+                      />
+                    </div>
+                    <div className="mt-1 text-[11px] font-medium text-foreground/80">{level}</div>
                   </div>
-                  <div className="font-bold text-foreground">{scores[k]}%</div>
-                  <div className="text-[10px] text-foreground/60">{TYPE_INFO[k].ar}</div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         )}

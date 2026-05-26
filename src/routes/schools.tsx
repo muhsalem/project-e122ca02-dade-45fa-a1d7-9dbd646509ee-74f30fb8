@@ -46,7 +46,7 @@ function SchoolsPage() {
             بدلًا من نصائح عامة، يحصل كل طالب على تقرير شخصي بالعربية مبني على 7 تقييمات معتمدة. ويحصل المرشد على لوحة تحكم تكشف ميول الفصل بأكمله.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <a href="mailto:schools@busala.app?subject=طلب%20عرض%20بوصلة%20للمدارس" className="rounded-xl bg-primary px-6 py-3 text-sm text-primary-foreground hover:opacity-90">احجز عرضًا تجريبيًا</a>
+            <a href="mailto:schools@bosla.app?subject=طلب%20عرض%20بوصلة%20للمدارس" className="rounded-xl bg-primary px-6 py-3 text-sm text-primary-foreground hover:opacity-90">احجز عرضًا تجريبيًا</a>
             <Link to="/about" className="rounded-xl border border-border px-6 py-3 text-sm hover:bg-secondary">تعرّف على المنهج</Link>
           </div>
         </div>
@@ -96,7 +96,7 @@ function SchoolsPage() {
       <section className="container-page py-16 text-center">
         <h2 className="text-3xl text-primary">جاهزون للبدء مع مدرستك؟</h2>
         <p className="mx-auto mt-3 max-w-xl text-muted-foreground">نوفّر فترة تجريبية مجانية لمدة 14 يومًا مع 30 طالبًا لتقييم الجودة قبل الالتزام.</p>
-        <a href="mailto:schools@busala.app" className="mt-6 inline-flex items-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm text-primary-foreground hover:opacity-90">
+        <a href="mailto:schools@bosla.app" className="mt-6 inline-flex items-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm text-primary-foreground hover:opacity-90">
           تواصل معنا <ArrowLeft className="h-4 w-4" />
         </a>
       </section>

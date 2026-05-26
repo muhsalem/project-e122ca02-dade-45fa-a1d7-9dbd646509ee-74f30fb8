@@ -26,6 +26,7 @@ import { Route as JournalRouteImport } from './routes/journal'
 import { Route as JoinAsCoachRouteImport } from './routes/join-as-coach'
 import { Route as EthicsRouteImport } from './routes/ethics'
 import { Route as CounselorRouteImport } from './routes/counselor'
+import { Route as CookiesRouteImport } from './routes/cookies'
 import { Route as ComprehensiveAssessmentRouteImport } from './routes/comprehensive-assessment'
 import { Route as ClarityCheckRouteImport } from './routes/clarity-check'
 import { Route as CareerTypeAssessmentRouteImport } from './routes/career-type-assessment'
@@ -131,6 +132,11 @@ const EthicsRoute = EthicsRouteImport.update({
 const CounselorRoute = CounselorRouteImport.update({
   id: '/counselor',
   path: '/counselor',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CookiesRoute = CookiesRouteImport.update({
+  id: '/cookies',
+  path: '/cookies',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ComprehensiveAssessmentRoute = ComprehensiveAssessmentRouteImport.update({
@@ -253,6 +259,7 @@ export interface FileRoutesByFullPath {
   '/career-type-assessment': typeof CareerTypeAssessmentRoute
   '/clarity-check': typeof ClarityCheckRoute
   '/comprehensive-assessment': typeof ComprehensiveAssessmentRoute
+  '/cookies': typeof CookiesRoute
   '/counselor': typeof CounselorRoute
   '/ethics': typeof EthicsRoute
   '/join-as-coach': typeof JoinAsCoachRoute
@@ -293,6 +300,7 @@ export interface FileRoutesByTo {
   '/career-type-assessment': typeof CareerTypeAssessmentRoute
   '/clarity-check': typeof ClarityCheckRoute
   '/comprehensive-assessment': typeof ComprehensiveAssessmentRoute
+  '/cookies': typeof CookiesRoute
   '/counselor': typeof CounselorRoute
   '/ethics': typeof EthicsRoute
   '/join-as-coach': typeof JoinAsCoachRoute
@@ -334,6 +342,7 @@ export interface FileRoutesById {
   '/career-type-assessment': typeof CareerTypeAssessmentRoute
   '/clarity-check': typeof ClarityCheckRoute
   '/comprehensive-assessment': typeof ComprehensiveAssessmentRoute
+  '/cookies': typeof CookiesRoute
   '/counselor': typeof CounselorRoute
   '/ethics': typeof EthicsRoute
   '/join-as-coach': typeof JoinAsCoachRoute
@@ -376,6 +385,7 @@ export interface FileRouteTypes {
     | '/career-type-assessment'
     | '/clarity-check'
     | '/comprehensive-assessment'
+    | '/cookies'
     | '/counselor'
     | '/ethics'
     | '/join-as-coach'
@@ -416,6 +426,7 @@ export interface FileRouteTypes {
     | '/career-type-assessment'
     | '/clarity-check'
     | '/comprehensive-assessment'
+    | '/cookies'
     | '/counselor'
     | '/ethics'
     | '/join-as-coach'
@@ -456,6 +467,7 @@ export interface FileRouteTypes {
     | '/career-type-assessment'
     | '/clarity-check'
     | '/comprehensive-assessment'
+    | '/cookies'
     | '/counselor'
     | '/ethics'
     | '/join-as-coach'
@@ -497,6 +509,7 @@ export interface RootRouteChildren {
   CareerTypeAssessmentRoute: typeof CareerTypeAssessmentRoute
   ClarityCheckRoute: typeof ClarityCheckRoute
   ComprehensiveAssessmentRoute: typeof ComprehensiveAssessmentRoute
+  CookiesRoute: typeof CookiesRoute
   CounselorRoute: typeof CounselorRoute
   EthicsRoute: typeof EthicsRoute
   JoinAsCoachRoute: typeof JoinAsCoachRoute
@@ -640,6 +653,13 @@ declare module '@tanstack/react-router' {
       path: '/counselor'
       fullPath: '/counselor'
       preLoaderRoute: typeof CounselorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cookies': {
+      id: '/cookies'
+      path: '/cookies'
+      fullPath: '/cookies'
+      preLoaderRoute: typeof CookiesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/comprehensive-assessment': {
@@ -827,6 +847,7 @@ const rootRouteChildren: RootRouteChildren = {
   CareerTypeAssessmentRoute: CareerTypeAssessmentRoute,
   ClarityCheckRoute: ClarityCheckRoute,
   ComprehensiveAssessmentRoute: ComprehensiveAssessmentRoute,
+  CookiesRoute: CookiesRoute,
   CounselorRoute: CounselorRoute,
   EthicsRoute: EthicsRoute,
   JoinAsCoachRoute: JoinAsCoachRoute,
@@ -853,13 +874,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

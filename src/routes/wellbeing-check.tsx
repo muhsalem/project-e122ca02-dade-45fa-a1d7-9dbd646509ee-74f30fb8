@@ -40,12 +40,17 @@ function WellbeingPage() {
   const [vals, setVals] = useState<Record<string, number>>({});
   const [busy, setBusy] = useState(false);
   const [res, setRes] = useState<{ phq2: number; gad2: number; carAnx: number; referral: boolean; risk: string } | null>(null);
+  const [isMinor, setIsMinor] = useState(false);
+  const [parentConsent, setParentConsent] = useState(false);
+  const [storeConsent, setStoreConsent] = useState(false);
   const submit = useServerFn(submitWellbeing);
   const { user } = useAuth();
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!code.trim()) { toast.error("أدخل معرّفك أو بريدك"); return; }
+    if (isMinor && !parentConsent) { toast.error("يلزم تأكيد موافقة وليّ الأمر للمستخدمين دون ١٨ سنة"); return; }
+    if (!storeConsent) { toast.error("الفحص بيانات نفسيّة حسّاسة — يلزم موافقتك الصريحة على الحفظ المؤقّت لإصدار النتيجة."); return; }
     if (QUESTIONS.some((q) => vals[q.k] === undefined)) { toast.error("أكمل جميع الأسئلة"); return; }
     setBusy(true);
     try {
@@ -71,8 +76,10 @@ function WellbeingPage() {
             مقاييس فرز عالمية موثّقة: <strong>PHQ-2</strong> (الاكتئاب) و<strong>GAD-2</strong> (القلق) ومقياس <strong>القلق المهني</strong>.
           </p>
           <div className="mx-auto mt-5 max-w-2xl rounded-xl border border-amber-500/40 bg-amber-50 p-4 text-right text-sm leading-7 text-amber-900 dark:bg-amber-950/20 dark:text-amber-200">
-            <strong>إخلاء مسؤولية:</strong> هذا الفحص <strong>فرز أولي</strong> فقط، وليس تشخيصاً طبياً أو نفسياً.
-            لا يُغني عن مراجعة طبيب أو معالج مرخّص. النتائج اجتهادية وقد تتأثر بحالتك المؤقتة يوم الإجابة.
+            <strong>تنبيه قانوني وطبّي:</strong> هذا الفحص <strong>أداة فرز أوّليّة</strong> فقط،
+            وليس تشخيصاً طبياً ولا نفسيّاً، ولا يُغني عن مراجعة طبيب أو معالج مرخّص. النتائج
+            اجتهاديّة وقد تتأثّر بحالتك يوم الإجابة. تُعالَج إجاباتك بصفتها
+            <strong> بيانات شخصيّة حسّاسة</strong> وفق نظام حماية البيانات الشخصيّة السعودي (PDPL).
           </div>
         </div>
 
@@ -84,6 +91,46 @@ function WellbeingPage() {
                 placeholder="بريدك أو كود التقرير"
                 className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm" maxLength={64} />
             </div>
+
+            <div className="space-y-3 rounded-xl border border-border bg-secondary/30 p-4 text-sm leading-7">
+              <label className="flex items-start gap-2">
+                <input
+                  type="checkbox"
+                  checked={isMinor}
+                  onChange={(e) => setIsMinor(e.target.checked)}
+                  className="mt-1 h-4 w-4"
+                />
+                <span>عمري <strong>أقل من ١٨ سنة</strong>.</span>
+              </label>
+              {isMinor && (
+                <label className="flex items-start gap-2 rounded-md border border-amber-500/40 bg-amber-50/60 p-3 dark:bg-amber-950/20">
+                  <input
+                    type="checkbox"
+                    checked={parentConsent}
+                    onChange={(e) => setParentConsent(e.target.checked)}
+                    className="mt-1 h-4 w-4"
+                  />
+                  <span>
+                    أُقرّ بأنّ <strong>وليّ أمري قد اطّلع على هذا الفحص ووافق</strong> على
+                    إجرائه ومعالجة إجاباتي.
+                  </span>
+                </label>
+              )}
+              <label className="flex items-start gap-2">
+                <input
+                  type="checkbox"
+                  checked={storeConsent}
+                  onChange={(e) => setStoreConsent(e.target.checked)}
+                  className="mt-1 h-4 w-4"
+                />
+                <span>
+                  أوافق صراحةً على معالجة وحفظ هذه <strong>البيانات النفسيّة الحسّاسة</strong>
+                  لإصدار النتيجة، مع علمي بحقّي في طلب حذفها لاحقاً عبر{" "}
+                  <a className="text-primary underline" href="mailto:dpo@bosla.app">dpo@bosla.app</a>.
+                </span>
+              </label>
+            </div>
+
 
             {QUESTIONS.map((q, i) => (
               <div key={q.k} className="border-t border-border pt-5">
