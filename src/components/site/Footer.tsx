@@ -32,9 +32,6 @@ export function Footer() {
             <li className="flex items-center gap-2"><Mail className="h-4 w-4 text-gold" /><span>info@bosla.app</span></li>
             <li className="flex items-center gap-2"><Phone className="h-4 w-4 text-gold" /><span>+966 50 000 0000</span></li>
           </ul>
-
-            <li className="flex items-center gap-2"><Phone className="h-4 w-4 text-gold" /><span>+966 50 000 0000</span></li>
-          </ul>
         </div>
       </div>
       <div className="border-t border-border py-6 text-center text-xs text-muted-foreground">
