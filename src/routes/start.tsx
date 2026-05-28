@@ -5,7 +5,8 @@ import { Compass, ArrowRight, Sparkles } from "lucide-react";
 export const Route = createFileRoute("/start")({
   head: () => ({
     meta: [
-      { title: "ابدأ تشخيصك المجاني — بوصلة" },
+      { title: "ابدأ رحلتك — بوصلة" },
+
       { name: "description", content: "ثلاث خطوات بسيطة ترشدك إلى أنسب تقييم مهني لحالتك الراهنة — مجاناً." },
     ],
   }),
