@@ -11,16 +11,34 @@ const nav = [
 const discoveryGroup = {
   label: "اكتشف",
   items: [
+const discoveryGroup = {
+  label: "اكتشف",
+  items: [
     { to: "/self-discovery", label: "اكتشف ذاتك" },
     { to: "/learning-style", label: "اكتشف نمط تعلمك" },
-    
     { to: "/academic-major", label: "اكتشف تخصصك الدراسي" },
     { to: "/career-type-assessment", label: "اكتشف مسارك المهني" },
     { to: "/sector-guide", label: "دليل القطاعات والصناعات" },
   ],
 } as const;
 
-const navAfter = [
+const changeGroup = {
+  label: "أريد التغيير",
+  items: [
+    { to: "/career-change", label: "تشخيص الرغبة في تغيير المسار" },
+    { to: "/burnout-check", label: "مؤشر الاحتراق المهني" },
+    { to: "/wellbeing-check", label: "فحص الصحة النفسية المهنية" },
+  ],
+} as const;
+
+const growthGroup = {
+  label: "تطوير المسار",
+  items: [
+    { to: "/career-growth", label: "خطة تطوير مساري الوظيفي" },
+    { to: "/career-readiness", label: "شهادة الجاهزية المهنية" },
+    { to: "/career-ladder", label: "سلّم المسار الوظيفي" },
+  ],
+} as const;
   { to: "/labor-market", label: "نبض السوق" },
   { to: "/comprehensive-assessment", label: "التقييم الشامل" },
   { to: "/career-readiness", label: "شهادة الجاهزية" },
