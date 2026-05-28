@@ -22,9 +22,6 @@ const discoveryGroup = {
 const changeGroup = {
   label: "أريد التغيير",
   items: [
-const changeGroup = {
-  label: "أريد التغيير",
-  items: [
     { to: "/career-change", label: "تشخيص الرغبة في تغيير المسار" },
     { to: "/career-type-assessment", label: "اكتشاف المسار البديل المناسب" },
     { to: "/burnout-check", label: "مؤشر الاحتراق المهني" },
@@ -32,7 +29,10 @@ const changeGroup = {
   ],
 } as const;
 
+const growthGroup = {
   label: "أريد التطوير",
+  items: [
+
   items: [
     { to: "/career-growth", label: "خطة تطوير مساري الوظيفي" },
     { to: "/career-readiness", label: "شهادة الجاهزية المهنية" },
