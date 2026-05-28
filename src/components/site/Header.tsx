@@ -13,27 +13,77 @@ const discoveryGroup = {
   items: [
     { to: "/self-discovery", label: "اكتشف ذاتك" },
     { to: "/learning-style", label: "اكتشف نمط تعلمك" },
-    
     { to: "/academic-major", label: "اكتشف تخصصك الدراسي" },
     { to: "/career-type-assessment", label: "اكتشف مسارك المهني" },
     { to: "/sector-guide", label: "دليل القطاعات والصناعات" },
   ],
 } as const;
 
+const changeGroup = {
+  label: "أريد التغيير",
+  items: [
+    { to: "/career-change", label: "تشخيص الرغبة في تغيير المسار" },
+    { to: "/burnout-check", label: "مؤشر الاحتراق المهني" },
+    { to: "/wellbeing-check", label: "فحص الصحة النفسية المهنية" },
+  ],
+} as const;
+
+const growthGroup = {
+  label: "تطوير المسار",
+  items: [
+    { to: "/career-growth", label: "خطة تطوير مساري الوظيفي" },
+    { to: "/career-readiness", label: "شهادة الجاهزية المهنية" },
+    { to: "/career-ladder", label: "سلّم المسار الوظيفي" },
+  ],
+} as const;
+
 const navAfter = [
   { to: "/labor-market", label: "نبض السوق" },
   { to: "/comprehensive-assessment", label: "التقييم الشامل" },
-  { to: "/career-readiness", label: "شهادة الجاهزية" },
   { to: "/career-twin", label: "توأم المسار" },
   { to: "/counselor", label: "الإرشاد المهني والكوتشينج" },
   { to: "/institutions", label: "للمؤسسات" },
   { to: "/resources", label: "الموارد" },
 ] as const;
 
+type NavGroup = { label: string; items: readonly { to: string; label: string }[] };
+
+function DropdownNav({ group }: { group: NavGroup }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="relative" onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
+      <button
+        type="button"
+        className="inline-flex items-center gap-1 whitespace-nowrap text-sm text-foreground/80 transition-colors hover:text-primary"
+        aria-expanded={open}
+      >
+        {group.label}
+        <ChevronDown className="h-3.5 w-3.5" />
+      </button>
+      {open && (
+        <div className="absolute right-1/2 top-full z-50 min-w-[240px] translate-x-1/2 pt-2">
+          <div className="overflow-hidden rounded-xl border border-border bg-card p-1.5 shadow-xl">
+            {group.items.map((item) => (
+              <Link
+                key={item.to}
+                to={item.to}
+                className="block whitespace-nowrap rounded-lg px-4 py-2.5 text-sm text-foreground/80 transition-colors hover:bg-muted hover:text-primary"
+                activeProps={{ className: "text-primary font-semibold bg-muted" }}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export function Header() {
   const [open, setOpen] = useState(false);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
   const { isAuthenticated } = useAuth();
+
 
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur-md">
@@ -56,36 +106,9 @@ export function Header() {
             </Link>
           ))}
 
-          <div
-            className="relative"
-            onMouseEnter={() => setDropdownOpen(true)}
-            onMouseLeave={() => setDropdownOpen(false)}
-          >
-            <button
-              type="button"
-              className="inline-flex items-center gap-1 whitespace-nowrap text-sm text-foreground/80 transition-colors hover:text-primary"
-              aria-expanded={dropdownOpen}
-            >
-              {discoveryGroup.label}
-              <ChevronDown className="h-3.5 w-3.5" />
-            </button>
-            {dropdownOpen && (
-              <div className="absolute right-1/2 top-full z-50 min-w-[220px] translate-x-1/2 pt-2">
-                <div className="overflow-hidden rounded-xl border border-border bg-card p-1.5 shadow-xl">
-                  {discoveryGroup.items.map((item) => (
-                    <Link
-                      key={item.to}
-                      to={item.to}
-                      className="block whitespace-nowrap rounded-lg px-4 py-2.5 text-sm text-foreground/80 transition-colors hover:bg-muted hover:text-primary"
-                      activeProps={{ className: "text-primary font-semibold bg-muted" }}
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
+          {[discoveryGroup, changeGroup, growthGroup].map((group) => (
+            <DropdownNav key={group.label} group={group} />
+          ))}
 
           {navAfter.map((item) => (
             <Link
@@ -148,16 +171,21 @@ export function Header() {
                 {item.label}
               </Link>
             ))}
-            {discoveryGroup.items.map((item) => (
-              <Link
-                key={item.to}
-                to={item.to}
-                onClick={() => setOpen(false)}
-                className="pr-6 py-2.5 text-sm text-foreground/70"
-                activeProps={{ className: "text-primary font-semibold" }}
-              >
-                {item.label}
-              </Link>
+            {[discoveryGroup, changeGroup, growthGroup].map((group) => (
+              <div key={group.label}>
+                <div className="mt-3 pr-1 text-xs font-semibold text-primary">{group.label}</div>
+                {group.items.map((item) => (
+                  <Link
+                    key={item.to}
+                    to={item.to}
+                    onClick={() => setOpen(false)}
+                    className="block pr-6 py-2 text-sm text-foreground/70"
+                    activeProps={{ className: "text-primary font-semibold" }}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
             ))}
             {navAfter.map((item) => (
               <Link
