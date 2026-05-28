@@ -9,7 +9,7 @@ const nav = [
 ] as const;
 
 const discoveryGroup = {
-  label: "اكتشف",
+  label: "أريد الاكتشاف",
   items: [
     { to: "/self-discovery", label: "اكتشف ذاتك" },
     { to: "/learning-style", label: "اكتشف نمط تعلمك" },
@@ -29,7 +29,7 @@ const changeGroup = {
 } as const;
 
 const growthGroup = {
-  label: "تطوير المسار",
+  label: "أريد التطوير",
   items: [
     { to: "/career-growth", label: "خطة تطوير مساري الوظيفي" },
     { to: "/career-readiness", label: "شهادة الجاهزية المهنية" },
