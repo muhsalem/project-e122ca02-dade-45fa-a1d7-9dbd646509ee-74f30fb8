@@ -46,10 +46,44 @@ const navAfter = [
   { to: "/resources", label: "الموارد" },
 ] as const;
 
+type NavGroup = { label: string; items: readonly { to: string; label: string }[] };
+
+function DropdownNav({ group }: { group: NavGroup }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="relative" onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
+      <button
+        type="button"
+        className="inline-flex items-center gap-1 whitespace-nowrap text-sm text-foreground/80 transition-colors hover:text-primary"
+        aria-expanded={open}
+      >
+        {group.label}
+        <ChevronDown className="h-3.5 w-3.5" />
+      </button>
+      {open && (
+        <div className="absolute right-1/2 top-full z-50 min-w-[240px] translate-x-1/2 pt-2">
+          <div className="overflow-hidden rounded-xl border border-border bg-card p-1.5 shadow-xl">
+            {group.items.map((item) => (
+              <Link
+                key={item.to}
+                to={item.to}
+                className="block whitespace-nowrap rounded-lg px-4 py-2.5 text-sm text-foreground/80 transition-colors hover:bg-muted hover:text-primary"
+                activeProps={{ className: "text-primary font-semibold bg-muted" }}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export function Header() {
   const [open, setOpen] = useState(false);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
   const { isAuthenticated } = useAuth();
+
 
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur-md">
