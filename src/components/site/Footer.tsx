@@ -19,9 +19,8 @@ export function Footer() {
         <div>
           <h4 className="mb-4 font-serif text-base text-primary">روابط</h4>
           <ul className="space-y-2 text-sm text-muted-foreground">
-            <li><Link to="/start" className="hover:text-primary">ابدأ تشخيصك المجاني</Link></li>
+            <li><Link to="/start" className="hover:text-primary">ابدأ رحلتك</Link></li>
             <li><Link to="/pricing" className="hover:text-primary">الأسعار والباقات</Link></li>
-            <li><Link to="/career-ladder" className="hover:text-primary">سلالم المسارات المهنية</Link></li>
             <li><Link to="/institutions" className="hover:text-primary">للمؤسسات (B2B)</Link></li>
             <li><Link to="/booking" className="hover:text-primary">حجز جلسة إرشاد أو كوتشينج</Link></li>
             <li><Link to="/resources" className="hover:text-primary">الموارد والمقالات</Link></li>
@@ -30,9 +29,6 @@ export function Footer() {
           <h4 className="mb-4 font-serif text-base text-primary">قانوني وتواصل</h4>
           <ul className="space-y-3 text-sm text-muted-foreground">
             <li><Link to="/terms" className="hover:text-primary">الشروط والأحكام</Link></li>
-            <li><a href="/terms#privacy" className="hover:text-primary">سياسة الخصوصية</a></li>
-            <li><a href="/terms#cookies" className="hover:text-primary">سياسة الكوكيز</a></li>
-            <li><a href="/terms#ethics" className="hover:text-primary">الميثاق الأخلاقي والقيمي</a></li>
             <li className="flex items-center gap-2"><Mail className="h-4 w-4 text-gold" /><span>info@bosla.app</span></li>
             <li className="flex items-center gap-2"><Phone className="h-4 w-4 text-gold" /><span>+966 50 000 0000</span></li>
           </ul>

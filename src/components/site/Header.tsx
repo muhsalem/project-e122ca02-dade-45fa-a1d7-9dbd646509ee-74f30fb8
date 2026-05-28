@@ -23,6 +23,7 @@ const changeGroup = {
   label: "أريد التغيير",
   items: [
     { to: "/career-change", label: "تشخيص الرغبة في تغيير المسار" },
+    { to: "/career-type-assessment", label: "اكتشاف المسار البديل المناسب" },
     { to: "/burnout-check", label: "مؤشر الاحتراق المهني" },
     { to: "/wellbeing-check", label: "فحص الصحة النفسية المهنية" },
   ],
@@ -141,7 +142,8 @@ export function Header() {
             to="/start"
             className="shrink-0 whitespace-nowrap rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
           >
-            ابدأ تشخيصك المجاني
+            ابدأ رحلتك
+
           </Link>
         </div>
 

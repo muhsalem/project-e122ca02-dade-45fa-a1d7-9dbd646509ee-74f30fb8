@@ -5,7 +5,8 @@ import { Compass, ArrowRight, Sparkles } from "lucide-react";
 export const Route = createFileRoute("/start")({
   head: () => ({
     meta: [
-      { title: "ابدأ تشخيصك المجاني — بوصلة" },
+      { title: "ابدأ رحلتك — بوصلة" },
+
       { name: "description", content: "ثلاث خطوات بسيطة ترشدك إلى أنسب تقييم مهني لحالتك الراهنة — مجاناً." },
     ],
   }),
@@ -34,8 +35,9 @@ function StartFunnel() {
           مجاني تماماً — لا يتطلب تسجيلاً
         </div>
         <h1 className="mt-5 font-serif text-3xl text-primary md:text-5xl">
-          ابدأ تشخيصك المجاني
+          ابدأ رحلتك
         </h1>
+
         <p className="mx-auto mt-4 max-w-xl text-muted-foreground leading-9">
           أخبرنا أين أنت الآن في رحلتك المهنية، وسنرشدك إلى أنسب تقييم علمي لحالتك —
           مبني على نماذج Holland و MBI و GROW المعتمدة دولياً.
