@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WellbeingCheckRouteImport } from './routes/wellbeing-check'
 import { Route as TermsRouteImport } from './routes/terms'
+import { Route as StartRouteImport } from './routes/start'
 import { Route as SkillsGapRouteImport } from './routes/skills-gap'
 import { Route as SelfDiscoveryRouteImport } from './routes/self-discovery'
 import { Route as SectorGuideRouteImport } from './routes/sector-guide'
@@ -18,6 +19,7 @@ import { Route as SchoolsRouteImport } from './routes/schools'
 import { Route as Review360RouteImport } from './routes/review360'
 import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as MyAssessmentsRouteImport } from './routes/my-assessments'
 import { Route as LearningStyleRouteImport } from './routes/learning-style'
 import { Route as LaborMarketRouteImport } from './routes/labor-market'
@@ -50,6 +52,7 @@ import { Route as ResourcesCoachingVsCareerCounselingRouteImport } from './route
 import { Route as ResourcesCareerPathTermsRouteImport } from './routes/resources.career-path-terms'
 import { Route as ResourcesCareerChangeStrategiesRouteImport } from './routes/resources.career-change-strategies'
 import { Route as ReportCodeRouteImport } from './routes/report.$code'
+import { Route as InstitutionsDashboardRouteImport } from './routes/institutions.dashboard'
 import { Route as IdpCodeRouteImport } from './routes/idp.$code'
 
 const WellbeingCheckRoute = WellbeingCheckRouteImport.update({
@@ -60,6 +63,11 @@ const WellbeingCheckRoute = WellbeingCheckRouteImport.update({
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
   path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StartRoute = StartRouteImport.update({
+  id: '/start',
+  path: '/start',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SkillsGapRoute = SkillsGapRouteImport.update({
@@ -95,6 +103,11 @@ const ResourcesRoute = ResourcesRouteImport.update({
 const ProfileRoute = ProfileRouteImport.update({
   id: '/profile',
   path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PricingRoute = PricingRouteImport.update({
+  id: '/pricing',
+  path: '/pricing',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MyAssessmentsRoute = MyAssessmentsRouteImport.update({
@@ -261,6 +274,11 @@ const ReportCodeRoute = ReportCodeRouteImport.update({
   path: '/report/$code',
   getParentRoute: () => rootRouteImport,
 } as any)
+const InstitutionsDashboardRoute = InstitutionsDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => InstitutionsRoute,
+} as any)
 const IdpCodeRoute = IdpCodeRouteImport.update({
   id: '/idp/$code',
   path: '/idp/$code',
@@ -284,11 +302,12 @@ export interface FileRoutesByFullPath {
   '/cognitive-profile': typeof CognitiveProfileRoute
   '/comprehensive-assessment': typeof ComprehensiveAssessmentRoute
   '/counselor': typeof CounselorRoute
-  '/institutions': typeof InstitutionsRoute
+  '/institutions': typeof InstitutionsRouteWithChildren
   '/join-as-coach': typeof JoinAsCoachRoute
   '/labor-market': typeof LaborMarketRoute
   '/learning-style': typeof LearningStyleRoute
   '/my-assessments': typeof MyAssessmentsRoute
+  '/pricing': typeof PricingRoute
   '/profile': typeof ProfileRoute
   '/resources': typeof ResourcesRouteWithChildren
   '/review360': typeof Review360Route
@@ -296,9 +315,11 @@ export interface FileRoutesByFullPath {
   '/sector-guide': typeof SectorGuideRoute
   '/self-discovery': typeof SelfDiscoveryRoute
   '/skills-gap': typeof SkillsGapRoute
+  '/start': typeof StartRoute
   '/terms': typeof TermsRoute
   '/wellbeing-check': typeof WellbeingCheckRoute
   '/idp/$code': typeof IdpCodeRoute
+  '/institutions/dashboard': typeof InstitutionsDashboardRoute
   '/report/$code': typeof ReportCodeRoute
   '/resources/career-change-strategies': typeof ResourcesCareerChangeStrategiesRoute
   '/resources/career-path-terms': typeof ResourcesCareerPathTermsRoute
@@ -328,11 +349,12 @@ export interface FileRoutesByTo {
   '/cognitive-profile': typeof CognitiveProfileRoute
   '/comprehensive-assessment': typeof ComprehensiveAssessmentRoute
   '/counselor': typeof CounselorRoute
-  '/institutions': typeof InstitutionsRoute
+  '/institutions': typeof InstitutionsRouteWithChildren
   '/join-as-coach': typeof JoinAsCoachRoute
   '/labor-market': typeof LaborMarketRoute
   '/learning-style': typeof LearningStyleRoute
   '/my-assessments': typeof MyAssessmentsRoute
+  '/pricing': typeof PricingRoute
   '/profile': typeof ProfileRoute
   '/resources': typeof ResourcesRouteWithChildren
   '/review360': typeof Review360Route
@@ -340,9 +362,11 @@ export interface FileRoutesByTo {
   '/sector-guide': typeof SectorGuideRoute
   '/self-discovery': typeof SelfDiscoveryRoute
   '/skills-gap': typeof SkillsGapRoute
+  '/start': typeof StartRoute
   '/terms': typeof TermsRoute
   '/wellbeing-check': typeof WellbeingCheckRoute
   '/idp/$code': typeof IdpCodeRoute
+  '/institutions/dashboard': typeof InstitutionsDashboardRoute
   '/report/$code': typeof ReportCodeRoute
   '/resources/career-change-strategies': typeof ResourcesCareerChangeStrategiesRoute
   '/resources/career-path-terms': typeof ResourcesCareerPathTermsRoute
@@ -373,11 +397,12 @@ export interface FileRoutesById {
   '/cognitive-profile': typeof CognitiveProfileRoute
   '/comprehensive-assessment': typeof ComprehensiveAssessmentRoute
   '/counselor': typeof CounselorRoute
-  '/institutions': typeof InstitutionsRoute
+  '/institutions': typeof InstitutionsRouteWithChildren
   '/join-as-coach': typeof JoinAsCoachRoute
   '/labor-market': typeof LaborMarketRoute
   '/learning-style': typeof LearningStyleRoute
   '/my-assessments': typeof MyAssessmentsRoute
+  '/pricing': typeof PricingRoute
   '/profile': typeof ProfileRoute
   '/resources': typeof ResourcesRouteWithChildren
   '/review360': typeof Review360Route
@@ -385,9 +410,11 @@ export interface FileRoutesById {
   '/sector-guide': typeof SectorGuideRoute
   '/self-discovery': typeof SelfDiscoveryRoute
   '/skills-gap': typeof SkillsGapRoute
+  '/start': typeof StartRoute
   '/terms': typeof TermsRoute
   '/wellbeing-check': typeof WellbeingCheckRoute
   '/idp/$code': typeof IdpCodeRoute
+  '/institutions/dashboard': typeof InstitutionsDashboardRoute
   '/report/$code': typeof ReportCodeRoute
   '/resources/career-change-strategies': typeof ResourcesCareerChangeStrategiesRoute
   '/resources/career-path-terms': typeof ResourcesCareerPathTermsRoute
@@ -424,6 +451,7 @@ export interface FileRouteTypes {
     | '/labor-market'
     | '/learning-style'
     | '/my-assessments'
+    | '/pricing'
     | '/profile'
     | '/resources'
     | '/review360'
@@ -431,9 +459,11 @@ export interface FileRouteTypes {
     | '/sector-guide'
     | '/self-discovery'
     | '/skills-gap'
+    | '/start'
     | '/terms'
     | '/wellbeing-check'
     | '/idp/$code'
+    | '/institutions/dashboard'
     | '/report/$code'
     | '/resources/career-change-strategies'
     | '/resources/career-path-terms'
@@ -468,6 +498,7 @@ export interface FileRouteTypes {
     | '/labor-market'
     | '/learning-style'
     | '/my-assessments'
+    | '/pricing'
     | '/profile'
     | '/resources'
     | '/review360'
@@ -475,9 +506,11 @@ export interface FileRouteTypes {
     | '/sector-guide'
     | '/self-discovery'
     | '/skills-gap'
+    | '/start'
     | '/terms'
     | '/wellbeing-check'
     | '/idp/$code'
+    | '/institutions/dashboard'
     | '/report/$code'
     | '/resources/career-change-strategies'
     | '/resources/career-path-terms'
@@ -512,6 +545,7 @@ export interface FileRouteTypes {
     | '/labor-market'
     | '/learning-style'
     | '/my-assessments'
+    | '/pricing'
     | '/profile'
     | '/resources'
     | '/review360'
@@ -519,9 +553,11 @@ export interface FileRouteTypes {
     | '/sector-guide'
     | '/self-discovery'
     | '/skills-gap'
+    | '/start'
     | '/terms'
     | '/wellbeing-check'
     | '/idp/$code'
+    | '/institutions/dashboard'
     | '/report/$code'
     | '/resources/career-change-strategies'
     | '/resources/career-path-terms'
@@ -552,11 +588,12 @@ export interface RootRouteChildren {
   CognitiveProfileRoute: typeof CognitiveProfileRoute
   ComprehensiveAssessmentRoute: typeof ComprehensiveAssessmentRoute
   CounselorRoute: typeof CounselorRoute
-  InstitutionsRoute: typeof InstitutionsRoute
+  InstitutionsRoute: typeof InstitutionsRouteWithChildren
   JoinAsCoachRoute: typeof JoinAsCoachRoute
   LaborMarketRoute: typeof LaborMarketRoute
   LearningStyleRoute: typeof LearningStyleRoute
   MyAssessmentsRoute: typeof MyAssessmentsRoute
+  PricingRoute: typeof PricingRoute
   ProfileRoute: typeof ProfileRoute
   ResourcesRoute: typeof ResourcesRouteWithChildren
   Review360Route: typeof Review360Route
@@ -564,6 +601,7 @@ export interface RootRouteChildren {
   SectorGuideRoute: typeof SectorGuideRoute
   SelfDiscoveryRoute: typeof SelfDiscoveryRoute
   SkillsGapRoute: typeof SkillsGapRoute
+  StartRoute: typeof StartRoute
   TermsRoute: typeof TermsRoute
   WellbeingCheckRoute: typeof WellbeingCheckRoute
   IdpCodeRoute: typeof IdpCodeRoute
@@ -587,6 +625,13 @@ declare module '@tanstack/react-router' {
       path: '/terms'
       fullPath: '/terms'
       preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/start': {
+      id: '/start'
+      path: '/start'
+      fullPath: '/start'
+      preLoaderRoute: typeof StartRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/skills-gap': {
@@ -636,6 +681,13 @@ declare module '@tanstack/react-router' {
       path: '/profile'
       fullPath: '/profile'
       preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pricing': {
+      id: '/pricing'
+      path: '/pricing'
+      fullPath: '/pricing'
+      preLoaderRoute: typeof PricingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/my-assessments': {
@@ -862,6 +914,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ReportCodeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/institutions/dashboard': {
+      id: '/institutions/dashboard'
+      path: '/dashboard'
+      fullPath: '/institutions/dashboard'
+      preLoaderRoute: typeof InstitutionsDashboardRouteImport
+      parentRoute: typeof InstitutionsRoute
+    }
     '/idp/$code': {
       id: '/idp/$code'
       path: '/idp/$code'
@@ -871,6 +930,18 @@ declare module '@tanstack/react-router' {
     }
   }
 }
+
+interface InstitutionsRouteChildren {
+  InstitutionsDashboardRoute: typeof InstitutionsDashboardRoute
+}
+
+const InstitutionsRouteChildren: InstitutionsRouteChildren = {
+  InstitutionsDashboardRoute: InstitutionsDashboardRoute,
+}
+
+const InstitutionsRouteWithChildren = InstitutionsRoute._addFileChildren(
+  InstitutionsRouteChildren,
+)
 
 interface ResourcesRouteChildren {
   ResourcesCareerChangeStrategiesRoute: typeof ResourcesCareerChangeStrategiesRoute
@@ -914,11 +985,12 @@ const rootRouteChildren: RootRouteChildren = {
   CognitiveProfileRoute: CognitiveProfileRoute,
   ComprehensiveAssessmentRoute: ComprehensiveAssessmentRoute,
   CounselorRoute: CounselorRoute,
-  InstitutionsRoute: InstitutionsRoute,
+  InstitutionsRoute: InstitutionsRouteWithChildren,
   JoinAsCoachRoute: JoinAsCoachRoute,
   LaborMarketRoute: LaborMarketRoute,
   LearningStyleRoute: LearningStyleRoute,
   MyAssessmentsRoute: MyAssessmentsRoute,
+  PricingRoute: PricingRoute,
   ProfileRoute: ProfileRoute,
   ResourcesRoute: ResourcesRouteWithChildren,
   Review360Route: Review360Route,
@@ -926,6 +998,7 @@ const rootRouteChildren: RootRouteChildren = {
   SectorGuideRoute: SectorGuideRoute,
   SelfDiscoveryRoute: SelfDiscoveryRoute,
   SkillsGapRoute: SkillsGapRoute,
+  StartRoute: StartRoute,
   TermsRoute: TermsRoute,
   WellbeingCheckRoute: WellbeingCheckRoute,
   IdpCodeRoute: IdpCodeRoute,
