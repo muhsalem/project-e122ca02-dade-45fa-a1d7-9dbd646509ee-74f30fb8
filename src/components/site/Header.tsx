@@ -142,7 +142,8 @@ export function Header() {
             to="/start"
             className="shrink-0 whitespace-nowrap rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
           >
-            ابدأ تشخيصك المجاني
+            ابدأ رحلتك
+
           </Link>
         </div>
 
