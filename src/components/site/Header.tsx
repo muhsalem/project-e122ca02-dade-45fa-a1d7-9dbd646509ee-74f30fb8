@@ -11,9 +11,6 @@ const nav = [
 const discoveryGroup = {
   label: "اكتشف",
   items: [
-const discoveryGroup = {
-  label: "اكتشف",
-  items: [
     { to: "/self-discovery", label: "اكتشف ذاتك" },
     { to: "/learning-style", label: "اكتشف نمط تعلمك" },
     { to: "/academic-major", label: "اكتشف تخصصك الدراسي" },
@@ -39,9 +36,10 @@ const growthGroup = {
     { to: "/career-ladder", label: "سلّم المسار الوظيفي" },
   ],
 } as const;
+
+const navAfter = [
   { to: "/labor-market", label: "نبض السوق" },
   { to: "/comprehensive-assessment", label: "التقييم الشامل" },
-  { to: "/career-readiness", label: "شهادة الجاهزية" },
   { to: "/career-twin", label: "توأم المسار" },
   { to: "/counselor", label: "الإرشاد المهني والكوتشينج" },
   { to: "/institutions", label: "للمؤسسات" },
