@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Award, Heart, Lightbulb, Target } from "lucide-react";
+import { PsychometricCredibility } from "@/components/site/PsychometricCredibility";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -69,6 +70,8 @@ function AboutPage() {
           </div>
         </div>
       </section>
+
+      <PsychometricCredibility />
 
       <section className="container-page py-20 text-center">
         <h2 className="text-3xl text-primary">انضم لرحلة التغيير</h2>
