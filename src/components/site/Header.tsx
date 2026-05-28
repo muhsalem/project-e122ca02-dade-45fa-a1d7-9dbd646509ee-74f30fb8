@@ -39,14 +39,12 @@ const growthGroup = {
 
 const navAfter = [
   { to: "/labor-market", label: "نبض السوق" },
-  { to: "/comprehensive-assessment", label: "التقييم الشامل" },
-  { to: "/career-twin", label: "توأم المسار" },
-  { to: "/counselor", label: "الإرشاد المهني والكوتشينج" },
+const navAfter = [
+  { to: "/counselor", label: "الإرشاد والكوتشينج" },
+  { to: "/pricing", label: "الأسعار" },
   { to: "/institutions", label: "للمؤسسات" },
   { to: "/resources", label: "الموارد" },
 ] as const;
-
-type NavGroup = { label: string; items: readonly { to: string; label: string }[] };
 
 function DropdownNav({ group }: { group: NavGroup }) {
   const [open, setOpen] = useState(false);
@@ -140,10 +138,10 @@ export function Header() {
             </Link>
           )}
           <Link
-            to="/booking"
+            to="/start"
             className="shrink-0 whitespace-nowrap rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
           >
-            ابدأ رحلتك
+            ابدأ تشخيصك المجاني
           </Link>
         </div>
 

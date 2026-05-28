@@ -124,14 +124,89 @@ function ReportPage() {
       </section>
 
       <article className="container-page py-12 relative z-10">
-        <div className="report-content mx-auto max-w-3xl text-base leading-relaxed text-foreground">
-          <ReactMarkdown>{data.report}</ReactMarkdown>
-          <MarketPulseInsights reportText={data.report} />
-        </div>
-        <p className="mx-auto mt-10 max-w-3xl border-t border-border pt-4 text-center text-xs text-muted-foreground">
-          © {new Date().getFullYear()} بوصلة® — هذا التقرير سري وشخصي. الكود {code} لمالكه فقط. يُمنع النسخ أو إعادة النشر دون إذن خطي.
-        </p>
+        <ViewToggle code={code} name={data.name} stage={data.stage} report={data.report} />
       </article>
+    </div>
+  );
+}
+
+function ViewToggle({ code, name, stage, report }: { code: string; name: string | null; stage: string | null; report: string }) {
+  const [view, setView] = useState<"full" | "guardian">("full");
+
+  return (
+    <div className="mx-auto max-w-3xl">
+      <div className="mb-6 inline-flex rounded-lg border border-border bg-card p-1 print:hidden">
+        <button
+          onClick={() => setView("full")}
+          className={`rounded-md px-4 py-2 text-xs font-medium transition-colors ${
+            view === "full" ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-primary"
+          }`}
+        >
+          النسخة الكاملة (للمستفيد)
+        </button>
+        <button
+          onClick={() => setView("guardian")}
+          className={`rounded-md px-4 py-2 text-xs font-medium transition-colors ${
+            view === "guardian" ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-primary"
+          }`}
+        >
+          نسخة لولي الأمر / المدير
+        </button>
+      </div>
+
+      {view === "full" ? (
+        <div className="report-content text-base leading-relaxed text-foreground">
+          <ReactMarkdown>{report}</ReactMarkdown>
+          <MarketPulseInsights reportText={report} />
+        </div>
+      ) : (
+        <div className="space-y-5 rounded-2xl border border-gold/30 bg-gold/5 p-6">
+          <div>
+            <p className="text-xs font-medium uppercase tracking-widest text-gold">ملخص لولي الأمر / المدير</p>
+            <h2 className="mt-2 font-serif text-2xl text-primary">
+              {name ? `نظرة عامة على رحلة ${name}` : "نظرة عامة"}
+            </h2>
+            {stage && <p className="mt-1 text-sm text-muted-foreground">{stage}</p>}
+          </div>
+
+          <div className="rounded-lg bg-card p-4 text-sm leading-8 text-foreground/85">
+            <p className="font-semibold text-primary">ما الذي يحتاج إلى دعمك؟</p>
+            <ul className="mt-2 list-disc space-y-1.5 pr-5 text-muted-foreground">
+              <li>الإصغاء دون أحكام أو مقارنات بإخوته أو زملائه.</li>
+              <li>تشجيع تجربة الأنشطة المرتبطة باهتماماته المهنية الظاهرة في التقرير.</li>
+              <li>دعم قرار استشارة مرشد مهني محايد عند الحاجة.</li>
+              <li>احترام خصوصيته — التقرير الكامل ملكه، وهذا ملخص توجيهي لك فقط.</li>
+            </ul>
+          </div>
+
+          <div className="rounded-lg bg-card p-4 text-sm leading-8 text-foreground/85">
+            <p className="font-semibold text-primary">إشارات إيجابية يستحق التقدير عليها</p>
+            <p className="mt-2 text-muted-foreground">
+              إكمال التقييم بصدق دليل على وعي ذاتي ورغبة حقيقية في التطور. هذه خطوة شجاعة تستحق التقدير الصريح.
+            </p>
+          </div>
+
+          <div className="rounded-lg border border-primary/30 bg-primary/5 p-4 text-sm">
+            <p className="font-semibold text-primary">الخطوة التالية المقترحة</p>
+            <p className="mt-2 text-muted-foreground">
+              اعرض المساعدة دون فرض. اقترح حجز <Link to="/booking" className="text-primary underline">جلسة استشارية</Link> أو
+              مراجعة <Link to="/pricing" className="text-primary underline">الباقات المتاحة</Link> سوياً — القرار يبقى له.
+            </p>
+          </div>
+
+          <p className="text-center text-xs text-muted-foreground">
+            هذه نسخة موجزة بلغة غير فنية. التفاصيل العلمية الكاملة في النسخة الأخرى.
+          </p>
+        </div>
+      )}
+
+      <p className="mt-10 border-t border-border pt-4 text-center text-xs text-muted-foreground">
+        © {new Date().getFullYear()} بوصلة® — هذا التقرير سري وشخصي. الكود {code} لمالكه فقط.
+      </p>
+    </div>
+  );
+}
+
     </div>
   );
 }
