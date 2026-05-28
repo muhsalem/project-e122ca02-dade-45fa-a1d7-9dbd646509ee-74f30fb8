@@ -34,7 +34,8 @@ function StartFunnel() {
           <Sparkles className="h-3.5 w-3.5" />
           مجاني تماماً — لا يتطلب تسجيلاً
         </div>
-        <h1 className="mt-5 font-serif text-3xl text-primary md:text-5xl">
+          ابدأ رحلتك
+
           ابدأ تشخيصك المجاني
         </h1>
         <p className="mx-auto mt-4 max-w-xl text-muted-foreground leading-9">
