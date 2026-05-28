@@ -171,16 +171,21 @@ export function Header() {
                 {item.label}
               </Link>
             ))}
-            {discoveryGroup.items.map((item) => (
-              <Link
-                key={item.to}
-                to={item.to}
-                onClick={() => setOpen(false)}
-                className="pr-6 py-2.5 text-sm text-foreground/70"
-                activeProps={{ className: "text-primary font-semibold" }}
-              >
-                {item.label}
-              </Link>
+            {[discoveryGroup, changeGroup, growthGroup].map((group) => (
+              <div key={group.label}>
+                <div className="mt-3 pr-1 text-xs font-semibold text-primary">{group.label}</div>
+                {group.items.map((item) => (
+                  <Link
+                    key={item.to}
+                    to={item.to}
+                    onClick={() => setOpen(false)}
+                    className="block pr-6 py-2 text-sm text-foreground/70"
+                    activeProps={{ className: "text-primary font-semibold" }}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
             ))}
             {navAfter.map((item) => (
               <Link
