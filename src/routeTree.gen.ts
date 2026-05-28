@@ -31,6 +31,8 @@ import { Route as CareerTypeAssessmentRouteImport } from './routes/career-type-a
 import { Route as CareerTwinRouteImport } from './routes/career-twin'
 import { Route as CareerReadinessRouteImport } from './routes/career-readiness'
 import { Route as CareerLadderRouteImport } from './routes/career-ladder'
+import { Route as CareerGrowthRouteImport } from './routes/career-growth'
+import { Route as CareerChangeRouteImport } from './routes/career-change'
 import { Route as BurnoutCheckRouteImport } from './routes/burnout-check'
 import { Route as BookingRouteImport } from './routes/booking'
 import { Route as AuthRouteImport } from './routes/auth'
@@ -160,6 +162,16 @@ const CareerLadderRoute = CareerLadderRouteImport.update({
   path: '/career-ladder',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CareerGrowthRoute = CareerGrowthRouteImport.update({
+  id: '/career-growth',
+  path: '/career-growth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CareerChangeRoute = CareerChangeRouteImport.update({
+  id: '/career-change',
+  path: '/career-change',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BurnoutCheckRoute = BurnoutCheckRouteImport.update({
   id: '/burnout-check',
   path: '/burnout-check',
@@ -262,6 +274,8 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/booking': typeof BookingRoute
   '/burnout-check': typeof BurnoutCheckRoute
+  '/career-change': typeof CareerChangeRoute
+  '/career-growth': typeof CareerGrowthRoute
   '/career-ladder': typeof CareerLadderRoute
   '/career-readiness': typeof CareerReadinessRoute
   '/career-twin': typeof CareerTwinRoute
@@ -304,6 +318,8 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/booking': typeof BookingRoute
   '/burnout-check': typeof BurnoutCheckRoute
+  '/career-change': typeof CareerChangeRoute
+  '/career-growth': typeof CareerGrowthRoute
   '/career-ladder': typeof CareerLadderRoute
   '/career-readiness': typeof CareerReadinessRoute
   '/career-twin': typeof CareerTwinRoute
@@ -347,6 +363,8 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/booking': typeof BookingRoute
   '/burnout-check': typeof BurnoutCheckRoute
+  '/career-change': typeof CareerChangeRoute
+  '/career-growth': typeof CareerGrowthRoute
   '/career-ladder': typeof CareerLadderRoute
   '/career-readiness': typeof CareerReadinessRoute
   '/career-twin': typeof CareerTwinRoute
@@ -391,6 +409,8 @@ export interface FileRouteTypes {
     | '/auth'
     | '/booking'
     | '/burnout-check'
+    | '/career-change'
+    | '/career-growth'
     | '/career-ladder'
     | '/career-readiness'
     | '/career-twin'
@@ -433,6 +453,8 @@ export interface FileRouteTypes {
     | '/auth'
     | '/booking'
     | '/burnout-check'
+    | '/career-change'
+    | '/career-growth'
     | '/career-ladder'
     | '/career-readiness'
     | '/career-twin'
@@ -475,6 +497,8 @@ export interface FileRouteTypes {
     | '/auth'
     | '/booking'
     | '/burnout-check'
+    | '/career-change'
+    | '/career-growth'
     | '/career-ladder'
     | '/career-readiness'
     | '/career-twin'
@@ -518,6 +542,8 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   BookingRoute: typeof BookingRoute
   BurnoutCheckRoute: typeof BurnoutCheckRoute
+  CareerChangeRoute: typeof CareerChangeRoute
+  CareerGrowthRoute: typeof CareerGrowthRoute
   CareerLadderRoute: typeof CareerLadderRoute
   CareerReadinessRoute: typeof CareerReadinessRoute
   CareerTwinRoute: typeof CareerTwinRoute
@@ -703,6 +729,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CareerLadderRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/career-growth': {
+      id: '/career-growth'
+      path: '/career-growth'
+      fullPath: '/career-growth'
+      preLoaderRoute: typeof CareerGrowthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/career-change': {
+      id: '/career-change'
+      path: '/career-change'
+      fullPath: '/career-change'
+      preLoaderRoute: typeof CareerChangeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/burnout-check': {
       id: '/burnout-check'
       path: '/burnout-check'
@@ -864,6 +904,8 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   BookingRoute: BookingRoute,
   BurnoutCheckRoute: BurnoutCheckRoute,
+  CareerChangeRoute: CareerChangeRoute,
+  CareerGrowthRoute: CareerGrowthRoute,
   CareerLadderRoute: CareerLadderRoute,
   CareerReadinessRoute: CareerReadinessRoute,
   CareerTwinRoute: CareerTwinRoute,
@@ -895,13 +937,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
