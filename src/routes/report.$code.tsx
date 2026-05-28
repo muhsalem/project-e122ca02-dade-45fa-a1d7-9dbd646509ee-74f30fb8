@@ -206,7 +206,3 @@ function ViewToggle({ code, name, stage, report }: { code: string; name: string 
     </div>
   );
 }
-
-    </div>
-  );
-}

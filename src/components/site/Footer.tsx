@@ -19,8 +19,6 @@ export function Footer() {
         <div>
           <h4 className="mb-4 font-serif text-base text-primary">روابط</h4>
           <ul className="space-y-2 text-sm text-muted-foreground">
-          <h4 className="mb-4 font-serif text-base text-primary">روابط</h4>
-          <ul className="space-y-2 text-sm text-muted-foreground">
             <li><Link to="/start" className="hover:text-primary">ابدأ تشخيصك المجاني</Link></li>
             <li><Link to="/pricing" className="hover:text-primary">الأسعار والباقات</Link></li>
             <li><Link to="/career-ladder" className="hover:text-primary">سلالم المسارات المهنية</Link></li>

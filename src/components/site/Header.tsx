@@ -38,8 +38,6 @@ const growthGroup = {
 } as const;
 
 const navAfter = [
-  { to: "/labor-market", label: "نبض السوق" },
-const navAfter = [
   { to: "/counselor", label: "الإرشاد والكوتشينج" },
   { to: "/pricing", label: "الأسعار" },
   { to: "/institutions", label: "للمؤسسات" },
