@@ -102,7 +102,7 @@ function Page() {
       for (const g of GROUPS) {
         payload[g.key] = g.items.map((_, i) => invertIfNeeded(g.key, i, answers[g.key][i]));
       }
-      const res = await submit({ data: { name, age, job, years, context, ...(payload as never) } });
+      const res = await submit({ data: { name, age, job, years, context, ...payload } as never });
       navigate({ to: "/report/$code", params: { code: res.code } });
     } catch (e) {
       setErr(e instanceof Error ? e.message : "تعذر إنشاء التقرير.");
