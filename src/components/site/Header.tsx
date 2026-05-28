@@ -32,8 +32,6 @@ const changeGroup = {
 const growthGroup = {
   label: "أريد التطوير",
   items: [
-
-  items: [
     { to: "/career-growth", label: "خطة تطوير مساري الوظيفي" },
     { to: "/career-readiness", label: "شهادة الجاهزية المهنية" },
     { to: "/career-ladder", label: "سلّم المسار الوظيفي" },
