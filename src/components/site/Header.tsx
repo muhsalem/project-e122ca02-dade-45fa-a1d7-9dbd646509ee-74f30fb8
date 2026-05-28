@@ -44,6 +44,8 @@ const navAfter = [
   { to: "/resources", label: "الموارد" },
 ] as const;
 
+type NavGroup = { label: string; items: readonly { to: string; label: string }[] };
+
 function DropdownNav({ group }: { group: NavGroup }) {
   const [open, setOpen] = useState(false);
   return (
