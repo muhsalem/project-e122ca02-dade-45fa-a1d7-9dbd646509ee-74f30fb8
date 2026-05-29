@@ -22,21 +22,24 @@ const discoveryGroup = {
 const changeGroup = {
   label: "أريد التغيير",
   items: [
-    { to: "/career-change", label: "تشخيص الرغبة في تغيير المسار" },
-    { to: "/career-type-assessment", label: "اكتشاف المسار البديل المناسب" },
-    { to: "/burnout-check", label: "مؤشر الاحتراق المهني" },
-    { to: "/wellbeing-check", label: "فحص الصحة النفسية المهنية" },
+    // ترتيب سيكومتري: فرز أولي ← تشخيص الأعراض ← فحص الصحة ← استكشاف البديل
+    { to: "/career-change", label: "١. تشخيص الرغبة في تغيير المسار" },
+    { to: "/burnout-check", label: "٢. مؤشر الاحتراق المهني" },
+    { to: "/wellbeing-check", label: "٣. فحص الصحة النفسية المهنية" },
+    { to: "/career-type-assessment", label: "٤. اكتشاف المسار البديل المناسب" },
   ],
 } as const;
 
 const growthGroup = {
   label: "أريد التطوير",
   items: [
-    { to: "/career-growth", label: "خطة تطوير مساري الوظيفي" },
-    { to: "/career-readiness", label: "شهادة الجاهزية المهنية" },
-    { to: "/career-ladder", label: "سلّم المسار الوظيفي" },
+    // ترتيب سيكومتري: تقييم وخطة ← خريطة المسار ← شهادة الجاهزية كمخرج
+    { to: "/career-growth", label: "١. خطة تطوير مساري الوظيفي" },
+    { to: "/career-ladder", label: "٢. سلّم المسار الوظيفي" },
+    { to: "/career-readiness", label: "٣. شهادة الجاهزية المهنية" },
   ],
 } as const;
+
 
 const navAfter = [
   { to: "/counselor", label: "الإرشاد والكوتشينج" },
