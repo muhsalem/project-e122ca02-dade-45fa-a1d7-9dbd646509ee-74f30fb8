@@ -24,7 +24,9 @@ export function Footer() {
             <li><Link to="/institutions" className="hover:text-primary">للمؤسسات (B2B)</Link></li>
             <li><Link to="/booking" className="hover:text-primary">حجز جلسة إرشاد أو كوتشينج</Link></li>
             <li><Link to="/resources" className="hover:text-primary">الموارد والمقالات</Link></li>
+            <li><Link to="/for-counselors" className="hover:text-primary">للمرشدين المهنيين</Link></li>
             <li><Link to="/about" className="hover:text-primary">عن المنصة</Link></li>
+
           </ul>
         </div>
 
