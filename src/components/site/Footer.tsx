@@ -26,6 +26,9 @@ export function Footer() {
             <li><Link to="/resources" className="hover:text-primary">الموارد والمقالات</Link></li>
             <li><Link to="/about" className="hover:text-primary">عن المنصة</Link></li>
           </ul>
+        </div>
+
+        <div>
           <h4 className="mb-4 font-serif text-base text-primary">قانوني وتواصل</h4>
           <ul className="space-y-3 text-sm text-muted-foreground">
             <li><Link to="/terms" className="hover:text-primary">الشروط والأحكام</Link></li>
@@ -34,9 +37,7 @@ export function Footer() {
           </ul>
         </div>
       </div>
-      <div className="border-t border-border py-6 text-center text-xs text-muted-foreground">
-        © {new Date().getFullYear()} بوصلة® — جميع الحقوق محفوظة. المحتوى والتصاميم والأكواد ملكية فكرية محمية، يُمنع النسخ أو إعادة الاستخدام دون إذن خطي.
-      </div>
+
     </footer>
   );
 }
