@@ -5,6 +5,7 @@ import ReactMarkdown from "react-markdown";
 import { supabase } from "@/integrations/supabase/client";
 import { ContentProtection } from "@/components/site/ContentProtection";
 import { MarketPulseInsights } from "@/components/site/MarketPulseInsights";
+import { CareerLadderInsights } from "@/components/site/CareerLadderInsights";
 
 export const Route = createFileRoute("/report/$code")({
   head: ({ params }) => ({
@@ -157,6 +158,7 @@ function ViewToggle({ code, name, stage, report }: { code: string; name: string 
       {view === "full" ? (
         <div className="report-content text-base leading-relaxed text-foreground">
           <ReactMarkdown>{report}</ReactMarkdown>
+          <CareerLadderInsights reportText={report} />
           <MarketPulseInsights reportText={report} />
         </div>
       ) : (
