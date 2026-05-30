@@ -165,6 +165,37 @@ export function CareerLadderInsights({ reportText }: { reportText: string }) {
                 </li>
               ))}
             </ol>
+
+            {FAMILY_INSIGHTS[family] && (
+              <div className="mt-5 grid gap-3 md:grid-cols-2">
+                <div className="rounded-lg border border-emerald-500/30 bg-emerald-500/5 p-3">
+                  <p className="mb-2 flex items-center gap-1.5 text-xs font-bold text-emerald-700 dark:text-emerald-400">
+                    <TrendingUp className="h-3.5 w-3.5" /> مميزات التخصص
+                  </p>
+                  <ul className="space-y-1.5 text-[11px] leading-5 text-muted-foreground">
+                    {FAMILY_INSIGHTS[family].pros.map((p, i) => (
+                      <li key={i} className="flex gap-1.5"><span className="text-emerald-600">✓</span><span>{p}</span></li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="rounded-lg border border-amber-500/30 bg-amber-500/5 p-3">
+                  <p className="mb-2 flex items-center gap-1.5 text-xs font-bold text-amber-700 dark:text-amber-400">
+                    <AlertTriangle className="h-3.5 w-3.5" /> تحديات وكيف تتغلب عليها
+                  </p>
+                  <ul className="space-y-2 text-[11px] leading-5">
+                    {FAMILY_INSIGHTS[family].cons.map((c, i) => (
+                      <li key={i} className="border-r border-amber-500/30 pr-2">
+                        <p className="font-medium text-foreground">• {c.challenge}</p>
+                        <p className="mt-0.5 flex items-start gap-1 text-muted-foreground">
+                          <Shield className="mt-0.5 h-3 w-3 shrink-0 text-emerald-600" />
+                          <span>{c.mitigation}</span>
+                        </p>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            )}
           </div>
         ))}
       </div>
