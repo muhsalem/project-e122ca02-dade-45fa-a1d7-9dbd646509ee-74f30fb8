@@ -26,7 +26,6 @@ export const explainSpecialization = createServerFn({ method: "POST" })
       .maybeSingle();
 
     if (cached?.report) {
-      await supabaseAdmin.rpc("noop").catch(() => {});
       return { report: cached.report as string, cached: true };
     }
 
