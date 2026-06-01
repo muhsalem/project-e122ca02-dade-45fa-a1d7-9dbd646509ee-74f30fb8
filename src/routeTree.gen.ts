@@ -14,6 +14,7 @@ import { Route as TermsRouteImport } from './routes/terms'
 import { Route as StartRouteImport } from './routes/start'
 import { Route as SpecializationsRouteImport } from './routes/specializations'
 import { Route as SkillsGapRouteImport } from './routes/skills-gap'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SelfDiscoveryRouteImport } from './routes/self-discovery'
 import { Route as SectorGuideRouteImport } from './routes/sector-guide'
 import { Route as SchoolsRouteImport } from './routes/schools'
@@ -80,6 +81,11 @@ const SpecializationsRoute = SpecializationsRouteImport.update({
 const SkillsGapRoute = SkillsGapRouteImport.update({
   id: '/skills-gap',
   path: '/skills-gap',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SelfDiscoveryRoute = SelfDiscoveryRouteImport.update({
@@ -327,6 +333,7 @@ export interface FileRoutesByFullPath {
   '/schools': typeof SchoolsRoute
   '/sector-guide': typeof SectorGuideRoute
   '/self-discovery': typeof SelfDiscoveryRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/skills-gap': typeof SkillsGapRoute
   '/specializations': typeof SpecializationsRoute
   '/start': typeof StartRoute
@@ -376,6 +383,7 @@ export interface FileRoutesByTo {
   '/schools': typeof SchoolsRoute
   '/sector-guide': typeof SectorGuideRoute
   '/self-discovery': typeof SelfDiscoveryRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/skills-gap': typeof SkillsGapRoute
   '/specializations': typeof SpecializationsRoute
   '/start': typeof StartRoute
@@ -426,6 +434,7 @@ export interface FileRoutesById {
   '/schools': typeof SchoolsRoute
   '/sector-guide': typeof SectorGuideRoute
   '/self-discovery': typeof SelfDiscoveryRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/skills-gap': typeof SkillsGapRoute
   '/specializations': typeof SpecializationsRoute
   '/start': typeof StartRoute
@@ -477,6 +486,7 @@ export interface FileRouteTypes {
     | '/schools'
     | '/sector-guide'
     | '/self-discovery'
+    | '/sitemap.xml'
     | '/skills-gap'
     | '/specializations'
     | '/start'
@@ -526,6 +536,7 @@ export interface FileRouteTypes {
     | '/schools'
     | '/sector-guide'
     | '/self-discovery'
+    | '/sitemap.xml'
     | '/skills-gap'
     | '/specializations'
     | '/start'
@@ -575,6 +586,7 @@ export interface FileRouteTypes {
     | '/schools'
     | '/sector-guide'
     | '/self-discovery'
+    | '/sitemap.xml'
     | '/skills-gap'
     | '/specializations'
     | '/start'
@@ -625,6 +637,7 @@ export interface RootRouteChildren {
   SchoolsRoute: typeof SchoolsRoute
   SectorGuideRoute: typeof SectorGuideRoute
   SelfDiscoveryRoute: typeof SelfDiscoveryRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SkillsGapRoute: typeof SkillsGapRoute
   SpecializationsRoute: typeof SpecializationsRoute
   StartRoute: typeof StartRoute
@@ -672,6 +685,13 @@ declare module '@tanstack/react-router' {
       path: '/skills-gap'
       fullPath: '/skills-gap'
       preLoaderRoute: typeof SkillsGapRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/self-discovery': {
@@ -1038,6 +1058,7 @@ const rootRouteChildren: RootRouteChildren = {
   SchoolsRoute: SchoolsRoute,
   SectorGuideRoute: SectorGuideRoute,
   SelfDiscoveryRoute: SelfDiscoveryRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   SkillsGapRoute: SkillsGapRoute,
   SpecializationsRoute: SpecializationsRoute,
   StartRoute: StartRoute,
@@ -1052,13 +1073,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
