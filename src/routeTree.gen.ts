@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as WellbeingCheckRouteImport } from './routes/wellbeing-check'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as StartRouteImport } from './routes/start'
+import { Route as SpecializationsRouteImport } from './routes/specializations'
 import { Route as SkillsGapRouteImport } from './routes/skills-gap'
 import { Route as SelfDiscoveryRouteImport } from './routes/self-discovery'
 import { Route as SectorGuideRouteImport } from './routes/sector-guide'
@@ -69,6 +70,11 @@ const TermsRoute = TermsRouteImport.update({
 const StartRoute = StartRouteImport.update({
   id: '/start',
   path: '/start',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SpecializationsRoute = SpecializationsRouteImport.update({
+  id: '/specializations',
+  path: '/specializations',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SkillsGapRoute = SkillsGapRouteImport.update({
@@ -322,6 +328,7 @@ export interface FileRoutesByFullPath {
   '/sector-guide': typeof SectorGuideRoute
   '/self-discovery': typeof SelfDiscoveryRoute
   '/skills-gap': typeof SkillsGapRoute
+  '/specializations': typeof SpecializationsRoute
   '/start': typeof StartRoute
   '/terms': typeof TermsRoute
   '/wellbeing-check': typeof WellbeingCheckRoute
@@ -370,6 +377,7 @@ export interface FileRoutesByTo {
   '/sector-guide': typeof SectorGuideRoute
   '/self-discovery': typeof SelfDiscoveryRoute
   '/skills-gap': typeof SkillsGapRoute
+  '/specializations': typeof SpecializationsRoute
   '/start': typeof StartRoute
   '/terms': typeof TermsRoute
   '/wellbeing-check': typeof WellbeingCheckRoute
@@ -419,6 +427,7 @@ export interface FileRoutesById {
   '/sector-guide': typeof SectorGuideRoute
   '/self-discovery': typeof SelfDiscoveryRoute
   '/skills-gap': typeof SkillsGapRoute
+  '/specializations': typeof SpecializationsRoute
   '/start': typeof StartRoute
   '/terms': typeof TermsRoute
   '/wellbeing-check': typeof WellbeingCheckRoute
@@ -469,6 +478,7 @@ export interface FileRouteTypes {
     | '/sector-guide'
     | '/self-discovery'
     | '/skills-gap'
+    | '/specializations'
     | '/start'
     | '/terms'
     | '/wellbeing-check'
@@ -517,6 +527,7 @@ export interface FileRouteTypes {
     | '/sector-guide'
     | '/self-discovery'
     | '/skills-gap'
+    | '/specializations'
     | '/start'
     | '/terms'
     | '/wellbeing-check'
@@ -565,6 +576,7 @@ export interface FileRouteTypes {
     | '/sector-guide'
     | '/self-discovery'
     | '/skills-gap'
+    | '/specializations'
     | '/start'
     | '/terms'
     | '/wellbeing-check'
@@ -614,6 +626,7 @@ export interface RootRouteChildren {
   SectorGuideRoute: typeof SectorGuideRoute
   SelfDiscoveryRoute: typeof SelfDiscoveryRoute
   SkillsGapRoute: typeof SkillsGapRoute
+  SpecializationsRoute: typeof SpecializationsRoute
   StartRoute: typeof StartRoute
   TermsRoute: typeof TermsRoute
   WellbeingCheckRoute: typeof WellbeingCheckRoute
@@ -645,6 +658,13 @@ declare module '@tanstack/react-router' {
       path: '/start'
       fullPath: '/start'
       preLoaderRoute: typeof StartRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/specializations': {
+      id: '/specializations'
+      path: '/specializations'
+      fullPath: '/specializations'
+      preLoaderRoute: typeof SpecializationsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/skills-gap': {
@@ -1019,6 +1039,7 @@ const rootRouteChildren: RootRouteChildren = {
   SectorGuideRoute: SectorGuideRoute,
   SelfDiscoveryRoute: SelfDiscoveryRoute,
   SkillsGapRoute: SkillsGapRoute,
+  SpecializationsRoute: SpecializationsRoute,
   StartRoute: StartRoute,
   TermsRoute: TermsRoute,
   WellbeingCheckRoute: WellbeingCheckRoute,

@@ -14,6 +14,7 @@ const discoveryGroup = {
     { to: "/self-discovery", label: "اكتشف ذاتك" },
     { to: "/learning-style", label: "اكتشف نمط تعلمك" },
     { to: "/academic-major", label: "اكتشف تخصصك الدراسي" },
+    { to: "/specializations", label: "خريطة التخصصات الجامعية" },
     { to: "/career-type-assessment", label: "اكتشف مسارك المهني" },
     { to: "/sector-guide", label: "دليل القطاعات والصناعات" },
   ],
