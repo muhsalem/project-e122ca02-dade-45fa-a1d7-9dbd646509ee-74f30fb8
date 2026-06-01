@@ -153,6 +153,101 @@ function HomePage() {
         </div>
       </section>
 
+      {/* DISCOVERY — بداية المسار ولمن يريد الاكتشاف */}
+      <section className="relative overflow-hidden border-b border-border bg-gradient-to-br from-secondary via-background to-gold/10">
+        <div className="absolute inset-0 opacity-40">
+          <div className="absolute -top-24 -left-24 h-96 w-96 rounded-full bg-gold/20 blur-3xl" />
+          <div className="absolute -bottom-24 -right-24 h-96 w-96 rounded-full bg-primary/15 blur-3xl" />
+        </div>
+        <div className="container-page relative py-20 lg:py-24">
+          <div className="grid items-center gap-12 lg:grid-cols-5">
+            <div className="lg:col-span-3">
+              <span className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/10 px-4 py-1.5 text-xs font-medium text-primary">
+                <Compass className="h-3.5 w-3.5 text-gold" />
+                مساحة آمنة لمن يبحث عن البداية
+              </span>
+              <h2 className="mt-6 font-serif text-3xl leading-tight text-primary md:text-5xl">
+                لم تعرف بعد من أنت؟
+                <br />
+                <span className="text-gold">هنا تبدأ رحلتك بثقة.</span>
+              </h2>
+              <p className="mt-6 max-w-2xl text-lg leading-9 text-muted-foreground">
+                التيه في بداية الطريق ليس ضياعاً، بل فرصةٌ لتكتشف نفسك قبل أن تختار.
+                نأخذك خطوةً بخطوة من أسئلةٍ بسيطةٍ عن ميولك إلى صورةٍ واضحةٍ عن
+                تخصصك ومسارك المهني — بأدواتٍ علميةٍ معتمدةٍ دولياً ولغةٍ تشبهك.
+              </p>
+              <ul className="mt-8 grid gap-3 text-sm text-muted-foreground sm:grid-cols-2">
+                {[
+                  "اكتشاف الذات والميول وفق نموذج Holland",
+                  "تحديد نمط تعلمك المفضل بدقة",
+                  "خريطة لأكثر من 400 تخصص جامعي",
+                  "توصية بأنسب مسار مهني يشبه شخصيتك",
+                ].map((t) => (
+                  <li key={t} className="flex items-start gap-2">
+                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gold" />
+                    <span>{t}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-10 flex flex-wrap gap-3">
+                <Link
+                  to="/self-discovery"
+                  className="inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-[var(--shadow-elegant)] hover:opacity-90"
+                >
+                  ابدأ رحلة اكتشاف الذات
+                  <ArrowLeft className="h-4 w-4" />
+                </Link>
+                <Link
+                  to="/start"
+                  className="inline-flex items-center gap-2 rounded-md border border-primary/20 bg-card px-6 py-3.5 text-sm font-medium text-primary hover:bg-secondary"
+                >
+                  أرني الطريق المناسب لي
+                </Link>
+              </div>
+              <p className="mt-6 max-w-xl text-sm italic leading-7 text-muted-foreground">
+                «لا تختر مسارك من قائمةٍ جاهزة، بل من معرفةٍ صادقةٍ بنفسك… حينها فقط
+                يصبح الطريق يشبهك.»
+              </p>
+            </div>
+
+            <div className="lg:col-span-2">
+              <div className="relative">
+                <div className="absolute -inset-2 rounded-3xl bg-gradient-to-br from-gold/30 to-primary/20 blur-2xl" />
+                <div className="relative rounded-3xl border border-gold/30 bg-card p-8 shadow-[var(--shadow-elegant)]">
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gold/15 text-gold">
+                      <MapPin className="h-6 w-6" />
+                    </div>
+                    <div>
+                      <p className="text-xs uppercase tracking-widest text-gold">رحلة الاكتشاف</p>
+                      <p className="font-serif text-lg text-primary">من السؤال إلى الوضوح</p>
+                    </div>
+                  </div>
+                  <ol className="mt-6 space-y-5">
+                    {[
+                      { n: "1", icon: Lightbulb, t: "اسأل", d: "من أنا؟ ما الذي يستهويني حقاً؟" },
+                      { n: "2", icon: Brain, t: "اكتشف", d: "ميولك وقدراتك وقيمك بأدواتٍ علمية." },
+                      { n: "3", icon: RouteIcon, t: "اختر", d: "التخصص والمسار الذي يشبه ذاتك." },
+                      { n: "4", icon: Star, t: "انطلق", d: "بخطةٍ واضحةٍ وثقةٍ راسخة." },
+                    ].map((s) => (
+                      <li key={s.n} className="flex gap-4">
+                        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-gold/40 bg-gold/10 text-gold">
+                          <s.icon className="h-4 w-4" />
+                        </span>
+                        <div>
+                          <p className="font-serif text-base text-primary">{s.t}</p>
+                          <p className="mt-0.5 text-xs leading-6 text-muted-foreground">{s.d}</p>
+                        </div>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* BURNOUT — صحوة وانطلاقة جديدة */}
       <section className="relative overflow-hidden border-b border-border bg-gradient-to-br from-[#2a1810] via-primary to-[#1a0f08] text-primary-foreground">
         <div className="absolute inset-0 opacity-20">
