@@ -80,7 +80,7 @@
     },
     {
       "id": "law",
-      "label": "القانون والشريعة",
+      "label": "القانون",
       "icon": "⚖️",
       "color": { "bg": "#E1F5EE", "text": "#0F6E56", "tagBg": "#9FE1CB", "tagText": "#085041" },
       "generalSpecs": [
