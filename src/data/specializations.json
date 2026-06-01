@@ -1,0 +1,334 @@
+{
+  "meta": {
+    "title": "خريطة التخصصات الجامعية الشاملة",
+    "version": "1.0",
+    "totalFields": 12,
+    "totalGeneralSpecs": 63,
+    "totalDeepSpecs": 450,
+    "totalInterdisciplinary": 52,
+    "language": "ar",
+    "direction": "rtl",
+    "lastUpdated": "2025-06",
+    "sources": ["MIT", "Stanford", "UCL", "TUM", "Edinburgh", "CMU", "Georgetown", "Oxford", "LSE"]
+  },
+
+  "classicFields": [
+    {
+      "id": "sciences",
+      "label": "العلوم الطبيعية",
+      "icon": "🔬",
+      "color": { "bg": "#EAF3DE", "text": "#3B6D11", "tagBg": "#C0DD97", "tagText": "#27500A" },
+      "generalSpecs": [
+        { "name": "الرياضيات", "subs": ["جبر بحت","تحليل رياضي","إحصاء رياضي","بحوث عمليات","رياضيات تطبيقية","رياضيات حوسبية","نظرية الأعداد","طوبولوجيا"] },
+        { "name": "الفيزياء", "subs": ["فيزياء نظرية","ميكانيكا كم","فيزياء جسيمات","فيزياء مادة متكثفة","فيزياء فلكية","بصريات وليزر","فيزياء طبية","فيزياء حرارية"] },
+        { "name": "الكيمياء", "subs": ["كيمياء عضوية","كيمياء غير عضوية","كيمياء تحليلية","كيمياء فيزيائية","كيمياء حيوية","كيمياء بوليمرات","كيمياء دوائية","كيمياء بيئية"] },
+        { "name": "الأحياء", "subs": ["علم وراثة","علم خلية","أحياء جزيئية","علم بيئة","علم نبات","علم حيوان","علم أحياء دقيقة","علم طفيليات"] },
+        { "name": "الجيولوجيا", "subs": ["جيولوجيا اقتصادية","بترولوجيا","جيوفيزياء","هيدرولوجيا","جيومورفولوجيا","معادن وصخور","جيولوجيا بيئية","استكشاف جيوفيزيائي"] }
+      ]
+    },
+    {
+      "id": "engineering",
+      "label": "الهندسة",
+      "icon": "⚙️",
+      "color": { "bg": "#E6F1FB", "text": "#185FA5", "tagBg": "#B5D4F4", "tagText": "#0C447C" },
+      "generalSpecs": [
+        { "name": "هندسة مدنية", "subs": ["إنشاءات","جسور وأنفاق","هندسة ري","تخطيط عمراني","ميكانيكا تربة","إدارة مشاريع إنشائية","هندسة بيئية","هندسة طرق"] },
+        { "name": "هندسة ميكانيكية", "subs": ["تصميم ميكانيكي","ديناميكا حرارية","ميكاترونيكس","هندسة سيارات","هندسة طيران","إنتاج وتصنيع","روبوتيك","ميكانيكا موائع"] },
+        { "name": "هندسة كهربائية", "subs": ["إلكترونيات قوى","شبكات كهربائية","اتصالات","معالجة إشارات","أتمتة وتحكم","إلكترونيات دقيقة","طاقة متجددة","هندسة لاسلكية"] },
+        { "name": "هندسة كمبيوتر", "subs": ["معمارية حاسبات","أنظمة مضمنة","FPGA","تصميم رقائق","أنظمة تشغيل","شبكات حاسبات","أمن سيبراني","هندسة برمجيات"] },
+        { "name": "هندسة كيميائية", "subs": ["عمليات انتقال","هندسة بترولية","هندسة بوليمرات","تقنية حيوية","هندسة غذائية","هندسة دوائية","هندسة بيئية كيميائية","هندسة مواد"] },
+        { "name": "هندسة معمارية", "subs": ["تصميم معماري","تراث معماري","عمارة مستدامة","تصميم داخلي","تخطيط مدني","بيئة ومناخ","اقتصاد بناء","نقد معماري"] }
+      ]
+    },
+    {
+      "id": "medicine",
+      "label": "الطب وعلوم الصحة",
+      "icon": "🏥",
+      "color": { "bg": "#FCEBEB", "text": "#A32D2D", "tagBg": "#F7C1C1", "tagText": "#791F1F" },
+      "generalSpecs": [
+        { "name": "طب بشري", "subs": ["قلبية","أعصاب","جراحة عامة","طب نفسي","أطفال","نساء وتوليد","أورام","طوارئ وحوادث"] },
+        { "name": "طب أسنان", "subs": ["تقويم أسنان","طب أسنان أطفال","جراحة فم وفك","تركيبات أسنان","دواعم السن","علاج جذور","تجميل أسنان","وقاية أسنان"] },
+        { "name": "صيدلة", "subs": ["فارماكولوجيا","صيدلة سريرية","كيمياء دوائية","تصنيع دوائي","صيدلة إكلينيكية","علم سموم","صيدلة مجتمعية","أدوية عشبية"] },
+        { "name": "تمريض", "subs": ["تمريض باطني","تمريض جراحي","تمريض أطفال","تمريض حوادث","تمريض نفسي","صحة مجتمع","تمريض نساء","إدارة تمريضية"] },
+        { "name": "علوم طبية مساعدة", "subs": ["تحاليل طبية","أشعة تشخيصية","علاج طبيعي","تغذية علاجية","صحة بيئة","تأهيل حركي","سمعيات وتخاطب","تكنولوجيا طبية"] }
+      ]
+    },
+    {
+      "id": "computing",
+      "label": "الحاسبات وتقنية المعلومات",
+      "icon": "💻",
+      "color": { "bg": "#EEEDFE", "text": "#534AB7", "tagBg": "#CECBF6", "tagText": "#3C3489" },
+      "generalSpecs": [
+        { "name": "علوم الحاسب", "subs": ["خوارزميات","نظرية حوسبة","ذكاء اصطناعي","تعلم آلة","رؤية حاسوبية","معالجة لغات طبيعية","علم بيانات","حوسبة علمية"] },
+        { "name": "نظم المعلومات", "subs": ["قواعد بيانات","نظم ERP","تحليل أعمال","BI وتحليلات","حوكمة بيانات","إدارة المعرفة","نظم صحية","نظم مالية"] },
+        { "name": "تقنية المعلومات", "subs": ["إدارة شبكات","أمن معلومات","سحابة حوسبية","DevOps","بنية تحتية","دعم تقني","إدارة مشاريع IT","أمن سيبراني"] },
+        { "name": "هندسة البرمجيات", "subs": ["تصميم معماري للبرمجيات","تطوير ويب","تطوير تطبيقات موبايل","اختبار برمجيات","Agile/Scrum","تطوير ألعاب","تطوير مضمن","بلوكتشين"] }
+      ]
+    },
+    {
+      "id": "social",
+      "label": "العلوم الاجتماعية والإنسانية",
+      "icon": "🌍",
+      "color": { "bg": "#FAEEDA", "text": "#854F0B", "tagBg": "#FAC775", "tagText": "#633806" },
+      "generalSpecs": [
+        { "name": "علم النفس", "subs": ["نفس إكلينيكي","نفس تربوي","نفس اجتماعي","نفس شغلي","نفس جنائي","إرشاد نفسي","اضطرابات نمو","طب نفسي عصبي"] },
+        { "name": "علم الاجتماع", "subs": ["اجتماع سياسي","اجتماع اقتصادي","علم جريمة","اجتماع تربوي","رعاية اجتماعية","اجتماع أسري","اجتماع طبي","تنمية مجتمعية"] },
+        { "name": "العلوم السياسية", "subs": ["علاقات دولية","سياسة مقارنة","نظرية سياسية","حوكمة وإدارة عامة","دراسات أمنية","دراسات منطقة","دبلوماسية","قانون دولي"] },
+        { "name": "الاقتصاد", "subs": ["اقتصاد كلي","اقتصاد جزئي","اقتصاد تنموي","اقتصاد دولي","اقتصاد قياسي","اقتصاد سلوكي","اقتصاد إسلامي","مالية عامة"] },
+        { "name": "التاريخ والجغرافيا", "subs": ["تاريخ قديم","تاريخ إسلامي","تاريخ حديث","جغرافيا بشرية","جغرافيا طبيعية","GIS وخرائط","تاريخ حضارات","دراسات أرشيفية"] }
+      ]
+    },
+    {
+      "id": "law",
+      "label": "القانون والشريعة",
+      "icon": "⚖️",
+      "color": { "bg": "#E1F5EE", "text": "#0F6E56", "tagBg": "#9FE1CB", "tagText": "#085041" },
+      "generalSpecs": [
+        { "name": "القانون", "subs": ["قانون مدني","قانون جنائي","قانون تجاري","قانون دولي عام","قانون دولي خاص","قانون دستوري","قانون إداري","قانون عمل"] },
+        { "name": "الشريعة الإسلامية", "subs": ["فقه مقارن","أصول فقه","سياسة شرعية","مواريث","قضاء شرعي","فقه معاملات","فقه أسرة","مقاصد شريعة"] }
+      ]
+    },
+    {
+      "id": "business",
+      "label": "إدارة الأعمال والمحاسبة",
+      "icon": "📊",
+      "color": { "bg": "#FBEAF0", "text": "#993556", "tagBg": "#F4C0D1", "tagText": "#72243E" },
+      "generalSpecs": [
+        { "name": "إدارة الأعمال", "subs": ["تسويق","إدارة موارد بشرية","إدارة عمليات","ريادة أعمال","إدارة استراتيجية","إدارة مشاريع","سلوك تنظيمي","إدارة دولية"] },
+        { "name": "المحاسبة والمالية", "subs": ["محاسبة مالية","محاسبة إدارية","تدقيق وأنظمة رقابة","تمويل شركات","أسواق مالية","إدارة مخاطر","محاسبة حكومية","محاسبة جنائية"] },
+        { "name": "التجارة الدولية", "subs": ["لوجستيك وسلاسل إمداد","تمويل تجاري دولي","تسعير دولي","عقود دولية","تجارة إلكترونية دولية","جمارك وضرائب دولية","تحليل أسواق دولية","إدارة استيراد وتصدير"] }
+      ]
+    },
+    {
+      "id": "education",
+      "label": "التربية والتعليم",
+      "icon": "📚",
+      "color": { "bg": "#EAF3DE", "text": "#3B6D11", "tagBg": "#C0DD97", "tagText": "#27500A" },
+      "generalSpecs": [
+        { "name": "أصول التربية", "subs": ["فلسفة تربية","تاريخ تربية","تربية مقارنة","إدارة تعليمية","اقتصاد تعليم","سياسات تعليمية","تربية بيئية","تربية إسلامية"] },
+        { "name": "المناهج وطرق التدريس", "subs": ["مناهج رياضيات","مناهج علوم","تعليم لغة عربية","تعليم اللغات الأجنبية","تعليم مبكر","تكنولوجيا تعليم","تصميم تعليمي","مناهج اجتماعيات"] },
+        { "name": "التربية الخاصة", "subs": ["إعاقة ذهنية","صعوبات تعلم","إعاقة سمعية","إعاقة بصرية","اضطرابات طيف توحد","موهبة وتفوق","اضطرابات تواصل","تأهيل وتكيف"] }
+      ]
+    },
+    {
+      "id": "arts",
+      "label": "الآداب واللغات",
+      "icon": "📖",
+      "color": { "bg": "#EEEDFE", "text": "#534AB7", "tagBg": "#CECBF6", "tagText": "#3C3489" },
+      "generalSpecs": [
+        { "name": "اللغة العربية", "subs": ["نحو وصرف","بلاغة وأسلوبية","نقد أدبي","أدب عربي قديم","أدب عربي حديث","لسانيات عربية","تعليم عربية للناطقين بغيرها","ترجمة عربية"] },
+        { "name": "اللغات الأجنبية", "subs": ["أدب إنجليزي","لسانيات إنجليزية","لغة فرنسية","لغة ألمانية","لغة إسبانية","لغة صينية","لغة يابانية","دراسات ترجمة"] },
+        { "name": "الفلسفة", "subs": ["فلسفة غربية","فلسفة إسلامية","منطق","فلسفة علوم","أخلاق فلسفية","فلسفة سياسية","إبستيمولوجيا","فلسفة عقل"] }
+      ]
+    },
+    {
+      "id": "agriculture",
+      "label": "الزراعة والبيطرة والأغذية",
+      "icon": "🌾",
+      "color": { "bg": "#EAF3DE", "text": "#3B6D11", "tagBg": "#C0DD97", "tagText": "#27500A" },
+      "generalSpecs": [
+        { "name": "الزراعة", "subs": ["إنتاج نباتي","إنتاج حيواني","وقاية نبات","تربة ومياه","اقتصاد زراعي","ميكنة زراعية","بستنة","زراعة مائية"] },
+        { "name": "الطب البيطري", "subs": ["علم أمراض حيوانية","طب أسماك","تشريح بيطري","صحة عامة بيطرية","صيدلة بيطرية","إنتاج داجن","علم طفيليات بيطرية","جراحة بيطرية"] },
+        { "name": "علوم الأغذية", "subs": ["تكنولوجيا أغذية","سلامة غذائية","تغذية بشرية","كيمياء أغذية","صناعات تحويلية","مراقبة جودة أغذية","تقنية حيوية غذائية","تعبئة وتغليف"] }
+      ]
+    },
+    {
+      "id": "arts_fine",
+      "label": "الفنون والإعلام والتصميم",
+      "icon": "🎨",
+      "color": { "bg": "#FAECE7", "text": "#993C1D", "tagBg": "#F5C4B3", "tagText": "#712B13" },
+      "generalSpecs": [
+        { "name": "الفنون الجميلة", "subs": ["رسم وتصوير","نحت","فنون تطبيقية","غرافيك","إخراج مسرحي","نقد فني","فنون رقمية","فن معماري"] },
+        { "name": "الإعلام والاتصال", "subs": ["صحافة","علاقات عامة","إعلام رقمي","إذاعة وتلفزيون","تصوير صحفي","إعلام اجتماعي","إعلام تربوي","إدارة وسائل إعلام"] },
+        { "name": "التصميم", "subs": ["تصميم جرافيك","UX/UI","تصميم أزياء","تصميم داخلي","تصميم صناعي","تصميم تعليمي","تصميم حركي","تصميم حزم"] }
+      ]
+    },
+    {
+      "id": "islamic",
+      "label": "الدراسات الإسلامية",
+      "icon": "🕌",
+      "color": { "bg": "#FAEEDA", "text": "#854F0B", "tagBg": "#FAC775", "tagText": "#633806" },
+      "generalSpecs": [
+        { "name": "الدراسات الإسلامية", "subs": ["تفسير وعلوم قرآن","حديث وعلومه","عقيدة وكلام","سيرة نبوية","تاريخ إسلامي","دراسات قرآنية مقارنة","فكر إسلامي معاصر","دراسات إسلامية غربية"] },
+        { "name": "الفقه والأصول", "subs": ["فقه حنفي","فقه مالكي","فقه شافعي","فقه حنبلي","فقه مقارن","أصول فقه","مقاصد شريعة","فقه أقليات"] }
+      ]
+    }
+  ],
+
+  "emergingSpecs": [
+    { "id": "ai-society", "name": "الذكاء الاصطناعي في المجتمع", "universities": ["TUM"], "country": "de", "level": "ماجستير", "year": 2024, "demand": "hot", "fields": ["AI","علم اجتماع","سياسات عامة","أخلاق"], "desc": "يدرس تأثير الذكاء الاصطناعي على العمل والحوكمة والحرية المدنية وصنع القرار." },
+    { "id": "mgmt-data", "name": "الإدارة وعلم البيانات", "universities": ["TUM School of Management"], "country": "de", "level": "بكالوريوس", "year": 2024, "demand": "hot", "fields": ["إدارة","تحليل بيانات","CS","إحصاء"], "desc": "يجمع إدارة الأعمال مع data science لاتخاذ قرارات اقتصادية." },
+    { "id": "sustainability", "name": "علوم الاستدامة والطاقة", "universities": ["Stanford","UCL","TUM"], "country": "multi", "level": "بكالوريوس وماجستير", "year": 2022, "demand": "hot", "fields": ["هندسة","اقتصاد","بيئة","سياسات"], "desc": "Stanford أسست School of Sustainability 2022 كليةً مستقلة." },
+    { "id": "neurorobotics", "name": "الهندسة العصبية والروبوتيك", "universities": ["Leibniz University Hannover"], "country": "de", "level": "ماجستير", "year": 2024, "demand": "rising", "fields": ["أعصاب","هندسة","طب","CS"], "desc": "دمج علوم الأعصاب مع الهندسة لتصميم أجهزة طبية وروبوتات ذكية." },
+    { "id": "ai-health", "name": "الذكاء الاصطناعي في الرعاية الصحية", "universities": ["MIT","King's College London"], "country": "us_uk", "level": "ماجستير/دكتوراه", "year": 2023, "demand": "hot", "fields": ["طب","CS","بيانات","هندسة"], "desc": "يطور نماذج AI لتحليل البيانات الطبية وتشخيص الأمراض." },
+    { "id": "cognitive-sci", "name": "علم الإدراك والحوسبة", "universities": ["Stanford","UCL"], "country": "us_uk", "level": "بكالوريوس وماجستير", "year": 2020, "demand": "hot", "fields": ["علم نفس","فلسفة","CS","أعصاب"], "desc": "يجمع علم النفس المعرفي مع هندسة الحاسب لفهم كيفية عمل العقل." },
+    { "id": "comp-bio", "name": "البيولوجيا الحسابية والأنظمة", "universities": ["MIT/Harvard"], "country": "us", "level": "دكتوراه", "year": 2010, "demand": "rising", "fields": ["أحياء","رياضيات","CS","فيزياء"], "desc": "تحليل البيانات الجينومية وتصميم النماذج الرياضية للأنظمة البيولوجية." },
+    { "id": "data-science", "name": "علوم البيانات", "universities": ["LSE","UCL","MIT","TUM"], "country": "multi", "level": "بكالوريوس وماجستير", "year": 2018, "demand": "hot", "fields": ["إحصاء","CS","رياضيات","أعمال"], "desc": "الأعلى طلباً عالمياً. أصبح درجة مستقلة في أكبر الجامعات." },
+    { "id": "design-impact", "name": "تأثير التصميم (Design Impact)", "universities": ["Stanford d.school"], "country": "us", "level": "ماجستير", "year": 2022, "demand": "rising", "fields": ["تصميم","اجتماع","هندسة","سياسات"], "desc": "يدمج التصميم مع العلوم الاجتماعية والهندسة لحل مشكلات العالم الحقيقي." },
+    { "id": "cybersecurity", "name": "الأمن السيبراني", "universities": ["UCL","MIT","Imperial"], "country": "uk_us", "level": "بكالوريوس وماجستير", "year": 2015, "demand": "hot", "fields": ["CS","قانون","إدارة","أخلاق"], "desc": "انفصل عن CS كمجال مستقل. نمو 35%+ في 10 سنوات." },
+    { "id": "space-studies", "name": "دراسات الفضاء والاستكشاف", "universities": ["Arizona State","MIT"], "country": "us", "level": "بكالوريوس وماجستير", "year": 2020, "demand": "rising", "fields": ["هندسة","سياسة","علوم","فضاء"], "desc": "تخصص جديد تدعمه NASA وSpaceX. يشمل هندسة الفضاء وسياساته." },
+    { "id": "comp-neuro", "name": "علم الأعصاب الحسابي", "universities": ["Universität Tübingen","Max Planck"], "country": "de", "level": "ماجستير/دكتوراه", "year": 2022, "demand": "rising", "fields": ["أعصاب","AI","رياضيات","CS"], "desc": "يجمع علماء AI وعلماء أعصاب لفهم آليات الدماغ." },
+    { "id": "ml-bachelor", "name": "التعلم الآلي — بكالوريوس", "universities": ["UCL","MIT","Stanford"], "country": "multi", "level": "بكالوريوس", "year": 2021, "demand": "hot", "fields": ["رياضيات","CS","إحصاء","AI"], "desc": "طلبه 2.9 مرة أكثر من البرامج المتاحة حسب Bachelorsportal 2025." }
+  ],
+
+  "interdisciplinaryClusters": [
+    {
+      "id": "tech-soc",
+      "name": "التكنولوجيا والمجتمع",
+      "color": "#534AB7",
+      "specs": [
+        { "id": "ai-society-inter", "name": "الذكاء الاصطناعي والمجتمع", "fields": ["AI","علم اجتماع","سياسات عامة","أخلاق"], "demand": "hot", "desc": "يدرس تأثير الذكاء الاصطناعي على العمل والحوكمة والحرية المدنية وصنع القرار.", "universities": "TUM · UCL · Princeton" },
+        { "id": "hci", "name": "علم الإنسان والحاسوب (HCI)", "fields": ["CS","علم نفس","تصميم","لسانيات"], "demand": "hot", "desc": "يصمم تجارب التفاعل بين البشر والآلات. من أكثر التخصصات توظيفاً في شركات التكنولوجيا.", "universities": "Stanford · CMU · MIT" },
+        { "id": "sts", "name": "العلوم والتكنولوجيا والمجتمع (STS)", "fields": ["تاريخ علم","فلسفة","اجتماع","سياسات"], "demand": "rising", "desc": "يحلل كيف تتشكل العلوم والتكنولوجيا بالسياق الاجتماعي والسياسي.", "universities": "MIT · Cornell · Virginia Tech" },
+        { "id": "tech-ethics", "name": "أخلاقيات التكنولوجيا", "fields": ["فلسفة","CS","قانون","علم نفس"], "demand": "hot", "desc": "يعالج مسائل الخصوصية والتحيز في الخوارزميات والمسؤولية التقنية.", "universities": "Oxford · Georgetown · NYU" },
+        { "id": "cyber-law", "name": "الأمن السيبراني والقانون", "fields": ["CS","قانون","سياسات","جرائم"], "demand": "hot", "desc": "يجمع هندسة الأمن مع الأطر القانونية للجرائم الإلكترونية وحماية البيانات.", "universities": "UCL · Georgetown · CMU" },
+        { "id": "digital-media-data", "name": "الإعلام الرقمي وعلوم البيانات", "fields": ["إعلام","CS","إحصاء","اجتماع"], "demand": "rising", "desc": "يحلل المحتوى الرقمي والانتشار الإعلامي والتضليل ببيانات ضخمة.", "universities": "LSE · Columbia · Amsterdam" }
+      ]
+    },
+    {
+      "id": "bio-comp",
+      "name": "البيولوجيا والحوسبة",
+      "color": "#1D9E75",
+      "specs": [
+        { "id": "bioinformatics", "name": "المعلوماتية الحيوية (Bioinformatics)", "fields": ["أحياء","CS","رياضيات","كيمياء"], "demand": "hot", "desc": "يطور أدوات حاسوبية لتحليل الجينوم والبروتيوم.", "universities": "MIT · UCL · Heidelberg" },
+        { "id": "systems-bio", "name": "البيولوجيا الأنظمة والحسابية", "fields": ["أحياء","فيزياء","CS","رياضيات"], "demand": "hot", "desc": "يفهم الأنظمة البيولوجية كشبكات معقدة باستخدام نماذج رياضية.", "universities": "MIT/Harvard · Stanford · ETH Zurich" },
+        { "id": "synthetic-bio", "name": "هندسة الجينوم والبيولوجيا التركيبية", "fields": ["أحياء جزيئية","هندسة","كيمياء","CS"], "demand": "hot", "desc": "يصمم أنظمة بيولوجية جديدة وأدوات تحرير جيني مثل CRISPR.", "universities": "MIT · Imperial · TU Berlin" },
+        { "id": "comp-neuro-inter", "name": "علم الأعصاب الحسابي", "fields": ["أعصاب","رياضيات","AI","فيزياء"], "demand": "rising", "desc": "ينمذج كيفية معالجة الدماغ للمعلومات ويربط البحث العصبي بـ AI.", "universities": "Tübingen · Caltech · UCL" },
+        { "id": "biomedical-eng", "name": "هندسة الأحياء الطبية", "fields": ["طب","هندسة","فيزياء","كيمياء"], "demand": "hot", "desc": "يصمم الأجهزة الطبية والأطراف الاصطناعية وأنظمة التصوير البيولوجي.", "universities": "Imperial · Johns Hopkins · TUM" },
+        { "id": "health-informatics", "name": "المعلوماتية الصحية", "fields": ["طب","CS","إدارة","إحصاء"], "demand": "hot", "desc": "يدير البيانات الصحية ويطور أنظمة السجلات الطبية الإلكترونية.", "universities": "UCL · Harvard SPH · Heidelberg" }
+      ]
+    },
+    {
+      "id": "mind-brain",
+      "name": "العقل والدماغ والإدراك",
+      "color": "#D85A30",
+      "specs": [
+        { "id": "cognitive-science", "name": "علم الإدراك (Cognitive Science)", "fields": ["علم نفس","لسانيات","CS","فلسفة","أعصاب"], "demand": "hot", "desc": "يدرس آليات الإدراك والذاكرة واللغة والتفكير في البشر والآلات.", "universities": "Stanford · MIT · Cornell · Purdue 2027" },
+        { "id": "behavioral-neuro", "name": "علم الأعصاب والسلوك", "fields": ["أعصاب","علم نفس","أحياء","كيمياء"], "demand": "rising", "desc": "يربط العمليات العصبية بالسلوك والعواطف والإدراك.", "universities": "CMU · Northeastern · UCL" },
+        { "id": "neuroeconomics", "name": "الاقتصاد العصبي (Neuroeconomics)", "fields": ["اقتصاد","أعصاب","علم نفس","رياضيات"], "demand": "rising", "desc": "يدرس كيف تتخذ الأدمغة القرارات الاقتصادية.", "universities": "NYU · Caltech · Zürich" },
+        { "id": "neuroengineering", "name": "الهندسة العصبية (Neuroengineering)", "fields": ["هندسة","أعصاب","طب","CS"], "demand": "rising", "desc": "يطور واجهات الدماغ-الآلة والأجهزة العصبية التعويضية.", "universities": "Hannover · ETH · Carnegie Mellon" },
+        { "id": "comp-linguistics", "name": "اللسانيات الحاسوبية", "fields": ["لسانيات","CS","علم نفس","منطق"], "demand": "hot", "desc": "يبني أنظمة معالجة اللغات الطبيعية والترجمة الآلية وفهم النصوص. قلب ChatGPT ونماذج اللغة.", "universities": "MIT · Edinburgh · Stanford", "salaryRange": "$97K-$189K", "jobGrowth": "20%", "marketSize": "$43B", "arabicOpportunity": true }
+      ]
+    },
+    {
+      "id": "environment",
+      "name": "البيئة والاستدامة والمناخ",
+      "color": "#3B6D11",
+      "specs": [
+        { "id": "climate-policy", "name": "علوم المناخ والسياسات", "fields": ["فيزياء جوية","اقتصاد","سياسات","كيمياء"], "demand": "hot", "desc": "يدمج نمذجة المناخ مع السياسات الدولية والاقتصاد البيئي.", "universities": "Georgetown · Oxford · ETH Zurich" },
+        { "id": "sustainability-energy", "name": "الاستدامة والطاقة المتجددة", "fields": ["هندسة","اقتصاد","بيئة","سياسات"], "demand": "hot", "desc": "Stanford أسست School of Sustainability 2022 كليةً مستقلة.", "universities": "Stanford · TUM · UCL · Lund" },
+        { "id": "ecology-biodiversity", "name": "علم البيئة والتنوع البيولوجي", "fields": ["أحياء","جغرافيا","اقتصاد","CS"], "demand": "rising", "desc": "يدرس النظم البيئية وخدماتها وأزمة التنوع البيولوجي.", "universities": "Wageningen · UC Santa Barbara · Oxford" },
+        { "id": "env-engineering", "name": "العلوم والهندسة البيئية", "fields": ["كيمياء","هندسة مدنية","سياسات","علوم تربة"], "demand": "rising", "desc": "يعالج مشاكل التلوث ومياه الصرف والنفايات.", "universities": "Imperial · MIT · TU Berlin" },
+        { "id": "food-water-energy", "name": "إدارة الغذاء والماء والطاقة", "fields": ["زراعة","هندسة","اقتصاد","بيئة"], "demand": "rising", "desc": "يدرس ترابط منظومات الغذاء والماء والطاقة (Nexus).", "universities": "Wageningen · Oxford · Bonn" },
+        { "id": "marine-coastal", "name": "المناطق الساحلية وعلوم البحار", "fields": ["جيولوجيا","أحياء","هندسة","سياسات"], "demand": "stable", "desc": "يدرس الأنظمة البحرية والساحلية وإدارتها.", "universities": "Kiel · Southampton · Woods Hole" }
+      ]
+    },
+    {
+      "id": "data-quant",
+      "name": "البيانات والتحليل الكمي",
+      "color": "#185FA5",
+      "specs": [
+        { "id": "data-science-inter", "name": "علم البيانات (Data Science)", "fields": ["إحصاء","CS","رياضيات","أعمال"], "demand": "hot", "desc": "الأعلى طلباً على مستوى العالم. أصبح درجة مستقلة في MIT وLSE وUCL.", "universities": "MIT · LSE · UCL · TUM · Stanford" },
+        { "id": "stats-ml", "name": "الإحصاء والتعلم الآلي", "fields": ["رياضيات","CS","إحصاء","أعمال"], "demand": "hot", "desc": "طلبه 2.9 مرة أكثر من البرامج المتاحة حسب Bachelorsportal 2025.", "universities": "Stanford · Cambridge · ETH Zurich" },
+        { "id": "financial-eng", "name": "الهندسة المالية", "fields": ["رياضيات","مالية","CS","إحصاء"], "demand": "hot", "desc": "يصمم نماذج رياضية للأسواق المالية والمشتقات وإدارة المخاطر.", "universities": "CMU · Princeton · ETH Zurich" },
+        { "id": "network-science", "name": "علوم الشبكات (Network Science)", "fields": ["رياضيات","فيزياء","CS","اجتماع"], "demand": "rising", "desc": "يدرس بنية الشبكات المعقدة: اجتماعية ورقمية وبيولوجية.", "universities": "Northeastern · Oxford · Santa Fe Institute" },
+        { "id": "comp-economics", "name": "الاقتصاد الحسابي والقياسي", "fields": ["اقتصاد","رياضيات","CS","إحصاء"], "demand": "rising", "desc": "يبني نماذج اقتصادية حاسوبية ومحاكاة الأسواق.", "universities": "LSE · Chicago · Yale" },
+        { "id": "supply-chain-data", "name": "إدارة سلاسل الإمداد والبيانات", "fields": ["هندسة صناعية","CS","إدارة","إحصاء"], "demand": "rising", "desc": "يدمج تحليلات البيانات الكبيرة مع تحسين سلاسل التوريد.", "universities": "MIT SCM · TUM · Eindhoven" }
+      ]
+    },
+    {
+      "id": "health-policy",
+      "name": "الصحة والسياسات والمجتمع",
+      "color": "#993C1D",
+      "specs": [
+        { "id": "global-health", "name": "الصحة العالمية (Global Health)", "fields": ["طب","اقتصاد","سياسات","اجتماع"], "demand": "hot", "desc": "يعالج قضايا الصحة في السياقات الدولية.", "universities": "Harvard SPH · Oxford · Johns Hopkins" },
+        { "id": "ai-healthcare", "name": "الذكاء الاصطناعي في الرعاية الصحية", "fields": ["طب","CS","بيانات","هندسة"], "demand": "hot", "desc": "أحد أسرع البرامج نمواً 2024. يطور نماذج AI لتشخيص الأمراض.", "universities": "MIT · King's College · Stanford" },
+        { "id": "health-policy-inter", "name": "سياسات الصحة العامة", "fields": ["طب","اقتصاد","قانون","سياسات"], "demand": "rising", "desc": "يصمم الأنظمة الصحية الوطنية ويحلل سياسات التمويل والوقاية.", "universities": "LSE · Harvard Kennedy · Johns Hopkins" },
+        { "id": "mental-health-society", "name": "الصحة النفسية والمجتمع", "fields": ["علم نفس","اجتماع","طب","سياسات"], "demand": "hot", "desc": "نمو 30% في الطلب على خدمات الصحة النفسية بعد كوفيد-19.", "universities": "UCL · King's College · Melbourne" },
+        { "id": "precision-medicine", "name": "الطب الشخصي (Precision Medicine)", "fields": ["جينوم","طب","بيانات","CS"], "demand": "hot", "desc": "يستخدم البيانات الجينية لتخصيص العلاج. ثورة في علاج السرطان.", "universities": "Stanford · Heidelberg · UCL" },
+        { "id": "climate-health", "name": "المناخ والصحة", "fields": ["بيئة","طب","سياسات","اقتصاد"], "demand": "rising", "desc": "يدرس آثار التغير المناخي على الصحة البشرية.", "universities": "Georgetown · LSHTM · Harvard" }
+      ]
+    },
+    {
+      "id": "arts-humanit",
+      "name": "الإنسانيات الرقمية والإبداع",
+      "color": "#72243E",
+      "specs": [
+        { "id": "digital-humanities", "name": "الإنسانيات الرقمية (Digital Humanities)", "fields": ["أدب","تاريخ","CS","إحصاء"], "demand": "rising", "desc": "يطبق أدوات البيانات والحوسبة على التراث الإنساني.", "universities": "King's College · UCL · Stanford" },
+        { "id": "game-studies", "name": "دراسات الألعاب والسرديات الرقمية", "fields": ["تصميم","برمجة","أدب","علم نفس"], "demand": "rising", "desc": "يدرس الألعاب كشكل ثقافي وتصميم تجربة اللعب والحكاية التفاعلية.", "universities": "MIT · Carnegie Mellon · Copenhagen" },
+        { "id": "media-arts", "name": "الفنون والتكنولوجيا (Media Arts)", "fields": ["فنون","تكنولوجيا","تصميم","علم نفس"], "demand": "stable", "desc": "يدمج الإنتاج الإبداعي مع الأدوات الرقمية: موسيقى حاسوبية وفن تفاعلي.", "universities": "MIT Media Lab · RCA London · NYU" },
+        { "id": "social-design", "name": "التصميم الاجتماعي (Design Impact)", "fields": ["تصميم","اجتماع","هندسة","سياسات"], "demand": "rising", "desc": "يستخدم التصميم أداةً لحل مشكلات اجتماعية حقيقية.", "universities": "Stanford d.school · RCA · Politecnico" },
+        { "id": "digital-heritage", "name": "التراث الرقمي وصون الذاكرة", "fields": ["تاريخ","CS","مكتبات","فنون"], "demand": "stable", "desc": "يحفظ المخطوطات والتراث الثقافي رقمياً ويجعله قابلاً للبحث.", "universities": "UCL · Leiden · Toronto" }
+      ]
+    },
+    {
+      "id": "society-policy",
+      "name": "السياسات والمجتمع والاقتصاد",
+      "color": "#854F0B",
+      "specs": [
+        { "id": "comp-social-sci", "name": "علوم الاجتماع الحسابية", "fields": ["اجتماع","CS","إحصاء","اقتصاد"], "demand": "hot", "desc": "يستخدم البيانات الضخمة ومحاكاة الوكيل لفهم الظاهرات الاجتماعية.", "universities": "Oxford · Chicago · Princeton" },
+        { "id": "behavioral-econ", "name": "الاقتصاد السلوكي", "fields": ["اقتصاد","علم نفس","أعصاب","إحصاء"], "demand": "hot", "desc": "يدرس كيف تنحرف القرارات البشرية عن النموذج العقلاني.", "universities": "Chicago · LSE · Princeton" },
+        { "id": "law-tech", "name": "القانون والتكنولوجيا", "fields": ["قانون","CS","سياسات","أخلاق"], "demand": "hot", "desc": "يعالج التشريع في عصر AI والبلوكتشين وحماية البيانات.", "universities": "Oxford · UCL · Harvard Law" },
+        { "id": "science-policy", "name": "العلوم والسياسات العامة", "fields": ["علوم","سياسات","اقتصاد","اجتماع"], "demand": "rising", "desc": "يترجم البحث العلمي إلى قرارات حكومية: طاقة ومناخ وتقنية.", "universities": "Harvard Kennedy · Oxford · TU Berlin" },
+        { "id": "smart-urban", "name": "التخطيط العمراني الذكي", "fields": ["هندسة مدنية","CS","اقتصاد","اجتماع"], "demand": "rising", "desc": "يدمج البيانات الحضرية مع تصميم المدن المستدامة والمتصلة.", "universities": "MIT · UCL · TU Delft" },
+        { "id": "refugee-migration", "name": "دراسات اللاجئين والهجرة", "fields": ["قانون","اجتماع","جغرافيا","اقتصاد"], "demand": "stable", "desc": "يحلل ظاهرات النزوح والهجرة الدولية وسياسات اللجوء.", "universities": "Oxford RSC · Georgetown · Lund" },
+        { "id": "gender-studies", "name": "دراسات الجندر والمجتمع", "fields": ["اجتماع","تاريخ","قانون","أدب"], "demand": "stable", "desc": "يحلل بنى النوع الاجتماعي وتقاطعاتها مع العرق والطبقة والثقافة.", "universities": "LSE · Amsterdam · Georgetown" }
+      ]
+    }
+  ],
+
+  "spotlightSpec": {
+    "id": "computational-linguistics",
+    "nameAr": "اللسانيات الحاسوبية",
+    "nameEn": "Computational Linguistics / NLP",
+    "cluster": "mind-brain",
+    "demand": "hot",
+    "fields": ["لسانيات","CS","رياضيات","علم نفس","منطق"],
+    "topUniversities": [
+      { "name": "MIT", "country": "us", "programs": ["PhD NLP","Computational Linguistics"] },
+      { "name": "Stanford", "country": "us", "programs": ["MS Linguistics + NLP","PhD"] },
+      { "name": "University of Edinburgh", "country": "uk", "programs": ["MSc Human Language Technology","MSc NLP"] },
+      { "name": "UCL", "country": "uk", "programs": ["MSc Computational Statistics & ML","MSc Language"] },
+      { "name": "University of Pennsylvania", "country": "us", "programs": ["Computational Linguistics BA/MA"] },
+      { "name": "Carnegie Mellon", "country": "us", "programs": ["MSc Language Technologies"] },
+      { "name": "UC Irvine", "country": "us", "programs": ["Post-Bacc Computational Language Science 2024"] }
+    ],
+    "salary": {
+      "entryUSD": 70000,
+      "midUSD": 116000,
+      "seniorUSD": 189000,
+      "topUSD": 231000,
+      "currency": "USD",
+      "note": "بيانات 2025 — ZipRecruiter + Coursera + BLS"
+    },
+    "employers": ["Google","Meta AI","OpenAI","Amazon Alexa","Apple Siri","Microsoft","Anthropic","Grammarly","Hugging Face","IBM Research","Bloomberg NLP"],
+    "careerPaths": [
+      { "title": "مهندس NLP", "salaryRange": "$100K-$150K", "level": "mid" },
+      { "title": "باحث AI/NLP", "salaryRange": "$150K-$231K", "level": "senior" },
+      { "title": "عالم بيانات لغوية", "salaryRange": "$90K-$140K", "level": "mid" },
+      { "title": "مطور مساعدات ذكية", "salaryRange": "$85K-$130K", "level": "mid" },
+      { "title": "أكاديمي / أستاذ", "salaryRange": "$70K-$120K", "level": "varies" },
+      { "title": "مختص موارد لغوية عربية", "salaryRange": "$60K-$100K + remote", "level": "entry-mid" }
+    ],
+    "arabicNLP": {
+      "opportunity": "استثنائية",
+      "reason": "العربية لغة low-resource في NLP رغم 400M متحدث. التعقيد الصرفي والتعددية اللهجية يجعلانها تحدياً بحثياً مفتوحاً.",
+      "tools": ["CAMeL Tools (NYU Abu Dhabi)","QCRI Arabic NLP","AraBERT","CAMeL Studio"],
+      "conferences": ["ArabicNLP 2026","ACL","EMNLP"],
+      "egyptJobs": "16+ وظيفة NLP في مصر (Glassdoor Dec 2025) — معظمها Cairo/Giza"
+    },
+    "studyRoadmap": [
+      { "phase": 1, "title": "الأساس", "duration": "3-6 أشهر", "content": "Python · NumPy/Pandas · جبر خطي · مفاهيم لسانيات" },
+      { "phase": 2, "title": "NLP التطبيقي", "duration": "6-9 أشهر", "content": "Stanford CS224N · NLTK · spaCy · Hugging Face Transformers" },
+      { "phase": 3, "title": "تخصص عربي", "duration": "6-12 شهر", "content": "CAMeL Tools · بناء مشاريع عربية · مدونات نصية" },
+      { "phase": 4, "title": "الدراسة الأكاديمية", "duration": "1-2 سنة", "content": "ماجستير Edinburgh / UCL / CMU" },
+      { "phase": 5, "title": "البصمة المهنية", "duration": "مستمر", "content": "نشر في ArabicNLP · GitHub · مشاريع مفتوحة المصدر" }
+    ],
+    "freeResources": [
+      { "name": "Stanford CS224N", "url": "https://web.stanford.edu/class/cs224n/", "type": "كورس مجاني" },
+      { "name": "Hugging Face Course", "url": "https://huggingface.co/learn/nlp-course", "type": "كورس مجاني" },
+      { "name": "Speech & Language Processing (Jurafsky)", "url": "https://web.stanford.edu/~jurafsky/slp3/", "type": "كتاب مجاني PDF" },
+      { "name": "CAMeL Tools", "url": "https://github.com/CAMeL-Lab/camel_tools", "type": "أداة مفتوحة المصدر" }
+    ]
+  }
+}
