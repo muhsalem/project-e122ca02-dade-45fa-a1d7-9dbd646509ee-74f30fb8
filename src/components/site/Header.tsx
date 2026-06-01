@@ -1,7 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { Menu, X, Compass, ChevronDown, User as UserIcon } from "lucide-react";
+import { Menu, X, ChevronDown, User as UserIcon } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
+import logo from "@/assets/logo.png";
 
 const nav = [
   { to: "/", label: "الرئيسية" },
