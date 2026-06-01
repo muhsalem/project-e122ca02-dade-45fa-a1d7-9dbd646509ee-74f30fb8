@@ -1,15 +1,15 @@
 {
   "meta": {
     "title": "خريطة التخصصات الجامعية الشاملة",
-    "version": "1.0",
-    "totalFields": 12,
-    "totalGeneralSpecs": 63,
-    "totalDeepSpecs": 450,
+    "version": "1.1",
+    "totalFields": 13,
+    "totalGeneralSpecs": 68,
+    "totalDeepSpecs": 500,
     "totalInterdisciplinary": 52,
     "language": "ar",
     "direction": "rtl",
-    "lastUpdated": "2025-06",
-    "sources": ["MIT", "Stanford", "UCL", "TUM", "Edinburgh", "CMU", "Georgetown", "Oxford", "LSE"]
+    "lastUpdated": "2026-06",
+    "sources": ["MIT", "Stanford", "UCL", "TUM", "Edinburgh", "CMU", "Georgetown", "Oxford", "LSE", "Al-Azhar", "Umm Al-Qura"]
   },
 
   "classicFields": [
