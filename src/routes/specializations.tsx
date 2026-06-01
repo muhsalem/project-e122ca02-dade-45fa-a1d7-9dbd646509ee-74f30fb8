@@ -88,7 +88,7 @@ function SpecializationsPage() {
           </span>
           <h1 className="mt-4 text-3xl text-primary md:text-4xl">استكشف التخصصات</h1>
           <p className="mx-auto mt-3 max-w-2xl text-sm text-muted-foreground">
-            12 مجالًا • 63 تخصصًا عامًا • +450 تخصصًا دقيقًا. اختر تخصصك واعرف المسارات
+            13 مجالًا • 49 تخصصًا عامًا • +398 تخصصًا دقيقًا. اختر تخصصك واعرف المسارات
             المهنية والمميزات والتحديات.
           </p>
         </div>
