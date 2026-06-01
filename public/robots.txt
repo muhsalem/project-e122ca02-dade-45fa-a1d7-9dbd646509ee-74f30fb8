@@ -1,2 +1,11 @@
 User-agent: *
 Allow: /
+
+Disallow: /auth
+Disallow: /profile
+Disallow: /my-assessments
+Disallow: /institutions/dashboard
+Disallow: /report/
+Disallow: /idp/
+Disallow: /review-results/
+Disallow: /review-submit/
