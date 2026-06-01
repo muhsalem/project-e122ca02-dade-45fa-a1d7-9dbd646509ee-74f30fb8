@@ -1,11 +1,30 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft, Brain, Compass, GraduationCap, Sparkles, Target, Users, BookOpen, ShieldCheck, Briefcase, Flame, HeartPulse, Gauge, TrendingUp } from "lucide-react";
+import heroImage from "@/assets/hero.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "بوصلة — اكتشف مسارك المهني بثقة" },
-      { name: "description", content: "منصة إرشاد مهني عربية شاملة: تقييمات علمية، جلسات كوتشينج فردية، وموارد لكل مرحلة." },
+      { name: "description", content: "منصة إرشاد مهني عربية شاملة: تقييمات علمية مجانية، جلسات كوتشينج فردية مع مرشدين معتمدين، وخريطة لأكثر من 400 تخصص جامعي." },
+      { property: "og:title", content: "بوصلة — اكتشف مسارك المهني بثقة" },
+      { property: "og:description", content: "تقييمات علمية مجانية، جلسات كوتشينج معتمدة، وخريطة لأكثر من 400 تخصص جامعي." },
+      { property: "og:image", content: "/og-image.jpg" },
+      { name: "twitter:image", content: "/og-image.jpg" },
+      { property: "og:url", content: "/" },
+    ],
+    links: [{ rel: "canonical", href: "/" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: "بوصلة",
+          url: "/",
+          inLanguage: "ar",
+        }),
+      },
     ],
   }),
   component: HomePage,
@@ -63,8 +82,8 @@ function HomePage() {
 
           <div className="relative">
             <div className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-gold/20 to-primary/20 blur-2xl" />
-            <div className="relative flex aspect-[16/11] items-center justify-center rounded-3xl border border-border bg-card shadow-[var(--shadow-elegant)]">
-              <Compass className="h-24 w-24 text-gold/30" />
+            <div className="relative aspect-[16/11] overflow-hidden rounded-3xl border border-border bg-card shadow-[var(--shadow-elegant)]">
+              <img src={heroImage} alt="رحلة اكتشاف المسار المهني مع بوصلة" width={1408} height={992} className="h-full w-full object-cover" fetchPriority="high" />
             </div>
           </div>
         </div>
