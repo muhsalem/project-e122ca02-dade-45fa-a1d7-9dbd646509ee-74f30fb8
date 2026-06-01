@@ -8,7 +8,10 @@ export const Route = createFileRoute("/pricing")({
       { name: "description", content: "أسعار شفافة لجلسات الإرشاد والكوتشينج، مع جلسة تعارف مجانية 15 دقيقة قبل أي التزام." },
       { property: "og:title", content: "الأسعار والباقات — بوصلة" },
       { property: "og:description", content: "تقييمات مجانية، جلسة تعارف مجانية، وباقات كوتشينج بأسعار واضحة." },
+      { property: "og:image", content: "/og-image.jpg" },
+      { property: "og:url", content: "/pricing" },
     ],
+    links: [{ rel: "canonical", href: "/pricing" }],
   }),
   component: PricingPage,
 });

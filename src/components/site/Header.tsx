@@ -1,7 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { Menu, X, Compass, ChevronDown, User as UserIcon } from "lucide-react";
+import { Menu, X, ChevronDown, User as UserIcon } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
+import logo from "@/assets/logo.png";
 
 const nav = [
   { to: "/", label: "الرئيسية" },
@@ -92,7 +93,7 @@ export function Header() {
     <header className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur-md">
       <div className="container-page flex h-16 items-center gap-6">
         <Link to="/" className="flex shrink-0 items-center gap-2 font-serif text-xl font-bold text-primary">
-          <Compass className="h-6 w-6 text-gold" />
+          <img src={logo} alt="بوصلة" width={36} height={36} className="h-9 w-9 object-contain" />
           <span>بوصلة</span>
         </Link>
 
