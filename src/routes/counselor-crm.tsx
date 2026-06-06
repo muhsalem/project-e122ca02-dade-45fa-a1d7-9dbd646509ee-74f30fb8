@@ -89,12 +89,15 @@ function CounselorCRM() {
     <section className="container-page py-12">
       <div className="mx-auto max-w-6xl">
         <header className="flex flex-wrap items-end justify-between gap-4">
-          <div>
-            <h1 className="font-serif text-3xl text-primary md:text-4xl">إدارة العملاء — CRM</h1>
-            <p className="mt-2 max-w-2xl text-sm leading-7 text-muted-foreground">
-              أداة بسيطة لمتابعة عملائك وجلساتك. كل البيانات تُحفظ <strong>محلياً على جهازك فقط</strong>
-              ولا تُرفع لأي خادم — التزاماً بسرية معلومات العملاء.
-            </p>
+          <div className="flex items-center gap-4">
+            <AutoIllustration topic="/counselor-crm" className="h-20 w-20 shrink-0 text-primary" />
+            <div>
+              <h1 className="font-serif text-3xl text-primary md:text-4xl">إدارة العملاء — CRM</h1>
+              <p className="mt-2 max-w-2xl text-sm leading-7 text-muted-foreground">
+                أداة بسيطة لمتابعة عملائك وجلساتك. كل البيانات تُحفظ <strong>محلياً على جهازك فقط</strong>
+                ولا تُرفع لأي خادم — التزاماً بسرية معلومات العملاء.
+              </p>
+            </div>
           </div>
           <button
             onClick={() => { setEditing(null); setShowForm(true); }}
