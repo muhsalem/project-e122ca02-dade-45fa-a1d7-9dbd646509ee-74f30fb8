@@ -6,6 +6,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { toast } from "sonner";
 import { Compass, TrendingUp, Save, RotateCcw } from "lucide-react";
 import { useAutosave } from "@/hooks/use-autosave";
+import { AutoIllustration } from "@/components/site/Illustration";
 
 export const Route = createFileRoute("/clarity-check")({
   head: () => ({
