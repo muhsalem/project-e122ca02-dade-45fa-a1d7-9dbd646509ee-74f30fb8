@@ -1,9 +1,10 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
-import { Loader2, Sparkles, Layers, ArrowLeft, Brain, BookOpen, GraduationCap, Briefcase, Building2 } from "lucide-react";
+import { Loader2, Sparkles, Layers, ArrowLeft, Brain, BookOpen, GraduationCap, Briefcase, Building2, Save, RotateCcw } from "lucide-react";
 import { submitComprehensive } from "@/lib/comprehensive.functions";
 import { useAuth } from "@/hooks/use-auth";
+import { useAutosave } from "@/hooks/use-autosave";
 
 export const Route = createFileRoute("/comprehensive-assessment")({
   head: () => ({
@@ -39,12 +40,24 @@ function ComprehensivePage() {
   const submit = useServerFn(submitComprehensive);
   const { user } = useAuth();
 
-  const [name, setName] = useState("");
-  const [codes, setCodes] = useState<Record<string, string>>({});
+  const [draft, setDraft, clearDraft, restored] = useAutosave<{ name: string; codes: Record<string, string> }>(
+    "bosla:comprehensive:v1",
+    { name: "", codes: {} },
+  );
+  const { name, codes } = draft;
+  const setName = (v: string) => setDraft((d) => ({ ...d, name: v }));
+  const setCodes = (updater: (c: Record<string, string>) => Record<string, string>) =>
+    setDraft((d) => ({ ...d, codes: updater(d.codes) }));
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const filledCount = FIELDS.filter((f) => (codes[f.key] || "").trim().length > 0).length;
+
+  function handleReset() {
+    if (!confirm("هل أنت متأكد من مسح الأكواد المحفوظة؟")) return;
+    clearDraft();
+    setDraft({ name: "", codes: {} });
+  }
 
   async function handleSubmit() {
     setLoading(true);
@@ -60,6 +73,7 @@ function ComprehensivePage() {
           userId: user?.id,
         },
       });
+      clearDraft();
       navigate({ to: "/report/$code", params: { code: res.code } });
     } catch (e) {
       setError(e instanceof Error ? e.message : "حدث خطأ غير متوقع");
@@ -124,6 +138,16 @@ function ComprehensivePage() {
           <h2 className="mb-1 font-serif text-xl text-primary">ادمج تقاريرك في تقرير واحد</h2>
           <p className="mb-5 text-sm text-muted-foreground">أدخل أكواد التقارير التي حصلت عليها من التقييمات أعلاه.</p>
 
+          {restored && (name || filledCount > 0) && (
+            <div className="mb-4 flex items-center justify-between rounded-lg border border-emerald-500/30 bg-emerald-50 px-3 py-2 text-xs text-emerald-800 dark:bg-emerald-950/20 dark:text-emerald-200">
+              <span className="flex items-center gap-1.5"><Save className="h-3.5 w-3.5" /> تم استرجاع تقدمك المحفوظ ({filledCount}/{FIELDS.length})</span>
+              <button type="button" onClick={handleReset} className="flex items-center gap-1 underline">
+                <RotateCcw className="h-3.5 w-3.5" /> إعادة تعيين
+              </button>
+            </div>
+          )}
+
+
           <div className="mb-4">
             <label className="mb-1 block text-sm font-medium">اسمك (اختياري)</label>
             <input
@@ -145,7 +169,7 @@ function ComprehensivePage() {
                 </div>
                 <input
                   value={codes[f.key] || ""}
-                  onChange={(e) => setCodes({ ...codes, [f.key]: e.target.value.toUpperCase() })}
+                  onChange={(e) => setCodes((c) => ({ ...c, [f.key]: e.target.value.toUpperCase() }))}
                   className="w-full rounded-md border border-border bg-card px-3 py-2 text-sm font-mono"
                   placeholder={`${f.prefix}XXXX-XXXX`}
                 />
