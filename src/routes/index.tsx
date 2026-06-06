@@ -130,8 +130,8 @@ function HomePage() {
       <section className="border-b border-border">
         <div className="container-page py-20">
           <div className="grid items-center gap-12 lg:grid-cols-2">
-            <div className="flex aspect-[4/3] items-center justify-center rounded-2xl border border-border bg-card">
-              <Target className="h-20 w-20 text-primary/20" />
+            <div className="flex aspect-[4/3] items-center justify-center rounded-2xl border border-border bg-card p-8 text-primary">
+              <Illustration name="journey" className="h-full w-full" />
             </div>
             <div>
               <p className="font-serif text-sm uppercase tracking-widest text-gold">لمن نقدم خدماتنا</p>
