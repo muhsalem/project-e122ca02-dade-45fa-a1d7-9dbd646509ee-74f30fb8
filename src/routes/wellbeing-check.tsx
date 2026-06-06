@@ -8,6 +8,7 @@ import { Heart, AlertTriangle, CheckCircle2, Save, RotateCcw } from "lucide-reac
 import { EmergencyHelpline } from "@/components/site/EmergencyHelpline";
 import { AssessmentLimits } from "@/components/site/AssessmentLimits";
 import { useAutosave } from "@/hooks/use-autosave";
+import { AutoIllustration } from "@/components/site/Illustration";
 
 export const Route = createFileRoute("/wellbeing-check")({
   head: () => ({
