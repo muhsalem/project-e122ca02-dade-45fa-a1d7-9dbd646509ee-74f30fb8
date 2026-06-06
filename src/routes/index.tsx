@@ -42,7 +42,10 @@ function HomePage() {
           style={{ backgroundImage: "radial-gradient(60% 50% at 80% 0%, color-mix(in oklab, var(--gold) 18%, transparent), transparent 70%), radial-gradient(40% 40% at 10% 100%, color-mix(in oklab, var(--primary) 14%, transparent), transparent 70%)" }} />
         <div className="container-page grid items-center gap-12 py-20 lg:grid-cols-2 lg:py-28">
           <div>
-            <span className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/10 px-4 py-1.5 text-xs font-medium text-primary">
+            <span className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/10 py-1.5 pe-4 ps-1.5 text-xs font-medium text-primary shadow-sm">
+              <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-card ring-1 ring-gold/30">
+                <img src={logo} alt="شعار بوصلة" width={20} height={20} className="h-5 w-5 object-contain" />
+              </span>
               <Sparkles className="h-3.5 w-3.5 text-gold" />
               معايير دولية في الإرشاد النفسي المهني
             </span>
