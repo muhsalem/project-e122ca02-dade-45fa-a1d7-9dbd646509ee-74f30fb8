@@ -86,12 +86,20 @@ function MyAssessmentsPage() {
         {isEmpty ? (
           <Card>
             <CardContent className="flex flex-col items-center gap-4 py-16 text-center">
-              <FileText className="h-12 w-12 text-muted-foreground/50" />
-              <div>
-                <h3 className="font-semibold">لم تُجرِ أي تقييم بعد</h3>
-                <p className="mt-1 text-sm text-muted-foreground">ابدأ بالتقييم الشامل لتحصل على تقرير متكامل</p>
+              <div className="rounded-full bg-gold/15 p-4">
+                <FileText className="h-10 w-10 text-gold-foreground" aria-hidden="true" />
               </div>
-              <Button asChild><Link to="/comprehensive-assessment">ابدأ التقييم الشامل</Link></Button>
+              <div>
+                <h3 className="font-serif text-xl font-semibold text-primary">لم تُجرِ أي تقييم بعد</h3>
+                <p className="mt-2 text-sm leading-7 text-muted-foreground">
+                  ابدأ بالتقييم الشامل لتحصل على تقرير متكامل عن ميولك ومسارك،
+                  أو جرّب فحصاً قصيراً لتشعر بقيمة المنصة في 5 دقائق.
+                </p>
+              </div>
+              <div className="mt-2 flex flex-wrap items-center justify-center gap-2">
+                <Button asChild><Link to="/comprehensive-assessment">ابدأ التقييم الشامل</Link></Button>
+                <Button asChild variant="outline"><Link to="/start">اختر التقييم المناسب لك</Link></Button>
+              </div>
             </CardContent>
           </Card>
         ) : (
