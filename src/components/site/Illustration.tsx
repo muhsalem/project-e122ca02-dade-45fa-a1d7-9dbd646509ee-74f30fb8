@@ -277,5 +277,5 @@ export function AutoIllustration({
   topic,
   ...rest
 }: Common & { topic: string }) {
-  return <Illustration name={pickIllustration(topic)} {...rest} />;
+  return <Illustration name={pickIllustration(topic) as IllustrationName} {...rest} />;
 }
