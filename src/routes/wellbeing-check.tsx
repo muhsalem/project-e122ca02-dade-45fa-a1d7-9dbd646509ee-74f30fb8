@@ -69,6 +69,7 @@ function WellbeingPage() {
       const r = await submit({ data: { code: code.trim(), ...(vals as any), userId: user?.id } });
       setRes(r);
       clearSaved();
+    } catch (err: any) {
       toast.error(err?.message ?? "خطأ");
     } finally {
       setBusy(false);
