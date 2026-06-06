@@ -202,13 +202,21 @@ function DirectorySection() {
               الملفات المعروضة هنا اجتازت مراجعة فريق بوصلة وأصبحت متاحة لاستقبال الحجوزات.
             </p>
           </div>
-          <Link
-            to="/join-as-coach"
-            className="inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-xs font-medium text-primary-foreground hover:opacity-90"
-          >
-            <UserPlus className="h-3.5 w-3.5" />
-            انضم للدليل
-          </Link>
+          <div className="flex flex-wrap gap-2">
+            <Link
+              to="/counselor-crm"
+              className="inline-flex items-center gap-2 rounded-md border border-border bg-card px-4 py-2 text-xs font-medium text-primary hover:bg-secondary"
+            >
+              لوحة إدارة العملاء (CRM)
+            </Link>
+            <Link
+              to="/join-as-coach"
+              className="inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-xs font-medium text-primary-foreground hover:opacity-90"
+            >
+              <UserPlus className="h-3.5 w-3.5" />
+              انضم للدليل
+            </Link>
+          </div>
         </div>
 
         <div className="mb-5">
