@@ -266,7 +266,9 @@ const ROUTE_MAP: Array<[RegExp, IllustrationName]> = [
 ];
 
 export function pickIllustration(routeOrTopic: string): IllustrationName {
-  for (const [re, name] of ROUTE_MAP) {
+  for (const entry of ROUTE_MAP) {
+    const re = entry[0];
+    const name = entry[1];
     if (re.test(routeOrTopic)) return name;
   }
   return "compass";
