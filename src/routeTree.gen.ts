@@ -22,6 +22,7 @@ import { Route as Review360RouteImport } from './routes/review360'
 import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as PricingRouteImport } from './routes/pricing'
+import { Route as ParentDashboardRouteImport } from './routes/parent-dashboard'
 import { Route as MyAssessmentsRouteImport } from './routes/my-assessments'
 import { Route as LearningStyleRouteImport } from './routes/learning-style'
 import { Route as LaborMarketRouteImport } from './routes/labor-market'
@@ -121,6 +122,11 @@ const ProfileRoute = ProfileRouteImport.update({
 const PricingRoute = PricingRouteImport.update({
   id: '/pricing',
   path: '/pricing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ParentDashboardRoute = ParentDashboardRouteImport.update({
+  id: '/parent-dashboard',
+  path: '/parent-dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MyAssessmentsRoute = MyAssessmentsRouteImport.update({
@@ -326,6 +332,7 @@ export interface FileRoutesByFullPath {
   '/labor-market': typeof LaborMarketRoute
   '/learning-style': typeof LearningStyleRoute
   '/my-assessments': typeof MyAssessmentsRoute
+  '/parent-dashboard': typeof ParentDashboardRoute
   '/pricing': typeof PricingRoute
   '/profile': typeof ProfileRoute
   '/resources': typeof ResourcesRouteWithChildren
@@ -376,6 +383,7 @@ export interface FileRoutesByTo {
   '/labor-market': typeof LaborMarketRoute
   '/learning-style': typeof LearningStyleRoute
   '/my-assessments': typeof MyAssessmentsRoute
+  '/parent-dashboard': typeof ParentDashboardRoute
   '/pricing': typeof PricingRoute
   '/profile': typeof ProfileRoute
   '/resources': typeof ResourcesRouteWithChildren
@@ -427,6 +435,7 @@ export interface FileRoutesById {
   '/labor-market': typeof LaborMarketRoute
   '/learning-style': typeof LearningStyleRoute
   '/my-assessments': typeof MyAssessmentsRoute
+  '/parent-dashboard': typeof ParentDashboardRoute
   '/pricing': typeof PricingRoute
   '/profile': typeof ProfileRoute
   '/resources': typeof ResourcesRouteWithChildren
@@ -479,6 +488,7 @@ export interface FileRouteTypes {
     | '/labor-market'
     | '/learning-style'
     | '/my-assessments'
+    | '/parent-dashboard'
     | '/pricing'
     | '/profile'
     | '/resources'
@@ -529,6 +539,7 @@ export interface FileRouteTypes {
     | '/labor-market'
     | '/learning-style'
     | '/my-assessments'
+    | '/parent-dashboard'
     | '/pricing'
     | '/profile'
     | '/resources'
@@ -579,6 +590,7 @@ export interface FileRouteTypes {
     | '/labor-market'
     | '/learning-style'
     | '/my-assessments'
+    | '/parent-dashboard'
     | '/pricing'
     | '/profile'
     | '/resources'
@@ -630,6 +642,7 @@ export interface RootRouteChildren {
   LaborMarketRoute: typeof LaborMarketRoute
   LearningStyleRoute: typeof LearningStyleRoute
   MyAssessmentsRoute: typeof MyAssessmentsRoute
+  ParentDashboardRoute: typeof ParentDashboardRoute
   PricingRoute: typeof PricingRoute
   ProfileRoute: typeof ProfileRoute
   ResourcesRoute: typeof ResourcesRouteWithChildren
@@ -741,6 +754,13 @@ declare module '@tanstack/react-router' {
       path: '/pricing'
       fullPath: '/pricing'
       preLoaderRoute: typeof PricingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/parent-dashboard': {
+      id: '/parent-dashboard'
+      path: '/parent-dashboard'
+      fullPath: '/parent-dashboard'
+      preLoaderRoute: typeof ParentDashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/my-assessments': {
@@ -1051,6 +1071,7 @@ const rootRouteChildren: RootRouteChildren = {
   LaborMarketRoute: LaborMarketRoute,
   LearningStyleRoute: LearningStyleRoute,
   MyAssessmentsRoute: MyAssessmentsRoute,
+  ParentDashboardRoute: ParentDashboardRoute,
   PricingRoute: PricingRoute,
   ProfileRoute: ProfileRoute,
   ResourcesRoute: ResourcesRouteWithChildren,
