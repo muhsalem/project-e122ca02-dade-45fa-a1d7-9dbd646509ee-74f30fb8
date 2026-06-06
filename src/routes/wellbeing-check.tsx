@@ -4,9 +4,10 @@ import { useServerFn } from "@tanstack/react-start";
 import { submitWellbeing } from "@/lib/wellbeing.functions";
 import { useAuth } from "@/hooks/use-auth";
 import { toast } from "sonner";
-import { Heart, AlertTriangle, CheckCircle2 } from "lucide-react";
+import { Heart, AlertTriangle, CheckCircle2, Save, RotateCcw } from "lucide-react";
 import { EmergencyHelpline } from "@/components/site/EmergencyHelpline";
 import { AssessmentLimits } from "@/components/site/AssessmentLimits";
+import { useAutosave } from "@/hooks/use-autosave";
 
 export const Route = createFileRoute("/wellbeing-check")({
   head: () => ({
