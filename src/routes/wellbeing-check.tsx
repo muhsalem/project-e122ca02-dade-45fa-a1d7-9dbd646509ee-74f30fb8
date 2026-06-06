@@ -98,6 +98,14 @@ function WellbeingPage() {
 
         {!res && (
           <form onSubmit={onSubmit} className="mt-10 space-y-6 rounded-2xl border border-border bg-card p-6 md:p-8">
+            {restored && answered > 0 && (
+              <div className="flex items-center justify-between rounded-lg border border-emerald-500/30 bg-emerald-50 px-3 py-2 text-xs text-emerald-800 dark:bg-emerald-950/20 dark:text-emerald-200">
+                <span className="flex items-center gap-1.5"><Save className="h-3.5 w-3.5" /> تم استرجاع تقدمك المحفوظ ({answered}/{QUESTIONS.length})</span>
+                <button type="button" onClick={handleReset} className="flex items-center gap-1 underline">
+                  <RotateCcw className="h-3.5 w-3.5" /> ابدأ من جديد
+                </button>
+              </div>
+            )}
             <div>
               <label className="mb-2 block text-sm font-medium">معرّفك (اختياري — لربط النتيجة بتقاريرك)</label>
               <input value={code} onChange={(e) => setCode(e.target.value)}
