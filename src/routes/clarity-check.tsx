@@ -83,7 +83,16 @@ function ClarityPage() {
         </div>
 
         <form onSubmit={onSubmit} className="mt-10 space-y-6 rounded-2xl border border-border bg-card p-6 md:p-8">
+          {restored && (
+            <div className="flex items-center justify-between rounded-lg border border-emerald-500/30 bg-emerald-50 px-3 py-2 text-xs text-emerald-800 dark:bg-emerald-950/20 dark:text-emerald-200">
+              <span className="flex items-center gap-1.5"><Save className="h-3.5 w-3.5" /> يتم حفظ تقدمك تلقائياً</span>
+              <button type="button" onClick={handleReset} className="flex items-center gap-1 underline">
+                <RotateCcw className="h-3.5 w-3.5" /> إعادة تعيين
+              </button>
+            </div>
+          )}
           <div className="grid gap-4 md:grid-cols-2">
+
             <div>
               <label className="mb-2 block text-sm font-medium">كود التقرير أو معرّفك</label>
               <input
