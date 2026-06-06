@@ -4,7 +4,8 @@ import { useServerFn } from "@tanstack/react-start";
 import { submitClarityScore, getClarityComparison } from "@/lib/clarity.functions";
 import { useAuth } from "@/hooks/use-auth";
 import { toast } from "sonner";
-import { Compass, TrendingUp } from "lucide-react";
+import { Compass, TrendingUp, Save, RotateCcw } from "lucide-react";
+import { useAutosave } from "@/hooks/use-autosave";
 
 export const Route = createFileRoute("/clarity-check")({
   head: () => ({
