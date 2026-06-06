@@ -399,6 +399,7 @@ function CareerTypePage() {
       <div className="container-page py-10">
         {/* Header */}
         <div className="mb-8 text-center">
+          <AutoIllustration topic="/career-type-assessment" className="mx-auto mb-3 h-24 w-24 text-primary" />
           <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-1.5 text-sm">
             <Briefcase className="h-4 w-4 text-gold" />
             <span>تقييم تشخيصي شامل مرتبط بـ ISCO-08 و ASCO</span>
