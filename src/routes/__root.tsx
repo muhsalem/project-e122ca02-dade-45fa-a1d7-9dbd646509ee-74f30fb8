@@ -15,7 +15,7 @@ import { CookieConsent } from "@/components/site/CookieConsent";
 
 function NotFoundComponent() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+    <div className="flex min-h-dvh items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
         <h1 className="font-serif text-7xl font-bold text-primary">404</h1>
         <h2 className="mt-4 font-serif text-xl text-foreground">الصفحة غير موجودة</h2>
@@ -37,7 +37,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   console.error(error);
   const router = useRouter();
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+    <div className="flex min-h-dvh items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
         <h1 className="font-serif text-2xl font-bold text-foreground">حدث خطأ غير متوقع</h1>
         <p className="mt-2 text-sm text-muted-foreground">يرجى المحاولة مرة أخرى.</p>
@@ -124,9 +124,15 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="flex min-h-screen flex-col">
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:right-2 focus:z-[100] focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-primary-foreground focus:shadow-lg"
+      >
+        تخطَّ إلى المحتوى الرئيسي
+      </a>
+      <div className="flex min-h-dvh flex-col">
         <Header />
-        <main className="flex-1">
+        <main id="main-content" tabIndex={-1} className="flex-1 focus:outline-none">
           <Outlet />
         </main>
         <Footer />

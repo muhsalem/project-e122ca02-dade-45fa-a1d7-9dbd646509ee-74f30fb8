@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft, Brain, Compass, GraduationCap, Sparkles, Target, Users, BookOpen, ShieldCheck, Briefcase, Flame, HeartPulse, Gauge, TrendingUp, MapPin, Lightbulb, Route as RouteIcon, Star } from "lucide-react";
 import heroImage from "@/assets/hero.jpg";
 import { SocialProof } from "@/components/site/SocialProof";
+import { Illustration } from "@/components/site/Illustration";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -129,8 +130,8 @@ function HomePage() {
       <section className="border-b border-border">
         <div className="container-page py-20">
           <div className="grid items-center gap-12 lg:grid-cols-2">
-            <div className="flex aspect-[4/3] items-center justify-center rounded-2xl border border-border bg-card">
-              <Target className="h-20 w-20 text-primary/20" />
+            <div className="flex aspect-[4/3] items-center justify-center rounded-2xl border border-border bg-card p-8 text-primary">
+              <Illustration name="journey" className="h-full w-full" />
             </div>
             <div>
               <p className="font-serif text-sm uppercase tracking-widest text-gold">لمن نقدم خدماتنا</p>
