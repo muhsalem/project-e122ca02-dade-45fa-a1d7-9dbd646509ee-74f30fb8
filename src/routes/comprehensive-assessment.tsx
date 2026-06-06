@@ -73,6 +73,7 @@ function ComprehensivePage() {
           userId: user?.id,
         },
       });
+      clearDraft();
       navigate({ to: "/report/$code", params: { code: res.code } });
     } catch (e) {
       setError(e instanceof Error ? e.message : "حدث خطأ غير متوقع");
