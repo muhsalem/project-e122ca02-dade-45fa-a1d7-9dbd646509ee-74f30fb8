@@ -41,7 +41,19 @@ function HomePage() {
         <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 opacity-60 dark:opacity-40"
           style={{ backgroundImage: "radial-gradient(60% 50% at 80% 0%, color-mix(in oklab, var(--gold) 18%, transparent), transparent 70%), radial-gradient(40% 40% at 10% 100%, color-mix(in oklab, var(--primary) 14%, transparent), transparent 70%)" }} />
         <div className="container-page grid items-center gap-12 py-20 lg:grid-cols-2 lg:py-28">
-          <div>
+          <div className="relative">
+            {/* Decorative logo emblem in the empty space (tablet/desktop only) */}
+            <div
+              aria-hidden
+              className="pointer-events-none absolute -left-4 top-1/2 hidden -translate-y-1/2 md:block lg:hidden"
+            >
+              <div className="relative">
+                <div className="absolute -inset-6 rounded-full bg-gradient-to-br from-gold/30 to-primary/20 blur-2xl" />
+                <div className="relative flex h-44 w-44 items-center justify-center rounded-full border border-gold/30 bg-card/80 shadow-[var(--shadow-elegant)] backdrop-blur-sm">
+                  <img src={logo} alt="" width={120} height={120} className="h-28 w-28 object-contain opacity-90" />
+                </div>
+              </div>
+            </div>
             <span className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/10 py-1.5 pe-4 ps-1.5 text-xs font-medium text-primary shadow-sm">
               <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-card ring-1 ring-gold/30">
                 <img src={logo} alt="شعار بوصلة" width={20} height={20} className="h-5 w-5 object-contain" />
