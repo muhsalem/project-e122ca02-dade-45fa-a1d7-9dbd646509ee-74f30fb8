@@ -576,7 +576,7 @@ function CareerTypePage() {
                         return (
                           <button
                             key={v}
-                            onClick={() => setRiasec({ ...riasec, [d.key]: v })}
+                            onClick={() => setRiasec((r) => ({ ...r, [d.key]: v }))}
                             className={`rounded-md border py-2 text-sm font-medium transition-all ${
                               sel
                                 ? "border-primary bg-primary text-primary-foreground"
