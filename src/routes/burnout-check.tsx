@@ -156,6 +156,10 @@ function BurnoutPage() {
       <p className="mt-4 text-center text-xs text-muted-foreground">
         <Link to="/report" className="text-primary hover:underline">افتح تقريراً سابقاً</Link>
       </p>
+
+      <div className="mt-10">
+        <EmergencyHelpline compact />
+      </div>
     </div>
   );
 }
