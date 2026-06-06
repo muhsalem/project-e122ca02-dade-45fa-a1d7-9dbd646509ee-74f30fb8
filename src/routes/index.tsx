@@ -55,8 +55,8 @@ function HomePage() {
               </div>
             </div>
             <span className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/10 py-1.5 pe-4 ps-1.5 text-xs font-medium text-primary shadow-sm">
-              <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-card ring-1 ring-gold/30">
-                <img src={logo} alt="شعار بوصلة" width={20} height={20} className="h-5 w-5 object-contain" />
+              <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-card ring-1 ring-gold/30">
+                <img src={logo} alt="شعار بوصلة" width={28} height={28} className="h-7 w-7 object-contain" />
               </span>
               <Sparkles className="h-3.5 w-3.5 text-gold" />
               معايير دولية في الإرشاد النفسي المهني
