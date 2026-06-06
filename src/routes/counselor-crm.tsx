@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { UserPlus, Search, Trash2, Phone, Mail, Calendar, FileText, ShieldCheck, Tag, Pencil, X, Save } from "lucide-react";
+import { AutoIllustration } from "@/components/site/Illustration";
 
 export const Route = createFileRoute("/counselor-crm")({
   head: () => ({
