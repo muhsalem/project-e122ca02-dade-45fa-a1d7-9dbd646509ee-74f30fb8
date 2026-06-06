@@ -20,6 +20,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { submitCareerType } from "@/lib/career-type.functions";
 import { useAutosave } from "@/hooks/use-autosave";
 import { Save, RotateCcw } from "lucide-react";
+import { AutoIllustration } from "@/components/site/Illustration";
 
 export const Route = createFileRoute("/career-type-assessment")({
   head: () => ({
