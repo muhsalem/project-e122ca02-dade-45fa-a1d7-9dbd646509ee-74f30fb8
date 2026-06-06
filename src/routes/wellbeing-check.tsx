@@ -84,7 +84,7 @@ function WellbeingPage() {
     <section className="container-page py-16">
       <div className="mx-auto max-w-3xl">
         <div className="text-center">
-          <Heart className="mx-auto h-10 w-10 text-gold" />
+          <AutoIllustration topic="/wellbeing-check" className="mx-auto h-24 w-24 text-primary" />
           <h1 className="mt-4 text-3xl text-primary md:text-4xl">الفحص النفسي المختصر</h1>
           <p className="mt-3 leading-8 text-muted-foreground">
             مقاييس فرز عالمية موثّقة: <strong>PHQ-2</strong> (الاكتئاب) و<strong>GAD-2</strong> (القلق) ومقياس <strong>القلق المهني</strong>.
