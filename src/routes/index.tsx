@@ -487,6 +487,9 @@ function HomePage() {
         </div>
       </section>
 
+      {/* SOCIAL PROOF */}
+      <SocialProof />
+
       {/* CTA */}
       <section>
         <div className="container-page py-20 text-center">
