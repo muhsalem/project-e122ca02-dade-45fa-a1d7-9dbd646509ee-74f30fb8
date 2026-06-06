@@ -426,6 +426,14 @@ function CareerTypePage() {
               style={{ width: `${progress}%` }}
             />
           </div>
+          {restored && (Object.keys(answers).length > 0 || name || track) && (
+            <div className="mt-3 flex items-center justify-between rounded-lg border border-emerald-500/30 bg-emerald-50 px-3 py-2 text-xs text-emerald-800 dark:bg-emerald-950/20 dark:text-emerald-200">
+              <span className="flex items-center gap-1.5"><Save className="h-3.5 w-3.5" /> تم استرجاع تقدمك المحفوظ ({Object.keys(answers).length}/{QUESTIONS.length} سؤال)</span>
+              <button type="button" onClick={handleReset} className="flex items-center gap-1 underline">
+                <RotateCcw className="h-3.5 w-3.5" /> ابدأ من جديد
+              </button>
+            </div>
+          )}
         </div>
 
         <div className="mx-auto max-w-3xl rounded-2xl border border-border bg-card p-6 md:p-8">
