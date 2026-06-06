@@ -28,10 +28,13 @@ const QUESTIONS = [
 function ClarityPage() {
   const [code, setCode] = useState("");
   const [phase, setPhase] = useState<"pre" | "post">("pre");
-  const [values, setValues] = useState<Record<string, number>>({
-    q1_self_awareness: 5, q2_career_options: 5, q3_decision_confidence: 5,
-    q4_action_plan: 5, q5_future_optimism: 5,
-  });
+  const [values, setValues, clearSaved, restored] = useAutosave<Record<string, number>>(
+    "bosla:clarity:v1",
+    {
+      q1_self_awareness: 5, q2_career_options: 5, q3_decision_confidence: 5,
+      q4_action_plan: 5, q5_future_optimism: 5,
+    },
+  );
   const [result, setResult] = useState<{ total: number; percent: number } | null>(null);
   const [comp, setComp] = useState<{ pre: number | null; post: number | null; improvement: number | null } | null>(null);
   const [busy, setBusy] = useState(false);
