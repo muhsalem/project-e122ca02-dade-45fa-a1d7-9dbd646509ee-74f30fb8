@@ -29,6 +29,7 @@ import { Route as LaborMarketRouteImport } from './routes/labor-market'
 import { Route as JoinAsCoachRouteImport } from './routes/join-as-coach'
 import { Route as InstitutionsRouteImport } from './routes/institutions'
 import { Route as ForCounselorsRouteImport } from './routes/for-counselors'
+import { Route as CounselorCrmRouteImport } from './routes/counselor-crm'
 import { Route as CounselorRouteImport } from './routes/counselor'
 import { Route as ComprehensiveAssessmentRouteImport } from './routes/comprehensive-assessment'
 import { Route as CognitiveProfileRouteImport } from './routes/cognitive-profile'
@@ -157,6 +158,11 @@ const InstitutionsRoute = InstitutionsRouteImport.update({
 const ForCounselorsRoute = ForCounselorsRouteImport.update({
   id: '/for-counselors',
   path: '/for-counselors',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CounselorCrmRoute = CounselorCrmRouteImport.update({
+  id: '/counselor-crm',
+  path: '/counselor-crm',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CounselorRoute = CounselorRouteImport.update({
@@ -326,6 +332,7 @@ export interface FileRoutesByFullPath {
   '/cognitive-profile': typeof CognitiveProfileRoute
   '/comprehensive-assessment': typeof ComprehensiveAssessmentRoute
   '/counselor': typeof CounselorRoute
+  '/counselor-crm': typeof CounselorCrmRoute
   '/for-counselors': typeof ForCounselorsRoute
   '/institutions': typeof InstitutionsRouteWithChildren
   '/join-as-coach': typeof JoinAsCoachRoute
@@ -377,6 +384,7 @@ export interface FileRoutesByTo {
   '/cognitive-profile': typeof CognitiveProfileRoute
   '/comprehensive-assessment': typeof ComprehensiveAssessmentRoute
   '/counselor': typeof CounselorRoute
+  '/counselor-crm': typeof CounselorCrmRoute
   '/for-counselors': typeof ForCounselorsRoute
   '/institutions': typeof InstitutionsRouteWithChildren
   '/join-as-coach': typeof JoinAsCoachRoute
@@ -429,6 +437,7 @@ export interface FileRoutesById {
   '/cognitive-profile': typeof CognitiveProfileRoute
   '/comprehensive-assessment': typeof ComprehensiveAssessmentRoute
   '/counselor': typeof CounselorRoute
+  '/counselor-crm': typeof CounselorCrmRoute
   '/for-counselors': typeof ForCounselorsRoute
   '/institutions': typeof InstitutionsRouteWithChildren
   '/join-as-coach': typeof JoinAsCoachRoute
@@ -482,6 +491,7 @@ export interface FileRouteTypes {
     | '/cognitive-profile'
     | '/comprehensive-assessment'
     | '/counselor'
+    | '/counselor-crm'
     | '/for-counselors'
     | '/institutions'
     | '/join-as-coach'
@@ -533,6 +543,7 @@ export interface FileRouteTypes {
     | '/cognitive-profile'
     | '/comprehensive-assessment'
     | '/counselor'
+    | '/counselor-crm'
     | '/for-counselors'
     | '/institutions'
     | '/join-as-coach'
@@ -584,6 +595,7 @@ export interface FileRouteTypes {
     | '/cognitive-profile'
     | '/comprehensive-assessment'
     | '/counselor'
+    | '/counselor-crm'
     | '/for-counselors'
     | '/institutions'
     | '/join-as-coach'
@@ -636,6 +648,7 @@ export interface RootRouteChildren {
   CognitiveProfileRoute: typeof CognitiveProfileRoute
   ComprehensiveAssessmentRoute: typeof ComprehensiveAssessmentRoute
   CounselorRoute: typeof CounselorRoute
+  CounselorCrmRoute: typeof CounselorCrmRoute
   ForCounselorsRoute: typeof ForCounselorsRoute
   InstitutionsRoute: typeof InstitutionsRouteWithChildren
   JoinAsCoachRoute: typeof JoinAsCoachRoute
@@ -803,6 +816,13 @@ declare module '@tanstack/react-router' {
       path: '/for-counselors'
       fullPath: '/for-counselors'
       preLoaderRoute: typeof ForCounselorsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/counselor-crm': {
+      id: '/counselor-crm'
+      path: '/counselor-crm'
+      fullPath: '/counselor-crm'
+      preLoaderRoute: typeof CounselorCrmRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/counselor': {
@@ -1065,6 +1085,7 @@ const rootRouteChildren: RootRouteChildren = {
   CognitiveProfileRoute: CognitiveProfileRoute,
   ComprehensiveAssessmentRoute: ComprehensiveAssessmentRoute,
   CounselorRoute: CounselorRoute,
+  CounselorCrmRoute: CounselorCrmRoute,
   ForCounselorsRoute: ForCounselorsRoute,
   InstitutionsRoute: InstitutionsRouteWithChildren,
   JoinAsCoachRoute: JoinAsCoachRoute,
