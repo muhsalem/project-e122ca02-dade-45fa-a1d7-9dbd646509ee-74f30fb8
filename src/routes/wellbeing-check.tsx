@@ -4,9 +4,10 @@ import { useServerFn } from "@tanstack/react-start";
 import { submitWellbeing } from "@/lib/wellbeing.functions";
 import { useAuth } from "@/hooks/use-auth";
 import { toast } from "sonner";
-import { Heart, AlertTriangle, CheckCircle2 } from "lucide-react";
+import { Heart, AlertTriangle, CheckCircle2, Save, RotateCcw } from "lucide-react";
 import { EmergencyHelpline } from "@/components/site/EmergencyHelpline";
 import { AssessmentLimits } from "@/components/site/AssessmentLimits";
+import { useAutosave } from "@/hooks/use-autosave";
 
 export const Route = createFileRoute("/wellbeing-check")({
   head: () => ({
@@ -37,7 +38,10 @@ const QUESTIONS = [
 
 function WellbeingPage() {
   const [code, setCode] = useState("");
-  const [vals, setVals] = useState<Record<string, number>>({});
+  const [vals, setVals, clearSaved, restored] = useAutosave<Record<string, number>>(
+    "bosla:wellbeing:v1",
+    {},
+  );
   const [busy, setBusy] = useState(false);
   const [res, setRes] = useState<{ phq2: number; gad2: number; carAnx: number; referral: boolean; risk: string } | null>(null);
   const [isMinor, setIsMinor] = useState(false);
@@ -45,6 +49,14 @@ function WellbeingPage() {
   const [storeConsent, setStoreConsent] = useState(false);
   const submit = useServerFn(submitWellbeing);
   const { user } = useAuth();
+
+  const answered = Object.keys(vals).length;
+  function handleReset() {
+    if (!confirm("هل أنت متأكد من مسح كل إجاباتك المحفوظة؟")) return;
+    clearSaved();
+    setVals({});
+    toast.success("تم مسح الإجابات المحفوظة");
+  }
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -56,6 +68,7 @@ function WellbeingPage() {
     try {
       const r = await submit({ data: { code: code.trim(), ...(vals as any), userId: user?.id } });
       setRes(r);
+      clearSaved();
     } catch (err: any) {
       toast.error(err?.message ?? "خطأ");
     } finally {
@@ -85,6 +98,14 @@ function WellbeingPage() {
 
         {!res && (
           <form onSubmit={onSubmit} className="mt-10 space-y-6 rounded-2xl border border-border bg-card p-6 md:p-8">
+            {restored && answered > 0 && (
+              <div className="flex items-center justify-between rounded-lg border border-emerald-500/30 bg-emerald-50 px-3 py-2 text-xs text-emerald-800 dark:bg-emerald-950/20 dark:text-emerald-200">
+                <span className="flex items-center gap-1.5"><Save className="h-3.5 w-3.5" /> تم استرجاع تقدمك المحفوظ ({answered}/{QUESTIONS.length})</span>
+                <button type="button" onClick={handleReset} className="flex items-center gap-1 underline">
+                  <RotateCcw className="h-3.5 w-3.5" /> ابدأ من جديد
+                </button>
+              </div>
+            )}
             <div>
               <label className="mb-2 block text-sm font-medium">معرّفك (اختياري — لربط النتيجة بتقاريرك)</label>
               <input value={code} onChange={(e) => setCode(e.target.value)}

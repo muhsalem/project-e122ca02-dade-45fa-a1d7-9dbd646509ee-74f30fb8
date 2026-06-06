@@ -18,6 +18,8 @@ import {
 } from "lucide-react";
 import { useServerFn } from "@tanstack/react-start";
 import { submitCareerType } from "@/lib/career-type.functions";
+import { useAutosave } from "@/hooks/use-autosave";
+import { Save, RotateCcw } from "lucide-react";
 
 export const Route = createFileRoute("/career-type-assessment")({
   head: () => ({
@@ -273,15 +275,51 @@ function CareerTypePage() {
 
   // Steps: 0=meta, 1=track, 2=nature, 3..N+2 = questions
   const [step, setStep] = useState(0);
-  const [name, setName] = useState("");
-  const [age, setAge] = useState("");
-  const [stage, setStage] = useState("");
-  const [track, setTrack] = useState<Track | null>(null);
-  const [nature, setNature] = useState<Nature | null>(null);
-  const [answers, setAnswers] = useState<Record<string, { type: Type; label: string }>>({});
-  const [riasec, setRiasec] = useState<Record<RiasecDim, number>>({ R: 0, I: 0, A: 0, S: 0, E: 0, C: 0 });
+  type Draft = {
+    name: string;
+    age: string;
+    stage: string;
+    track: Track | null;
+    nature: Nature | null;
+    answers: Record<string, { type: Type; label: string }>;
+    riasec: Record<RiasecDim, number>;
+  };
+  const [draft, setDraft, clearDraft, restored] = useAutosave<Draft>(
+    "bosla:career-type:v1",
+    {
+      name: "",
+      age: "",
+      stage: "",
+      track: null,
+      nature: null,
+      answers: {},
+      riasec: { R: 0, I: 0, A: 0, S: 0, E: 0, C: 0 },
+    },
+  );
+  const { name, age, stage, track, nature, answers, riasec } = draft;
+  const setName = (v: string) => setDraft((d) => ({ ...d, name: v }));
+  const setAge = (v: string) => setDraft((d) => ({ ...d, age: v }));
+  const setStage = (v: string) => setDraft((d) => ({ ...d, stage: v }));
+  const setTrack = (v: Track) => setDraft((d) => ({ ...d, track: v }));
+  const setNature = (v: Nature) => setDraft((d) => ({ ...d, nature: v }));
+  const setAnswers = (
+    updater: (a: Record<string, { type: Type; label: string }>) => Record<string, { type: Type; label: string }>,
+  ) => setDraft((d) => ({ ...d, answers: updater(d.answers) }));
+  const setRiasec = (
+    updater: (r: Record<RiasecDim, number>) => Record<RiasecDim, number>,
+  ) => setDraft((d) => ({ ...d, riasec: updater(d.riasec) }));
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  function handleReset() {
+    if (!confirm("هل أنت متأكد من مسح كل تقدمك؟")) return;
+    clearDraft();
+    setDraft({
+      name: "", age: "", stage: "", track: null, nature: null,
+      answers: {}, riasec: { R: 0, I: 0, A: 0, S: 0, E: 0, C: 0 },
+    });
+    setStep(0);
+  }
 
   const META_STEPS = 4; // meta + track + nature + RIASEC
   const totalSteps = META_STEPS + QUESTIONS.length;
@@ -345,6 +383,7 @@ function CareerTypePage() {
           riasec,
         },
       });
+      clearDraft();
       navigate({ to: "/report/$code", params: { code: res.code } });
     } catch (e) {
       setError(e instanceof Error ? e.message : "حدث خطأ غير متوقع");
@@ -387,6 +426,14 @@ function CareerTypePage() {
               style={{ width: `${progress}%` }}
             />
           </div>
+          {restored && (Object.keys(answers).length > 0 || name || track) && (
+            <div className="mt-3 flex items-center justify-between rounded-lg border border-emerald-500/30 bg-emerald-50 px-3 py-2 text-xs text-emerald-800 dark:bg-emerald-950/20 dark:text-emerald-200">
+              <span className="flex items-center gap-1.5"><Save className="h-3.5 w-3.5" /> تم استرجاع تقدمك المحفوظ ({Object.keys(answers).length}/{QUESTIONS.length} سؤال)</span>
+              <button type="button" onClick={handleReset} className="flex items-center gap-1 underline">
+                <RotateCcw className="h-3.5 w-3.5" /> ابدأ من جديد
+              </button>
+            </div>
+          )}
         </div>
 
         <div className="mx-auto max-w-3xl rounded-2xl border border-border bg-card p-6 md:p-8">
@@ -538,7 +585,7 @@ function CareerTypePage() {
                         return (
                           <button
                             key={v}
-                            onClick={() => setRiasec({ ...riasec, [d.key]: v })}
+                            onClick={() => setRiasec((r) => ({ ...r, [d.key]: v }))}
                             className={`rounded-md border py-2 text-sm font-medium transition-all ${
                               sel
                                 ? "border-primary bg-primary text-primary-foreground"
@@ -571,7 +618,7 @@ function CareerTypePage() {
                   return (
                     <button
                       key={i}
-                      onClick={() => setAnswers({ ...answers, [currentQuestion.id]: opt })}
+                      onClick={() => setAnswers((a) => ({ ...a, [currentQuestion.id]: opt }))}
                       className={`flex items-start gap-3 rounded-xl border p-4 text-right transition-all ${
                         isSel
                           ? "border-primary bg-primary/10"

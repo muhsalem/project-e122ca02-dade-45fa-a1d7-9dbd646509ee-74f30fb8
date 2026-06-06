@@ -4,7 +4,8 @@ import { useServerFn } from "@tanstack/react-start";
 import { submitClarityScore, getClarityComparison } from "@/lib/clarity.functions";
 import { useAuth } from "@/hooks/use-auth";
 import { toast } from "sonner";
-import { Compass, TrendingUp } from "lucide-react";
+import { Compass, TrendingUp, Save, RotateCcw } from "lucide-react";
+import { useAutosave } from "@/hooks/use-autosave";
 
 export const Route = createFileRoute("/clarity-check")({
   head: () => ({
@@ -27,10 +28,13 @@ const QUESTIONS = [
 function ClarityPage() {
   const [code, setCode] = useState("");
   const [phase, setPhase] = useState<"pre" | "post">("pre");
-  const [values, setValues] = useState<Record<string, number>>({
-    q1_self_awareness: 5, q2_career_options: 5, q3_decision_confidence: 5,
-    q4_action_plan: 5, q5_future_optimism: 5,
-  });
+  const [values, setValues, clearSaved, restored] = useAutosave<Record<string, number>>(
+    "bosla:clarity:v1",
+    {
+      q1_self_awareness: 5, q2_career_options: 5, q3_decision_confidence: 5,
+      q4_action_plan: 5, q5_future_optimism: 5,
+    },
+  );
   const [result, setResult] = useState<{ total: number; percent: number } | null>(null);
   const [comp, setComp] = useState<{ pre: number | null; post: number | null; improvement: number | null } | null>(null);
   const [busy, setBusy] = useState(false);
@@ -48,12 +52,23 @@ function ClarityPage() {
       setResult(r);
       const c = await compare({ data: { code: code.trim() } });
       setComp(c);
+      clearSaved();
       toast.success("تم حفظ المقياس بنجاح");
     } catch (err: any) {
       toast.error(err?.message ?? "خطأ");
     } finally {
       setBusy(false);
     }
+  }
+
+  function handleReset() {
+    if (!confirm("هل أنت متأكد من إعادة تعيين القيم؟")) return;
+    clearSaved();
+    setValues({
+      q1_self_awareness: 5, q2_career_options: 5, q3_decision_confidence: 5,
+      q4_action_plan: 5, q5_future_optimism: 5,
+    });
+    toast.success("تمت إعادة التعيين");
   }
 
   return (
@@ -68,7 +83,16 @@ function ClarityPage() {
         </div>
 
         <form onSubmit={onSubmit} className="mt-10 space-y-6 rounded-2xl border border-border bg-card p-6 md:p-8">
+          {restored && (
+            <div className="flex items-center justify-between rounded-lg border border-emerald-500/30 bg-emerald-50 px-3 py-2 text-xs text-emerald-800 dark:bg-emerald-950/20 dark:text-emerald-200">
+              <span className="flex items-center gap-1.5"><Save className="h-3.5 w-3.5" /> يتم حفظ تقدمك تلقائياً</span>
+              <button type="button" onClick={handleReset} className="flex items-center gap-1 underline">
+                <RotateCcw className="h-3.5 w-3.5" /> إعادة تعيين
+              </button>
+            </div>
+          )}
           <div className="grid gap-4 md:grid-cols-2">
+
             <div>
               <label className="mb-2 block text-sm font-medium">كود التقرير أو معرّفك</label>
               <input
