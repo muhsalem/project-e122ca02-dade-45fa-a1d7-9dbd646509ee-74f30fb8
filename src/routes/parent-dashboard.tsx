@@ -56,6 +56,7 @@ function ParentDashboard() {
     <section className="container-page py-14">
       <div className="mx-auto max-w-4xl">
         <div className="text-center">
+          <AutoIllustration topic="/parent-dashboard" className="mx-auto mb-2 h-24 w-24 text-primary" />
           <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/10 px-4 py-1.5 text-xs font-medium text-primary">
             <Users className="h-3.5 w-3.5 text-gold" />
             لوحة وليّ الأمر
