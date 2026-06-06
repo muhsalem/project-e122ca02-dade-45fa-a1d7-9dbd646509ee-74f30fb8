@@ -137,7 +137,7 @@ function BurnoutPage() {
   return (
     <div className="container-page py-10 max-w-3xl mx-auto">
       <div className="mb-8 text-center">
-        <Flame className="mx-auto h-10 w-10 text-orange-500" />
+        <AutoIllustration topic="/burnout-check" className="mx-auto h-24 w-24 text-primary" />
         <h1 className="mt-3 font-serif text-3xl font-bold">مؤشر الاحتراق المهني</h1>
         <p className="mt-2 text-muted-foreground">فحص علمي مبني على MBI-GS لقياس صحتك المهنية الحالية.</p>
       </div>
