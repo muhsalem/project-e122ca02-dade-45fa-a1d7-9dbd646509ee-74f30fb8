@@ -1,9 +1,10 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
-import { Loader2, Sparkles, Layers, ArrowLeft, Brain, BookOpen, GraduationCap, Briefcase, Building2 } from "lucide-react";
+import { Loader2, Sparkles, Layers, ArrowLeft, Brain, BookOpen, GraduationCap, Briefcase, Building2, Save, RotateCcw } from "lucide-react";
 import { submitComprehensive } from "@/lib/comprehensive.functions";
 import { useAuth } from "@/hooks/use-auth";
+import { useAutosave } from "@/hooks/use-autosave";
 
 export const Route = createFileRoute("/comprehensive-assessment")({
   head: () => ({
