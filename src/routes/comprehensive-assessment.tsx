@@ -40,12 +40,24 @@ function ComprehensivePage() {
   const submit = useServerFn(submitComprehensive);
   const { user } = useAuth();
 
-  const [name, setName] = useState("");
-  const [codes, setCodes] = useState<Record<string, string>>({});
+  const [draft, setDraft, clearDraft, restored] = useAutosave<{ name: string; codes: Record<string, string> }>(
+    "bosla:comprehensive:v1",
+    { name: "", codes: {} },
+  );
+  const { name, codes } = draft;
+  const setName = (v: string) => setDraft((d) => ({ ...d, name: v }));
+  const setCodes = (updater: (c: Record<string, string>) => Record<string, string>) =>
+    setDraft((d) => ({ ...d, codes: updater(d.codes) }));
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const filledCount = FIELDS.filter((f) => (codes[f.key] || "").trim().length > 0).length;
+
+  function handleReset() {
+    if (!confirm("هل أنت متأكد من مسح الأكواد المحفوظة؟")) return;
+    clearDraft();
+    setDraft({ name: "", codes: {} });
+  }
 
   async function handleSubmit() {
     setLoading(true);
