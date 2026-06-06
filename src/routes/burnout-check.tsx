@@ -51,16 +51,36 @@ const SCALE = [
   { v: 6, l: "كل يوم" },
 ];
 
+type Draft = {
+  name: string;
+  age: string;
+  stage: string;
+  ex: Record<number, number>;
+  cy: Record<number, number>;
+  ef: Record<number, number>;
+  context: string;
+};
+
+const EMPTY_DRAFT: Draft = { name: "", age: "", stage: "", ex: {}, cy: {}, ef: {}, context: "" };
+
 function BurnoutPage() {
   const navigate = useNavigate();
   const submit = useServerFn(submitBurnout);
-  const [name, setName] = useState("");
-  const [age, setAge] = useState("");
-  const [stage, setStage] = useState("");
-  const [ex, setEx] = useState<Record<number, number>>({});
-  const [cy, setCy] = useState<Record<number, number>>({});
-  const [ef, setEf] = useState<Record<number, number>>({});
-  const [context, setContext] = useState("");
+  const [draft, setDraft, clearDraft, restored] = useAutosave<Draft>(
+    "bosla:burnout:v1",
+    EMPTY_DRAFT,
+  );
+  const { name, age, stage, ex, cy, ef, context } = draft;
+  const setName = (v: string) => setDraft((d) => ({ ...d, name: v }));
+  const setAge = (v: string) => setDraft((d) => ({ ...d, age: v }));
+  const setStage = (v: string) => setDraft((d) => ({ ...d, stage: v }));
+  const setEx = (updater: React.SetStateAction<Record<number, number>>) =>
+    setDraft((d) => ({ ...d, ex: typeof updater === "function" ? updater(d.ex) : updater }));
+  const setCy = (updater: React.SetStateAction<Record<number, number>>) =>
+    setDraft((d) => ({ ...d, cy: typeof updater === "function" ? updater(d.cy) : updater }));
+  const setEf = (updater: React.SetStateAction<Record<number, number>>) =>
+    setDraft((d) => ({ ...d, ef: typeof updater === "function" ? updater(d.ef) : updater }));
+  const setContext = (v: string) => setDraft((d) => ({ ...d, context: v }));
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState<string | null>(null);
 
@@ -79,6 +99,7 @@ function BurnoutPage() {
     setLoading(true);
     try {
       const res = await submit({ data: { name, age, stage, ...totals, context } });
+      clearDraft();
       navigate({ to: "/report/$code", params: { code: res.code } });
     } catch (e) {
       setErr(e instanceof Error ? e.message : "تعذر إنشاء التقرير.");
