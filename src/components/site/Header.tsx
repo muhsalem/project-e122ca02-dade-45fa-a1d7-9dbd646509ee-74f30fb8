@@ -46,6 +46,7 @@ const growthGroup = {
 
 const navAfter = [
   { to: "/counselor", label: "الإرشاد والكوتشينج" },
+  { to: "/parent-dashboard", label: "لوحة وليّ الأمر" },
   { to: "/pricing", label: "الأسعار" },
   { to: "/institutions", label: "للمؤسسات" },
   { to: "/resources", label: "الموارد" },
