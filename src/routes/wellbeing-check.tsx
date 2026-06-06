@@ -38,7 +38,10 @@ const QUESTIONS = [
 
 function WellbeingPage() {
   const [code, setCode] = useState("");
-  const [vals, setVals] = useState<Record<string, number>>({});
+  const [vals, setVals, clearSaved, restored] = useAutosave<Record<string, number>>(
+    "bosla:wellbeing:v1",
+    {},
+  );
   const [busy, setBusy] = useState(false);
   const [res, setRes] = useState<{ phq2: number; gad2: number; carAnx: number; referral: boolean; risk: string } | null>(null);
   const [isMinor, setIsMinor] = useState(false);
@@ -46,6 +49,14 @@ function WellbeingPage() {
   const [storeConsent, setStoreConsent] = useState(false);
   const submit = useServerFn(submitWellbeing);
   const { user } = useAuth();
+
+  const answered = Object.keys(vals).length;
+  function handleReset() {
+    if (!confirm("هل أنت متأكد من مسح كل إجاباتك المحفوظة؟")) return;
+    clearSaved();
+    setVals({});
+    toast.success("تم مسح الإجابات المحفوظة");
+  }
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
