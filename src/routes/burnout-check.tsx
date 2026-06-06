@@ -143,6 +143,28 @@ function BurnoutPage() {
 
       <ClinicalDisclaimer tool="مؤشر الاحتراق المهني (MBI-GS)" />
 
+      {restored && (name || age || Object.keys(ex).length > 0) && (
+        <div className="my-4 flex items-center justify-between gap-3 rounded-lg border border-gold/30 bg-gold/5 px-4 py-2.5 text-xs">
+          <span className="flex items-center gap-2 text-foreground/80">
+            <Save className="h-3.5 w-3.5 text-gold-foreground" aria-hidden="true" />
+            تم حفظ تقدمك تلقائياً — يمكنك العودة لاحقاً لإكماله.
+          </span>
+          <button
+            type="button"
+            onClick={() => {
+              if (confirm("سيتم مسح كل إجاباتك. متأكد؟")) {
+                clearDraft();
+                setDraft(EMPTY_DRAFT);
+              }
+            }}
+            className="rounded-md border border-border bg-background px-2.5 py-1 text-foreground/70 hover:bg-muted"
+          >
+            مسح والبدء من جديد
+          </button>
+        </div>
+      )}
+
+
       <div className="space-y-4 rounded-2xl border border-border bg-card p-6">
         <h2 className="font-semibold text-lg">بياناتك</h2>
         <div className="grid gap-4 sm:grid-cols-3">
