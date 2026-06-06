@@ -119,6 +119,8 @@ function BurnoutPage() {
         <p className="mt-2 text-muted-foreground">فحص علمي مبني على MBI-GS لقياس صحتك المهنية الحالية.</p>
       </div>
 
+      <ClinicalDisclaimer tool="مؤشر الاحتراق المهني (MBI-GS)" />
+
       <div className="space-y-4 rounded-2xl border border-border bg-card p-6">
         <h2 className="font-semibold text-lg">بياناتك</h2>
         <div className="grid gap-4 sm:grid-cols-3">
