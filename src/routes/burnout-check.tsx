@@ -3,6 +3,8 @@ import { useState, useMemo } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { Loader2, Sparkles, Flame, ArrowRight } from "lucide-react";
 import { submitBurnout } from "@/lib/burnout.functions";
+import { ClinicalDisclaimer } from "@/components/site/ClinicalDisclaimer";
+import { EmergencyHelpline } from "@/components/site/EmergencyHelpline";
 
 export const Route = createFileRoute("/burnout-check")({
   head: () => ({
