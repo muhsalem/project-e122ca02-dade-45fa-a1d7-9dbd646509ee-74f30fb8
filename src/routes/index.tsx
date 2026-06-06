@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft, Brain, Compass, GraduationCap, Sparkles, Target, Users, BookOpen, ShieldCheck, Briefcase, Flame, HeartPulse, Gauge, TrendingUp, MapPin, Lightbulb, Route as RouteIcon, Star } from "lucide-react";
 import heroImage from "@/assets/hero.jpg";
+import { SocialProof } from "@/components/site/SocialProof";
 
 export const Route = createFileRoute("/")({
   head: () => ({
