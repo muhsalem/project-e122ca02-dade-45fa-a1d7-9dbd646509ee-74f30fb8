@@ -76,7 +76,7 @@ function ClarityPage() {
     <section className="container-page py-16">
       <div className="mx-auto max-w-3xl">
         <div className="text-center">
-          <Compass className="mx-auto h-10 w-10 text-gold" />
+          <AutoIllustration topic="/clarity-check" className="mx-auto h-24 w-24 text-primary" />
           <h1 className="mt-4 text-3xl text-primary md:text-4xl">مقياس وضوح المسار المهني</h1>
           <p className="mt-3 text-muted-foreground">
             مقياس علمي من 5 أبعاد لقياس وضوح مسارك المهني. أكمله **قبل** بدء أي تقييم، ثم **بعد** انتهائك لقياس الأثر الفعلي.
