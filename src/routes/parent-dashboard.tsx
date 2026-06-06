@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Users, FileText, Plus, Trash2, ExternalLink, ShieldCheck } from "lucide-react";
+import { AutoIllustration } from "@/components/site/Illustration";
 
 export const Route = createFileRoute("/parent-dashboard")({
   head: () => ({
