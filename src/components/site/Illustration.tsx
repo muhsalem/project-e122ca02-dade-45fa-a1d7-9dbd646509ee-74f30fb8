@@ -279,5 +279,7 @@ export function AutoIllustration({
   topic,
   ...rest
 }: Common & { topic: string }) {
-  return <Illustration name={pickIllustration(topic) as IllustrationName} {...rest} />;
+  const picked = pickIllustration(topic);
+  const C = ILLUSTRATIONS[picked];
+  return <C {...rest} />;
 }
