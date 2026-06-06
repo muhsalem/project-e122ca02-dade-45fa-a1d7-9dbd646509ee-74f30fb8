@@ -275,15 +275,51 @@ function CareerTypePage() {
 
   // Steps: 0=meta, 1=track, 2=nature, 3..N+2 = questions
   const [step, setStep] = useState(0);
-  const [name, setName] = useState("");
-  const [age, setAge] = useState("");
-  const [stage, setStage] = useState("");
-  const [track, setTrack] = useState<Track | null>(null);
-  const [nature, setNature] = useState<Nature | null>(null);
-  const [answers, setAnswers] = useState<Record<string, { type: Type; label: string }>>({});
-  const [riasec, setRiasec] = useState<Record<RiasecDim, number>>({ R: 0, I: 0, A: 0, S: 0, E: 0, C: 0 });
+  type Draft = {
+    name: string;
+    age: string;
+    stage: string;
+    track: Track | null;
+    nature: Nature | null;
+    answers: Record<string, { type: Type; label: string }>;
+    riasec: Record<RiasecDim, number>;
+  };
+  const [draft, setDraft, clearDraft, restored] = useAutosave<Draft>(
+    "bosla:career-type:v1",
+    {
+      name: "",
+      age: "",
+      stage: "",
+      track: null,
+      nature: null,
+      answers: {},
+      riasec: { R: 0, I: 0, A: 0, S: 0, E: 0, C: 0 },
+    },
+  );
+  const { name, age, stage, track, nature, answers, riasec } = draft;
+  const setName = (v: string) => setDraft((d) => ({ ...d, name: v }));
+  const setAge = (v: string) => setDraft((d) => ({ ...d, age: v }));
+  const setStage = (v: string) => setDraft((d) => ({ ...d, stage: v }));
+  const setTrack = (v: Track) => setDraft((d) => ({ ...d, track: v }));
+  const setNature = (v: Nature) => setDraft((d) => ({ ...d, nature: v }));
+  const setAnswers = (
+    updater: (a: Record<string, { type: Type; label: string }>) => Record<string, { type: Type; label: string }>,
+  ) => setDraft((d) => ({ ...d, answers: updater(d.answers) }));
+  const setRiasec = (
+    updater: (r: Record<RiasecDim, number>) => Record<RiasecDim, number>,
+  ) => setDraft((d) => ({ ...d, riasec: updater(d.riasec) }));
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  function handleReset() {
+    if (!confirm("هل أنت متأكد من مسح كل تقدمك؟")) return;
+    clearDraft();
+    setDraft({
+      name: "", age: "", stage: "", track: null, nature: null,
+      answers: {}, riasec: { R: 0, I: 0, A: 0, S: 0, E: 0, C: 0 },
+    });
+    setStep(0);
+  }
 
   const META_STEPS = 4; // meta + track + nature + RIASEC
   const totalSteps = META_STEPS + QUESTIONS.length;
