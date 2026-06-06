@@ -383,6 +383,7 @@ function CareerTypePage() {
           riasec,
         },
       });
+      clearDraft();
       navigate({ to: "/report/$code", params: { code: res.code } });
     } catch (e) {
       setError(e instanceof Error ? e.message : "حدث خطأ غير متوقع");
