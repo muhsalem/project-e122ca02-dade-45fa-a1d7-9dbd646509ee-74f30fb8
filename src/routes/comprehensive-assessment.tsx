@@ -5,6 +5,7 @@ import { Loader2, Sparkles, Layers, ArrowLeft, Brain, BookOpen, GraduationCap, B
 import { submitComprehensive } from "@/lib/comprehensive.functions";
 import { useAuth } from "@/hooks/use-auth";
 import { useAutosave } from "@/hooks/use-autosave";
+import { AutoIllustration } from "@/components/site/Illustration";
 
 export const Route = createFileRoute("/comprehensive-assessment")({
   head: () => ({
@@ -86,6 +87,7 @@ function ComprehensivePage() {
     <div className="min-h-screen bg-background">
       <section className="border-b border-border bg-secondary/40">
         <div className="container-page py-14 text-center">
+          <AutoIllustration topic="/comprehensive-assessment" className="mx-auto mb-3 h-24 w-24 text-primary" />
           <span className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/10 px-4 py-1.5 text-xs font-medium text-primary">
             <Layers className="h-3.5 w-3.5 text-gold" />
             تقرير موحّد يدمج جميع تقييماتك

@@ -1,11 +1,12 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState, useMemo } from "react";
 import { useServerFn } from "@tanstack/react-start";
-import { Loader2, Sparkles, Flame, ArrowRight, Save } from "lucide-react";
+import { Loader2, Sparkles, ArrowRight, Save } from "lucide-react";
 import { submitBurnout } from "@/lib/burnout.functions";
 import { ClinicalDisclaimer } from "@/components/site/ClinicalDisclaimer";
 import { EmergencyHelpline } from "@/components/site/EmergencyHelpline";
 import { useAutosave } from "@/hooks/use-autosave";
+import { AutoIllustration } from "@/components/site/Illustration";
 
 export const Route = createFileRoute("/burnout-check")({
   head: () => ({
@@ -136,7 +137,7 @@ function BurnoutPage() {
   return (
     <div className="container-page py-10 max-w-3xl mx-auto">
       <div className="mb-8 text-center">
-        <Flame className="mx-auto h-10 w-10 text-orange-500" />
+        <AutoIllustration topic="/burnout-check" className="mx-auto h-24 w-24 text-primary" />
         <h1 className="mt-3 font-serif text-3xl font-bold">مؤشر الاحتراق المهني</h1>
         <p className="mt-2 text-muted-foreground">فحص علمي مبني على MBI-GS لقياس صحتك المهنية الحالية.</p>
       </div>
