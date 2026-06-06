@@ -609,7 +609,7 @@ function CareerTypePage() {
                   return (
                     <button
                       key={i}
-                      onClick={() => setAnswers({ ...answers, [currentQuestion.id]: opt })}
+                      onClick={() => setAnswers((a) => ({ ...a, [currentQuestion.id]: opt }))}
                       className={`flex items-start gap-3 rounded-xl border p-4 text-right transition-all ${
                         isSel
                           ? "border-primary bg-primary/10"
