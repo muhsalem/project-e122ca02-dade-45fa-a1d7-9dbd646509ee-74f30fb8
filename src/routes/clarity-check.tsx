@@ -52,12 +52,23 @@ function ClarityPage() {
       setResult(r);
       const c = await compare({ data: { code: code.trim() } });
       setComp(c);
+      clearSaved();
       toast.success("تم حفظ المقياس بنجاح");
     } catch (err: any) {
       toast.error(err?.message ?? "خطأ");
     } finally {
       setBusy(false);
     }
+  }
+
+  function handleReset() {
+    if (!confirm("هل أنت متأكد من إعادة تعيين القيم؟")) return;
+    clearSaved();
+    setValues({
+      q1_self_awareness: 5, q2_career_options: 5, q3_decision_confidence: 5,
+      q4_action_plan: 5, q5_future_optimism: 5,
+    });
+    toast.success("تمت إعادة التعيين");
   }
 
   return (
