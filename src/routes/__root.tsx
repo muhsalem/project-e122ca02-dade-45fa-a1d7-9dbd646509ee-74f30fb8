@@ -37,7 +37,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   console.error(error);
   const router = useRouter();
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+    <div className="flex min-h-dvh items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
         <h1 className="font-serif text-2xl font-bold text-foreground">حدث خطأ غير متوقع</h1>
         <p className="mt-2 text-sm text-muted-foreground">يرجى المحاولة مرة أخرى.</p>
