@@ -5,6 +5,7 @@ import { Loader2, Sparkles, Layers, ArrowLeft, Brain, BookOpen, GraduationCap, B
 import { submitComprehensive } from "@/lib/comprehensive.functions";
 import { useAuth } from "@/hooks/use-auth";
 import { useAutosave } from "@/hooks/use-autosave";
+import { AutoIllustration } from "@/components/site/Illustration";
 
 export const Route = createFileRoute("/comprehensive-assessment")({
   head: () => ({
