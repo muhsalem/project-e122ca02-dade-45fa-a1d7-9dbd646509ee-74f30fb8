@@ -35,7 +35,9 @@ function HomePage() {
   return (
     <>
       {/* HERO */}
-      <section className="relative overflow-hidden border-b border-border">
+      <section className="relative overflow-hidden border-b border-border bg-gradient-to-b from-secondary/40 via-background to-background dark:from-primary/10 dark:via-background dark:to-background">
+        <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 opacity-60 dark:opacity-40"
+          style={{ backgroundImage: "radial-gradient(60% 50% at 80% 0%, color-mix(in oklab, var(--gold) 18%, transparent), transparent 70%), radial-gradient(40% 40% at 10% 100%, color-mix(in oklab, var(--primary) 14%, transparent), transparent 70%)" }} />
         <div className="container-page grid items-center gap-12 py-20 lg:grid-cols-2 lg:py-28">
           <div>
             <span className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/10 px-4 py-1.5 text-xs font-medium text-primary">
@@ -82,9 +84,10 @@ function HomePage() {
           </div>
 
           <div className="relative">
-            <div className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-gold/20 to-primary/20 blur-2xl" />
-            <div className="relative aspect-[16/11] overflow-hidden rounded-3xl border border-border bg-card shadow-[var(--shadow-elegant)]">
+            <div aria-hidden className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-gold/30 to-primary/30 blur-2xl dark:from-gold/20 dark:to-primary/40" />
+            <div className="relative aspect-[16/11] overflow-hidden rounded-3xl border border-border bg-card shadow-[var(--shadow-elegant)] dark:ring-1 dark:ring-gold/20">
               <img src={heroImage} alt="رحلة اكتشاف المسار المهني مع بوصلة" width={1408} height={992} className="h-full w-full object-cover" fetchPriority="high" />
+              <div aria-hidden className="pointer-events-none absolute inset-0 hidden bg-gradient-to-t from-background/60 via-transparent to-transparent dark:block" />
             </div>
           </div>
         </div>
