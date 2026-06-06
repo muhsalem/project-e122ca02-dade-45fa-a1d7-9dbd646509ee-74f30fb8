@@ -1,10 +1,11 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState, useMemo } from "react";
 import { useServerFn } from "@tanstack/react-start";
-import { Loader2, Sparkles, Flame, ArrowRight } from "lucide-react";
+import { Loader2, Sparkles, Flame, ArrowRight, Save } from "lucide-react";
 import { submitBurnout } from "@/lib/burnout.functions";
 import { ClinicalDisclaimer } from "@/components/site/ClinicalDisclaimer";
 import { EmergencyHelpline } from "@/components/site/EmergencyHelpline";
+import { useAutosave } from "@/hooks/use-autosave";
 
 export const Route = createFileRoute("/burnout-check")({
   head: () => ({
