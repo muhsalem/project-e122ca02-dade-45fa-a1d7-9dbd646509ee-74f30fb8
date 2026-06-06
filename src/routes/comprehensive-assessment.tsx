@@ -138,6 +138,16 @@ function ComprehensivePage() {
           <h2 className="mb-1 font-serif text-xl text-primary">ادمج تقاريرك في تقرير واحد</h2>
           <p className="mb-5 text-sm text-muted-foreground">أدخل أكواد التقارير التي حصلت عليها من التقييمات أعلاه.</p>
 
+          {restored && (name || filledCount > 0) && (
+            <div className="mb-4 flex items-center justify-between rounded-lg border border-emerald-500/30 bg-emerald-50 px-3 py-2 text-xs text-emerald-800 dark:bg-emerald-950/20 dark:text-emerald-200">
+              <span className="flex items-center gap-1.5"><Save className="h-3.5 w-3.5" /> تم استرجاع تقدمك المحفوظ ({filledCount}/{FIELDS.length})</span>
+              <button type="button" onClick={handleReset} className="flex items-center gap-1 underline">
+                <RotateCcw className="h-3.5 w-3.5" /> إعادة تعيين
+              </button>
+            </div>
+          )}
+
+
           <div className="mb-4">
             <label className="mb-1 block text-sm font-medium">اسمك (اختياري)</label>
             <input
