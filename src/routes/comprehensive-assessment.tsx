@@ -158,7 +158,7 @@ function ComprehensivePage() {
                 </div>
                 <input
                   value={codes[f.key] || ""}
-                  onChange={(e) => setCodes({ ...codes, [f.key]: e.target.value.toUpperCase() })}
+                  onChange={(e) => setCodes((c) => ({ ...c, [f.key]: e.target.value.toUpperCase() }))}
                   className="w-full rounded-md border border-border bg-card px-3 py-2 text-sm font-mono"
                   placeholder={`${f.prefix}XXXX-XXXX`}
                 />
