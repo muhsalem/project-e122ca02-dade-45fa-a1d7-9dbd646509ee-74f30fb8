@@ -46,7 +46,27 @@ function MyAssessmentsPage() {
   }, [user, authLoading, navigate]);
 
   if (authLoading || loading) {
-    return <div className="container-page flex min-h-[60vh] items-center justify-center"><Loader2 className="h-8 w-8 animate-spin text-gold" /></div>;
+    return (
+      <div className="container-page py-12">
+        <div className="mx-auto max-w-5xl">
+          <div className="mb-8">
+            <div className="h-8 w-40 animate-pulse rounded bg-muted" />
+            <div className="mt-2 h-4 w-72 animate-pulse rounded bg-muted/70" />
+          </div>
+          <div className="space-y-6">
+            {[0, 1, 2].map((i) => (
+              <div key={i} className="rounded-xl border border-border bg-card p-6">
+                <div className="h-5 w-48 animate-pulse rounded bg-muted" />
+                <div className="mt-4 space-y-2">
+                  <div className="h-14 animate-pulse rounded-lg bg-muted/70" />
+                  <div className="h-14 animate-pulse rounded-lg bg-muted/50" />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
   }
 
   const formatDate = (d: string) => new Date(d).toLocaleDateString("ar-EG", { year: "numeric", month: "long", day: "numeric" });
