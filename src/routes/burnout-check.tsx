@@ -3,6 +3,8 @@ import { useState, useMemo } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { Loader2, Sparkles, Flame, ArrowRight } from "lucide-react";
 import { submitBurnout } from "@/lib/burnout.functions";
+import { ClinicalDisclaimer } from "@/components/site/ClinicalDisclaimer";
+import { EmergencyHelpline } from "@/components/site/EmergencyHelpline";
 
 export const Route = createFileRoute("/burnout-check")({
   head: () => ({
@@ -117,6 +119,8 @@ function BurnoutPage() {
         <p className="mt-2 text-muted-foreground">فحص علمي مبني على MBI-GS لقياس صحتك المهنية الحالية.</p>
       </div>
 
+      <ClinicalDisclaimer tool="مؤشر الاحتراق المهني (MBI-GS)" />
+
       <div className="space-y-4 rounded-2xl border border-border bg-card p-6">
         <h2 className="font-semibold text-lg">بياناتك</h2>
         <div className="grid gap-4 sm:grid-cols-3">
@@ -152,6 +156,10 @@ function BurnoutPage() {
       <p className="mt-4 text-center text-xs text-muted-foreground">
         <Link to="/report" className="text-primary hover:underline">افتح تقريراً سابقاً</Link>
       </p>
+
+      <div className="mt-10">
+        <EmergencyHelpline compact />
+      </div>
     </div>
   );
 }
