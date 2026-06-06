@@ -46,7 +46,27 @@ function MyAssessmentsPage() {
   }, [user, authLoading, navigate]);
 
   if (authLoading || loading) {
-    return <div className="container-page flex min-h-[60vh] items-center justify-center"><Loader2 className="h-8 w-8 animate-spin text-gold" /></div>;
+    return (
+      <div className="container-page py-12">
+        <div className="mx-auto max-w-5xl">
+          <div className="mb-8">
+            <div className="h-8 w-40 animate-pulse rounded bg-muted" />
+            <div className="mt-2 h-4 w-72 animate-pulse rounded bg-muted/70" />
+          </div>
+          <div className="space-y-6">
+            {[0, 1, 2].map((i) => (
+              <div key={i} className="rounded-xl border border-border bg-card p-6">
+                <div className="h-5 w-48 animate-pulse rounded bg-muted" />
+                <div className="mt-4 space-y-2">
+                  <div className="h-14 animate-pulse rounded-lg bg-muted/70" />
+                  <div className="h-14 animate-pulse rounded-lg bg-muted/50" />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
   }
 
   const formatDate = (d: string) => new Date(d).toLocaleDateString("ar-EG", { year: "numeric", month: "long", day: "numeric" });
@@ -66,12 +86,20 @@ function MyAssessmentsPage() {
         {isEmpty ? (
           <Card>
             <CardContent className="flex flex-col items-center gap-4 py-16 text-center">
-              <FileText className="h-12 w-12 text-muted-foreground/50" />
-              <div>
-                <h3 className="font-semibold">لم تُجرِ أي تقييم بعد</h3>
-                <p className="mt-1 text-sm text-muted-foreground">ابدأ بالتقييم الشامل لتحصل على تقرير متكامل</p>
+              <div className="rounded-full bg-gold/15 p-4">
+                <FileText className="h-10 w-10 text-gold-foreground" aria-hidden="true" />
               </div>
-              <Button asChild><Link to="/comprehensive-assessment">ابدأ التقييم الشامل</Link></Button>
+              <div>
+                <h3 className="font-serif text-xl font-semibold text-primary">لم تُجرِ أي تقييم بعد</h3>
+                <p className="mt-2 text-sm leading-7 text-muted-foreground">
+                  ابدأ بالتقييم الشامل لتحصل على تقرير متكامل عن ميولك ومسارك،
+                  أو جرّب فحصاً قصيراً لتشعر بقيمة المنصة في 5 دقائق.
+                </p>
+              </div>
+              <div className="mt-2 flex flex-wrap items-center justify-center gap-2">
+                <Button asChild><Link to="/comprehensive-assessment">ابدأ التقييم الشامل</Link></Button>
+                <Button asChild variant="outline"><Link to="/start">اختر التقييم المناسب لك</Link></Button>
+              </div>
             </CardContent>
           </Card>
         ) : (

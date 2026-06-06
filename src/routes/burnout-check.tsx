@@ -1,10 +1,11 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState, useMemo } from "react";
 import { useServerFn } from "@tanstack/react-start";
-import { Loader2, Sparkles, Flame, ArrowRight } from "lucide-react";
+import { Loader2, Sparkles, Flame, ArrowRight, Save } from "lucide-react";
 import { submitBurnout } from "@/lib/burnout.functions";
 import { ClinicalDisclaimer } from "@/components/site/ClinicalDisclaimer";
 import { EmergencyHelpline } from "@/components/site/EmergencyHelpline";
+import { useAutosave } from "@/hooks/use-autosave";
 
 export const Route = createFileRoute("/burnout-check")({
   head: () => ({
@@ -50,16 +51,36 @@ const SCALE = [
   { v: 6, l: "كل يوم" },
 ];
 
+type Draft = {
+  name: string;
+  age: string;
+  stage: string;
+  ex: Record<number, number>;
+  cy: Record<number, number>;
+  ef: Record<number, number>;
+  context: string;
+};
+
+const EMPTY_DRAFT: Draft = { name: "", age: "", stage: "", ex: {}, cy: {}, ef: {}, context: "" };
+
 function BurnoutPage() {
   const navigate = useNavigate();
   const submit = useServerFn(submitBurnout);
-  const [name, setName] = useState("");
-  const [age, setAge] = useState("");
-  const [stage, setStage] = useState("");
-  const [ex, setEx] = useState<Record<number, number>>({});
-  const [cy, setCy] = useState<Record<number, number>>({});
-  const [ef, setEf] = useState<Record<number, number>>({});
-  const [context, setContext] = useState("");
+  const [draft, setDraft, clearDraft, restored] = useAutosave<Draft>(
+    "bosla:burnout:v1",
+    EMPTY_DRAFT,
+  );
+  const { name, age, stage, ex, cy, ef, context } = draft;
+  const setName = (v: string) => setDraft((d) => ({ ...d, name: v }));
+  const setAge = (v: string) => setDraft((d) => ({ ...d, age: v }));
+  const setStage = (v: string) => setDraft((d) => ({ ...d, stage: v }));
+  const setEx = (updater: React.SetStateAction<Record<number, number>>) =>
+    setDraft((d) => ({ ...d, ex: typeof updater === "function" ? updater(d.ex) : updater }));
+  const setCy = (updater: React.SetStateAction<Record<number, number>>) =>
+    setDraft((d) => ({ ...d, cy: typeof updater === "function" ? updater(d.cy) : updater }));
+  const setEf = (updater: React.SetStateAction<Record<number, number>>) =>
+    setDraft((d) => ({ ...d, ef: typeof updater === "function" ? updater(d.ef) : updater }));
+  const setContext = (v: string) => setDraft((d) => ({ ...d, context: v }));
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState<string | null>(null);
 
@@ -78,6 +99,7 @@ function BurnoutPage() {
     setLoading(true);
     try {
       const res = await submit({ data: { name, age, stage, ...totals, context } });
+      clearDraft();
       navigate({ to: "/report/$code", params: { code: res.code } });
     } catch (e) {
       setErr(e instanceof Error ? e.message : "تعذر إنشاء التقرير.");
@@ -120,6 +142,28 @@ function BurnoutPage() {
       </div>
 
       <ClinicalDisclaimer tool="مؤشر الاحتراق المهني (MBI-GS)" />
+
+      {restored && (name || age || Object.keys(ex).length > 0) && (
+        <div className="my-4 flex items-center justify-between gap-3 rounded-lg border border-gold/30 bg-gold/5 px-4 py-2.5 text-xs">
+          <span className="flex items-center gap-2 text-foreground/80">
+            <Save className="h-3.5 w-3.5 text-gold-foreground" aria-hidden="true" />
+            تم حفظ تقدمك تلقائياً — يمكنك العودة لاحقاً لإكماله.
+          </span>
+          <button
+            type="button"
+            onClick={() => {
+              if (confirm("سيتم مسح كل إجاباتك. متأكد؟")) {
+                clearDraft();
+                setDraft(EMPTY_DRAFT);
+              }
+            }}
+            className="rounded-md border border-border bg-background px-2.5 py-1 text-foreground/70 hover:bg-muted"
+          >
+            مسح والبدء من جديد
+          </button>
+        </div>
+      )}
+
 
       <div className="space-y-4 rounded-2xl border border-border bg-card p-6">
         <h2 className="font-semibold text-lg">بياناتك</h2>

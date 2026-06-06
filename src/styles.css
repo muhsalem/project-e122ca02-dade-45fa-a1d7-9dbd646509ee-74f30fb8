@@ -63,13 +63,13 @@
   --secondary-foreground: oklch(0.28 0.06 195);
 
   --muted: oklch(0.94 0.015 85);
-  --muted-foreground: oklch(0.48 0.03 200);
+  --muted-foreground: oklch(0.42 0.03 200);
 
   --accent: oklch(0.92 0.04 180);
   --accent-foreground: oklch(0.28 0.06 195);
 
-  /* Warm gold — accent, achievement */
-  --gold: oklch(0.74 0.13 75);
+  /* Warm gold — accent, achievement (gold-foreground is dark for AA contrast) */
+  --gold: oklch(0.72 0.13 75);
   --gold-foreground: oklch(0.22 0.04 200);
 
   --destructive: oklch(0.55 0.2 25);
@@ -78,6 +78,39 @@
   --border: oklch(0.88 0.02 90);
   --input: oklch(0.9 0.018 90);
   --ring: oklch(0.38 0.07 195);
+}
+
+.dark {
+  /* Deep navy paper */
+  --background: oklch(0.18 0.025 230);
+  --foreground: oklch(0.95 0.015 85);
+
+  --card: oklch(0.22 0.03 225);
+  --card-foreground: oklch(0.95 0.015 85);
+  --popover: oklch(0.22 0.03 225);
+  --popover-foreground: oklch(0.95 0.015 85);
+
+  --primary: oklch(0.78 0.09 195);
+  --primary-foreground: oklch(0.18 0.025 230);
+
+  --secondary: oklch(0.26 0.03 225);
+  --secondary-foreground: oklch(0.95 0.015 85);
+
+  --muted: oklch(0.28 0.025 225);
+  --muted-foreground: oklch(0.72 0.02 200);
+
+  --accent: oklch(0.32 0.04 200);
+  --accent-foreground: oklch(0.95 0.015 85);
+
+  --gold: oklch(0.78 0.14 78);
+  --gold-foreground: oklch(0.18 0.025 230);
+
+  --destructive: oklch(0.65 0.2 25);
+  --destructive-foreground: oklch(0.98 0.01 85);
+
+  --border: oklch(0.32 0.025 225);
+  --input: oklch(0.3 0.025 225);
+  --ring: oklch(0.78 0.09 195);
 }
 
 @layer base {
