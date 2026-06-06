@@ -84,9 +84,10 @@ function HomePage() {
           </div>
 
           <div className="relative">
-            <div className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-gold/20 to-primary/20 blur-2xl" />
-            <div className="relative aspect-[16/11] overflow-hidden rounded-3xl border border-border bg-card shadow-[var(--shadow-elegant)]">
+            <div aria-hidden className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-gold/30 to-primary/30 blur-2xl dark:from-gold/20 dark:to-primary/40" />
+            <div className="relative aspect-[16/11] overflow-hidden rounded-3xl border border-border bg-card shadow-[var(--shadow-elegant)] dark:ring-1 dark:ring-gold/20">
               <img src={heroImage} alt="رحلة اكتشاف المسار المهني مع بوصلة" width={1408} height={992} className="h-full w-full object-cover" fetchPriority="high" />
+              <div aria-hidden className="pointer-events-none absolute inset-0 hidden bg-gradient-to-t from-background/60 via-transparent to-transparent dark:block" />
             </div>
           </div>
         </div>
