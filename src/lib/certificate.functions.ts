@@ -1,5 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
+import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
 const Schema = z.object({
   fullName: z.string().min(2).max(120),
@@ -14,18 +15,20 @@ function genCert() {
 }
 
 export const issueCertificate = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
   .inputValidator((d: unknown) => Schema.parse(d))
-  .handler(async ({ data }) => {
+  .handler(async ({ data, context }) => {
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
-    // Verify each code exists
+    // Verify each code exists AND belongs to the authenticated caller (anti-IDOR)
     const { data: reports, error: rErr } = await supabaseAdmin
       .from("assessment_reports")
-      .select("code, stage, created_at")
-      .in("code", data.codes);
+      .select("code, stage, created_at, user_id")
+      .in("code", data.codes)
+      .eq("user_id", context.userId);
     if (rErr) throw new Error("تعذر التحقق من الأكواد.");
     if (!reports || reports.length < 4) {
-      throw new Error("يجب إكمال 4 تقييمات على الأقل بأكواد صحيحة.");
+      throw new Error("يجب إكمال 4 تقييمات على الأقل بأكواد تخصّك.");
     }
 
     const stages = reports.map((r) => r.stage ?? "general");
@@ -89,6 +92,7 @@ ${reports.map((r) => `- \`${r.code}\` — ${stageLabel(r.stage ?? "general")} ($
       code: certCode,
       name: data.fullName,
       stage: "certificate",
+      user_id: context.userId,
       answers: { codes: data.codes, stages: Array.from(uniqueStages), issuedAt: issuedAt.toISOString(), expiresAt: expiresAt.toISOString() },
       report,
     });
