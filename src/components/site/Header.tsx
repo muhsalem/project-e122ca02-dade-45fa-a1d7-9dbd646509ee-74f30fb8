@@ -44,11 +44,18 @@ const growthGroup = {
 } as const;
 
 
+const institutionsGroup = {
+  label: "للمؤسسات",
+  items: [
+    { to: "/institutions", label: "بوابة المؤسسات والجامعات" },
+    { to: "/schools", label: "بوصلة للمدارس" },
+    { to: "/parent-dashboard", label: "لوحة وليّ الأمر" },
+  ],
+} as const;
+
 const navAfter = [
-  { to: "/counselor", label: "الإرشاد والكوتشينج" },
-  { to: "/parent-dashboard", label: "لوحة وليّ الأمر" },
-  { to: "/pricing", label: "الأسعار" },
-  { to: "/institutions", label: "للمؤسسات" },
+  { to: "/counselor", label: "للمرشدين والمدربين" },
+  { to: "/pricing", label: "باقات الاشتراك" },
   { to: "/resources", label: "الموارد" },
 ] as const;
 
@@ -112,7 +119,7 @@ export function Header() {
             </Link>
           ))}
 
-          {[discoveryGroup, changeGroup, growthGroup].map((group) => (
+          {[discoveryGroup, changeGroup, growthGroup, institutionsGroup].map((group) => (
             <DropdownNav key={group.label} group={group} />
           ))}
 
@@ -183,7 +190,7 @@ export function Header() {
                 {item.label}
               </Link>
             ))}
-            {[discoveryGroup, changeGroup, growthGroup].map((group) => (
+            {[discoveryGroup, changeGroup, growthGroup, institutionsGroup].map((group) => (
               <div key={group.label}>
                 <div className="mt-3 pr-1 text-xs font-semibold text-primary">{group.label}</div>
                 {group.items.map((item) => (
