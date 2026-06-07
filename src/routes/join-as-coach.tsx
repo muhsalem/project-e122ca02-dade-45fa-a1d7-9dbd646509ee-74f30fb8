@@ -7,11 +7,11 @@ import { submitCoachApplication } from "@/lib/coach.functions";
 export const Route = createFileRoute("/join-as-coach")({
   head: () => ({
     meta: [
-      { title: "انضم كمرشد/كوتش مهني — بوصلة" },
+      { title: "انضم كمرشد/مدرب مهني (كوتش) مهني — بوصلة" },
       {
         name: "description",
         content:
-          "قدّم طلبك للانضمام إلى دليل المرشدين والكوتشز على منصة بوصلة، واستقبل حجوزات من المسترشدين بعد قبول طلبك.",
+          "قدّم طلبك للانضمام إلى دليل المرشدين والمدربين المهنيين (الكوتشز) على منصة بوصلة، واستقبل حجوزات من المسترشدين بعد قبول طلبك.",
       },
     ],
   }),
@@ -144,7 +144,7 @@ function JoinCoachPage() {
             انضم لشبكة المرشدين المعتمدين
           </span>
           <h1 className="mt-5 font-serif text-3xl text-primary md:text-4xl">
-            انضم كمرشد أو كوتش مهني
+            انضم كمرشد أو مدرب مهني (كوتش) مهني
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
             شارك خبرتك مع المسترشدين عبر منصة بوصلة. بعد قبول طلبك ستحصل على ملف عام في

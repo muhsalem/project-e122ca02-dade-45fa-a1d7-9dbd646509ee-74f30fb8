@@ -25,8 +25,8 @@ import { submitCoachRating, getCoachRatingsSummary } from "@/lib/coach-rating.fu
 export const Route = createFileRoute("/counselor")({
   head: () => ({
     meta: [
-      { title: "تعرف على الكوتشين والمرشدين المهنيين — بوصلة" },
-      { name: "description", content: "تصفح دليل المرشدين والكوتشز المعتمدين، واطلع على تقييماتهم واحجز جلستك." },
+      { title: "تعرف على المدربين المهنيين (الكوتشين) والمرشدين المهنيين — بوصلة" },
+      { name: "description", content: "تصفح دليل المرشدين والمدربين المهنيين (الكوتشز) المعتمدين، واطلع على تقييماتهم واحجز جلستك." },
     ],
   }),
   component: CounselorPage,
@@ -43,8 +43,8 @@ function CounselorPage() {
 
   const tabs: { key: TabKey; label: string; icon: typeof GraduationCap }[] = [
     { key: "counselor", label: "مرشد مهني معتمد", icon: GraduationCap },
-    { key: "coach", label: "كوتش مهني — احجز جلسة", icon: Calendar },
-    { key: "join", label: "انضم كمرشد أو كوتش", icon: UserPlus },
+    { key: "coach", label: "مدرب مهني (كوتش) مهني — احجز جلسة", icon: Calendar },
+    { key: "join", label: "انضم كمرشد أو مدرب مهني (كوتش)", icon: UserPlus },
   ];
 
   return (
@@ -53,14 +53,14 @@ function CounselorPage() {
         <div className="container-page py-10 text-center">
           <span className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/10 px-4 py-1.5 text-xs font-medium text-primary">
             <GraduationCap className="h-3.5 w-3.5 text-gold" />
-            دليل المرشدين والكوتشز
+            دليل المرشدين والمدربين المهنيين (الكوتشز)
           </span>
           <h1 className="mt-4 text-3xl text-primary md:text-4xl">
-            تعرف على الكوتشين والمرشدين المهنيين
+            تعرف على المدربين المهنيين (الكوتشين) والمرشدين المهنيين
           </h1>
           <p className="mx-auto mt-3 max-w-2xl text-sm text-muted-foreground">
             ابدأ النقاش مع <span className="font-semibold text-primary">مرشد مهني معتمد</span> لاستكشاف خياراتك،
-            ثم صُغ <span className="font-semibold text-primary">خطتك التنفيذية</span> مع كوتش مهني متخصص.
+            ثم صُغ <span className="font-semibold text-primary">خطتك التنفيذية</span> مع مدرب مهني (كوتش) مهني متخصص.
           </p>
 
           <div className="mx-auto mt-6 flex max-w-2xl gap-2 rounded-full border border-border bg-background p-1 shadow-[var(--shadow-soft)]">
@@ -101,9 +101,9 @@ function CounselorPage() {
       {tab === "coach" && (
         <>
           <RoleIntro
-            title="الكوتش المهني"
+            title="المدرب المهني (الكوتش) المهني"
             subtitle="مرحلة صياغة الخطة والتنفيذ"
-            description="بعد وضوح الرؤية مع المرشد، يأتي دور الكوتش المهني لمساعدتك على بناء خطة عمل تفصيلية، وتحديد الأهداف، ومتابعة تنفيذها خطوة بخطوة."
+            description="بعد وضوح الرؤية مع المرشد، يأتي دور المدرب المهني (الكوتش) المهني لمساعدتك على بناء خطة عمل تفصيلية، وتحديد الأهداف، ومتابعة تنفيذها خطوة بخطوة."
           />
           <BookingSection />
         </>
@@ -135,9 +135,9 @@ function JoinSection() {
         <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-gold/15 text-gold">
           <UserPlus className="h-7 w-7" />
         </div>
-        <h2 className="mt-4 font-serif text-2xl text-primary">انضم إلى دليل بوصلة كمرشد أو كوتش مهني</h2>
+        <h2 className="mt-4 font-serif text-2xl text-primary">انضم إلى دليل بوصلة كمرشد أو مدرب مهني (كوتش) مهني</h2>
         <p className="mx-auto mt-3 max-w-xl text-sm text-muted-foreground">
-          إن كنت مرشدًا مهنيًا معتمدًا أو كوتشًا متخصصًا، انضم إلى منصتنا لاستقبال الحجوزات والوصول إلى آلاف الباحثين عن التوجيه المهني.
+          إن كنت مرشدًا مهنيًا معتمدًا أو مدربًا مهنيًا (كوتشًا) متخصصًا، انضم إلى منصتنا لاستقبال الحجوزات والوصول إلى آلاف الباحثين عن التوجيه المهني.
         </p>
         <Link
           to="/join-as-coach"
@@ -197,7 +197,7 @@ function DirectorySection() {
       <div className="mx-auto max-w-5xl">
         <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h2 className="font-serif text-2xl text-primary">دليل المرشدين والكوتشز المعتمدين</h2>
+            <h2 className="font-serif text-2xl text-primary">دليل المرشدين والمدربين المهنيين (الكوتشز) المعتمدين</h2>
             <p className="mt-1 text-xs text-muted-foreground">
               الملفات المعروضة هنا اجتازت مراجعة فريق بوصلة وأصبحت متاحة لاستقبال الحجوزات.
             </p>
@@ -422,7 +422,7 @@ function RatingsSection() {
           >
             <div className="flex items-center gap-2">
               <Star className="h-5 w-5 text-gold" />
-              <h2 className="font-serif text-lg text-primary">تقييمات المرشدين والكوتشز</h2>
+              <h2 className="font-serif text-lg text-primary">تقييمات المرشدين والمدربين المهنيين (الكوتشز)</h2>
             </div>
             {open ? <ChevronUp className="h-5 w-5 text-muted-foreground" /> : <ChevronDown className="h-5 w-5 text-muted-foreground" />}
           </button>
@@ -444,7 +444,7 @@ function RatingsSection() {
                 <div className="grid gap-8 pt-6 lg:grid-cols-3">
                   <form onSubmit={onSubmit} className="space-y-6 lg:col-span-2">
                     <div>
-                      <label className="text-sm font-medium text-primary">المرشد / الكوتش</label>
+                      <label className="text-sm font-medium text-primary">المرشد / المدرب المهني (الكوتش)</label>
                       <select value={coach} onChange={(e) => setCoach(e.target.value)} className="mt-2 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
                         {coachOptions.map((c) => <option key={c} value={c}>{c}</option>)}
                       </select>
@@ -588,7 +588,7 @@ function BookingSection() {
           >
             <div className="flex items-center gap-2">
               <Calendar className="h-5 w-5 text-gold" />
-              <h2 className="font-serif text-lg text-primary">احجز جلسة مع مرشد أو كوتش مهني</h2>
+              <h2 className="font-serif text-lg text-primary">احجز جلسة مع مرشد أو مدرب مهني (كوتش) مهني</h2>
             </div>
             {open ? <ChevronUp className="h-5 w-5 text-muted-foreground" /> : <ChevronDown className="h-5 w-5 text-muted-foreground" />}
           </button>
@@ -613,7 +613,7 @@ function BookingSection() {
               ) : (
                 <form onSubmit={onSubmit} className="grid gap-5 md:grid-cols-2">
                   <div className="md:col-span-2">
-                    <label className="text-sm font-medium text-primary">المرشد / الكوتش</label>
+                    <label className="text-sm font-medium text-primary">المرشد / المدرب المهني (الكوتش)</label>
                     <select value={coach} onChange={(e) => setCoach(e.target.value)} className="mt-2 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
                       {coachOptions.map((c) => <option key={c.id} value={c.name}>{c.name}</option>)}
                     </select>
