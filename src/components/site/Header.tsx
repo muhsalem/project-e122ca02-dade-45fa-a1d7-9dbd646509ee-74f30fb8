@@ -190,7 +190,7 @@ export function Header() {
                 {item.label}
               </Link>
             ))}
-            {[discoveryGroup, changeGroup, growthGroup].map((group) => (
+            {[discoveryGroup, changeGroup, growthGroup, institutionsGroup].map((group) => (
               <div key={group.label}>
                 <div className="mt-3 pr-1 text-xs font-semibold text-primary">{group.label}</div>
                 {group.items.map((item) => (
