@@ -92,6 +92,7 @@ ${reports.map((r) => `- \`${r.code}\` — ${stageLabel(r.stage ?? "general")} ($
       code: certCode,
       name: data.fullName,
       stage: "certificate",
+      user_id: context.userId,
       answers: { codes: data.codes, stages: Array.from(uniqueStages), issuedAt: issuedAt.toISOString(), expiresAt: expiresAt.toISOString() },
       report,
     });
