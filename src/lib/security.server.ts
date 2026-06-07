@@ -61,7 +61,7 @@ export async function audit(entry: {
       actor_ip: getClientIp(),
       target_type: entry.targetType ?? null,
       target_id: entry.targetId ?? null,
-      metadata: entry.metadata ?? {},
+      metadata: (entry.metadata ?? {}) as never,
     });
   } catch (e) {
     console.error("Audit write failed:", e);
