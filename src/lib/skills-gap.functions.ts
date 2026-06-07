@@ -60,8 +60,11 @@ export const analyzeSkillsGap = createServerFn({ method: "POST" })
       }),
     });
     if (!res.ok) {
-      const t = await res.text();
-      throw new Error(`فشل توليد التحليل: ${res.status} ${t.slice(0, 200)}`);
+      const t = await res.text().catch(() => "");
+      console.error("Skills-gap AI gateway error:", res.status, t);
+      if (res.status === 429) throw new Error("تم تجاوز حد الاستخدام مؤقتاً. حاول بعد دقيقة.");
+      if (res.status === 402) throw new Error("نفد رصيد الذكاء الاصطناعي.");
+      throw new Error("تعذّر توليد التحليل. حاول مرة أخرى.");
     }
     const json = await res.json();
     const report: string = json.choices?.[0]?.message?.content ?? "";
