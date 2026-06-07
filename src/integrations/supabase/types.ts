@@ -53,6 +53,39 @@ export type Database = {
         }
         Relationships: []
       }
+      audit_log: {
+        Row: {
+          action: string
+          actor_id: string | null
+          actor_ip: string | null
+          created_at: string
+          id: string
+          metadata: Json
+          target_id: string | null
+          target_type: string | null
+        }
+        Insert: {
+          action: string
+          actor_id?: string | null
+          actor_ip?: string | null
+          created_at?: string
+          id?: string
+          metadata?: Json
+          target_id?: string | null
+          target_type?: string | null
+        }
+        Update: {
+          action?: string
+          actor_id?: string | null
+          actor_ip?: string | null
+          created_at?: string
+          id?: string
+          metadata?: Json
+          target_id?: string | null
+          target_type?: string | null
+        }
+        Relationships: []
+      }
       career_ladders: {
         Row: {
           created_at: string
@@ -362,6 +395,30 @@ export type Database = {
         }
         Relationships: []
       }
+      rate_limits: {
+        Row: {
+          bucket: string
+          client_key: string
+          hits: number
+          id: string
+          window_start: string
+        }
+        Insert: {
+          bucket: string
+          client_key: string
+          hits?: number
+          id?: string
+          window_start?: string
+        }
+        Update: {
+          bucket?: string
+          client_key?: string
+          hits?: number
+          id?: string
+          window_start?: string
+        }
+        Relationships: []
+      }
       report_cache: {
         Row: {
           cache_key: string
@@ -559,6 +616,15 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      check_rate_limit: {
+        Args: {
+          p_bucket: string
+          p_client_key: string
+          p_limit: number
+          p_window_seconds: number
+        }
+        Returns: boolean
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]

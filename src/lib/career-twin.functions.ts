@@ -86,8 +86,9 @@ ${plan ? `### خطة التطوير الحالية (IDP):
     if (!res.ok) {
       if (res.status === 429) throw new Error("تم تجاوز حد الاستخدام مؤقتاً. حاول بعد دقيقة.");
       if (res.status === 402) throw new Error("نفد رصيد الذكاء الاصطناعي.");
-      const t = await res.text();
-      throw new Error(`تعذّر الرد: ${res.status} ${t.slice(0, 200)}`);
+      const t = await res.text().catch(() => "");
+      console.error("Career-twin AI gateway error:", res.status, t);
+      throw new Error("تعذّر الرد. حاول مرة أخرى.");
     }
     const json = await res.json();
     const reply: string = json.choices?.[0]?.message?.content ?? "عذراً، لم أتمكن من الرد.";
