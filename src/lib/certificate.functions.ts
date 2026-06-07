@@ -98,6 +98,15 @@ ${reports.map((r) => `- \`${r.code}\` — ${stageLabel(r.stage ?? "general")} ($
     });
     if (error) throw new Error("تعذر إصدار الشهادة.");
 
+    const { audit } = await import("./security.server");
+    await audit({
+      action: "certificate.issued",
+      actorId: context.userId,
+      targetType: "certificate",
+      targetId: certCode,
+      metadata: { reports: reports.length, stages: Array.from(uniqueStages) },
+    });
+
     return { code: certCode, report, expiresAt: expiresAt.toISOString() };
   });
 

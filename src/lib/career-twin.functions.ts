@@ -14,6 +14,8 @@ const Schema = z.object({
 export const chatCareerTwin = createServerFn({ method: "POST" })
   .inputValidator((d: unknown) => Schema.parse(d))
   .handler(async ({ data }) => {
+    const { enforceRateLimit } = await import("./security.server");
+    await enforceRateLimit({ bucket: "career-twin", limit: 30, windowSeconds: 600 });
     const apiKey = process.env.LOVABLE_API_KEY;
     if (!apiKey) throw new Error("LOVABLE_API_KEY غير مُهيّأ");
 
@@ -86,8 +88,9 @@ ${plan ? `### خطة التطوير الحالية (IDP):
     if (!res.ok) {
       if (res.status === 429) throw new Error("تم تجاوز حد الاستخدام مؤقتاً. حاول بعد دقيقة.");
       if (res.status === 402) throw new Error("نفد رصيد الذكاء الاصطناعي.");
-      const t = await res.text();
-      throw new Error(`تعذّر الرد: ${res.status} ${t.slice(0, 200)}`);
+      const t = await res.text().catch(() => "");
+      console.error("Career-twin AI gateway error:", res.status, t);
+      throw new Error("تعذّر الرد. حاول مرة أخرى.");
     }
     const json = await res.json();
     const reply: string = json.choices?.[0]?.message?.content ?? "عذراً، لم أتمكن من الرد.";
