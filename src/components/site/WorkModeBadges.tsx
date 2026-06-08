@@ -2,10 +2,12 @@ import {
   type WorkModes,
   MODE_LABELS,
   LEVEL_LABELS,
+  MODE_REQUIREMENTS,
+  RATIONALE_NOTE,
   getWorkModesByField,
   getWorkModesByIsco,
 } from "@/lib/work-modes";
-import { Briefcase } from "lucide-react";
+import { Briefcase, Info, ExternalLink, GraduationCap, Wrench, Rocket } from "lucide-react";
 
 type Props =
   | { modes: WorkModes; fieldId?: never; isco?: never; title?: string; compact?: boolean }
