@@ -26,7 +26,7 @@ export const Route = createFileRoute("/counselor")({
   head: () => ({
     meta: [
       { title: "تعرف على المدربين المهنيين (الكوتشين) والمرشدين المهنيين — بوصلة" },
-      { name: "description", content: "تصفح دليل المرشدين والمدربين المهنيين (الكوتشز) المعتمدين، واطلع على تقييماتهم واحجز جلستك." },
+      { name: "description", content: "تصفح دليل المرشدين والمدربين المهنيين (المدرّبين) المعتمدين، واطلع على تقييماتهم واحجز جلستك." },
     ],
   }),
   component: CounselorPage,
@@ -53,7 +53,7 @@ function CounselorPage() {
         <div className="container-page py-10 text-center">
           <span className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/10 px-4 py-1.5 text-xs font-medium text-primary">
             <GraduationCap className="h-3.5 w-3.5 text-gold" />
-            دليل المرشدين والمدربين المهنيين (الكوتشز)
+            دليل المرشدين والمدربين المهنيين (المدرّبين)
           </span>
           <h1 className="mt-4 text-3xl text-primary md:text-4xl">
             تعرف على المدربين المهنيين (الكوتشين) والمرشدين المهنيين
@@ -197,7 +197,7 @@ function DirectorySection() {
       <div className="mx-auto max-w-5xl">
         <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h2 className="font-serif text-2xl text-primary">دليل المرشدين والمدربين المهنيين (الكوتشز) المعتمدين</h2>
+            <h2 className="font-serif text-2xl text-primary">دليل المرشدين والمدربين المهنيين (المدرّبين) المعتمدين</h2>
             <p className="mt-1 text-xs text-muted-foreground">
               الملفات المعروضة هنا اجتازت مراجعة فريق بوصلة وأصبحت متاحة لاستقبال الحجوزات.
             </p>
@@ -422,7 +422,7 @@ function RatingsSection() {
           >
             <div className="flex items-center gap-2">
               <Star className="h-5 w-5 text-gold" />
-              <h2 className="font-serif text-lg text-primary">تقييمات المرشدين والمدربين المهنيين (الكوتشز)</h2>
+              <h2 className="font-serif text-lg text-primary">تقييمات المرشدين والمدربين المهنيين (المدرّبين)</h2>
             </div>
             {open ? <ChevronUp className="h-5 w-5 text-muted-foreground" /> : <ChevronDown className="h-5 w-5 text-muted-foreground" />}
           </button>
