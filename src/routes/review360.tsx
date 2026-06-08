@@ -4,6 +4,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { createReviewRequest } from "@/lib/review360.functions";
 import { toast } from "sonner";
 import { Users, Copy, Check, Share2, BarChart3 } from "lucide-react";
+import { ShariaNotice } from "@/components/site/ShariaNotice";
 
 export const Route = createFileRoute("/review360")({
   head: () => ({
@@ -57,6 +58,9 @@ function Review360Page() {
             (ولي أمر، معلم، زميل، مدير سابق) عبر 8 أبعاد سلوكية ومهنية. الردود <strong>مجهولة المصدر</strong>.
           </p>
         </div>
+
+        <ShariaNotice variant="review360" className="mt-6" />
+
 
         {!code && (
           <form onSubmit={onCreate} className="mt-10 space-y-5 rounded-2xl border border-border bg-card p-6 md:p-8">
