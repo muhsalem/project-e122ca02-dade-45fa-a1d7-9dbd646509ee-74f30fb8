@@ -64,10 +64,29 @@ function BookingPage() {
         <div className="container-page py-16 text-center">
           <h1 className="text-4xl text-primary md:text-5xl">حجز جلسة إرشاد أو كوتشينج</h1>
           <p className="mx-auto mt-4 max-w-xl text-muted-foreground">
-            خطوات بسيطة للحجز مع أحد مرشدينا المعتمدين دولياً.
+            احجز فورياً عبر التقويم المتزامن أدناه، أو املأ نموذج الطلب لتواصل خاص.
           </p>
         </div>
       </section>
+
+      <section className="container-page py-12">
+        <div className="mx-auto max-w-4xl">
+          <h2 className="mb-4 font-serif text-2xl text-primary">احجز فورياً</h2>
+          <p className="mb-6 text-sm text-muted-foreground">
+            اختر الوقت الذي يناسبك من التقويم المباشر — تأكيد فوري عبر البريد ومزامنة مع تقويمك (Google / Outlook / Apple).
+          </p>
+          <CalEmbed calLink="bosla/coaching-30min" height={760} />
+        </div>
+      </section>
+
+      <section className="border-t border-border bg-secondary/20">
+        <div className="container-page py-8 text-center">
+          <p className="text-sm text-muted-foreground">
+            أو اطلب موعداً مخصصاً عبر النموذج التالي ↓
+          </p>
+        </div>
+      </section>
+
 
       <section className="container-page py-16">
         <form onSubmit={onSubmit} className="mx-auto max-w-3xl space-y-10">
