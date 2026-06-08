@@ -137,7 +137,7 @@ export function Header() {
             </Link>
           ))}
 
-          {[discoveryGroup, changeGroup, growthGroup, institutionsGroup].map((group) => (
+          {[assessmentsGroup, institutionsGroup].map((group) => (
             <DropdownNav key={group.label} group={group} />
           ))}
 
