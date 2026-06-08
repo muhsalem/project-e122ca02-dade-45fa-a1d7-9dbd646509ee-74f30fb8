@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { Check, Calendar, Clock, User, ShieldCheck, Users } from "lucide-react";
+import { CalEmbed } from "@/components/site/CalEmbed";
 
 export const Route = createFileRoute("/booking")({
   head: () => ({
