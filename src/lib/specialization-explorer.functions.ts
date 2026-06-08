@@ -16,7 +16,7 @@ export const explainSpecialization = createServerFn({ method: "POST" })
     if (!apiKey) throw new Error("LOVABLE_API_KEY غير مُهيّأ");
 
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    const cacheKey = `spec:${data.fieldLabel}|${data.generalSpec}|${data.deepSpec}`;
+    const cacheKey = `spec-v2:${data.fieldLabel}|${data.generalSpec}|${data.deepSpec}`;
 
     // Check cache
     const { data: cached } = await supabaseAdmin
