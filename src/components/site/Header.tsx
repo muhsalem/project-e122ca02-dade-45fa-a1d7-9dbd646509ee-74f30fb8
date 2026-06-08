@@ -7,54 +7,56 @@ import logo from "@/assets/logo.png";
 
 const nav = [
   { to: "/", label: "الرئيسية" },
-  { to: "/paths", label: "خريطة الاختبارات" },
   { to: "/about", label: "من نحن" },
+  { to: "/paths", label: "خريطة الاختبارات" },
 ] as const;
 
-const discoveryGroup = {
-  label: "أريد الاكتشاف",
-  items: [
-    { to: "/self-discovery", label: "اكتشف ذاتك" },
-    { to: "/work-values", label: "القيم المهنية (WVI)" },
-    { to: "/career-anchors", label: "مرساة المسيرة (Schein)" },
-    { to: "/learning-style", label: "نمط التعلّم (VARK + Kolb)" },
-    { to: "/academic-major", label: "اكتشف تخصصك الدراسي" },
-    { to: "/specializations", label: "خريطة التخصصات الجامعية" },
-    { to: "/career-type-assessment", label: "اكتشف مسارك المهني" },
-    { to: "/sector-guide", label: "دليل القطاعات والصناعات" },
+const assessmentsGroup = {
+  label: "الاختبارات",
+  sections: [
+    {
+      title: "أريد الاكتشاف",
+      items: [
+        { to: "/self-discovery", label: "اكتشف ذاتك (RIASEC + Big Five)" },
+        { to: "/career-type-assessment", label: "اكتشف مسارك المهني (ISCO-08)" },
+        { to: "/work-values", label: "القيم المهنية (WVI)" },
+        { to: "/career-anchors", label: "مرساة المسيرة (Schein)" },
+        { to: "/learning-style", label: "نمط التعلّم (VARK + Kolb)" },
+        { to: "/academic-major", label: "تخصصك الجامعي" },
+      ],
+    },
+    {
+      title: "أريد التغيير",
+      items: [
+        { to: "/career-change", label: "تشخيص الرغبة في تغيير المسار" },
+        { to: "/burnout-check", label: "مؤشر الاحتراق المهني (MBI)" },
+        { to: "/wellbeing-check", label: "الفحص النفسي المختصر" },
+        { to: "/career-self-efficacy", label: "الكفاءة الذاتية لاتخاذ القرار" },
+      ],
+    },
+    {
+      title: "أريد التطوير",
+      items: [
+        { to: "/career-growth", label: "خطة تطوير مساري الوظيفي" },
+        { to: "/emotional-intelligence", label: "الذكاء العاطفي (WLEIS)" },
+        { to: "/career-ladder", label: "سلّم المسار الوظيفي" },
+        { to: "/career-readiness", label: "شهادة الجاهزية المهنية" },
+      ],
+    },
   ],
 } as const;
-
-const changeGroup = {
-  label: "أريد التغيير",
-  items: [
-    // ترتيب سيكومتري: فرز أولي ← تشخيص الأعراض ← فحص الصحة ← استكشاف البديل
-    { to: "/career-change", label: "١. تشخيص الرغبة في تغيير المسار" },
-    { to: "/burnout-check", label: "٢. مؤشر الاحتراق المهني" },
-    { to: "/wellbeing-check", label: "٣. فحص الصحة النفسية المهنية" },
-    { to: "/career-self-efficacy", label: "٤. الكفاءة الذاتية لاتخاذ القرار" },
-    { to: "/career-type-assessment", label: "٥. اكتشاف المسار البديل المناسب" },
-  ],
-} as const;
-
-const growthGroup = {
-  label: "أريد التطوير",
-  items: [
-    // ترتيب سيكومتري: تقييم وخطة ← خريطة المسار ← شهادة الجاهزية كمخرج
-    { to: "/career-growth", label: "١. خطة تطوير مساري الوظيفي" },
-    { to: "/emotional-intelligence", label: "٢. الذكاء العاطفي (WLEIS)" },
-    { to: "/career-ladder", label: "٣. سلّم المسار الوظيفي" },
-    { to: "/career-readiness", label: "٤. شهادة الجاهزية المهنية" },
-  ],
-} as const;
-
 
 const institutionsGroup = {
   label: "للمؤسسات",
-  items: [
-    { to: "/institutions", label: "بوابة المؤسسات والجامعات" },
-    { to: "/schools", label: "بوصلة للمدارس" },
-    { to: "/parent-dashboard", label: "لوحة وليّ الأمر" },
+  sections: [
+    {
+      title: "",
+      items: [
+        { to: "/institutions", label: "بوصلة للجامعات والمؤسسات" },
+        { to: "/schools", label: "بوصلة للمدارس" },
+        { to: "/parent-dashboard", label: "لوحة وليّ الأمر" },
+      ],
+    },
   ],
 } as const;
 
@@ -64,10 +66,12 @@ const navAfter = [
   { to: "/resources", label: "الموارد" },
 ] as const;
 
-type NavGroup = { label: string; items: readonly { to: string; label: string }[] };
+type NavSection = { title: string; items: readonly { to: string; label: string }[] };
+type NavGroup = { label: string; sections: readonly NavSection[] };
 
 function DropdownNav({ group }: { group: NavGroup }) {
   const [open, setOpen] = useState(false);
+  const multi = group.sections.length > 1;
   return (
     <div className="relative" onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
       <button
@@ -79,17 +83,26 @@ function DropdownNav({ group }: { group: NavGroup }) {
         <ChevronDown className="h-3.5 w-3.5" />
       </button>
       {open && (
-        <div className="absolute right-1/2 top-full z-50 min-w-[240px] translate-x-1/2 pt-2">
-          <div className="overflow-hidden rounded-xl border border-border bg-card p-1.5 shadow-xl">
-            {group.items.map((item) => (
-              <Link
-                key={item.to}
-                to={item.to}
-                className="block whitespace-nowrap rounded-lg px-4 py-2.5 text-sm text-foreground/80 transition-colors hover:bg-muted hover:text-primary"
-                activeProps={{ className: "text-primary font-semibold bg-muted" }}
-              >
-                {item.label}
-              </Link>
+        <div className={`absolute right-1/2 top-full z-50 translate-x-1/2 pt-2 ${multi ? "min-w-[640px]" : "min-w-[260px]"}`}>
+          <div className={`overflow-hidden rounded-xl border border-border bg-card p-3 shadow-xl ${multi ? "grid grid-cols-3 gap-2" : ""}`}>
+            {group.sections.map((section) => (
+              <div key={section.title || "_"} className="flex flex-col">
+                {section.title && (
+                  <div className="px-3 pb-1.5 pt-1 text-[11px] font-semibold uppercase tracking-wide text-gold">
+                    {section.title}
+                  </div>
+                )}
+                {section.items.map((item) => (
+                  <Link
+                    key={item.to}
+                    to={item.to}
+                    className="block whitespace-nowrap rounded-lg px-3 py-2 text-sm text-foreground/80 transition-colors hover:bg-muted hover:text-primary"
+                    activeProps={{ className: "text-primary font-semibold bg-muted" }}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
             ))}
           </div>
         </div>
@@ -124,7 +137,7 @@ export function Header() {
             </Link>
           ))}
 
-          {[discoveryGroup, changeGroup, growthGroup, institutionsGroup].map((group) => (
+          {[assessmentsGroup, institutionsGroup].map((group) => (
             <DropdownNav key={group.label} group={group} />
           ))}
 
@@ -195,19 +208,26 @@ export function Header() {
                 {item.label}
               </Link>
             ))}
-            {[discoveryGroup, changeGroup, growthGroup, institutionsGroup].map((group) => (
+            {[assessmentsGroup, institutionsGroup].map((group) => (
               <div key={group.label}>
                 <div className="mt-3 pr-1 text-xs font-semibold text-primary">{group.label}</div>
-                {group.items.map((item) => (
-                  <Link
-                    key={item.to}
-                    to={item.to}
-                    onClick={() => setOpen(false)}
-                    className="block pr-6 py-2 text-sm text-foreground/70"
-                    activeProps={{ className: "text-primary font-semibold" }}
-                  >
-                    {item.label}
-                  </Link>
+                {group.sections.map((section) => (
+                  <div key={section.title || "_"}>
+                    {section.title && (
+                      <div className="mt-2 pr-3 text-[11px] font-semibold text-gold">{section.title}</div>
+                    )}
+                    {section.items.map((item) => (
+                      <Link
+                        key={item.to}
+                        to={item.to}
+                        onClick={() => setOpen(false)}
+                        className="block pr-6 py-2 text-sm text-foreground/70"
+                        activeProps={{ className: "text-primary font-semibold" }}
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
                 ))}
               </div>
             ))}
