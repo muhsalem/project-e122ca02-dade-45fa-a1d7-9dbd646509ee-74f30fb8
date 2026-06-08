@@ -104,6 +104,11 @@ function CounselorCRM() {
     upcoming: clients.filter((c) => c.nextSession && new Date(c.nextSession) >= new Date()).length,
   }), [clients]);
 
+  if (authLoading || allowed === null) {
+    return <div className="container-page flex min-h-[60vh] items-center justify-center"><Loader2 className="h-8 w-8 animate-spin text-gold" /></div>;
+  }
+  if (!allowed) return null;
+
   return (
     <section className="container-page py-12">
       <div className="mx-auto max-w-6xl">
