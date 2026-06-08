@@ -1,7 +1,9 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
-import { UserPlus, Search, Trash2, Phone, Mail, Calendar, FileText, ShieldCheck, Tag, Pencil, X, Save } from "lucide-react";
+import { UserPlus, Search, Trash2, Phone, Mail, Calendar, FileText, ShieldCheck, Tag, Pencil, X, Save, Loader2 } from "lucide-react";
 import { AutoIllustration } from "@/components/site/Illustration";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/use-auth";
 
 export const Route = createFileRoute("/counselor-crm")({
   head: () => ({
