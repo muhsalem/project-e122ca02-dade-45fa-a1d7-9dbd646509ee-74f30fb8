@@ -4,6 +4,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { Loader2, BookOpen, ChevronLeft, Sparkles } from "lucide-react";
 import { explainSpecialization } from "@/lib/specialization-explorer.functions";
 import specData from "@/data/specializations.json";
+import { WorkModeBadges } from "@/components/site/WorkModeBadges";
 
 type Sub = string;
 type GeneralSpec = { name: string; subs: Sub[] };
@@ -156,6 +157,12 @@ function SpecializationsPage() {
         {/* Step 2: pick general spec */}
         {field && !general && (
           <div className="mx-auto max-w-5xl">
+            <div className="mb-6">
+              <WorkModeBadges
+                fieldId={field.id}
+                title={`قابلية العمل في مجال ${field.label}: موظف / مستقل / مؤسس`}
+              />
+            </div>
             <h2 className="mb-4 font-serif text-xl text-primary">
               اختر التخصص العام داخل {field.label}
             </h2>
@@ -235,17 +242,27 @@ function SpecializationsPage() {
             )}
 
             {!loading && report && (
-              <article className="mt-8 rounded-2xl border border-border bg-card p-6 md:p-8 shadow-[var(--shadow-soft)]">
-                <div className="mb-4 flex items-center gap-2 text-xs text-muted-foreground">
-                  <Sparkles className="h-3.5 w-3.5 text-gold" />
-                  تحليل مولّد بالذكاء الاصطناعي للتخصص الدقيق
-                </div>
-                <div
-                  className="prose prose-sm max-w-none text-foreground prose-headings:font-serif prose-headings:text-primary prose-strong:text-primary prose-li:my-0.5"
-                  style={{ direction: "rtl" }}
-                  dangerouslySetInnerHTML={{ __html: mdToHtml(report) }}
-                />
-              </article>
+              <>
+                <article className="mt-8 rounded-2xl border border-border bg-card p-6 md:p-8 shadow-[var(--shadow-soft)]">
+                  <div className="mb-4 flex items-center gap-2 text-xs text-muted-foreground">
+                    <Sparkles className="h-3.5 w-3.5 text-gold" />
+                    تحليل مولّد بالذكاء الاصطناعي للتخصص الدقيق
+                  </div>
+                  <div
+                    className="prose prose-sm max-w-none text-foreground prose-headings:font-serif prose-headings:text-primary prose-strong:text-primary prose-li:my-0.5"
+                    style={{ direction: "rtl" }}
+                    dangerouslySetInnerHTML={{ __html: mdToHtml(report) }}
+                  />
+                </article>
+                {field && (
+                  <div className="mt-6">
+                    <WorkModeBadges
+                      fieldId={field.id}
+                      title={`قابلية ممارسة ${deep} كموظف / مستقل / مؤسس`}
+                    />
+                  </div>
+                )}
+              </>
             )}
           </div>
         )}

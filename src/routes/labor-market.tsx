@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { DollarSign, Briefcase, TrendingUp, MapPin, Database, Building2 } from "lucide-react";
+import { WorkModeBadges } from "@/components/site/WorkModeBadges";
 
 
 export const Route = createFileRoute("/labor-market")({
@@ -117,7 +118,7 @@ function LaborMarketPage() {
         </div>
 
         <div className="mt-6 overflow-x-auto rounded-2xl border border-border bg-card shadow-[var(--shadow-soft)]">
-          <table className="w-full min-w-[560px] text-sm">
+          <table className="w-full min-w-[760px] text-sm">
             <thead className="bg-secondary/60 text-xs text-muted-foreground">
               <tr>
                 <th className="px-4 py-3 text-right">الدور</th>
@@ -125,6 +126,7 @@ function LaborMarketPage() {
                 <th className="px-3 py-3 text-center">مبتدئ</th>
                 <th className="px-3 py-3 text-center">متوسط</th>
                 <th className="px-3 py-3 text-center">خبير</th>
+                <th className="px-3 py-3 text-right">قابلية العمل</th>
               </tr>
             </thead>
             <tbody>
@@ -137,6 +139,7 @@ function LaborMarketPage() {
                     <td className="px-3 py-3 text-center font-mono text-xs">{r.junior}</td>
                     <td className="px-3 py-3 text-center font-mono text-xs font-semibold text-gold">{r.mid}</td>
                     <td className="px-3 py-3 text-center font-mono text-xs">{r.senior}</td>
+                    <td className="px-3 py-3"><WorkModeBadges isco={s.isco} compact /></td>
                   </tr>
                 );
               })}
