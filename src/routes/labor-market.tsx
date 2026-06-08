@@ -126,6 +126,7 @@ function LaborMarketPage() {
                 <th className="px-3 py-3 text-center">مبتدئ</th>
                 <th className="px-3 py-3 text-center">متوسط</th>
                 <th className="px-3 py-3 text-center">خبير</th>
+                <th className="px-3 py-3 text-right">قابلية العمل</th>
               </tr>
             </thead>
             <tbody>
@@ -138,6 +139,7 @@ function LaborMarketPage() {
                     <td className="px-3 py-3 text-center font-mono text-xs">{r.junior}</td>
                     <td className="px-3 py-3 text-center font-mono text-xs font-semibold text-gold">{r.mid}</td>
                     <td className="px-3 py-3 text-center font-mono text-xs">{r.senior}</td>
+                    <td className="px-3 py-3"><WorkModeBadges isco={s.isco} compact /></td>
                   </tr>
                 );
               })}
