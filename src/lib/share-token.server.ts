@@ -21,13 +21,10 @@ function b64urlDecode(str: string): Uint8Array {
 }
 
 async function hmacKey(secret: string): Promise<CryptoKey> {
-  return crypto.subtle.importKey(
-    "raw",
-    new TextEncoder().encode(secret),
-    { name: "HMAC", hash: "SHA-256" },
-    false,
-    ["sign", "verify"],
-  );
+  const bytes = new TextEncoder().encode(secret);
+  const ab = new ArrayBuffer(bytes.byteLength);
+  new Uint8Array(ab).set(bytes);
+  return crypto.subtle.importKey("raw", ab, { name: "HMAC", hash: "SHA-256" }, false, ["sign", "verify"]);
 }
 
 function getSecret(): string {
