@@ -37,6 +37,8 @@ const TRACKS: Track[] = [
       { name: "اكتشاف المسار المهني (ISCO-08)", href: "/career-type-assessment" },
       { name: "الملف المعرفي (القدرات الأربع)", href: "/cognitive-profile" },
       { name: "نمط التعلّم (VARK + Kolb)", href: "/learning-style" },
+      { name: "القيم المهنية (WVI) — جديد", href: "/work-values" },
+      { name: "مرساة المسيرة المهنية (Schein) — جديد", href: "/career-anchors" },
       { name: "التخصص الجامعي المناسب", href: "/academic-major", note: "يستفيد تلقائيًا من نتائجك السابقة" },
     ],
   },
@@ -51,6 +53,7 @@ const TRACKS: Track[] = [
       { name: "وضوح المسار المهني (قبل/بعد)", href: "/clarity-check" },
       { name: "تشخيص تغيير المسار (احتراق + انخراط + دافعية)", href: "/career-change" },
       { name: "مؤشر الاحتراق المهني (MBI-GS)", href: "/burnout-check" },
+      { name: "الكفاءة الذاتية لاتخاذ القرار (CDSE) — جديد", href: "/career-self-efficacy" },
     ],
   },
   {
@@ -62,6 +65,7 @@ const TRACKS: Track[] = [
     accent: "from-emerald-500/15 to-emerald-500/5 border-emerald-500/30",
     tests: [
       { name: "تطوير المسار الوظيفي (الأداء + القيادة)", href: "/career-growth" },
+      { name: "الذكاء العاطفي (WLEIS) — جديد", href: "/emotional-intelligence" },
       { name: "سلالم المسارات المهنية (Junior → Lead)", href: "/career-ladder" },
       { name: "تقييم 360° (اختياري بإذن العميل)", href: "/review360" },
       { name: "شهادة الجاهزية المهنية", href: "/career-readiness", note: "تُصدَر بعد إكمال 4 اختبارات" },
