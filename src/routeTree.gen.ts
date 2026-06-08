@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WorkValuesRouteImport } from './routes/work-values'
 import { Route as WellbeingCheckRouteImport } from './routes/wellbeing-check'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as StartRouteImport } from './routes/start'
@@ -31,6 +32,7 @@ import { Route as LaborMarketRouteImport } from './routes/labor-market'
 import { Route as JoinAsCoachRouteImport } from './routes/join-as-coach'
 import { Route as InstitutionsRouteImport } from './routes/institutions'
 import { Route as ForCounselorsRouteImport } from './routes/for-counselors'
+import { Route as EmotionalIntelligenceRouteImport } from './routes/emotional-intelligence'
 import { Route as CounselorCrmRouteImport } from './routes/counselor-crm'
 import { Route as CounselorRouteImport } from './routes/counselor'
 import { Route as ComprehensiveAssessmentRouteImport } from './routes/comprehensive-assessment'
@@ -38,10 +40,12 @@ import { Route as CognitiveProfileRouteImport } from './routes/cognitive-profile
 import { Route as ClarityCheckRouteImport } from './routes/clarity-check'
 import { Route as CareerTypeAssessmentRouteImport } from './routes/career-type-assessment'
 import { Route as CareerTwinRouteImport } from './routes/career-twin'
+import { Route as CareerSelfEfficacyRouteImport } from './routes/career-self-efficacy'
 import { Route as CareerReadinessRouteImport } from './routes/career-readiness'
 import { Route as CareerLadderRouteImport } from './routes/career-ladder'
 import { Route as CareerGrowthRouteImport } from './routes/career-growth'
 import { Route as CareerChangeRouteImport } from './routes/career-change'
+import { Route as CareerAnchorsRouteImport } from './routes/career-anchors'
 import { Route as BurnoutCheckRouteImport } from './routes/burnout-check'
 import { Route as BookingRouteImport } from './routes/booking'
 import { Route as AuthRouteImport } from './routes/auth'
@@ -63,6 +67,11 @@ import { Route as RTokenRouteImport } from './routes/r.$token'
 import { Route as InstitutionsDashboardRouteImport } from './routes/institutions.dashboard'
 import { Route as IdpCodeRouteImport } from './routes/idp.$code'
 
+const WorkValuesRoute = WorkValuesRouteImport.update({
+  id: '/work-values',
+  path: '/work-values',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const WellbeingCheckRoute = WellbeingCheckRouteImport.update({
   id: '/wellbeing-check',
   path: '/wellbeing-check',
@@ -173,6 +182,11 @@ const ForCounselorsRoute = ForCounselorsRouteImport.update({
   path: '/for-counselors',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EmotionalIntelligenceRoute = EmotionalIntelligenceRouteImport.update({
+  id: '/emotional-intelligence',
+  path: '/emotional-intelligence',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CounselorCrmRoute = CounselorCrmRouteImport.update({
   id: '/counselor-crm',
   path: '/counselor-crm',
@@ -208,6 +222,11 @@ const CareerTwinRoute = CareerTwinRouteImport.update({
   path: '/career-twin',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CareerSelfEfficacyRoute = CareerSelfEfficacyRouteImport.update({
+  id: '/career-self-efficacy',
+  path: '/career-self-efficacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CareerReadinessRoute = CareerReadinessRouteImport.update({
   id: '/career-readiness',
   path: '/career-readiness',
@@ -226,6 +245,11 @@ const CareerGrowthRoute = CareerGrowthRouteImport.update({
 const CareerChangeRoute = CareerChangeRouteImport.update({
   id: '/career-change',
   path: '/career-change',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CareerAnchorsRoute = CareerAnchorsRouteImport.update({
+  id: '/career-anchors',
+  path: '/career-anchors',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BurnoutCheckRoute = BurnoutCheckRouteImport.update({
@@ -340,10 +364,12 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/booking': typeof BookingRoute
   '/burnout-check': typeof BurnoutCheckRoute
+  '/career-anchors': typeof CareerAnchorsRoute
   '/career-change': typeof CareerChangeRoute
   '/career-growth': typeof CareerGrowthRoute
   '/career-ladder': typeof CareerLadderRoute
   '/career-readiness': typeof CareerReadinessRoute
+  '/career-self-efficacy': typeof CareerSelfEfficacyRoute
   '/career-twin': typeof CareerTwinRoute
   '/career-type-assessment': typeof CareerTypeAssessmentRoute
   '/clarity-check': typeof ClarityCheckRoute
@@ -351,6 +377,7 @@ export interface FileRoutesByFullPath {
   '/comprehensive-assessment': typeof ComprehensiveAssessmentRoute
   '/counselor': typeof CounselorRoute
   '/counselor-crm': typeof CounselorCrmRoute
+  '/emotional-intelligence': typeof EmotionalIntelligenceRoute
   '/for-counselors': typeof ForCounselorsRoute
   '/institutions': typeof InstitutionsRouteWithChildren
   '/join-as-coach': typeof JoinAsCoachRoute
@@ -373,6 +400,7 @@ export interface FileRoutesByFullPath {
   '/start': typeof StartRoute
   '/terms': typeof TermsRoute
   '/wellbeing-check': typeof WellbeingCheckRoute
+  '/work-values': typeof WorkValuesRoute
   '/idp/$code': typeof IdpCodeRoute
   '/institutions/dashboard': typeof InstitutionsDashboardRoute
   '/r/$token': typeof RTokenRoute
@@ -395,10 +423,12 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/booking': typeof BookingRoute
   '/burnout-check': typeof BurnoutCheckRoute
+  '/career-anchors': typeof CareerAnchorsRoute
   '/career-change': typeof CareerChangeRoute
   '/career-growth': typeof CareerGrowthRoute
   '/career-ladder': typeof CareerLadderRoute
   '/career-readiness': typeof CareerReadinessRoute
+  '/career-self-efficacy': typeof CareerSelfEfficacyRoute
   '/career-twin': typeof CareerTwinRoute
   '/career-type-assessment': typeof CareerTypeAssessmentRoute
   '/clarity-check': typeof ClarityCheckRoute
@@ -406,6 +436,7 @@ export interface FileRoutesByTo {
   '/comprehensive-assessment': typeof ComprehensiveAssessmentRoute
   '/counselor': typeof CounselorRoute
   '/counselor-crm': typeof CounselorCrmRoute
+  '/emotional-intelligence': typeof EmotionalIntelligenceRoute
   '/for-counselors': typeof ForCounselorsRoute
   '/institutions': typeof InstitutionsRouteWithChildren
   '/join-as-coach': typeof JoinAsCoachRoute
@@ -428,6 +459,7 @@ export interface FileRoutesByTo {
   '/start': typeof StartRoute
   '/terms': typeof TermsRoute
   '/wellbeing-check': typeof WellbeingCheckRoute
+  '/work-values': typeof WorkValuesRoute
   '/idp/$code': typeof IdpCodeRoute
   '/institutions/dashboard': typeof InstitutionsDashboardRoute
   '/r/$token': typeof RTokenRoute
@@ -451,10 +483,12 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/booking': typeof BookingRoute
   '/burnout-check': typeof BurnoutCheckRoute
+  '/career-anchors': typeof CareerAnchorsRoute
   '/career-change': typeof CareerChangeRoute
   '/career-growth': typeof CareerGrowthRoute
   '/career-ladder': typeof CareerLadderRoute
   '/career-readiness': typeof CareerReadinessRoute
+  '/career-self-efficacy': typeof CareerSelfEfficacyRoute
   '/career-twin': typeof CareerTwinRoute
   '/career-type-assessment': typeof CareerTypeAssessmentRoute
   '/clarity-check': typeof ClarityCheckRoute
@@ -462,6 +496,7 @@ export interface FileRoutesById {
   '/comprehensive-assessment': typeof ComprehensiveAssessmentRoute
   '/counselor': typeof CounselorRoute
   '/counselor-crm': typeof CounselorCrmRoute
+  '/emotional-intelligence': typeof EmotionalIntelligenceRoute
   '/for-counselors': typeof ForCounselorsRoute
   '/institutions': typeof InstitutionsRouteWithChildren
   '/join-as-coach': typeof JoinAsCoachRoute
@@ -484,6 +519,7 @@ export interface FileRoutesById {
   '/start': typeof StartRoute
   '/terms': typeof TermsRoute
   '/wellbeing-check': typeof WellbeingCheckRoute
+  '/work-values': typeof WorkValuesRoute
   '/idp/$code': typeof IdpCodeRoute
   '/institutions/dashboard': typeof InstitutionsDashboardRoute
   '/r/$token': typeof RTokenRoute
@@ -508,10 +544,12 @@ export interface FileRouteTypes {
     | '/auth'
     | '/booking'
     | '/burnout-check'
+    | '/career-anchors'
     | '/career-change'
     | '/career-growth'
     | '/career-ladder'
     | '/career-readiness'
+    | '/career-self-efficacy'
     | '/career-twin'
     | '/career-type-assessment'
     | '/clarity-check'
@@ -519,6 +557,7 @@ export interface FileRouteTypes {
     | '/comprehensive-assessment'
     | '/counselor'
     | '/counselor-crm'
+    | '/emotional-intelligence'
     | '/for-counselors'
     | '/institutions'
     | '/join-as-coach'
@@ -541,6 +580,7 @@ export interface FileRouteTypes {
     | '/start'
     | '/terms'
     | '/wellbeing-check'
+    | '/work-values'
     | '/idp/$code'
     | '/institutions/dashboard'
     | '/r/$token'
@@ -563,10 +603,12 @@ export interface FileRouteTypes {
     | '/auth'
     | '/booking'
     | '/burnout-check'
+    | '/career-anchors'
     | '/career-change'
     | '/career-growth'
     | '/career-ladder'
     | '/career-readiness'
+    | '/career-self-efficacy'
     | '/career-twin'
     | '/career-type-assessment'
     | '/clarity-check'
@@ -574,6 +616,7 @@ export interface FileRouteTypes {
     | '/comprehensive-assessment'
     | '/counselor'
     | '/counselor-crm'
+    | '/emotional-intelligence'
     | '/for-counselors'
     | '/institutions'
     | '/join-as-coach'
@@ -596,6 +639,7 @@ export interface FileRouteTypes {
     | '/start'
     | '/terms'
     | '/wellbeing-check'
+    | '/work-values'
     | '/idp/$code'
     | '/institutions/dashboard'
     | '/r/$token'
@@ -618,10 +662,12 @@ export interface FileRouteTypes {
     | '/auth'
     | '/booking'
     | '/burnout-check'
+    | '/career-anchors'
     | '/career-change'
     | '/career-growth'
     | '/career-ladder'
     | '/career-readiness'
+    | '/career-self-efficacy'
     | '/career-twin'
     | '/career-type-assessment'
     | '/clarity-check'
@@ -629,6 +675,7 @@ export interface FileRouteTypes {
     | '/comprehensive-assessment'
     | '/counselor'
     | '/counselor-crm'
+    | '/emotional-intelligence'
     | '/for-counselors'
     | '/institutions'
     | '/join-as-coach'
@@ -651,6 +698,7 @@ export interface FileRouteTypes {
     | '/start'
     | '/terms'
     | '/wellbeing-check'
+    | '/work-values'
     | '/idp/$code'
     | '/institutions/dashboard'
     | '/r/$token'
@@ -674,10 +722,12 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   BookingRoute: typeof BookingRoute
   BurnoutCheckRoute: typeof BurnoutCheckRoute
+  CareerAnchorsRoute: typeof CareerAnchorsRoute
   CareerChangeRoute: typeof CareerChangeRoute
   CareerGrowthRoute: typeof CareerGrowthRoute
   CareerLadderRoute: typeof CareerLadderRoute
   CareerReadinessRoute: typeof CareerReadinessRoute
+  CareerSelfEfficacyRoute: typeof CareerSelfEfficacyRoute
   CareerTwinRoute: typeof CareerTwinRoute
   CareerTypeAssessmentRoute: typeof CareerTypeAssessmentRoute
   ClarityCheckRoute: typeof ClarityCheckRoute
@@ -685,6 +735,7 @@ export interface RootRouteChildren {
   ComprehensiveAssessmentRoute: typeof ComprehensiveAssessmentRoute
   CounselorRoute: typeof CounselorRoute
   CounselorCrmRoute: typeof CounselorCrmRoute
+  EmotionalIntelligenceRoute: typeof EmotionalIntelligenceRoute
   ForCounselorsRoute: typeof ForCounselorsRoute
   InstitutionsRoute: typeof InstitutionsRouteWithChildren
   JoinAsCoachRoute: typeof JoinAsCoachRoute
@@ -707,6 +758,7 @@ export interface RootRouteChildren {
   StartRoute: typeof StartRoute
   TermsRoute: typeof TermsRoute
   WellbeingCheckRoute: typeof WellbeingCheckRoute
+  WorkValuesRoute: typeof WorkValuesRoute
   IdpCodeRoute: typeof IdpCodeRoute
   RTokenRoute: typeof RTokenRoute
   ReportCodeRoute: typeof ReportCodeRoute
@@ -717,6 +769,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/work-values': {
+      id: '/work-values'
+      path: '/work-values'
+      fullPath: '/work-values'
+      preLoaderRoute: typeof WorkValuesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/wellbeing-check': {
       id: '/wellbeing-check'
       path: '/wellbeing-check'
@@ -871,6 +930,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ForCounselorsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/emotional-intelligence': {
+      id: '/emotional-intelligence'
+      path: '/emotional-intelligence'
+      fullPath: '/emotional-intelligence'
+      preLoaderRoute: typeof EmotionalIntelligenceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/counselor-crm': {
       id: '/counselor-crm'
       path: '/counselor-crm'
@@ -920,6 +986,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CareerTwinRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/career-self-efficacy': {
+      id: '/career-self-efficacy'
+      path: '/career-self-efficacy'
+      fullPath: '/career-self-efficacy'
+      preLoaderRoute: typeof CareerSelfEfficacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/career-readiness': {
       id: '/career-readiness'
       path: '/career-readiness'
@@ -946,6 +1019,13 @@ declare module '@tanstack/react-router' {
       path: '/career-change'
       fullPath: '/career-change'
       preLoaderRoute: typeof CareerChangeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/career-anchors': {
+      id: '/career-anchors'
+      path: '/career-anchors'
+      fullPath: '/career-anchors'
+      preLoaderRoute: typeof CareerAnchorsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/burnout-check': {
@@ -1135,10 +1215,12 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   BookingRoute: BookingRoute,
   BurnoutCheckRoute: BurnoutCheckRoute,
+  CareerAnchorsRoute: CareerAnchorsRoute,
   CareerChangeRoute: CareerChangeRoute,
   CareerGrowthRoute: CareerGrowthRoute,
   CareerLadderRoute: CareerLadderRoute,
   CareerReadinessRoute: CareerReadinessRoute,
+  CareerSelfEfficacyRoute: CareerSelfEfficacyRoute,
   CareerTwinRoute: CareerTwinRoute,
   CareerTypeAssessmentRoute: CareerTypeAssessmentRoute,
   ClarityCheckRoute: ClarityCheckRoute,
@@ -1146,6 +1228,7 @@ const rootRouteChildren: RootRouteChildren = {
   ComprehensiveAssessmentRoute: ComprehensiveAssessmentRoute,
   CounselorRoute: CounselorRoute,
   CounselorCrmRoute: CounselorCrmRoute,
+  EmotionalIntelligenceRoute: EmotionalIntelligenceRoute,
   ForCounselorsRoute: ForCounselorsRoute,
   InstitutionsRoute: InstitutionsRouteWithChildren,
   JoinAsCoachRoute: JoinAsCoachRoute,
@@ -1168,6 +1251,7 @@ const rootRouteChildren: RootRouteChildren = {
   StartRoute: StartRoute,
   TermsRoute: TermsRoute,
   WellbeingCheckRoute: WellbeingCheckRoute,
+  WorkValuesRoute: WorkValuesRoute,
   IdpCodeRoute: IdpCodeRoute,
   RTokenRoute: RTokenRoute,
   ReportCodeRoute: ReportCodeRoute,

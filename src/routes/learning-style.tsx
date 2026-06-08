@@ -662,6 +662,11 @@ function LearningStylePage() {
 
       <section className="container-page py-12">
         <div className="mx-auto max-w-3xl">
+          <div className="mb-4 rounded-xl border border-gold/30 bg-gold/5 p-3 text-xs leading-6 text-primary">
+            <strong>ملاحظة سيكومترية:</strong> الأقسام الأساسية المعتمدة علميًا هي <strong>VARK</strong> و<strong>Kolb</strong>؛
+            بقية النماذج مكمّلة استرشاديًا. ركّز على نتيجة هذين النموذجين عند اتخاذ قرارات التعلّم.
+          </div>
+
           <div className="mb-3 flex items-center justify-between text-xs text-muted-foreground">
             <span>الخطوة {step + 1} من {TOTAL_STEPS}</span>
             <span>{Math.round(progress)}%</span>

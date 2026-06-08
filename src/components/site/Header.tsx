@@ -15,7 +15,9 @@ const discoveryGroup = {
   label: "أريد الاكتشاف",
   items: [
     { to: "/self-discovery", label: "اكتشف ذاتك" },
-    { to: "/learning-style", label: "اكتشف نمط تعلمك" },
+    { to: "/work-values", label: "القيم المهنية (WVI)" },
+    { to: "/career-anchors", label: "مرساة المسيرة (Schein)" },
+    { to: "/learning-style", label: "نمط التعلّم (VARK + Kolb)" },
     { to: "/academic-major", label: "اكتشف تخصصك الدراسي" },
     { to: "/specializations", label: "خريطة التخصصات الجامعية" },
     { to: "/career-type-assessment", label: "اكتشف مسارك المهني" },
@@ -30,7 +32,8 @@ const changeGroup = {
     { to: "/career-change", label: "١. تشخيص الرغبة في تغيير المسار" },
     { to: "/burnout-check", label: "٢. مؤشر الاحتراق المهني" },
     { to: "/wellbeing-check", label: "٣. فحص الصحة النفسية المهنية" },
-    { to: "/career-type-assessment", label: "٤. اكتشاف المسار البديل المناسب" },
+    { to: "/career-self-efficacy", label: "٤. الكفاءة الذاتية لاتخاذ القرار" },
+    { to: "/career-type-assessment", label: "٥. اكتشاف المسار البديل المناسب" },
   ],
 } as const;
 
@@ -39,8 +42,9 @@ const growthGroup = {
   items: [
     // ترتيب سيكومتري: تقييم وخطة ← خريطة المسار ← شهادة الجاهزية كمخرج
     { to: "/career-growth", label: "١. خطة تطوير مساري الوظيفي" },
-    { to: "/career-ladder", label: "٢. سلّم المسار الوظيفي" },
-    { to: "/career-readiness", label: "٣. شهادة الجاهزية المهنية" },
+    { to: "/emotional-intelligence", label: "٢. الذكاء العاطفي (WLEIS)" },
+    { to: "/career-ladder", label: "٣. سلّم المسار الوظيفي" },
+    { to: "/career-readiness", label: "٤. شهادة الجاهزية المهنية" },
   ],
 } as const;
 
