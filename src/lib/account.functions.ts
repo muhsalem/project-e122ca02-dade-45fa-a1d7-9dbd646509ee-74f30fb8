@@ -16,18 +16,13 @@ export const deleteMyAccount = createServerFn({ method: "POST" })
       "clarity_scores",
       "development_plans",
       "journal_entries",
-      "review_requests",
-      "review_responses",
-      "coach_ratings",
       "profiles",
       "user_roles",
     ] as const;
 
     for (const t of tables) {
       const { error } = await supabaseAdmin.from(t).delete().eq("user_id", userId);
-      if (error && !String(error.message).includes("does not exist")) {
-        console.error(`delete ${t} failed:`, error.message);
-      }
+      if (error) console.error(`delete ${t} failed:`, error.message);
     }
 
     await audit({
