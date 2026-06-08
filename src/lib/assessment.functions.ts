@@ -23,6 +23,8 @@ function generateCode() {
 export const submitAssessment = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) => SectionSchema.parse(data))
   .handler(async ({ data }) => {
+    const { enforceRateLimit } = await import("./security.server");
+    await enforceRateLimit({ bucket: "assessment", limit: 30, windowSeconds: 600 });
     const apiKey = process.env.LOVABLE_API_KEY;
     if (!apiKey) throw new Error("LOVABLE_API_KEY is not configured");
 

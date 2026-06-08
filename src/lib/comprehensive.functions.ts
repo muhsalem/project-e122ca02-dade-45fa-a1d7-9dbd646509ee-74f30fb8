@@ -20,6 +20,8 @@ function generateCode() {
 export const submitComprehensive = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) => Schema.parse(data))
   .handler(async ({ data }) => {
+    const { enforceRateLimit } = await import("./security.server");
+    await enforceRateLimit({ bucket: "comprehensive", limit: 15, windowSeconds: 600 });
     const apiKey = process.env.LOVABLE_API_KEY;
     if (!apiKey) throw new Error("LOVABLE_API_KEY غير مُهيّأ");
 

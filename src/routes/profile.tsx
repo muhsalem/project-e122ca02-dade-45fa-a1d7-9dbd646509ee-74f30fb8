@@ -1,4 +1,5 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
@@ -7,7 +8,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
-import { Loader2, User as UserIcon, FileText, LogOut } from "lucide-react";
+import { Loader2, User as UserIcon, FileText, LogOut, ShieldAlert } from "lucide-react";
+import { deleteMyAccount } from "@/lib/account.functions";
 
 export const Route = createFileRoute("/profile")({
   component: ProfilePage,
@@ -129,7 +131,49 @@ function ProfilePage() {
             </Button>
           </CardContent>
         </Card>
+
+        <DangerZone />
       </div>
     </div>
+  );
+}
+
+function DangerZone() {
+  const navigate = useNavigate();
+  const deleteFn = useServerFn(deleteMyAccount);
+  const [confirm, setConfirm] = useState("");
+  const [busy, setBusy] = useState(false);
+
+  const onDelete = async () => {
+    if (confirm !== "حذف") return toast.error('اكتب كلمة "حذف" للتأكيد');
+    setBusy(true);
+    try {
+      await deleteFn({});
+      await supabase.auth.signOut();
+      toast.success("تم حذف حسابك وبياناتك نهائياً");
+      navigate({ to: "/" });
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "تعذّر حذف الحساب");
+      setBusy(false);
+    }
+  };
+
+  return (
+    <Card className="border-destructive/40">
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2 text-destructive"><ShieldAlert className="h-5 w-5" /> منطقة الخطر — حذف الحساب</CardTitle>
+        <CardDescription>
+          سيتم مسح جميع بياناتك (التقييمات، التقارير، الخطط، اليوميات) نهائياً ولا يمكن استرجاعها. هذا حقّك وفقاً لنظام حماية البيانات السعودي (PDPL).
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-3">
+        <Label htmlFor="confirm" className="text-sm">اكتب كلمة <span className="font-bold">حذف</span> للتأكيد:</Label>
+        <Input id="confirm" value={confirm} onChange={(e) => setConfirm(e.target.value)} placeholder="حذف" />
+        <Button variant="destructive" disabled={busy || confirm !== "حذف"} onClick={onDelete}>
+          {busy && <Loader2 className="ml-2 h-4 w-4 animate-spin" />}
+          حذف حسابي وبياناتي نهائياً
+        </Button>
+      </CardContent>
+    </Card>
   );
 }

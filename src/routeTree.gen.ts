@@ -21,6 +21,7 @@ import { Route as SchoolsRouteImport } from './routes/schools'
 import { Route as Review360RouteImport } from './routes/review360'
 import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as ParentDashboardRouteImport } from './routes/parent-dashboard'
 import { Route as MyAssessmentsRouteImport } from './routes/my-assessments'
@@ -118,6 +119,11 @@ const ResourcesRoute = ResourcesRouteImport.update({
 const ProfileRoute = ProfileRouteImport.update({
   id: '/profile',
   path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PricingRoute = PricingRouteImport.update({
@@ -341,6 +347,7 @@ export interface FileRoutesByFullPath {
   '/my-assessments': typeof MyAssessmentsRoute
   '/parent-dashboard': typeof ParentDashboardRoute
   '/pricing': typeof PricingRoute
+  '/privacy': typeof PrivacyRoute
   '/profile': typeof ProfileRoute
   '/resources': typeof ResourcesRouteWithChildren
   '/review360': typeof Review360Route
@@ -393,6 +400,7 @@ export interface FileRoutesByTo {
   '/my-assessments': typeof MyAssessmentsRoute
   '/parent-dashboard': typeof ParentDashboardRoute
   '/pricing': typeof PricingRoute
+  '/privacy': typeof PrivacyRoute
   '/profile': typeof ProfileRoute
   '/resources': typeof ResourcesRouteWithChildren
   '/review360': typeof Review360Route
@@ -446,6 +454,7 @@ export interface FileRoutesById {
   '/my-assessments': typeof MyAssessmentsRoute
   '/parent-dashboard': typeof ParentDashboardRoute
   '/pricing': typeof PricingRoute
+  '/privacy': typeof PrivacyRoute
   '/profile': typeof ProfileRoute
   '/resources': typeof ResourcesRouteWithChildren
   '/review360': typeof Review360Route
@@ -500,6 +509,7 @@ export interface FileRouteTypes {
     | '/my-assessments'
     | '/parent-dashboard'
     | '/pricing'
+    | '/privacy'
     | '/profile'
     | '/resources'
     | '/review360'
@@ -552,6 +562,7 @@ export interface FileRouteTypes {
     | '/my-assessments'
     | '/parent-dashboard'
     | '/pricing'
+    | '/privacy'
     | '/profile'
     | '/resources'
     | '/review360'
@@ -604,6 +615,7 @@ export interface FileRouteTypes {
     | '/my-assessments'
     | '/parent-dashboard'
     | '/pricing'
+    | '/privacy'
     | '/profile'
     | '/resources'
     | '/review360'
@@ -657,6 +669,7 @@ export interface RootRouteChildren {
   MyAssessmentsRoute: typeof MyAssessmentsRoute
   ParentDashboardRoute: typeof ParentDashboardRoute
   PricingRoute: typeof PricingRoute
+  PrivacyRoute: typeof PrivacyRoute
   ProfileRoute: typeof ProfileRoute
   ResourcesRoute: typeof ResourcesRouteWithChildren
   Review360Route: typeof Review360Route
@@ -760,6 +773,13 @@ declare module '@tanstack/react-router' {
       path: '/profile'
       fullPath: '/profile'
       preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/pricing': {
@@ -1094,6 +1114,7 @@ const rootRouteChildren: RootRouteChildren = {
   MyAssessmentsRoute: MyAssessmentsRoute,
   ParentDashboardRoute: ParentDashboardRoute,
   PricingRoute: PricingRoute,
+  PrivacyRoute: PrivacyRoute,
   ProfileRoute: ProfileRoute,
   ResourcesRoute: ResourcesRouteWithChildren,
   Review360Route: Review360Route,
@@ -1115,13 +1136,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

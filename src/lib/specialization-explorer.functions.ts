@@ -10,6 +10,8 @@ const Schema = z.object({
 export const explainSpecialization = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) => Schema.parse(data))
   .handler(async ({ data }) => {
+    const { enforceRateLimit } = await import("./security.server");
+    await enforceRateLimit({ bucket: "specialization-explorer", limit: 30, windowSeconds: 600 });
     const apiKey = process.env.LOVABLE_API_KEY;
     if (!apiKey) throw new Error("LOVABLE_API_KEY غير مُهيّأ");
 

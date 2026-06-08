@@ -12,6 +12,19 @@ export const Route = createFileRoute("/pricing")({
       { property: "og:url", content: "/pricing" },
     ],
     links: [{ rel: "canonical", href: "/pricing" }],
+    scripts: [{
+      type: "application/ld+json",
+      children: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: [
+          { "@type": "Question", name: "هل التقييمات مجانية؟", acceptedAnswer: { "@type": "Answer", text: "نعم، جميع التقييمات الذاتية (RIASEC، Big Five، الفحص النفسي، تحليل فجوة المهارات) مجانية بالكامل." } },
+          { "@type": "Question", name: "كم سعر جلسة الكوتشينج؟", acceptedAnswer: { "@type": "Answer", text: "350 ريالاً للجلسة الفردية (60 دقيقة)، و1,500 ريال لباقة 5 جلسات، مع جلسة تعارف مجانية أولى مدتها 15 دقيقة." } },
+          { "@type": "Question", name: "هل يمكنني الإلغاء؟", acceptedAnswer: { "@type": "Answer", text: "نعم، يمكن إلغاء الجلسة قبل 24 ساعة من موعدها مع استرداد كامل." } },
+          { "@type": "Question", name: "هل تتوفر باقات للمؤسسات؟", acceptedAnswer: { "@type": "Answer", text: "نعم، نوفر باقات مخصصة للمدارس والجامعات وأقسام الموارد البشرية مع لوحة تحكم للمشرفين وتقارير إجمالية." } },
+        ],
+      }),
+    }],
   }),
   component: PricingPage,
 });
