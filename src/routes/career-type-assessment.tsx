@@ -398,6 +398,13 @@ function CareerTypePage() {
   return (
     <div className="min-h-screen bg-background">
       <div className="container-page py-10">
+        {/* Track 1 unifier */}
+        <div className="mx-auto mb-6 max-w-3xl rounded-xl border border-gold/30 bg-gold/5 px-4 py-3 text-center text-xs text-primary">
+          هذا الاختبار جزء من <Link to="/paths" className="font-semibold underline-offset-4 hover:underline">المسار 1 — الاكتشاف</Link>.
+          يُكمّل اختبار{" "}
+          <Link to="/self-discovery" className="font-semibold underline-offset-4 hover:underline">اكتشاف الذات (RIASEC + Big Five)</Link>{" "}
+          ويربط نتائجك بمسمى مهني عبر ISCO-08.
+        </div>
         {/* Header */}
         <div className="mb-8 text-center">
           <AutoIllustration topic="/career-type-assessment" className="mx-auto mb-3 h-24 w-24 text-primary" />

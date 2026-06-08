@@ -702,6 +702,12 @@ function SelfDiscoveryPage() {
           <p className="mx-auto mt-3 max-w-2xl text-sm text-muted-foreground">
             10 محاور بأسئلة اختيارية سريعة. لا تحتاج للكتابة — فقط اختر ما يصفك، وسيُصدر الذكاء الاصطناعي تقريرًا تفصيليًا بكود لمناقشته مع مرشدك المهني.
           </p>
+          <div className="mx-auto mt-5 max-w-2xl rounded-xl border border-gold/30 bg-gold/5 px-4 py-3 text-xs text-primary">
+            هذا الاختبار ضمن <Link to="/paths" className="font-semibold underline-offset-4 hover:underline">المسار 1 — الاكتشاف</Link>.
+            بعد الانتهاء، يُنصح بإكمال{" "}
+            <Link to="/career-type-assessment" className="font-semibold underline-offset-4 hover:underline">اكتشاف المسار المهني (ISCO-08)</Link>{" "}
+            لربط نتائجك بمسمى مهني محدّد.
+          </div>
         </div>
       </section>
 
