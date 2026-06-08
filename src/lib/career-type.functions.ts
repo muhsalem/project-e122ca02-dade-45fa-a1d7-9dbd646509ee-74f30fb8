@@ -36,6 +36,8 @@ function generateCode() {
 export const submitCareerType = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) => Schema.parse(data))
   .handler(async ({ data }) => {
+    const { enforceRateLimit } = await import("./security.server");
+    await enforceRateLimit({ bucket: "career-type", limit: 20, windowSeconds: 600 });
     const apiKey = process.env.LOVABLE_API_KEY;
     if (!apiKey) throw new Error("LOVABLE_API_KEY غير مُهيّأ");
 

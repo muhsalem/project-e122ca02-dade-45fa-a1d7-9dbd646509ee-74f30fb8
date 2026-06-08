@@ -22,6 +22,8 @@ function generateCode() {
 export const submitLearningStyle = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) => SectionSchema.parse(data))
   .handler(async ({ data }) => {
+    const { enforceRateLimit } = await import("./security.server");
+    await enforceRateLimit({ bucket: "learning-style", limit: 20, windowSeconds: 600 });
     const apiKey = process.env.LOVABLE_API_KEY;
     if (!apiKey) throw new Error("LOVABLE_API_KEY is not configured");
 

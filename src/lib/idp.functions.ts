@@ -31,6 +31,8 @@ export const generateIDP = createServerFn({ method: "POST" })
       .maybeSingle();
     if (rErr || !report) throw new Error("لم يُعثر على التقرير.");
 
+    const { enforceRateLimit } = await import("./security.server");
+    await enforceRateLimit({ bucket: "idp", limit: 20, windowSeconds: 600 });
     const apiKey = process.env.LOVABLE_API_KEY;
     if (!apiKey) throw new Error("LOVABLE_API_KEY غير مُهيّأ.");
 
