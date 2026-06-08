@@ -40,6 +40,16 @@ function SpecializationsPage() {
   const [loading, setLoading] = useState(false);
   const [report, setReport] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
+  const [modeFilter, setModeFilter] = useState<keyof WorkModes | "all">("all");
+
+  const filteredFields = useMemo(() => {
+    if (modeFilter === "all") return FIELDS;
+    return FIELDS.filter((f) => {
+      const m = getWorkModesByField(f.id);
+      const lvl = m[modeFilter].level;
+      return lvl === "high" || lvl === "medium";
+    });
+  }, [modeFilter]);
 
   const explainFn = useServerFn(explainSpecialization);
 
