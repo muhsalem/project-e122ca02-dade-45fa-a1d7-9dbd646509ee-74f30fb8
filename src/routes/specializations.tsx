@@ -5,6 +5,7 @@ import { Loader2, BookOpen, ChevronLeft, Sparkles } from "lucide-react";
 import { explainSpecialization } from "@/lib/specialization-explorer.functions";
 import specData from "@/data/specializations.json";
 import { WorkModeBadges } from "@/components/site/WorkModeBadges";
+import { getWorkModesByField, MODE_LABELS, type WorkModes } from "@/lib/work-modes";
 
 type Sub = string;
 type GeneralSpec = { name: string; subs: Sub[] };
@@ -39,6 +40,16 @@ function SpecializationsPage() {
   const [loading, setLoading] = useState(false);
   const [report, setReport] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
+  const [modeFilter, setModeFilter] = useState<keyof WorkModes | "all">("all");
+
+  const filteredFields = useMemo(() => {
+    if (modeFilter === "all") return FIELDS;
+    return FIELDS.filter((f) => {
+      const m = getWorkModesByField(f.id);
+      const lvl = m[modeFilter].level;
+      return lvl === "high" || lvl === "medium";
+    });
+  }, [modeFilter]);
 
   const explainFn = useServerFn(explainSpecialization);
 
@@ -131,26 +142,89 @@ function SpecializationsPage() {
 
         {/* Step 1: pick field */}
         {!field && (
-          <div className="mx-auto grid max-w-5xl gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {FIELDS.map((f) => (
-              <button
-                key={f.id}
-                onClick={() => setFieldId(f.id)}
-                className="group rounded-2xl border border-border bg-card p-5 text-right transition hover:-translate-y-0.5 hover:border-gold/60 hover:shadow-[var(--shadow-soft)]"
-              >
-                <div
-                  className="mb-3 flex h-12 w-12 items-center justify-center rounded-xl text-2xl"
-                  style={{ backgroundColor: f.color.bg, color: f.color.text }}
-                >
-                  {f.icon}
-                </div>
-                <h3 className="font-serif text-lg text-primary">{f.label}</h3>
-                <p className="mt-1 text-xs text-muted-foreground">
-                  {f.generalSpecs.length} تخصصات عامة •{" "}
-                  {f.generalSpecs.reduce((n, g) => n + g.subs.length, 0)} تخصص دقيق
+          <div className="mx-auto max-w-5xl">
+            {/* Filter by work mode */}
+            <div className="mb-6 rounded-2xl border border-border bg-card p-4">
+              <div className="mb-2 text-xs font-medium text-primary">
+                فلترة المجالات حسب طريقة العمل المفضّلة:
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {([
+                  { k: "all" as const, label: "🌐 الكل" },
+                  { k: "employee" as const, label: `${MODE_LABELS.employee.icon} ${MODE_LABELS.employee.ar}` },
+                  { k: "freelance" as const, label: `${MODE_LABELS.freelance.icon} ${MODE_LABELS.freelance.ar}` },
+                  { k: "founder" as const, label: `${MODE_LABELS.founder.icon} ${MODE_LABELS.founder.ar}` },
+                ]).map((opt) => {
+                  const active = modeFilter === opt.k;
+                  return (
+                    <button
+                      key={opt.k}
+                      onClick={() => setModeFilter(opt.k)}
+                      className={`rounded-full border px-3 py-1.5 text-xs transition ${
+                        active
+                          ? "border-gold bg-gold/15 font-semibold text-primary"
+                          : "border-border bg-background text-muted-foreground hover:border-gold/50 hover:text-primary"
+                      }`}
+                    >
+                      {opt.label}
+                    </button>
+                  );
+                })}
+              </div>
+              {modeFilter !== "all" && (
+                <p className="mt-2 text-[11px] text-muted-foreground">
+                  يعرض المجالات ذات ملاءمة عالية أو متوسطة لدور &quot;{MODE_LABELS[modeFilter].ar}&quot; ({filteredFields.length} مجال).
                 </p>
-              </button>
-            ))}
+              )}
+            </div>
+
+            {filteredFields.length === 0 ? (
+              <div className="rounded-xl border border-dashed border-border p-8 text-center text-sm text-muted-foreground">
+                لا توجد مجالات تطابق هذا الفلتر. جرّب اختيار &quot;الكل&quot;.
+              </div>
+            ) : (
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {filteredFields.map((f) => {
+                  const m = getWorkModesByField(f.id);
+                  return (
+                    <button
+                      key={f.id}
+                      onClick={() => setFieldId(f.id)}
+                      className="group rounded-2xl border border-border bg-card p-5 text-right transition hover:-translate-y-0.5 hover:border-gold/60 hover:shadow-[var(--shadow-soft)]"
+                    >
+                      <div
+                        className="mb-3 flex h-12 w-12 items-center justify-center rounded-xl text-2xl"
+                        style={{ backgroundColor: f.color.bg, color: f.color.text }}
+                      >
+                        {f.icon}
+                      </div>
+                      <h3 className="font-serif text-lg text-primary">{f.label}</h3>
+                      <p className="mt-1 text-xs text-muted-foreground">
+                        {f.generalSpecs.length} تخصصات عامة •{" "}
+                        {f.generalSpecs.reduce((n, g) => n + g.subs.length, 0)} تخصص دقيق
+                      </p>
+                      <div className="mt-3 flex flex-wrap gap-1">
+                        {(["employee", "freelance", "founder"] as const).map((mk) => (
+                          <span
+                            key={mk}
+                            title={`${MODE_LABELS[mk].ar}: ${m[mk].level === "high" ? "عالية" : m[mk].level === "medium" ? "متوسطة" : "محدودة"}`}
+                            className={`inline-flex items-center gap-0.5 rounded-full px-1.5 py-0.5 text-[10px] ${
+                              m[mk].level === "high"
+                                ? "bg-emerald-500/10 text-emerald-700 dark:text-emerald-300"
+                                : m[mk].level === "medium"
+                                  ? "bg-amber-500/10 text-amber-700 dark:text-amber-300"
+                                  : "bg-rose-500/10 text-rose-700 dark:text-rose-300"
+                            }`}
+                          >
+                            {MODE_LABELS[mk].icon}
+                          </span>
+                        ))}
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            )}
           </div>
         )}
 
@@ -288,7 +362,11 @@ function mdToHtml(md: string): string {
     escape(s)
       .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
       .replace(/\*(.+?)\*/g, "<em>$1</em>")
-      .replace(/`(.+?)`/g, "<code>$1</code>");
+      .replace(/`(.+?)`/g, "<code>$1</code>")
+      .replace(
+        /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,
+        '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-gold underline hover:opacity-80">$1</a>',
+      );
 
   for (const raw of lines) {
     const line = raw.trimEnd();
