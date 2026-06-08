@@ -45,11 +45,28 @@ function save(list: Client[]) {
 }
 
 function CounselorCRM() {
+  const { user, loading: authLoading } = useAuth();
+  const navigate = useNavigate();
+  const [allowed, setAllowed] = useState<boolean | null>(null);
   const [clients, setClients] = useState<Client[]>([]);
   const [editing, setEditing] = useState<Client | null>(null);
   const [showForm, setShowForm] = useState(false);
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<Status | "all">("all");
+
+  useEffect(() => {
+    if (authLoading) return;
+    if (!user) { navigate({ to: "/auth" }); return; }
+    supabase
+      .from("user_roles")
+      .select("role")
+      .eq("user_id", user.id)
+      .then(({ data }) => {
+        const isCoach = (data ?? []).some((r: { role: string }) => r.role === "coach" || r.role === "admin");
+        setAllowed(isCoach);
+        if (!isCoach) navigate({ to: "/profile" });
+      });
+  }, [user, authLoading, navigate]);
 
   useEffect(() => { setClients(load()); }, []);
 
