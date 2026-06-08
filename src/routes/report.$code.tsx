@@ -1,11 +1,14 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useState } from "react";
-import { Copy, Check, Printer, ArrowLeft, Loader2 } from "lucide-react";
+import { Copy, Check, Printer, ArrowLeft, Loader2, Share2 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { supabase } from "@/integrations/supabase/client";
 import { ContentProtection } from "@/components/site/ContentProtection";
 import { MarketPulseInsights } from "@/components/site/MarketPulseInsights";
 import { CareerLadderInsights } from "@/components/site/CareerLadderInsights";
+import { createReportShareToken } from "@/lib/share.functions";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/report/$code")({
   head: ({ params }) => ({
