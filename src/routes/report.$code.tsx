@@ -1,11 +1,14 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useState } from "react";
-import { Copy, Check, Printer, ArrowLeft, Loader2 } from "lucide-react";
+import { Copy, Check, Printer, ArrowLeft, Loader2, Share2 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { supabase } from "@/integrations/supabase/client";
 import { ContentProtection } from "@/components/site/ContentProtection";
 import { MarketPulseInsights } from "@/components/site/MarketPulseInsights";
 import { CareerLadderInsights } from "@/components/site/CareerLadderInsights";
+import { createReportShareToken } from "@/lib/share.functions";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/report/$code")({
   head: ({ params }) => ({
@@ -108,6 +111,7 @@ function ReportPage() {
                   <Printer className="h-3.5 w-3.5" />
                   طباعة / PDF
                 </button>
+                <ShareLinkButton code={code} />
                 <Link to="/idp/$code" params={{ code }} className="inline-flex items-center gap-1.5 rounded-md border border-gold bg-gold/10 px-3 py-1.5 text-xs font-medium text-primary">
                   خطة التطوير 90 يوم
                 </Link>
@@ -128,6 +132,34 @@ function ReportPage() {
         <ViewToggle code={code} name={data.name} stage={data.stage} report={data.report} />
       </article>
     </div>
+  );
+}
+
+function ShareLinkButton({ code }: { code: string }) {
+  const fn = useServerFn(createReportShareToken);
+  const [busy, setBusy] = useState(false);
+  const onClick = async () => {
+    setBusy(true);
+    try {
+      const { token } = await fn({ data: { code, ttlDays: 30 } });
+      const url = `${window.location.origin}/r/${token}`;
+      await navigator.clipboard.writeText(url);
+      toast.success("تم نسخ رابط مشاركة آمن (صالح 30 يوماً)");
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "تعذّر إنشاء الرابط");
+    } finally {
+      setBusy(false);
+    }
+  };
+  return (
+    <button
+      onClick={onClick}
+      disabled={busy}
+      className="inline-flex items-center gap-1.5 rounded-md border border-border bg-background px-3 py-1.5 text-xs disabled:opacity-50"
+    >
+      {busy ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Share2 className="h-3.5 w-3.5" />}
+      رابط مشاركة آمن
+    </button>
   );
 }
 

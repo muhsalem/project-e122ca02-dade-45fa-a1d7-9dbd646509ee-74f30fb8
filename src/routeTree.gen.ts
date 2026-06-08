@@ -58,6 +58,7 @@ import { Route as ResourcesCoachingVsCareerCounselingRouteImport } from './route
 import { Route as ResourcesCareerPathTermsRouteImport } from './routes/resources.career-path-terms'
 import { Route as ResourcesCareerChangeStrategiesRouteImport } from './routes/resources.career-change-strategies'
 import { Route as ReportCodeRouteImport } from './routes/report.$code'
+import { Route as RTokenRouteImport } from './routes/r.$token'
 import { Route as InstitutionsDashboardRouteImport } from './routes/institutions.dashboard'
 import { Route as IdpCodeRouteImport } from './routes/idp.$code'
 
@@ -310,6 +311,11 @@ const ReportCodeRoute = ReportCodeRouteImport.update({
   path: '/report/$code',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RTokenRoute = RTokenRouteImport.update({
+  id: '/r/$token',
+  path: '/r/$token',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const InstitutionsDashboardRoute = InstitutionsDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -362,6 +368,7 @@ export interface FileRoutesByFullPath {
   '/wellbeing-check': typeof WellbeingCheckRoute
   '/idp/$code': typeof IdpCodeRoute
   '/institutions/dashboard': typeof InstitutionsDashboardRoute
+  '/r/$token': typeof RTokenRoute
   '/report/$code': typeof ReportCodeRoute
   '/resources/career-change-strategies': typeof ResourcesCareerChangeStrategiesRoute
   '/resources/career-path-terms': typeof ResourcesCareerPathTermsRoute
@@ -415,6 +422,7 @@ export interface FileRoutesByTo {
   '/wellbeing-check': typeof WellbeingCheckRoute
   '/idp/$code': typeof IdpCodeRoute
   '/institutions/dashboard': typeof InstitutionsDashboardRoute
+  '/r/$token': typeof RTokenRoute
   '/report/$code': typeof ReportCodeRoute
   '/resources/career-change-strategies': typeof ResourcesCareerChangeStrategiesRoute
   '/resources/career-path-terms': typeof ResourcesCareerPathTermsRoute
@@ -469,6 +477,7 @@ export interface FileRoutesById {
   '/wellbeing-check': typeof WellbeingCheckRoute
   '/idp/$code': typeof IdpCodeRoute
   '/institutions/dashboard': typeof InstitutionsDashboardRoute
+  '/r/$token': typeof RTokenRoute
   '/report/$code': typeof ReportCodeRoute
   '/resources/career-change-strategies': typeof ResourcesCareerChangeStrategiesRoute
   '/resources/career-path-terms': typeof ResourcesCareerPathTermsRoute
@@ -524,6 +533,7 @@ export interface FileRouteTypes {
     | '/wellbeing-check'
     | '/idp/$code'
     | '/institutions/dashboard'
+    | '/r/$token'
     | '/report/$code'
     | '/resources/career-change-strategies'
     | '/resources/career-path-terms'
@@ -577,6 +587,7 @@ export interface FileRouteTypes {
     | '/wellbeing-check'
     | '/idp/$code'
     | '/institutions/dashboard'
+    | '/r/$token'
     | '/report/$code'
     | '/resources/career-change-strategies'
     | '/resources/career-path-terms'
@@ -630,6 +641,7 @@ export interface FileRouteTypes {
     | '/wellbeing-check'
     | '/idp/$code'
     | '/institutions/dashboard'
+    | '/r/$token'
     | '/report/$code'
     | '/resources/career-change-strategies'
     | '/resources/career-path-terms'
@@ -683,6 +695,7 @@ export interface RootRouteChildren {
   TermsRoute: typeof TermsRoute
   WellbeingCheckRoute: typeof WellbeingCheckRoute
   IdpCodeRoute: typeof IdpCodeRoute
+  RTokenRoute: typeof RTokenRoute
   ReportCodeRoute: typeof ReportCodeRoute
   ReviewResultsCodeRoute: typeof ReviewResultsCodeRoute
   ReviewSubmitCodeRoute: typeof ReviewSubmitCodeRoute
@@ -1034,6 +1047,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ReportCodeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/r/$token': {
+      id: '/r/$token'
+      path: '/r/$token'
+      fullPath: '/r/$token'
+      preLoaderRoute: typeof RTokenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/institutions/dashboard': {
       id: '/institutions/dashboard'
       path: '/dashboard'
@@ -1128,6 +1148,7 @@ const rootRouteChildren: RootRouteChildren = {
   TermsRoute: TermsRoute,
   WellbeingCheckRoute: WellbeingCheckRoute,
   IdpCodeRoute: IdpCodeRoute,
+  RTokenRoute: RTokenRoute,
   ReportCodeRoute: ReportCodeRoute,
   ReviewResultsCodeRoute: ReviewResultsCodeRoute,
   ReviewSubmitCodeRoute: ReviewSubmitCodeRoute,
