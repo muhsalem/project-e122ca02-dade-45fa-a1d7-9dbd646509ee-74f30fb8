@@ -35,7 +35,7 @@ export function Footer() {
           <h4 className="mb-4 font-serif text-base text-primary">قانوني وتواصل</h4>
           <ul className="space-y-3 text-sm text-muted-foreground">
             <li><Link to="/terms" className="hover:text-primary">الشروط والأحكام</Link></li>
-            <li><Link to="/terms" hash="privacy" className="hover:text-primary">سياسة الخصوصية</Link></li>
+            <li><Link to="/privacy" className="hover:text-primary">سياسة الخصوصية</Link></li>
             <li><Link to="/terms" hash="cookies" className="hover:text-primary">سياسة الكوكيز</Link></li>
             <li><Link to="/terms" hash="ethics" className="hover:text-primary">الميثاق الأخلاقي</Link></li>
             <li className="flex items-center gap-2"><Mail className="h-4 w-4 text-gold" aria-hidden="true" /><span>info@bosla.app</span></li>
