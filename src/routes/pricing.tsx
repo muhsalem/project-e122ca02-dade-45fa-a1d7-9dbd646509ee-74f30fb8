@@ -157,6 +157,66 @@ function PricingPage() {
       </section>
 
       <section className="container-page py-16">
+        <div className="text-center">
+          <h2 className="font-serif text-2xl text-primary md:text-3xl">ما المجاني وما المدفوع؟</h2>
+          <p className="mx-auto mt-3 max-w-2xl text-muted-foreground">
+            جميع الاختبارات النفسية والمهنية في بُوصلة <span className="font-semibold text-primary">مجانية بالكامل</span> — تشمل الاكتشاف والتغيير والتطوير.
+            ما يُدفع مقابله فقط هو الجلسات البشرية (الكوتشينج/الإرشاد) والتقارير المعمّقة والشهادات الموثّقة.
+          </p>
+        </div>
+
+        <div className="mt-10 grid gap-6 md:grid-cols-3">
+          {[
+            {
+              track: "مسار الاكتشاف",
+              free: ["اكتشف ذاتك (RIASEC + Big Five)", "اكتشف مسارك المهني (ISCO-08)", "القيم المهنية (WVI)", "مرساة المسيرة (Schein)", "نمط التعلّم (VARK + Kolb)", "اقتراح التخصص الجامعي"],
+              paid: ["تقرير AI تفصيلي PDF (قريبًا) — 49 ر.س", "جلسة إرشاد جامعي 60 دق — 350 ر.س"],
+            },
+            {
+              track: "مسار التغيير",
+              free: ["تشخيص الرغبة في تغيير المسار", "مؤشر الاحتراق المهني (MBI-GS)", "الفحص النفسي المختصر (PHQ-2 + GAD-2)", "الكفاءة الذاتية لاتخاذ القرار (CDSE)"],
+              paid: ["خطة انتقال مهني مكتوبة — 199 ر.س", "باقة 3 جلسات كوتشينج تغيير المسار — 950 ر.س"],
+            },
+            {
+              track: "مسار التطوير",
+              free: ["خطة تطوير المسار الوظيفي", "الذكاء العاطفي (WLEIS)", "سلّم المسار الوظيفي", "تقييم 360° (نسخة أساسية)"],
+              paid: ["شهادة الجاهزية المهنية الموثّقة — 99 ر.س", "باقة المسار الكامل (5 جلسات + IDP 90 يوم) — 1,500 ر.س"],
+            },
+          ].map((t) => (
+            <div key={t.track} className="rounded-2xl border border-border bg-card p-6">
+              <h3 className="font-serif text-lg text-primary">{t.track}</h3>
+              <div className="mt-4">
+                <div className="text-xs font-semibold uppercase tracking-wide text-gold">مجاني للجميع</div>
+                <ul className="mt-2 space-y-1.5">
+                  {t.free.map((f) => (
+                    <li key={f} className="flex items-start gap-2 text-sm">
+                      <Check className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
+                      <span className="text-foreground/85">{f}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="mt-5 border-t border-border pt-4">
+                <div className="text-xs font-semibold uppercase tracking-wide text-primary">إضافات مدفوعة (اختيارية)</div>
+                <ul className="mt-2 space-y-1.5">
+                  {t.paid.map((p) => (
+                    <li key={p} className="flex items-start gap-2 text-sm">
+                      <Sparkles className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                      <span className="text-foreground/85">{p}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <p className="mx-auto mt-6 max-w-3xl text-center text-xs text-muted-foreground">
+          * الأسعار شاملة ضريبة القيمة المضافة. الدفع متوافق شرعيًا (مدى، Apple Pay، STC Pay، تابي دفعة واحدة فقط بدون فوائد).
+        </p>
+      </section>
+
+      <section className="container-page py-16">
         <h2 className="text-center font-serif text-2xl text-primary">للمؤسسات والمدارس</h2>
         <p className="mx-auto mt-3 max-w-2xl text-center text-muted-foreground">
           نقدّم باقات مخصصة بأسعار جماعية للمدارس والجامعات والشركات،
