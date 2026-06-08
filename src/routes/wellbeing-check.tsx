@@ -9,6 +9,7 @@ import { EmergencyHelpline } from "@/components/site/EmergencyHelpline";
 import { AssessmentLimits } from "@/components/site/AssessmentLimits";
 import { useAutosave } from "@/hooks/use-autosave";
 import { AutoIllustration } from "@/components/site/Illustration";
+import { ShariaNotice } from "@/components/site/ShariaNotice";
 
 export const Route = createFileRoute("/wellbeing-check")({
   head: () => ({
@@ -95,7 +96,9 @@ function WellbeingPage() {
             اجتهاديّة وقد تتأثّر بحالتك يوم الإجابة. تُعالَج إجاباتك بصفتها
             <strong> بيانات شخصيّة حسّاسة</strong> وفق نظام حماية البيانات الشخصيّة السعودي (PDPL).
           </div>
+          <ShariaNotice variant="wellbeing" className="mx-auto mt-4 max-w-2xl text-right" />
         </div>
+
 
         {!res && (
           <form onSubmit={onSubmit} className="mt-10 space-y-6 rounded-2xl border border-border bg-card p-6 md:p-8">
