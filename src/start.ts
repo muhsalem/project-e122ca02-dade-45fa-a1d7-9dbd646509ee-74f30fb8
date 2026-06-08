@@ -3,23 +3,31 @@ import { createStart, createMiddleware } from "@tanstack/react-start";
 import { renderErrorPage } from "./lib/error-page";
 import { attachSupabaseAuth } from "@/integrations/supabase/auth-attacher";
 
+const IS_PROD = process.env.NODE_ENV === "production";
+
+// In production we drop 'unsafe-eval' from script-src; dev keeps it for HMR/Vite.
+const SCRIPT_SRC = IS_PROD
+  ? "'self' 'unsafe-inline' https:"
+  : "'self' 'unsafe-inline' 'unsafe-eval' https:";
+
 const SECURITY_HEADERS: Record<string, string> = {
   "X-Content-Type-Options": "nosniff",
   "X-Frame-Options": "SAMEORIGIN",
   "Referrer-Policy": "strict-origin-when-cross-origin",
   "Permissions-Policy": "camera=(), microphone=(), geolocation=(), payment=()",
-  "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-  // CSP kept moderate to preserve dev-server HMR + inline styles used by shadcn/Vite.
+  "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
   "Content-Security-Policy":
     "default-src 'self'; " +
     "img-src 'self' data: blob: https:; " +
     "font-src 'self' data: https:; " +
     "style-src 'self' 'unsafe-inline' https:; " +
-    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; " +
+    `script-src ${SCRIPT_SRC}; ` +
     "connect-src 'self' https: wss:; " +
+    "frame-src 'self' https://cal.com https://*.cal.com; " +
     "frame-ancestors 'self'; " +
     "base-uri 'self'; " +
-    "form-action 'self'",
+    "form-action 'self'; " +
+    "object-src 'none'",
 };
 
 const securityHeadersMiddleware = createMiddleware().server(async ({ next }) => {
