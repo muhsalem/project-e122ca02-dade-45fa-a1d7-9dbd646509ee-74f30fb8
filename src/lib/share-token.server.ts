@@ -40,13 +40,20 @@ function getSecret(): string {
   );
 }
 
+function toAB(bytes: Uint8Array): ArrayBuffer {
+  // Force a fresh ArrayBuffer (not SharedArrayBuffer) for Web Crypto type compat.
+  const ab = new ArrayBuffer(bytes.byteLength);
+  new Uint8Array(ab).set(bytes);
+  return ab;
+}
+
 /** Sign a code into a share token that expires in `ttlDays` days (default 30). */
 export async function signShareToken(code: string, ttlDays = 30): Promise<string> {
   const exp = Math.floor(Date.now() / 1000) + ttlDays * 86400;
   const payload = JSON.stringify({ c: code, e: exp });
   const payloadBytes = new TextEncoder().encode(payload);
   const key = await hmacKey(getSecret());
-  const sigBuf = await crypto.subtle.sign("HMAC", key, payloadBytes as BufferSource);
+  const sigBuf = await crypto.subtle.sign("HMAC", key, toAB(payloadBytes));
   return `${b64urlEncode(payloadBytes)}.${b64urlEncode(new Uint8Array(sigBuf))}`;
 }
 
@@ -58,7 +65,7 @@ export async function verifyShareToken(token: string): Promise<string | null> {
     const payloadBytes = b64urlDecode(payloadB64);
     const sigBytes = b64urlDecode(sigB64);
     const key = await hmacKey(getSecret());
-    const ok = await crypto.subtle.verify("HMAC", key, sigBytes, payloadBytes);
+    const ok = await crypto.subtle.verify("HMAC", key, toAB(sigBytes), toAB(payloadBytes));
     if (!ok) return null;
     const { c, e } = JSON.parse(new TextDecoder().decode(payloadBytes)) as { c: string; e: number };
     if (typeof c !== "string" || typeof e !== "number") return null;
