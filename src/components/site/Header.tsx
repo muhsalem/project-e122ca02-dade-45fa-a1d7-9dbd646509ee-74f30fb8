@@ -208,19 +208,26 @@ export function Header() {
                 {item.label}
               </Link>
             ))}
-            {[discoveryGroup, changeGroup, growthGroup, institutionsGroup].map((group) => (
+            {[assessmentsGroup, institutionsGroup].map((group) => (
               <div key={group.label}>
                 <div className="mt-3 pr-1 text-xs font-semibold text-primary">{group.label}</div>
-                {group.items.map((item) => (
-                  <Link
-                    key={item.to}
-                    to={item.to}
-                    onClick={() => setOpen(false)}
-                    className="block pr-6 py-2 text-sm text-foreground/70"
-                    activeProps={{ className: "text-primary font-semibold" }}
-                  >
-                    {item.label}
-                  </Link>
+                {group.sections.map((section) => (
+                  <div key={section.title || "_"}>
+                    {section.title && (
+                      <div className="mt-2 pr-3 text-[11px] font-semibold text-gold">{section.title}</div>
+                    )}
+                    {section.items.map((item) => (
+                      <Link
+                        key={item.to}
+                        to={item.to}
+                        onClick={() => setOpen(false)}
+                        className="block pr-6 py-2 text-sm text-foreground/70"
+                        activeProps={{ className: "text-primary font-semibold" }}
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
                 ))}
               </div>
             ))}
