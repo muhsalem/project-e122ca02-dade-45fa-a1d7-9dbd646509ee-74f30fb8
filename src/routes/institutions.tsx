@@ -38,7 +38,7 @@ function InstitutionsPage() {
     <div className="container-page py-10 max-w-5xl mx-auto">
       <div className="mb-8 text-center">
         <Building2 className="mx-auto h-10 w-10 text-blue-600" />
-        <h1 className="mt-3 font-serif text-3xl font-bold">بوابة المؤسسات والجامعات</h1>
+        <h1 className="mt-3 font-serif text-3xl font-bold">بوصلة للجامعات والمؤسسات</h1>
         <p className="mt-2 text-muted-foreground">
           لوحة تحكم للمرشدين الأكاديميين ومسؤولي التطوير المهني — تتبّع مباشر لتقدم منسوبيكم.
         </p>
