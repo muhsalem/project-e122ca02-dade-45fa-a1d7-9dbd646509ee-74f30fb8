@@ -37,14 +37,25 @@ function ProfilePage() {
       return;
     }
     if (!user) return;
+    // إذا كان المستخدم مدرّبًا/كوتش → حوّله مباشرة إلى لوحة إدارة العملاء
     supabase
-      .from("profiles")
-      .select("full_name, age, stage, country, phone")
+      .from("user_roles")
+      .select("role")
       .eq("user_id", user.id)
-      .maybeSingle()
-      .then(({ data }) => {
-        if (data) setProfile(data as Profile);
-        setLoading(false);
+      .then(({ data: roles }) => {
+        if (roles?.some((r: { role: string }) => r.role === "coach")) {
+          navigate({ to: "/counselor-crm" });
+          return;
+        }
+        supabase
+          .from("profiles")
+          .select("full_name, age, stage, country, phone")
+          .eq("user_id", user.id)
+          .maybeSingle()
+          .then(({ data }) => {
+            if (data) setProfile(data as Profile);
+            setLoading(false);
+          });
       });
   }, [user, authLoading, navigate]);
 

@@ -1,7 +1,9 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
-import { UserPlus, Search, Trash2, Phone, Mail, Calendar, FileText, ShieldCheck, Tag, Pencil, X, Save } from "lucide-react";
+import { UserPlus, Search, Trash2, Phone, Mail, Calendar, FileText, ShieldCheck, Tag, Pencil, X, Save, Loader2 } from "lucide-react";
 import { AutoIllustration } from "@/components/site/Illustration";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/use-auth";
 
 export const Route = createFileRoute("/counselor-crm")({
   head: () => ({
@@ -43,11 +45,28 @@ function save(list: Client[]) {
 }
 
 function CounselorCRM() {
+  const { user, loading: authLoading } = useAuth();
+  const navigate = useNavigate();
+  const [allowed, setAllowed] = useState<boolean | null>(null);
   const [clients, setClients] = useState<Client[]>([]);
   const [editing, setEditing] = useState<Client | null>(null);
   const [showForm, setShowForm] = useState(false);
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<Status | "all">("all");
+
+  useEffect(() => {
+    if (authLoading) return;
+    if (!user) { navigate({ to: "/auth" }); return; }
+    supabase
+      .from("user_roles")
+      .select("role")
+      .eq("user_id", user.id)
+      .then(({ data }) => {
+        const isCoach = (data ?? []).some((r: { role: string }) => r.role === "coach" || r.role === "admin");
+        setAllowed(isCoach);
+        if (!isCoach) navigate({ to: "/profile" });
+      });
+  }, [user, authLoading, navigate]);
 
   useEffect(() => { setClients(load()); }, []);
 
@@ -84,6 +103,11 @@ function CounselorCRM() {
     followup: clients.filter((c) => c.status === "followup").length,
     upcoming: clients.filter((c) => c.nextSession && new Date(c.nextSession) >= new Date()).length,
   }), [clients]);
+
+  if (authLoading || allowed === null) {
+    return <div className="container-page flex min-h-[60vh] items-center justify-center"><Loader2 className="h-8 w-8 animate-spin text-gold" /></div>;
+  }
+  if (!allowed) return null;
 
   return (
     <section className="container-page py-12">
