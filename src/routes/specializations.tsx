@@ -157,6 +157,12 @@ function SpecializationsPage() {
         {/* Step 2: pick general spec */}
         {field && !general && (
           <div className="mx-auto max-w-5xl">
+            <div className="mb-6">
+              <WorkModeBadges
+                fieldId={field.id}
+                title={`قابلية العمل في مجال ${field.label}: موظف / مستقل / مؤسس`}
+              />
+            </div>
             <h2 className="mb-4 font-serif text-xl text-primary">
               اختر التخصص العام داخل {field.label}
             </h2>
