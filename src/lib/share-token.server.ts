@@ -46,7 +46,7 @@ export async function signShareToken(code: string, ttlDays = 30): Promise<string
   const payload = JSON.stringify({ c: code, e: exp });
   const payloadBytes = new TextEncoder().encode(payload);
   const key = await hmacKey(getSecret());
-  const sigBuf = await crypto.subtle.sign("HMAC", key, payloadBytes);
+  const sigBuf = await crypto.subtle.sign("HMAC", key, payloadBytes as BufferSource);
   return `${b64urlEncode(payloadBytes)}.${b64urlEncode(new Uint8Array(sigBuf))}`;
 }
 
