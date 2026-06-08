@@ -7,8 +7,8 @@ import { getInstitutionDashboard } from "@/lib/institution.functions";
 export const Route = createFileRoute("/institutions")({
   head: () => ({
     meta: [
-      { title: "بوابة المؤسسات والجامعات — B2B | بوصلة" },
-      { name: "description", content: "بوابة مخصصة للجامعات والمدارس والمؤسسات لمتابعة تقدّم طلابها وموظفيها في تقييمات اكتشاف الذات والتطوير المهني." },
+      { title: "بوصلة للجامعات والمؤسسات — B2B | بُوصلة" },
+      { name: "description", content: "بُوصلة للجامعات والمؤسسات: لوحة مخصصة للجامعات والمدارس والمؤسسات لمتابعة تقدّم طلابها وموظفيها في تقييمات اكتشاف الذات والتطوير المهني." },
     ],
   }),
   component: InstitutionsPage,
