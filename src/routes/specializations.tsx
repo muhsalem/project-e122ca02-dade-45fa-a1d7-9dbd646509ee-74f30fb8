@@ -362,7 +362,11 @@ function mdToHtml(md: string): string {
     escape(s)
       .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
       .replace(/\*(.+?)\*/g, "<em>$1</em>")
-      .replace(/`(.+?)`/g, "<code>$1</code>");
+      .replace(/`(.+?)`/g, "<code>$1</code>")
+      .replace(
+        /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,
+        '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-gold underline hover:opacity-80">$1</a>',
+      );
 
   for (const raw of lines) {
     const line = raw.trimEnd();
