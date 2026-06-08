@@ -7,6 +7,7 @@ import logo from "@/assets/logo.png";
 
 const nav = [
   { to: "/", label: "الرئيسية" },
+  { to: "/paths", label: "خريطة الاختبارات" },
   { to: "/about", label: "من نحن" },
 ] as const;
 

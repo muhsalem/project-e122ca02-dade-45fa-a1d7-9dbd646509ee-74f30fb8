@@ -7,6 +7,7 @@ import { ClinicalDisclaimer } from "@/components/site/ClinicalDisclaimer";
 import { EmergencyHelpline } from "@/components/site/EmergencyHelpline";
 import { useAutosave } from "@/hooks/use-autosave";
 import { AutoIllustration } from "@/components/site/Illustration";
+import { ShariaNotice } from "@/components/site/ShariaNotice";
 
 export const Route = createFileRoute("/burnout-check")({
   head: () => ({
@@ -143,6 +144,7 @@ function BurnoutPage() {
       </div>
 
       <ClinicalDisclaimer tool="مؤشر الاحتراق المهني (MBI-GS)" />
+      <ShariaNotice variant="general" className="mt-3" />
 
       {restored && (name || age || Object.keys(ex).length > 0) && (
         <div className="my-4 flex items-center justify-between gap-3 rounded-lg border border-gold/30 bg-gold/5 px-4 py-2.5 text-xs">

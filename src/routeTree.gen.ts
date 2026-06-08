@@ -23,6 +23,7 @@ import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as PricingRouteImport } from './routes/pricing'
+import { Route as PathsRouteImport } from './routes/paths'
 import { Route as ParentDashboardRouteImport } from './routes/parent-dashboard'
 import { Route as MyAssessmentsRouteImport } from './routes/my-assessments'
 import { Route as LearningStyleRouteImport } from './routes/learning-style'
@@ -130,6 +131,11 @@ const PrivacyRoute = PrivacyRouteImport.update({
 const PricingRoute = PricingRouteImport.update({
   id: '/pricing',
   path: '/pricing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PathsRoute = PathsRouteImport.update({
+  id: '/paths',
+  path: '/paths',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ParentDashboardRoute = ParentDashboardRouteImport.update({
@@ -352,6 +358,7 @@ export interface FileRoutesByFullPath {
   '/learning-style': typeof LearningStyleRoute
   '/my-assessments': typeof MyAssessmentsRoute
   '/parent-dashboard': typeof ParentDashboardRoute
+  '/paths': typeof PathsRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
   '/profile': typeof ProfileRoute
@@ -406,6 +413,7 @@ export interface FileRoutesByTo {
   '/learning-style': typeof LearningStyleRoute
   '/my-assessments': typeof MyAssessmentsRoute
   '/parent-dashboard': typeof ParentDashboardRoute
+  '/paths': typeof PathsRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
   '/profile': typeof ProfileRoute
@@ -461,6 +469,7 @@ export interface FileRoutesById {
   '/learning-style': typeof LearningStyleRoute
   '/my-assessments': typeof MyAssessmentsRoute
   '/parent-dashboard': typeof ParentDashboardRoute
+  '/paths': typeof PathsRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
   '/profile': typeof ProfileRoute
@@ -517,6 +526,7 @@ export interface FileRouteTypes {
     | '/learning-style'
     | '/my-assessments'
     | '/parent-dashboard'
+    | '/paths'
     | '/pricing'
     | '/privacy'
     | '/profile'
@@ -571,6 +581,7 @@ export interface FileRouteTypes {
     | '/learning-style'
     | '/my-assessments'
     | '/parent-dashboard'
+    | '/paths'
     | '/pricing'
     | '/privacy'
     | '/profile'
@@ -625,6 +636,7 @@ export interface FileRouteTypes {
     | '/learning-style'
     | '/my-assessments'
     | '/parent-dashboard'
+    | '/paths'
     | '/pricing'
     | '/privacy'
     | '/profile'
@@ -680,6 +692,7 @@ export interface RootRouteChildren {
   LearningStyleRoute: typeof LearningStyleRoute
   MyAssessmentsRoute: typeof MyAssessmentsRoute
   ParentDashboardRoute: typeof ParentDashboardRoute
+  PathsRoute: typeof PathsRoute
   PricingRoute: typeof PricingRoute
   PrivacyRoute: typeof PrivacyRoute
   ProfileRoute: typeof ProfileRoute
@@ -800,6 +813,13 @@ declare module '@tanstack/react-router' {
       path: '/pricing'
       fullPath: '/pricing'
       preLoaderRoute: typeof PricingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/paths': {
+      id: '/paths'
+      path: '/paths'
+      fullPath: '/paths'
+      preLoaderRoute: typeof PathsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/parent-dashboard': {
@@ -1133,6 +1153,7 @@ const rootRouteChildren: RootRouteChildren = {
   LearningStyleRoute: LearningStyleRoute,
   MyAssessmentsRoute: MyAssessmentsRoute,
   ParentDashboardRoute: ParentDashboardRoute,
+  PathsRoute: PathsRoute,
   PricingRoute: PricingRoute,
   PrivacyRoute: PrivacyRoute,
   ProfileRoute: ProfileRoute,
