@@ -242,17 +242,27 @@ function SpecializationsPage() {
             )}
 
             {!loading && report && (
-              <article className="mt-8 rounded-2xl border border-border bg-card p-6 md:p-8 shadow-[var(--shadow-soft)]">
-                <div className="mb-4 flex items-center gap-2 text-xs text-muted-foreground">
-                  <Sparkles className="h-3.5 w-3.5 text-gold" />
-                  تحليل مولّد بالذكاء الاصطناعي للتخصص الدقيق
-                </div>
-                <div
-                  className="prose prose-sm max-w-none text-foreground prose-headings:font-serif prose-headings:text-primary prose-strong:text-primary prose-li:my-0.5"
-                  style={{ direction: "rtl" }}
-                  dangerouslySetInnerHTML={{ __html: mdToHtml(report) }}
-                />
-              </article>
+              <>
+                <article className="mt-8 rounded-2xl border border-border bg-card p-6 md:p-8 shadow-[var(--shadow-soft)]">
+                  <div className="mb-4 flex items-center gap-2 text-xs text-muted-foreground">
+                    <Sparkles className="h-3.5 w-3.5 text-gold" />
+                    تحليل مولّد بالذكاء الاصطناعي للتخصص الدقيق
+                  </div>
+                  <div
+                    className="prose prose-sm max-w-none text-foreground prose-headings:font-serif prose-headings:text-primary prose-strong:text-primary prose-li:my-0.5"
+                    style={{ direction: "rtl" }}
+                    dangerouslySetInnerHTML={{ __html: mdToHtml(report) }}
+                  />
+                </article>
+                {field && (
+                  <div className="mt-6">
+                    <WorkModeBadges
+                      fieldId={field.id}
+                      title={`قابلية ممارسة ${deep} كموظف / مستقل / مؤسس`}
+                    />
+                  </div>
+                )}
+              </>
             )}
           </div>
         )}
