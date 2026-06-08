@@ -111,6 +111,7 @@ function ReportPage() {
                   <Printer className="h-3.5 w-3.5" />
                   طباعة / PDF
                 </button>
+                <ShareLinkButton code={code} />
                 <Link to="/idp/$code" params={{ code }} className="inline-flex items-center gap-1.5 rounded-md border border-gold bg-gold/10 px-3 py-1.5 text-xs font-medium text-primary">
                   خطة التطوير 90 يوم
                 </Link>
