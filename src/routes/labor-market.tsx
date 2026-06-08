@@ -118,7 +118,7 @@ function LaborMarketPage() {
         </div>
 
         <div className="mt-6 overflow-x-auto rounded-2xl border border-border bg-card shadow-[var(--shadow-soft)]">
-          <table className="w-full min-w-[560px] text-sm">
+          <table className="w-full min-w-[760px] text-sm">
             <thead className="bg-secondary/60 text-xs text-muted-foreground">
               <tr>
                 <th className="px-4 py-3 text-right">الدور</th>
