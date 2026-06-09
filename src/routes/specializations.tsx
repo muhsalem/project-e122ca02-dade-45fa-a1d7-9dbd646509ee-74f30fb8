@@ -5,6 +5,7 @@ import { Loader2, BookOpen, ChevronLeft, Sparkles } from "lucide-react";
 import { explainSpecialization } from "@/lib/specialization-explorer.functions";
 import specData from "@/data/specializations.json";
 import { WorkModeBadges } from "@/components/site/WorkModeBadges";
+import { CareerEvaluationCard } from "@/components/site/CareerEvaluationCard";
 import { getWorkModesByField, MODE_LABELS, type WorkModes } from "@/lib/work-modes";
 
 type Sub = string;
@@ -336,6 +337,12 @@ function SpecializationsPage() {
                     />
                   </div>
                 )}
+                <div className="mt-6">
+                  <CareerEvaluationCard
+                    defaultCareerName={deep ?? ""}
+                    context={field && general ? `${field.label} › ${general.name}` : undefined}
+                  />
+                </div>
               </>
             )}
           </div>
