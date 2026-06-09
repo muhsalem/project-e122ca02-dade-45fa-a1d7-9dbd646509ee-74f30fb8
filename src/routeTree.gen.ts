@@ -55,6 +55,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as ReportIndexRouteImport } from './routes/report.index'
 import { Route as ReviewSubmitCodeRouteImport } from './routes/review-submit.$code'
 import { Route as ReviewResultsCodeRouteImport } from './routes/review-results.$code'
+import { Route as ResourcesWhyWeWorkRouteImport } from './routes/resources.why-we-work'
 import { Route as ResourcesParentGuideRouteImport } from './routes/resources.parent-guide'
 import { Route as ResourcesHowToChooseMajorRouteImport } from './routes/resources.how-to-choose-major'
 import { Route as ResourcesGrowModelRouteImport } from './routes/resources.grow-model'
@@ -297,6 +298,11 @@ const ReviewResultsCodeRoute = ReviewResultsCodeRouteImport.update({
   path: '/review-results/$code',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ResourcesWhyWeWorkRoute = ResourcesWhyWeWorkRouteImport.update({
+  id: '/why-we-work',
+  path: '/why-we-work',
+  getParentRoute: () => ResourcesRoute,
+} as any)
 const ResourcesParentGuideRoute = ResourcesParentGuideRouteImport.update({
   id: '/parent-guide',
   path: '/parent-guide',
@@ -412,6 +418,7 @@ export interface FileRoutesByFullPath {
   '/resources/grow-model': typeof ResourcesGrowModelRoute
   '/resources/how-to-choose-major': typeof ResourcesHowToChooseMajorRoute
   '/resources/parent-guide': typeof ResourcesParentGuideRoute
+  '/resources/why-we-work': typeof ResourcesWhyWeWorkRoute
   '/review-results/$code': typeof ReviewResultsCodeRoute
   '/review-submit/$code': typeof ReviewSubmitCodeRoute
   '/report/': typeof ReportIndexRoute
@@ -471,6 +478,7 @@ export interface FileRoutesByTo {
   '/resources/grow-model': typeof ResourcesGrowModelRoute
   '/resources/how-to-choose-major': typeof ResourcesHowToChooseMajorRoute
   '/resources/parent-guide': typeof ResourcesParentGuideRoute
+  '/resources/why-we-work': typeof ResourcesWhyWeWorkRoute
   '/review-results/$code': typeof ReviewResultsCodeRoute
   '/review-submit/$code': typeof ReviewSubmitCodeRoute
   '/report': typeof ReportIndexRoute
@@ -531,6 +539,7 @@ export interface FileRoutesById {
   '/resources/grow-model': typeof ResourcesGrowModelRoute
   '/resources/how-to-choose-major': typeof ResourcesHowToChooseMajorRoute
   '/resources/parent-guide': typeof ResourcesParentGuideRoute
+  '/resources/why-we-work': typeof ResourcesWhyWeWorkRoute
   '/review-results/$code': typeof ReviewResultsCodeRoute
   '/review-submit/$code': typeof ReviewSubmitCodeRoute
   '/report/': typeof ReportIndexRoute
@@ -592,6 +601,7 @@ export interface FileRouteTypes {
     | '/resources/grow-model'
     | '/resources/how-to-choose-major'
     | '/resources/parent-guide'
+    | '/resources/why-we-work'
     | '/review-results/$code'
     | '/review-submit/$code'
     | '/report/'
@@ -651,6 +661,7 @@ export interface FileRouteTypes {
     | '/resources/grow-model'
     | '/resources/how-to-choose-major'
     | '/resources/parent-guide'
+    | '/resources/why-we-work'
     | '/review-results/$code'
     | '/review-submit/$code'
     | '/report'
@@ -710,6 +721,7 @@ export interface FileRouteTypes {
     | '/resources/grow-model'
     | '/resources/how-to-choose-major'
     | '/resources/parent-guide'
+    | '/resources/why-we-work'
     | '/review-results/$code'
     | '/review-submit/$code'
     | '/report/'
@@ -1091,6 +1103,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ReviewResultsCodeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/resources/why-we-work': {
+      id: '/resources/why-we-work'
+      path: '/why-we-work'
+      fullPath: '/resources/why-we-work'
+      preLoaderRoute: typeof ResourcesWhyWeWorkRouteImport
+      parentRoute: typeof ResourcesRoute
+    }
     '/resources/parent-guide': {
       id: '/resources/parent-guide'
       path: '/parent-guide'
@@ -1191,6 +1210,7 @@ interface ResourcesRouteChildren {
   ResourcesGrowModelRoute: typeof ResourcesGrowModelRoute
   ResourcesHowToChooseMajorRoute: typeof ResourcesHowToChooseMajorRoute
   ResourcesParentGuideRoute: typeof ResourcesParentGuideRoute
+  ResourcesWhyWeWorkRoute: typeof ResourcesWhyWeWorkRoute
 }
 
 const ResourcesRouteChildren: ResourcesRouteChildren = {
@@ -1202,6 +1222,7 @@ const ResourcesRouteChildren: ResourcesRouteChildren = {
   ResourcesGrowModelRoute: ResourcesGrowModelRoute,
   ResourcesHowToChooseMajorRoute: ResourcesHowToChooseMajorRoute,
   ResourcesParentGuideRoute: ResourcesParentGuideRoute,
+  ResourcesWhyWeWorkRoute: ResourcesWhyWeWorkRoute,
 }
 
 const ResourcesRouteWithChildren = ResourcesRoute._addFileChildren(
