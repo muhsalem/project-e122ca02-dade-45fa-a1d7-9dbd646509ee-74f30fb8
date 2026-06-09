@@ -96,7 +96,7 @@ export const explainSpecialization = createServerFn({ method: "POST" })
         model: "google/gemini-2.5-flash",
         max_tokens: 4096,
         messages: [
-          { role: "system", content: systemPrompt },
+          { role: "system", content: systemPrompt + AI_GUARDRAILS },
           { role: "user", content: userPrompt },
         ],
       }),

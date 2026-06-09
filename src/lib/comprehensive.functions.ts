@@ -88,7 +88,7 @@ export const submitComprehensive = createServerFn({ method: "POST" })
           model: "google/gemini-2.5-flash",
           max_tokens: 8192,
           messages: [
-            { role: "system", content: systemPrompt },
+            { role: "system", content: systemPrompt + AI_GUARDRAILS },
             {
               role: "user",
               content: `اسم المتقدم: ${userName}\n\nهذه التقارير السابقة:\n${reportsBlock}\n\nأصدر التقرير الشامل الموحّد وفق الهيكل المحدد.`,

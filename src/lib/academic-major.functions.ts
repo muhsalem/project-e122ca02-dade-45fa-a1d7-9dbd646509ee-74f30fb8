@@ -143,7 +143,7 @@ export const submitAcademicMajor = createServerFn({ method: "POST" })
         model: "google/gemini-2.5-flash",
         max_tokens: 8192,
         messages: [
-          { role: "system", content: systemPrompt },
+          { role: "system", content: systemPrompt + AI_GUARDRAILS },
           { role: "user", content: `إليك إجابات الطالب على تقييم اكتشاف التخصص الدراسي. حلّلها وأصدر التقرير وفق الهيكل المحدد:\n\n${userPayload}` },
         ],
       }),

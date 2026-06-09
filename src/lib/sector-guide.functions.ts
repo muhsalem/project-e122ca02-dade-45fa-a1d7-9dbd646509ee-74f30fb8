@@ -143,7 +143,7 @@ export const submitSectorGuide = createServerFn({ method: "POST" })
         model: "google/gemini-2.5-flash",
         max_tokens: 8192,
         messages: [
-          { role: "system", content: systemPrompt },
+          { role: "system", content: systemPrompt + AI_GUARDRAILS },
           {
             role: "user",
             content: `بيانات المتقدم لتشخيص القطاع/الصناعة:\n\n${userPayload}\n\nأصدر التقرير الكامل وفق الهيكل المحدد.`,
