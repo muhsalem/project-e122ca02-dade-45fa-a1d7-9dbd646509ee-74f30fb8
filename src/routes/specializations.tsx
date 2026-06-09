@@ -337,6 +337,12 @@ function SpecializationsPage() {
                     />
                   </div>
                 )}
+                <div className="mt-6">
+                  <CareerEvaluationCard
+                    defaultCareerName={deep ?? ""}
+                    context={field && general ? `${field.label} › ${general.name}` : undefined}
+                  />
+                </div>
               </>
             )}
           </div>
