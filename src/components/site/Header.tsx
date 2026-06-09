@@ -8,12 +8,17 @@ import logo from "@/assets/logo.png";
 const nav = [
   { to: "/", label: "الرئيسية" },
   { to: "/about", label: "من نحن" },
-  { to: "/paths", label: "خريطة الاختبارات" },
 ] as const;
 
 const assessmentsGroup = {
-  label: "الاختبارات",
+  label: "اختر مسارك",
   sections: [
+    {
+      title: "ابدأ من هنا",
+      items: [
+        { to: "/paths", label: "خريطة الاختبارات (دليل الاختيار)" },
+      ],
+    },
     {
       title: "أريد الاكتشاف",
       items: [
