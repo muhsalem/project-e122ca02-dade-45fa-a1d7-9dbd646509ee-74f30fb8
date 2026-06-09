@@ -8,7 +8,7 @@ import { LikertValue, scoreSubscale, toPercent, bandFromAvg } from "@/lib/psycho
 export const Route = createFileRoute("/career-self-efficacy")({
   head: () => ({
     meta: [
-      { title: "الكفاءة الذاتية لاتخاذ القرار المهني (CDSE) | بُوصلة" },
+      { title: "الكفاءة الذاتية لاتخاذ القرار المهني (CDSE) | بوصلة" },
       { name: "description", content: "إلى أي مدى تثق بقدرتك على اختيار مسارك المهني؟ تقييم من 5 أبعاد مبني على Career Decision Self-Efficacy Short Form." },
     ],
   }),

@@ -160,7 +160,7 @@ function PricingPage() {
         <div className="text-center">
           <h2 className="font-serif text-2xl text-primary md:text-3xl">ما المجاني وما المدفوع؟</h2>
           <p className="mx-auto mt-3 max-w-2xl text-muted-foreground">
-            جميع الاختبارات النفسية والمهنية في بُوصلة <span className="font-semibold text-primary">مجانية بالكامل</span> — تشمل الاكتشاف والتغيير والتطوير.
+            جميع الاختبارات النفسية والمهنية في بوصلة <span className="font-semibold text-primary">مجانية بالكامل</span> — تشمل الاكتشاف والتغيير والتطوير.
             ما يُدفع مقابله فقط هو الجلسات البشرية (الكوتشينج/الإرشاد) والتقارير المعمّقة والشهادات الموثّقة.
           </p>
         </div>
