@@ -89,7 +89,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           url: "/",
           logo: "/favicon-512.png",
           description: "منصة عربية للإرشاد النفسي المهني والكوتشينج مبنية على معايير علمية معتمدة.",
-          sameAs: [],
+          sameAs: [
+            "https://twitter.com/bosla_app",
+            "https://www.linkedin.com/company/bosla-app",
+            "https://www.instagram.com/bosla.app",
+            "https://www.youtube.com/@bosla-app",
+          ],
           contactPoint: {
             "@type": "ContactPoint",
             email: "info@bosla.app",
