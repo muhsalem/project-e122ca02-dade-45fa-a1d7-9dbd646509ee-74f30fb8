@@ -8,7 +8,7 @@ import { LikertValue, scoreSubscale, toPercent, bandFromAvg } from "@/lib/psycho
 export const Route = createFileRoute("/emotional-intelligence")({
   head: () => ({
     meta: [
-      { title: "الذكاء العاطفي (WLEIS) — 16 سؤالًا | بُوصلة" },
+      { title: "الذكاء العاطفي (WLEIS) — 16 سؤالًا | بوصلة" },
       { name: "description", content: "تقييم الذكاء العاطفي عبر 4 أبعاد: إدراك الذات، إدراك الآخرين، استخدام الانفعال، تنظيم الانفعال. مبني على Wong & Law Emotional Intelligence Scale." },
     ],
   }),

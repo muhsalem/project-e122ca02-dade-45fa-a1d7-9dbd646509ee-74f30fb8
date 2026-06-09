@@ -5,8 +5,8 @@ import { Search } from "lucide-react";
 export const Route = createFileRoute("/report/")({
   head: () => ({
     meta: [
-      { title: "افتح تقرير الإرشاد المهنى بالكود — بوصلة" },
-      { name: "description", content: "أدخل كود التقرير الفريد لعرض تقرير الإرشاد المهنى الشامل ومناقشته مع مرشدك." },
+      { title: "افتح تقرير الإرشاد المهني بالكود — بوصلة" },
+      { name: "description", content: "أدخل كود التقرير الفريد لعرض تقرير الإرشاد المهني الشامل ومناقشته مع مرشدك." },
     ],
   }),
   component: ReportLookupPage,

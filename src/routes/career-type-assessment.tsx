@@ -25,7 +25,7 @@ import { AutoIllustration } from "@/components/site/Illustration";
 export const Route = createFileRoute("/career-type-assessment")({
   head: () => ({
     meta: [
-      { title: "اكتشف مسارك المهنى — ISCO-08 و ASCO | بوصلة" },
+      { title: "اكتشف مسارك المهني — ISCO-08 و ASCO | بوصلة" },
       {
         name: "description",
         content:
@@ -413,7 +413,7 @@ function CareerTypePage() {
             <span>تقييم تشخيصي شامل مرتبط بـ ISCO-08 و ASCO</span>
           </div>
           <h1 className="mb-2 font-serif text-3xl font-bold text-primary md:text-4xl">
-            اكتشف مسارك المهنى
+            اكتشف مسارك المهني
           </h1>
           <p className="mx-auto max-w-2xl text-foreground/70">
             تقييم مدمج: مسارك (وظيفة/ريادة/عمل حر/نشاط) + طبيعة العمل (مهنة/حِرفة) + ميولك RIASEC،

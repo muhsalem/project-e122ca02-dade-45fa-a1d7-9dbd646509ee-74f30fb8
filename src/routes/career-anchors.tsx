@@ -8,7 +8,7 @@ import { LikertValue, scoreSubscale, toPercent, rankSubscales } from "@/lib/psyc
 export const Route = createFileRoute("/career-anchors")({
   head: () => ({
     meta: [
-      { title: "مرساة المسيرة المهنية (Schein) — ما لا يمكنك التخلي عنه | بُوصلة" },
+      { title: "مرساة المسيرة المهنية (Schein) — ما لا يمكنك التخلي عنه | بوصلة" },
       { name: "description", content: "اكتشف مرساتك المهنية الأقوى من 8 مراسي وفق نموذج Edgar Schein: الفنية، الإدارية، الاستقلالية، الأمان، الريادة، الخدمة، التحدي، نمط الحياة." },
     ],
   }),

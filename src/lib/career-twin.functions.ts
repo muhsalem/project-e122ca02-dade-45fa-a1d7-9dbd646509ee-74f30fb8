@@ -1,3 +1,4 @@
+import { AI_GUARDRAILS } from "./ai-guardrails";
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
@@ -79,7 +80,7 @@ ${plan ? `### خطة التطوير الحالية (IDP):
         model: "google/gemini-2.5-flash",
         max_tokens: 1500,
         messages: [
-          { role: "system", content: systemPrompt },
+          { role: "system", content: systemPrompt + AI_GUARDRAILS },
           ...data.messages,
         ],
       }),

@@ -16,6 +16,12 @@ export function PsychometricCredibility() {
             جميع تقييماتنا مبنية على مقاييس نفسية محكّمة دولياً، معرّبة ومكيّفة للسياق العربي،
             ومراجعة من قبل مختصين في علم النفس المهني.
           </p>
+          <div className="mx-auto mt-4 max-w-2xl rounded-lg border border-amber-500/40 bg-amber-50 px-4 py-3 text-right text-xs leading-6 text-amber-900 dark:bg-amber-950/20 dark:text-amber-200">
+            <strong>إفصاح سيكومتري:</strong> النسخ العربية من المقاييس (Schein, WLEIS, WVI, CDSE,
+            VARK, MBI-GS) <strong>نُسخ تجريبية</strong> قيد التحقّق السيكومتري على عيّنة سعودية/عربية
+            (Pilot قيد التنفيذ). تُعرض النتائج بنطاق ثقة ±10٪ ولا تُعدّ تشخيصًا. سيُنشر جدول
+            الصدق والثبات (Cronbach's α + CFA + Norms) فور اكتماله.
+          </div>
         </div>
 
         <div className="mt-10 grid gap-4 md:grid-cols-4">

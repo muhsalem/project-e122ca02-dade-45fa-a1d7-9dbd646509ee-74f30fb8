@@ -1,3 +1,4 @@
+import { AI_GUARDRAILS } from "./ai-guardrails";
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
@@ -78,7 +79,7 @@ export const generateIDP = createServerFn({ method: "POST" })
         model: "google/gemini-2.5-flash",
         max_tokens: 6000,
         messages: [
-          { role: "system", content: systemPrompt },
+          { role: "system", content: systemPrompt + AI_GUARDRAILS },
           {
             role: "user",
             content: `اسم المستفيد: ${report.name ?? "غير محدد"}\nالمرحلة: ${report.stage ?? "غير محدد"}\n\nتقرير التقييم:\n${report.report}\n\nأصدر خطة IDP بصيغة JSON فقط.`,

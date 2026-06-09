@@ -8,7 +8,7 @@ import { LikertValue, scoreSubscale, toPercent, rankSubscales } from "@/lib/psyc
 export const Route = createFileRoute("/work-values")({
   head: () => ({
     meta: [
-      { title: "القيم المهنية (WVI) — ما الذي لا تتنازل عنه؟ | بُوصلة" },
+      { title: "القيم المهنية (WVI) — ما الذي لا تتنازل عنه؟ | بوصلة" },
       { name: "description", content: "اكتشف أهم 3 قيم مهنية لديك من 10 قيم (الإنجاز، الاستقلالية، الخدمة، الاستقرار، الإبداع، القيادة، التوازن، الدخل، التعلّم، الانتماء) — مبني على Work Values Inventory." },
     ],
   }),

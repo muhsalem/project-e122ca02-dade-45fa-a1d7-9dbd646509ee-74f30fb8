@@ -217,7 +217,7 @@ function LaborMarketPage() {
 
           <div className="mt-8 flex flex-wrap gap-3">
             <Link to="/career-type-assessment" className="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground">
-              اكتشف مسارك المهنى
+              اكتشف مسارك المهني
             </Link>
             <Link to="/booking" className="inline-flex items-center gap-2 rounded-md border border-gold/40 bg-gold/10 px-5 py-2.5 text-sm font-medium text-primary">
               ناقش هذه الأرقام مع مرشد

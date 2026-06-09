@@ -1,3 +1,4 @@
+import { AI_GUARDRAILS } from "./ai-guardrails";
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
@@ -112,7 +113,7 @@ export const submitAssessment = createServerFn({ method: "POST" })
         model: "google/gemini-2.5-flash",
         max_tokens: 8192,
         messages: [
-          { role: "system", content: systemPrompt },
+          { role: "system", content: systemPrompt + AI_GUARDRAILS },
           { role: "user", content: `إليك إجابات المتدرب على اكتشاف ذاتك. قم بتحليلها وإصدار التقرير وفق الهيكل المحدد:\n\n${userPayload}` },
         ],
       }),

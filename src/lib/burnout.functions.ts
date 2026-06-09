@@ -1,3 +1,4 @@
+import { AI_GUARDRAILS } from "./ai-guardrails";
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
@@ -98,7 +99,7 @@ ${risk === "مرتفع" || risk === "مرتفع جداً" ? "**مستواك يس
         model: "google/gemini-2.5-flash",
         max_tokens: 5000,
         messages: [
-          { role: "system", content: system },
+          { role: "system", content: system + AI_GUARDRAILS },
           { role: "user", content: userPayload },
         ],
       }),
