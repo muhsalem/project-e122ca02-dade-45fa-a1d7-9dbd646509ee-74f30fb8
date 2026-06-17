@@ -103,6 +103,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           },
         }),
       },
+      {
+        type: "text/javascript",
+        async: true,
+        src: "https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX",
+      },
+      {
+        type: "text/javascript",
+        children: `window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-XXXXXXXXXX', { anonymize_ip: true, cookie_flags: 'SameSite=None;Secure' });`,
+      },
     ],
   }),
   shellComponent: RootShell,

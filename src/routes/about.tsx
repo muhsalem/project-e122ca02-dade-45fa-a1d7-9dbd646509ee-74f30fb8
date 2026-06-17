@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Award, Heart, Lightbulb, Target } from "lucide-react";
+import { Award, Heart, Lightbulb, Scale, ShieldCheck, Target } from "lucide-react";
 import { PsychometricCredibility } from "@/components/site/PsychometricCredibility";
 
 export const Route = createFileRoute("/about")({
@@ -72,6 +72,28 @@ function AboutPage() {
                 <p className="mt-2 text-sm text-muted-foreground">{v.d}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="container-page py-20">
+        <div className="rounded-2xl border border-border bg-card p-8 md:p-12">
+          <div className="flex flex-col items-start gap-6 md:flex-row md:items-center">
+            <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-gold/15 text-gold">
+              <Scale className="h-7 w-7" />
+            </div>
+            <div>
+              <h2 className="text-2xl text-primary">المرجعية الشرعية</h2>
+              <p className="mt-3 leading-8 text-muted-foreground">
+                نحرص على أن تكون جميع خدمات بوصلة وأدواتها ضمن إطار فقهي أخلاقي سليم.
+                نعمل على تأسيس <strong className="text-foreground">لجنة مراجعة شرعية</strong> تضم خبراء في الفقه المعاملات
+                والأخلاقيات المهنية، تُراجع المحتوى والتوصيات دورياً وتُصدر موافقاتها بشكل مستقل.
+              </p>
+              <div className="mt-4 inline-flex items-center gap-2 rounded-full bg-secondary px-4 py-2 text-sm text-muted-foreground">
+                <ShieldCheck className="h-4 w-4 text-gold" />
+                قيد التأسيس — نسعى لإعلان التشكيل خلال الربع القادم
+              </div>
+            </div>
           </div>
         </div>
       </section>
