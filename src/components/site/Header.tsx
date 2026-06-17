@@ -22,30 +22,42 @@ const assessmentsGroup = {
     {
       title: "أريد الاكتشاف",
       items: [
-        { to: "/self-discovery", label: "اكتشف ذاتك (RIASEC + Big Five)" },
-        { to: "/career-type-assessment", label: "اكتشف مسارك المهني (ISCO-08)" },
         { to: "/work-values", label: "القيم المهنية (WVI)" },
         { to: "/career-anchors", label: "مرساة المسيرة (Schein)" },
-        { to: "/learning-style", label: "نمط التعلّم (VARK + Kolb)" },
+        { to: "/self-discovery", label: "اكتشف ذاتك (RIASEC + Big Five)" },
+        { to: "/career-type-assessment", label: "اكتشف مسارك المهني (ISCO-08)" },
+        { to: "/cognitive-profile", label: "الملف المعرفي (القدرات)" },
         { to: "/academic-major", label: "تخصصك الجامعي" },
       ],
     },
     {
       title: "أريد التغيير",
       items: [
-        { to: "/career-change", label: "تشخيص الرغبة في تغيير المسار" },
+        { to: "/clarity-check", label: "وضوح المسار المهني" },
         { to: "/burnout-check", label: "مؤشر الاحتراق المهني (MBI)" },
-        { to: "/wellbeing-check", label: "الفحص النفسي المختصر" },
+        { to: "/career-change", label: "تشخيص الرغبة في تغيير المسار" },
         { to: "/career-self-efficacy", label: "الكفاءة الذاتية لاتخاذ القرار" },
       ],
     },
     {
       title: "أريد التطوير",
       items: [
-        { to: "/career-growth", label: "خطة تطوير مساري الوظيفي" },
         { to: "/emotional-intelligence", label: "الذكاء العاطفي (WLEIS)" },
+        { to: "/career-growth", label: "خطة تطوير مساري الوظيفي" },
         { to: "/career-ladder", label: "سلّم المسار الوظيفي" },
         { to: "/career-readiness", label: "شهادة الجاهزية المهنية" },
+      ],
+    },
+    {
+      title: "علم نفس التعلّم",
+      items: [
+        { to: "/learning-style", label: "اكتشف نمط تعلّمك (VARK + Kolb)" },
+      ],
+    },
+    {
+      title: "الفرز النفسي",
+      items: [
+        { to: "/wellbeing-check", label: "الفحص النفسي المختصر" },
       ],
     },
   ],
