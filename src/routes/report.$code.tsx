@@ -3,7 +3,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useState } from "react";
 import { Copy, Check, Printer, ArrowLeft, Loader2, Share2 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
-import { supabase } from "@/integrations/supabase/client";
+import { getReport } from "@/lib/report.functions";
 import { ContentProtection } from "@/components/site/ContentProtection";
 import { MarketPulseInsights } from "@/components/site/MarketPulseInsights";
 import { CareerLadderInsights } from "@/components/site/CareerLadderInsights";
@@ -39,22 +39,17 @@ function ReportPage() {
   const [loading, setLoading] = useState(true);
   const [notExist, setNotExist] = useState(false);
   const [copied, setCopied] = useState(false);
+  const fetchReport = useServerFn(getReport);
 
   useEffect(() => {
     let mounted = true;
     (async () => {
-      const { data: row, error } = await supabase
-        .from("assessment_reports")
-        .select("report,name,stage,created_at")
-        .eq("code", code)
-        .maybeSingle();
-      if (!mounted) return;
-      if (error || !row) {
-        setNotExist(true);
-      } else {
-        setData(row as any);
-      }
-      setLoading(false);
+      try {
+        const row = await fetchReport({ data: { code } });
+        if (!mounted) return;
+        if (!row) { setNotExist(true); } else { setData(row); }
+      } catch { if (mounted) setNotExist(true); }
+      finally { if (mounted) setLoading(false); }
     })();
     return () => { mounted = false; };
   }, [code]);
