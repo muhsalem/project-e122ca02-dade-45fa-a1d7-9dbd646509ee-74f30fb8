@@ -186,6 +186,7 @@ function ViewToggle({ code, name, stage, report }: { code: string; name: string 
       {view === "full" ? (
         <div className="report-content text-base leading-relaxed text-foreground">
           <ReactMarkdown>{report}</ReactMarkdown>
+          <GlobalAdvisorSection />
           <CareerLadderInsights reportText={report} />
           <MarketPulseInsights reportText={report} />
         </div>
