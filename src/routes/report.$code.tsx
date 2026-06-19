@@ -1,9 +1,10 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useState } from "react";
-import { Copy, Check, Printer, ArrowLeft, Loader2, Share2 } from "lucide-react";
+import { Copy, Check, Printer, ArrowLeft, Loader2, Share2, Sparkles } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { getReport } from "@/lib/report.functions";
+import { generateGlobalAdvisorReport } from "@/lib/global-advisor.functions";
 import { ContentProtection } from "@/components/site/ContentProtection";
 import { MarketPulseInsights } from "@/components/site/MarketPulseInsights";
 import { CareerLadderInsights } from "@/components/site/CareerLadderInsights";
