@@ -237,3 +237,84 @@ function ViewToggle({ code, name, stage, report }: { code: string; name: string 
     </div>
   );
 }
+
+function GlobalAdvisorSection() {
+  const fn = useServerFn(generateGlobalAdvisorReport);
+  const [loading, setLoading] = useState(false);
+  const [result, setResult] = useState<string | null>(null);
+  const [sources, setSources] = useState<{ code: string; stage: string | null }[]>([]);
+
+  const run = async () => {
+    setLoading(true);
+    try {
+      const res = await fn();
+      setResult(res.report);
+      setSources(res.sources);
+      toast.success(`تم توليد التحليل الشامل من ${res.sources.length} تقرير`);
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "تعذر توليد التحليل");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <section className="my-10 rounded-2xl border-2 border-gold/40 bg-gradient-to-br from-gold/5 to-primary/5 p-6 print:hidden">
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div className="flex-1 min-w-[260px]">
+          <p className="flex items-center gap-2 text-xs font-medium uppercase tracking-widest text-gold">
+            <Sparkles className="h-3.5 w-3.5" /> تحليل المستشار الذكي الشامل
+          </p>
+          <h3 className="mt-2 font-serif text-2xl text-primary">
+            ادمج كل اختباراتك في تقرير مهني واحد
+          </h3>
+          <p className="mt-2 text-sm leading-7 text-muted-foreground">
+            يحلّل المستشار الذكي جميع تقاريرك (الشخصية، القيم، نمط التعلم، الميول، إلخ)
+            ويُعدّ تقريراً مهنياً شاملاً من 10 مراحل: تحديد المسار الأنسب — مؤشرات الجاهزية
+            (وظيفي / ريادي / عمل حر) — أفضل 20 وظيفة و10 قطاعات — فجوات المهارات — تنبؤ النجاح
+            — خطة 90 يوماً وسنة و3 سنوات — توصيات تنفيذية.
+          </p>
+        </div>
+        <button
+          onClick={run}
+          disabled={loading}
+          className="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground disabled:opacity-60"
+        >
+          {loading ? (
+            <>
+              <Loader2 className="h-4 w-4 animate-spin" /> جاري التحليل…
+            </>
+          ) : (
+            <>
+              <Sparkles className="h-4 w-4" /> {result ? "إعادة التوليد" : "ولّد التحليل الآن"}
+            </>
+          )}
+        </button>
+      </div>
+
+      {loading && !result && (
+        <p className="mt-4 text-xs text-muted-foreground">
+          قد يستغرق هذا 30-60 ثانية لأنّه يقرأ كل تقاريرك ويُولّد تحليلاً مطوّلاً.
+        </p>
+      )}
+
+      {result && (
+        <div className="mt-6 rounded-xl border border-border bg-card p-5">
+          {sources.length > 0 && (
+            <p className="mb-4 text-xs text-muted-foreground">
+              مبنيّ على {sources.length} تقرير:{" "}
+              {sources.map((s) => s.stage || s.code).join(" • ")}
+            </p>
+          )}
+          <div className="report-content text-sm leading-loose text-foreground">
+            <ReactMarkdown>{result}</ReactMarkdown>
+          </div>
+        </div>
+      )}
+
+      <p className="mt-3 text-[11px] text-muted-foreground">
+        * يتطلّب تسجيل الدخول، ويعتمد فقط على نتائج اختباراتك الفعلية في حسابك.
+      </p>
+    </section>
+  );
+}
