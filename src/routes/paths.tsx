@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Compass, GraduationCap, RefreshCw, TrendingUp, HeartPulse, BookOpen, ArrowLeft, CheckCircle2 } from "lucide-react";
+import { Compass, GraduationCap, RefreshCw, TrendingUp, HeartPulse, BookOpen, Activity, ArrowLeft, CheckCircle2 } from "lucide-react";
 
 export const Route = createFileRoute("/paths")({
   head: () => ({
@@ -90,6 +90,19 @@ const TRACKS: Track[] = [
     accent: "from-rose-500/15 to-rose-500/5 border-rose-500/30",
     tests: [
       { name: "الفحص النفسي المختصر (PHQ-2 + GAD-2)", href: "/wellbeing-check", note: "للفرز فقط، لا يُغني عن مختصّ" },
+    ],
+  },
+  {
+    key: "poia",
+    title: "المسار 6 — الأثر المهني والصحي (POIA)",
+    audience: "لكل موظّف أو مهني يريد قياس أثر وظيفته على حياته",
+    outcome: "ستة مؤشرات (PI · OH · BRI · CSI · CFS · QWL) + تقرير ذكي + مقارنة مهن",
+    icon: Activity,
+    accent: "from-fuchsia-500/15 to-fuchsia-500/5 border-fuchsia-500/30",
+    tests: [
+      { name: "1) قياس الأثر المهني والصحي (POIA)", href: "/poia", note: "يقيس أثر العمل على الجسد والنفس والعلاقات والاستدامة" },
+      { name: "2) لوحة المؤشرات الشخصية", href: "/poia-dashboard", note: "متابعة تطوّرك عبر الزمن" },
+      { name: "3) مقارنة المهن", href: "/poia-compare", note: "قارن مؤشراتك بمتوسطات 20 مهنة" },
     ],
   },
 ];

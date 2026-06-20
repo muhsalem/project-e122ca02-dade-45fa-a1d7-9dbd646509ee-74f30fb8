@@ -24,6 +24,9 @@ import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as PricingRouteImport } from './routes/pricing'
+import { Route as PoiaDashboardRouteImport } from './routes/poia-dashboard'
+import { Route as PoiaCompareRouteImport } from './routes/poia-compare'
+import { Route as PoiaRouteImport } from './routes/poia'
 import { Route as PathsRouteImport } from './routes/paths'
 import { Route as ParentDashboardRouteImport } from './routes/parent-dashboard'
 import { Route as MyAssessmentsRouteImport } from './routes/my-assessments'
@@ -141,6 +144,21 @@ const PrivacyRoute = PrivacyRouteImport.update({
 const PricingRoute = PricingRouteImport.update({
   id: '/pricing',
   path: '/pricing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PoiaDashboardRoute = PoiaDashboardRouteImport.update({
+  id: '/poia-dashboard',
+  path: '/poia-dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PoiaCompareRoute = PoiaCompareRouteImport.update({
+  id: '/poia-compare',
+  path: '/poia-compare',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PoiaRoute = PoiaRouteImport.update({
+  id: '/poia',
+  path: '/poia',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PathsRoute = PathsRouteImport.update({
@@ -392,6 +410,9 @@ export interface FileRoutesByFullPath {
   '/my-assessments': typeof MyAssessmentsRoute
   '/parent-dashboard': typeof ParentDashboardRoute
   '/paths': typeof PathsRoute
+  '/poia': typeof PoiaRoute
+  '/poia-compare': typeof PoiaCompareRoute
+  '/poia-dashboard': typeof PoiaDashboardRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
   '/profile': typeof ProfileRoute
@@ -452,6 +473,9 @@ export interface FileRoutesByTo {
   '/my-assessments': typeof MyAssessmentsRoute
   '/parent-dashboard': typeof ParentDashboardRoute
   '/paths': typeof PathsRoute
+  '/poia': typeof PoiaRoute
+  '/poia-compare': typeof PoiaCompareRoute
+  '/poia-dashboard': typeof PoiaDashboardRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
   '/profile': typeof ProfileRoute
@@ -513,6 +537,9 @@ export interface FileRoutesById {
   '/my-assessments': typeof MyAssessmentsRoute
   '/parent-dashboard': typeof ParentDashboardRoute
   '/paths': typeof PathsRoute
+  '/poia': typeof PoiaRoute
+  '/poia-compare': typeof PoiaCompareRoute
+  '/poia-dashboard': typeof PoiaDashboardRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
   '/profile': typeof ProfileRoute
@@ -575,6 +602,9 @@ export interface FileRouteTypes {
     | '/my-assessments'
     | '/parent-dashboard'
     | '/paths'
+    | '/poia'
+    | '/poia-compare'
+    | '/poia-dashboard'
     | '/pricing'
     | '/privacy'
     | '/profile'
@@ -635,6 +665,9 @@ export interface FileRouteTypes {
     | '/my-assessments'
     | '/parent-dashboard'
     | '/paths'
+    | '/poia'
+    | '/poia-compare'
+    | '/poia-dashboard'
     | '/pricing'
     | '/privacy'
     | '/profile'
@@ -695,6 +728,9 @@ export interface FileRouteTypes {
     | '/my-assessments'
     | '/parent-dashboard'
     | '/paths'
+    | '/poia'
+    | '/poia-compare'
+    | '/poia-dashboard'
     | '/pricing'
     | '/privacy'
     | '/profile'
@@ -756,6 +792,9 @@ export interface RootRouteChildren {
   MyAssessmentsRoute: typeof MyAssessmentsRoute
   ParentDashboardRoute: typeof ParentDashboardRoute
   PathsRoute: typeof PathsRoute
+  PoiaRoute: typeof PoiaRoute
+  PoiaCompareRoute: typeof PoiaCompareRoute
+  PoiaDashboardRoute: typeof PoiaDashboardRoute
   PricingRoute: typeof PricingRoute
   PrivacyRoute: typeof PrivacyRoute
   ProfileRoute: typeof ProfileRoute
@@ -884,6 +923,27 @@ declare module '@tanstack/react-router' {
       path: '/pricing'
       fullPath: '/pricing'
       preLoaderRoute: typeof PricingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/poia-dashboard': {
+      id: '/poia-dashboard'
+      path: '/poia-dashboard'
+      fullPath: '/poia-dashboard'
+      preLoaderRoute: typeof PoiaDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/poia-compare': {
+      id: '/poia-compare'
+      path: '/poia-compare'
+      fullPath: '/poia-compare'
+      preLoaderRoute: typeof PoiaCompareRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/poia': {
+      id: '/poia'
+      path: '/poia'
+      fullPath: '/poia'
+      preLoaderRoute: typeof PoiaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/paths': {
@@ -1258,6 +1318,9 @@ const rootRouteChildren: RootRouteChildren = {
   MyAssessmentsRoute: MyAssessmentsRoute,
   ParentDashboardRoute: ParentDashboardRoute,
   PathsRoute: PathsRoute,
+  PoiaRoute: PoiaRoute,
+  PoiaCompareRoute: PoiaCompareRoute,
+  PoiaDashboardRoute: PoiaDashboardRoute,
   PricingRoute: PricingRoute,
   PrivacyRoute: PrivacyRoute,
   ProfileRoute: ProfileRoute,
