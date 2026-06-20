@@ -356,6 +356,108 @@ export type Database = {
         }
         Relationships: []
       }
+      poia_occupations: {
+        Row: {
+          avg_burnout: number | null
+          avg_health_impact: number | null
+          avg_income_band: string | null
+          avg_pressure: number | null
+          avg_satisfaction: number | null
+          avg_wlb: number | null
+          created_at: string
+          id: string
+          name_ar: string
+          name_en: string | null
+          sector: string | null
+          source: string | null
+          updated_at: string
+        }
+        Insert: {
+          avg_burnout?: number | null
+          avg_health_impact?: number | null
+          avg_income_band?: string | null
+          avg_pressure?: number | null
+          avg_satisfaction?: number | null
+          avg_wlb?: number | null
+          created_at?: string
+          id?: string
+          name_ar: string
+          name_en?: string | null
+          sector?: string | null
+          source?: string | null
+          updated_at?: string
+        }
+        Update: {
+          avg_burnout?: number | null
+          avg_health_impact?: number | null
+          avg_income_band?: string | null
+          avg_pressure?: number | null
+          avg_satisfaction?: number | null
+          avg_wlb?: number | null
+          created_at?: string
+          id?: string
+          name_ar?: string
+          name_en?: string | null
+          sector?: string | null
+          source?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      poia_submissions: {
+        Row: {
+          ai_report: string | null
+          answers: Json
+          band: string | null
+          bri_score: number | null
+          cfs_score: number | null
+          code: string
+          context: Json
+          created_at: string
+          csi_score: number | null
+          id: string
+          oh_score: number | null
+          pi_score: number | null
+          qwl_score: number | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          ai_report?: string | null
+          answers?: Json
+          band?: string | null
+          bri_score?: number | null
+          cfs_score?: number | null
+          code: string
+          context?: Json
+          created_at?: string
+          csi_score?: number | null
+          id?: string
+          oh_score?: number | null
+          pi_score?: number | null
+          qwl_score?: number | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          ai_report?: string | null
+          answers?: Json
+          band?: string | null
+          bri_score?: number | null
+          cfs_score?: number | null
+          code?: string
+          context?: Json
+          created_at?: string
+          csi_score?: number | null
+          id?: string
+          oh_score?: number | null
+          pi_score?: number | null
+          qwl_score?: number | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           age: number | null
