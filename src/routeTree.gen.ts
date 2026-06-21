@@ -31,6 +31,7 @@ import { Route as PathsRouteImport } from './routes/paths'
 import { Route as ParentDashboardRouteImport } from './routes/parent-dashboard'
 import { Route as MyAssessmentsRouteImport } from './routes/my-assessments'
 import { Route as LearningStyleRouteImport } from './routes/learning-style'
+import { Route as LearningDnaRouteImport } from './routes/learning-dna'
 import { Route as LaborMarketRouteImport } from './routes/labor-market'
 import { Route as JoinAsCoachRouteImport } from './routes/join-as-coach'
 import { Route as InstitutionsRouteImport } from './routes/institutions'
@@ -179,6 +180,11 @@ const MyAssessmentsRoute = MyAssessmentsRouteImport.update({
 const LearningStyleRoute = LearningStyleRouteImport.update({
   id: '/learning-style',
   path: '/learning-style',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LearningDnaRoute = LearningDnaRouteImport.update({
+  id: '/learning-dna',
+  path: '/learning-dna',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LaborMarketRoute = LaborMarketRouteImport.update({
@@ -406,6 +412,7 @@ export interface FileRoutesByFullPath {
   '/institutions': typeof InstitutionsRouteWithChildren
   '/join-as-coach': typeof JoinAsCoachRoute
   '/labor-market': typeof LaborMarketRoute
+  '/learning-dna': typeof LearningDnaRoute
   '/learning-style': typeof LearningStyleRoute
   '/my-assessments': typeof MyAssessmentsRoute
   '/parent-dashboard': typeof ParentDashboardRoute
@@ -469,6 +476,7 @@ export interface FileRoutesByTo {
   '/institutions': typeof InstitutionsRouteWithChildren
   '/join-as-coach': typeof JoinAsCoachRoute
   '/labor-market': typeof LaborMarketRoute
+  '/learning-dna': typeof LearningDnaRoute
   '/learning-style': typeof LearningStyleRoute
   '/my-assessments': typeof MyAssessmentsRoute
   '/parent-dashboard': typeof ParentDashboardRoute
@@ -533,6 +541,7 @@ export interface FileRoutesById {
   '/institutions': typeof InstitutionsRouteWithChildren
   '/join-as-coach': typeof JoinAsCoachRoute
   '/labor-market': typeof LaborMarketRoute
+  '/learning-dna': typeof LearningDnaRoute
   '/learning-style': typeof LearningStyleRoute
   '/my-assessments': typeof MyAssessmentsRoute
   '/parent-dashboard': typeof ParentDashboardRoute
@@ -598,6 +607,7 @@ export interface FileRouteTypes {
     | '/institutions'
     | '/join-as-coach'
     | '/labor-market'
+    | '/learning-dna'
     | '/learning-style'
     | '/my-assessments'
     | '/parent-dashboard'
@@ -661,6 +671,7 @@ export interface FileRouteTypes {
     | '/institutions'
     | '/join-as-coach'
     | '/labor-market'
+    | '/learning-dna'
     | '/learning-style'
     | '/my-assessments'
     | '/parent-dashboard'
@@ -724,6 +735,7 @@ export interface FileRouteTypes {
     | '/institutions'
     | '/join-as-coach'
     | '/labor-market'
+    | '/learning-dna'
     | '/learning-style'
     | '/my-assessments'
     | '/parent-dashboard'
@@ -788,6 +800,7 @@ export interface RootRouteChildren {
   InstitutionsRoute: typeof InstitutionsRouteWithChildren
   JoinAsCoachRoute: typeof JoinAsCoachRoute
   LaborMarketRoute: typeof LaborMarketRoute
+  LearningDnaRoute: typeof LearningDnaRoute
   LearningStyleRoute: typeof LearningStyleRoute
   MyAssessmentsRoute: typeof MyAssessmentsRoute
   ParentDashboardRoute: typeof ParentDashboardRoute
@@ -972,6 +985,13 @@ declare module '@tanstack/react-router' {
       path: '/learning-style'
       fullPath: '/learning-style'
       preLoaderRoute: typeof LearningStyleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/learning-dna': {
+      id: '/learning-dna'
+      path: '/learning-dna'
+      fullPath: '/learning-dna'
+      preLoaderRoute: typeof LearningDnaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/labor-market': {
@@ -1314,6 +1334,7 @@ const rootRouteChildren: RootRouteChildren = {
   InstitutionsRoute: InstitutionsRouteWithChildren,
   JoinAsCoachRoute: JoinAsCoachRoute,
   LaborMarketRoute: LaborMarketRoute,
+  LearningDnaRoute: LearningDnaRoute,
   LearningStyleRoute: LearningStyleRoute,
   MyAssessmentsRoute: MyAssessmentsRoute,
   ParentDashboardRoute: ParentDashboardRoute,
