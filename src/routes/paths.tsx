@@ -83,6 +83,8 @@ const TRACKS: Track[] = [
       { name: "3) لوحة Learning DNA الشخصية", href: "/learning-dna-dashboard", note: "تابع تطوّر مؤشراتك السبعة عبر الزمن" },
       { name: "4) AI Learning Coach — مدرّب التعلّم الذكي", href: "/learning-coach", note: "محادثة مع مدرّب يقرأ بصمتك ويعطيك توصيات فورية" },
     ],
+  },
+
 
   {
     key: "screening",
