@@ -356,6 +356,101 @@ export type Database = {
         }
         Relationships: []
       }
+      learning_coach_messages: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          role: string
+          submission_id: string | null
+          user_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          role: string
+          submission_id?: string | null
+          user_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          role?: string
+          submission_id?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "learning_coach_messages_submission_id_fkey"
+            columns: ["submission_id"]
+            isOneToOne: false
+            referencedRelation: "learning_dna_submissions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      learning_dna_submissions: {
+        Row: {
+          ai_report: string | null
+          answers: Json
+          band: string | null
+          code: string
+          created_at: string
+          dimension_scores: Json
+          dls: number | null
+          foc: number | null
+          id: string
+          las: number | null
+          les: number | null
+          pss: number | null
+          ret: number | null
+          sls: number | null
+          task_results: Json
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          ai_report?: string | null
+          answers?: Json
+          band?: string | null
+          code: string
+          created_at?: string
+          dimension_scores?: Json
+          dls?: number | null
+          foc?: number | null
+          id?: string
+          las?: number | null
+          les?: number | null
+          pss?: number | null
+          ret?: number | null
+          sls?: number | null
+          task_results?: Json
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          ai_report?: string | null
+          answers?: Json
+          band?: string | null
+          code?: string
+          created_at?: string
+          dimension_scores?: Json
+          dls?: number | null
+          foc?: number | null
+          id?: string
+          las?: number | null
+          les?: number | null
+          pss?: number | null
+          ret?: number | null
+          sls?: number | null
+          task_results?: Json
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       poia_occupations: {
         Row: {
           avg_burnout: number | null
