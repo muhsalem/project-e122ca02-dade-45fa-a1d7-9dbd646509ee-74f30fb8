@@ -78,9 +78,14 @@ const TRACKS: Track[] = [
     icon: BookOpen,
     accent: "from-violet-500/15 to-violet-500/5 border-violet-500/30",
     tests: [
-      { name: "اكتشاف نمط التعلّم (VARK + Kolb)", href: "/learning-style", note: "نموذجان متكاملان: قناة الاستقبال + دورة المعالجة" },
+      { name: "1) اكتشاف نمط التعلّم (VARK + Kolb)", href: "/learning-style", note: "نموذجان متكاملان: قناة الاستقبال + دورة المعالجة" },
+      { name: "2) Learning DNA — البصمة التعليمية الشاملة", href: "/learning-dna", note: "30+ بُعد + 3 اختبارات أداء (ذاكرة، Stroop، حلّ مشكلات) + خطة شخصية" },
+      { name: "3) لوحة Learning DNA الشخصية", href: "/learning-dna-dashboard", note: "تابع تطوّر مؤشراتك السبعة عبر الزمن" },
+      { name: "4) AI Learning Coach — مدرّب التعلّم الذكي", href: "/learning-coach", note: "محادثة مع مدرّب يقرأ بصمتك ويعطيك توصيات فورية" },
     ],
   },
+
+
   {
     key: "screening",
     title: "المسار 5 — الفرز النفسي",

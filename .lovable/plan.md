@@ -1,143 +1,115 @@
-# خطة دمج نظام "قياس الأثر المهني والصحي للمهنة" (POIA)
+# نظام Learning DNA — البصمة التعليمية الشخصية
 
-> ملاحظة مهمة: منصتك الحالية مبنية على **TanStack Start + Lovable Cloud (Supabase)** وليست Laravel. سأنفّذ النظام بنفس الـ stack الحالي حتى يندمج مع بقية الاختبارات (RIASEC، Big Five، Burnout، Wellbeing، Career Twin، التقرير الشامل…)، ويُعاد استخدام بنيتك السيكومترية (`src/lib/psychometrics.ts`) ومحرّك التقارير الذكي (`global-advisor.functions.ts`).
+> ملاحظة: المنصة الحالية مبنية على **TanStack Start + Lovable Cloud (Supabase)** وليست Laravel. سأبني النظام بنفس الـ stack ليندمج مع `learning-style`, `cognitive-profile`, `comprehensive-assessment`, `global-advisor`, POIA, و Career Twin.
 
----
+## 1) نطاق V1 (المُسلَّم الآن)
 
-## 1) النطاق المُسلَّم في هذه المرحلة (V1)
+مسار موحّد باسم **"Learning DNA — بصمة التعلم"** يتضمن:
 
-أبني **مساراً متكاملاً واحداً** باسم **"قياس الأثر المهني والصحي"** يربط بين كل ما تطلبه عبر:
+1. **استبيان متعدد الأبعاد** (~60 بنداً Likert‑5) يغطي 6 محاور و30+ بُعداً فرعياً.
+2. **3 اختبارات أداء فعلية** خفيفة في المتصفح (لا تتطلب أجهزة):
+   - **Memory Recall** — عرض 12 كلمة/10 ثوانٍ ثم استدعاء فوري + استدعاء مؤجل بعد إكمال قسم آخر.
+   - **Focus & Distraction** — مهمة Stroop مبسطة عربية (لون/كلمة) لقياس مقاومة التشتت وزمن الاستجابة.
+   - **Problem Solving** — 5 ألغاز منطقية قصيرة مؤقتة (Raven-style + استنباط).
+3. **محرّك تقييم** يحسب 10 مؤشرات معيارية ويبني خريطة الـ DNA.
+4. **تقرير ذكي** (Lovable AI / Gemini) يفسّر النتائج + خطة تعلم شخصية + روتين يومي + توصية محتوى.
+5. **لوحة شخصية** `/learning-dna-dashboard` مع رادار للمؤشرات وتتبع زمني.
+6. **AI Learning Coach** — chat مخصص يقرأ نتائج المستخدم ويعطي تغذية راجعة (server fn، بدون streaming في V1).
+7. ربط النتائج بـ Global Advisor و Career Twin و POIA (سياق إضافي).
 
-1. اختبار POIA موحّد (بنك أسئلة عربي/إنجليزي، Likert‑5، مع بنود عكسية).
-2. محرّك تقييم يحسب 6 مؤشرات معيارية.
-3. تقرير ذكي (Lovable AI / Gemini) يفسّر النتائج ويقترح مسارات.
-4. لوحة مؤشرات شخصية + متابعة زمنية (sparkline لكل مؤشر).
-5. مقارنة مهن (تبدأ ببذرة 20 مهنة شائعة، قابلة للتوسعة).
-6. ربط النتائج بـ **توأم المسار** و **التقرير الشامل** و **اختبار الاحتراق** الموجودة.
+**مؤجَّل** (يُطلب صراحةً لاحقاً): اشتراكات منفصلة، PDF مخصص، Gamification/شارات، EN كاملة، اختبارات أداء متقدمة (n-back, dual-task).
 
-ما لا أُسلّمه الآن (يُؤجَّل لمراحل لاحقة بطلب صريح): نظام اشتراكات جديد، PDF مخصّص للتقرير، Gamification، دعم EN كامل لواجهة الأسئلة (سأضع بنية i18n جاهزة فقط)، شهادات إتمام منفصلة.
+## 2) المحاور والأبعاد الـ30+
 
----
+| المحور | الأبعاد الفرعية |
+|---|---|
+| استقبال المعلومات (Input) | بصري، سمعي، قرائي، عملي، مشاهدة، نقاش، تجربة |
+| المعالجة (Processing) | تحليلي، منطقي، إبداعي، نقدي، منظومي، استقرائي، استنباطي |
+| الذاكرة (Memory) | قصيرة المدى، طويلة المدى، سرعة الاستدعاء، الترابط، الاحتفاظ |
+| التركيز (Attention) | مدة التركيز، مقاومة التشتت، الأداء تحت الضغط، إدارة المقاطعات، التعلم العميق |
+| الدافعية (Motivation) | داخلي، خارجي، استكشاف، فضول، مثابرة |
+| البيئة (Environment) | فردي، جماعي، تنافسي، تعاوني، مرن، منظم |
 
-## 2) المحاور والمؤشرات (المعادلات)
+## 3) المؤشرات المركّبة (0–100)
 
-كل بند Likert 1–5. متوسط البنود ضمن المقياس الفرعي ثم `toPercent` (الموجود لديك).
+- **LES** Learning Efficiency Score — مرجَّح من كل المحاور.
+- **RET** Retention — (ذاكرة × أداء Memory test).
+- **FOC** Focus — (انتباه × أداء Focus test).
+- **PSS** Problem Solving — (معالجة × أداء Problem test).
+- **LAS** Learning Agility — (إبداعي + استقرائي + سرعة الاستدعاء).
+- **SLS** Self-Learning — (داخلي + فضول + مثابرة + فردي).
+- **DLS** Deep Learning — (نقدي + منظومي + تركيز عميق).
+- **InputProfile**, **ProcessingProfile**, **EnvProfile** — متجهات نسبية.
 
-| المؤشر | المدخلات | المعادلة |
-|---|---|---|
-| Professional Impact (PI) | إنتاجية، جودة، ابتكار، قيادة، تعاون، خدمة عملاء، أثر مؤسسي | متوسط مرجّح (القيادة والأثر المؤسسي ×1.2) |
-| Occupational Health (OH) | صحة جسدية + نفسية + اجتماعية | (Phys×0.35 + Psych×0.4 + Social×0.25) |
-| Burnout Risk (BRI) | إرهاق عاطفي، فقدان حماس، انخفاض إنجاز، نية ترك | **عكسي**: 100 − متوسط |
-| Career Sustainability (CSI) | استمرار 5/10 سنوات، توافق نمط حياة، مرونة | متوسط مع عقوبة −15 إذا BRI<40 |
-| Career Fit (CFS) | شخصية، مهارات، قيم، اهتمامات، رسالة | متوسط بسيط، يدمج RIASEC السابق إن وُجد |
-| Quality of Work Life (QWL) | (PI + OH + (100−BRI) + CSI + CFS) / 5 | المجمَّع النهائي |
+التصنيف: ممتاز ≥80، جيد 65–79، متوسط 50–64، يحتاج تطوير <50.
 
-تصنيفات: ممتاز ≥80، جيد 65–79، متوسط 50–64، منخفض 35–49، حرج <35.
+## 4) الملفات الجديدة
 
----
-
-## 3) بنك الأسئلة (V1)
-
-≈ **70 سؤالاً** موزعة:
-- الأثر المهني: 14
-- الصحة الجسدية: 8 — النفسية: 10 — الاجتماعية: 6
-- الاحتراق: 8 (مستوحى من MBI/Oldenburg، صياغة عربية)
-- الاستدامة: 7
-- التوافق: 12 (شخصية/قيم/اهتمامات/رسالة)
-- 5 بنود سياقية (ساعات العمل، نمط الدوام، الراتب التقديري، القطاع، المسمى)
-
-تُخزَّن في ملف TS واحد `src/data/poia-bank.ts` مع `reverse` و `subscale` لكل بند، لتسهيل التحرير العلمي لاحقاً.
-
----
-
-## 4) الملفات الجديدة / المعدَّلة
-
-```text
-src/
-├── data/
-│   └── poia-bank.ts                 # بنك الأسئلة + الميتاداتا
-│   └── poia-occupations.ts          # 20 مهنة بذرة + متوسطات قياسية
-├── lib/
-│   ├── poia-scoring.ts              # حساب المؤشرات الستة + التصنيفات
-│   └── poia.functions.ts            # createServerFn: submitPOIA, generatePOIAReport, listMyPOIA, compareOccupations
-├── components/site/
-│   ├── PoiaRadarChart.tsx           # رسم سداسي للمؤشرات (recharts)
-│   └── PoiaTrendline.tsx            # متابعة زمنية
-├── routes/
-│   ├── poia.tsx                     # صفحة الاختبار (مقسّمة لأقسام، حفظ تقدم محلي)
-│   ├── poia-dashboard.tsx           # لوحة المؤشرات الشخصية + المقارنات
-│   └── poia-compare.tsx             # مقارنة المهن
-└── routes/paths.tsx                 # إضافة المسار تحت "خريطة الاختبارات"
+```
+src/data/
+  learning-dna-bank.ts          # ~60 سؤال + meta (محور، بُعد، reverse)
+  learning-dna-tasks.ts         # محفّزات اختبارات الأداء (كلمات، Stroop، ألغاز)
+src/lib/
+  learning-dna-scoring.ts       # حساب الأبعاد والمؤشرات الـ10
+  learning-dna.functions.ts     # submitLearningDna, listMyLearningDna, chatLearningCoach
+src/components/site/
+  MemoryRecallTask.tsx          # واجهة اختبار الذاكرة
+  FocusStroopTask.tsx           # واجهة اختبار التركيز
+  ProblemSolvingTask.tsx        # واجهة اختبار حل المشكلات
+  LearningDnaRadar.tsx          # رادار سداسي/عشاري
+src/routes/
+  learning-dna.tsx              # مسار الاختبار (استبيان + 3 مهام)
+  learning-dna-dashboard.tsx    # لوحة المؤشرات والخطة الشخصية
+  learning-coach.tsx            # AI Learning Coach
 ```
 
-تعديلات صغيرة:
-- `src/routes/report.$code.tsx` → عرض شارة POIA إن كان الاختبار من نوع poia.
-- `src/lib/global-advisor.functions.ts` → يستهلك تلقائياً آخر تقرير POIA (لا تغيير في البرومبت، فقط البيانات مضمّنة).
-- `src/lib/career-twin.functions.ts` → يقرأ مؤشرات POIA الأخيرة كسياق.
-- `src/components/site/Header.tsx` → بند جديد "الأثر المهني والصحي".
+تعديلات صغيرة: `paths.tsx` (إضافة المسار)، `global-advisor.functions.ts` (قراءة آخر DNA كسياق)، `Header.tsx`.
 
----
+## 5) قاعدة البيانات (Lovable Cloud)
 
-## 5) قاعدة البيانات (Lovable Cloud / Supabase)
+migration واحدة:
 
-سأطلب migration واحدة (موافقتك مطلوبة):
+```
+learning_dna_submissions
+  id, user_id, code (LDNA-XXXX-XXXX),
+  answers jsonb, task_results jsonb,
+  dimension_scores jsonb,          -- 30+ بُعد
+  les, ret, foc, pss, las, sls, dls (numeric),
+  band text, ai_report text,
+  created_at, updated_at
 
-```text
-poia_submissions
-  id, user_id, code (BSL-POIA-XXXX), answers jsonb, context jsonb,
-  pi_score, oh_score, bri_score, csi_score, cfs_score, qwl_score,
-  band text, ai_report text, created_at, updated_at
-poia_occupations              -- بذرة قابلة للتوسعة
-  id, name_ar, name_en, sector, avg_satisfaction, avg_pressure,
-  avg_burnout, avg_income_band, avg_wlb, avg_health_impact, source
+learning_coach_messages
+  id, user_id, submission_id, role (user|assistant),
+  content text, created_at
 ```
 
-RLS:
-- `poia_submissions`: المستخدم يقرأ/يكتب صفوفه فقط. service_role full.
-- `poia_occupations`: anon SELECT (جدول مرجعي عام).
-
-سيُكتب التقرير الذكي في `assessment_reports` بـ `stage='poia'` ليظهر في `/my-assessments` و`/report/$code` بنفس التجربة الحالية.
-
----
+RLS: المستخدم يقرأ/يكتب صفوفه فقط. service_role كامل. GRANT صريح.
+يُحفظ التقرير أيضاً في `assessment_reports` للظهور في `/my-assessments` و `/report/$code`.
 
 ## 6) تجربة المستخدم
 
-- صفحة `/poia` بأقسام منهجية (سياق → أثر → صحة → احتراق → استدامة → توافق) مع شريط تقدم و autosave (`use-autosave` الموجود).
-- بعد الإرسال: انتقال إلى `/report/<code>` مع رادار + جدول المؤشرات + التقرير الذكي + زر "ضمّه للتقرير الشامل".
-- لوحة `/poia-dashboard`: آخر نتائج + رسم زمني لكل مؤشر + تنبيهات إذا BRI≥65 (إحالة إلى wellbeing-check + EmergencyHelpline).
-- مقارنة `/poia-compare`: المستخدم يختار حتى 3 مهن من جدول `poia_occupations` ويرى مؤشراته مقابل المتوسطات.
+- `/learning-dna`: 6 أقسام استبيان + 3 مهام أداء بشريط تقدم و autosave.
+- بعد الإرسال: انتقال إلى `/report/<code>` مع رادار + جدول المؤشرات + خطة التعلم + روتين يومي + توصية محتوى.
+- `/learning-dna-dashboard`: تتبع زمني + تنبيهات (مثلاً تركيز منخفض ← تمارين Pomodoro موجّهة).
+- `/learning-coach`: chat بسيط يقرأ آخر DNA + رسائل سابقة ويرد بـ Gemini.
 
----
+## 7) المرجعية العلمية
 
-## 7) المعايير العلمية المرجعية
+Bloom's & SOLO Taxonomies، Cognitive Load Theory (Sweller)، Metacognition (Flavell)، Self-Regulated Learning (Zimmerman)، Deliberate Practice (Ericsson)، Growth Mindset (Dweck)، Spacing/Testing Effects، Dual Coding. تجنّب التصنيف القاطع بأنماط VAK/Honey-Mumford كآلية تدريس (أُشير إليها كتفضيلات استكشافية فقط).
 
-البنود مستلهمة (بإعادة صياغة عربية بدون نسخ) من: MBI-GS، Oldenburg Burnout، UWES، JD‑R، Karasek Demand‑Control، WHOQOL‑BREF، Holland RIASEC، Big Five، Gallup CliftonStrengths، Schein Career Anchors. تبقى الضوابط القيمية الحالية (لا قطاعات محرّمة، لا تشخيص طبي، الإحالة للمختص).
+## 8) خطة الدخل والتوسع (تُضاف لاحقاً في `/institutions`)
 
----
+- **أفراد**: ملخص مجاني + اشتراك سنوي للتقرير الكامل والمدرّب الذكي ومتابعة التطور.
+- **مدارس/جامعات**: تقارير DNA مجمّعة (Cohort) لتوجيه أساليب التدريس، تسعير per-seat.
+- **شركات L&D**: ربط بمؤشرات Skills Gap و POIA لتصميم برامج تدريب مخصصة.
 
-## 8) التحقق قبل التسليم
+## 9) ترتيب التنفيذ
 
-- بناء نظيف، لا أخطاء lint.
-- اختبار يدوي: إرسال إجابات وهمية → ظهور التقرير → ظهوره في `/my-assessments` و`/global-advisor`.
-- التحقق من RLS عبر `supabase--read_query`.
-
----
-
-## 9) خطة تحقيق الدخل والتوسع (مختصرة، تُكتب داخل `/institutions` كنموذج B2B إضافي)
-
-- **أفراد**: POIA مجاني نتيجة موجزة + اشتراك سنوي للتقرير الكامل ومتابعة زمنية.
-- **شركات**: تقرير مجمّع مجهول الهوية (Wellbeing & Burnout Heatmap) للموارد البشرية، تسعير per‑seat.
-- **حكومي/أكاديمي**: تراخيص مشروع لقياس الأثر المهني على القطاعات (مع تكامل ISCO‑08).
-- توسع إقليمي: واجهة EN جاهزة + بنك أسئلة قابل للترجمة + بنك مهن لكل سوق.
-
----
-
-## 10) ترتيب التنفيذ
-
-1. Migration (`poia_submissions` + `poia_occupations` + بذرة 20 مهنة) — **يتطلب موافقتك**.
-2. بنك الأسئلة + محرّك التقييم.
-3. صفحة `/poia` + حفظ + توليد التقرير الذكي.
-4. لوحة `/poia-dashboard` + مقارنة `/poia-compare`.
-5. ربط Header + paths + تقرير شامل + توأم المسار.
+1. Migration (`learning_dna_submissions` + `learning_coach_messages`) — **يتطلب موافقتك**.
+2. بنك الأسئلة + محفّزات المهام + محرّك التقييم.
+3. صفحة `/learning-dna` (استبيان + 3 مهام + تقرير ذكي).
+4. لوحة `/learning-dna-dashboard`.
+5. `/learning-coach` (AI Coach).
+6. ربط Header + paths + Global Advisor.
 
 هل تعتمد الخطة لأبدأ بالـ migration ثم التنفيذ؟

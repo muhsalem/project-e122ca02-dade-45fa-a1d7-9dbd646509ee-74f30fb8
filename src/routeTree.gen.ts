@@ -31,6 +31,9 @@ import { Route as PathsRouteImport } from './routes/paths'
 import { Route as ParentDashboardRouteImport } from './routes/parent-dashboard'
 import { Route as MyAssessmentsRouteImport } from './routes/my-assessments'
 import { Route as LearningStyleRouteImport } from './routes/learning-style'
+import { Route as LearningDnaDashboardRouteImport } from './routes/learning-dna-dashboard'
+import { Route as LearningDnaRouteImport } from './routes/learning-dna'
+import { Route as LearningCoachRouteImport } from './routes/learning-coach'
 import { Route as LaborMarketRouteImport } from './routes/labor-market'
 import { Route as JoinAsCoachRouteImport } from './routes/join-as-coach'
 import { Route as InstitutionsRouteImport } from './routes/institutions'
@@ -179,6 +182,21 @@ const MyAssessmentsRoute = MyAssessmentsRouteImport.update({
 const LearningStyleRoute = LearningStyleRouteImport.update({
   id: '/learning-style',
   path: '/learning-style',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LearningDnaDashboardRoute = LearningDnaDashboardRouteImport.update({
+  id: '/learning-dna-dashboard',
+  path: '/learning-dna-dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LearningDnaRoute = LearningDnaRouteImport.update({
+  id: '/learning-dna',
+  path: '/learning-dna',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LearningCoachRoute = LearningCoachRouteImport.update({
+  id: '/learning-coach',
+  path: '/learning-coach',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LaborMarketRoute = LaborMarketRouteImport.update({
@@ -406,6 +424,9 @@ export interface FileRoutesByFullPath {
   '/institutions': typeof InstitutionsRouteWithChildren
   '/join-as-coach': typeof JoinAsCoachRoute
   '/labor-market': typeof LaborMarketRoute
+  '/learning-coach': typeof LearningCoachRoute
+  '/learning-dna': typeof LearningDnaRoute
+  '/learning-dna-dashboard': typeof LearningDnaDashboardRoute
   '/learning-style': typeof LearningStyleRoute
   '/my-assessments': typeof MyAssessmentsRoute
   '/parent-dashboard': typeof ParentDashboardRoute
@@ -469,6 +490,9 @@ export interface FileRoutesByTo {
   '/institutions': typeof InstitutionsRouteWithChildren
   '/join-as-coach': typeof JoinAsCoachRoute
   '/labor-market': typeof LaborMarketRoute
+  '/learning-coach': typeof LearningCoachRoute
+  '/learning-dna': typeof LearningDnaRoute
+  '/learning-dna-dashboard': typeof LearningDnaDashboardRoute
   '/learning-style': typeof LearningStyleRoute
   '/my-assessments': typeof MyAssessmentsRoute
   '/parent-dashboard': typeof ParentDashboardRoute
@@ -533,6 +557,9 @@ export interface FileRoutesById {
   '/institutions': typeof InstitutionsRouteWithChildren
   '/join-as-coach': typeof JoinAsCoachRoute
   '/labor-market': typeof LaborMarketRoute
+  '/learning-coach': typeof LearningCoachRoute
+  '/learning-dna': typeof LearningDnaRoute
+  '/learning-dna-dashboard': typeof LearningDnaDashboardRoute
   '/learning-style': typeof LearningStyleRoute
   '/my-assessments': typeof MyAssessmentsRoute
   '/parent-dashboard': typeof ParentDashboardRoute
@@ -598,6 +625,9 @@ export interface FileRouteTypes {
     | '/institutions'
     | '/join-as-coach'
     | '/labor-market'
+    | '/learning-coach'
+    | '/learning-dna'
+    | '/learning-dna-dashboard'
     | '/learning-style'
     | '/my-assessments'
     | '/parent-dashboard'
@@ -661,6 +691,9 @@ export interface FileRouteTypes {
     | '/institutions'
     | '/join-as-coach'
     | '/labor-market'
+    | '/learning-coach'
+    | '/learning-dna'
+    | '/learning-dna-dashboard'
     | '/learning-style'
     | '/my-assessments'
     | '/parent-dashboard'
@@ -724,6 +757,9 @@ export interface FileRouteTypes {
     | '/institutions'
     | '/join-as-coach'
     | '/labor-market'
+    | '/learning-coach'
+    | '/learning-dna'
+    | '/learning-dna-dashboard'
     | '/learning-style'
     | '/my-assessments'
     | '/parent-dashboard'
@@ -788,6 +824,9 @@ export interface RootRouteChildren {
   InstitutionsRoute: typeof InstitutionsRouteWithChildren
   JoinAsCoachRoute: typeof JoinAsCoachRoute
   LaborMarketRoute: typeof LaborMarketRoute
+  LearningCoachRoute: typeof LearningCoachRoute
+  LearningDnaRoute: typeof LearningDnaRoute
+  LearningDnaDashboardRoute: typeof LearningDnaDashboardRoute
   LearningStyleRoute: typeof LearningStyleRoute
   MyAssessmentsRoute: typeof MyAssessmentsRoute
   ParentDashboardRoute: typeof ParentDashboardRoute
@@ -972,6 +1011,27 @@ declare module '@tanstack/react-router' {
       path: '/learning-style'
       fullPath: '/learning-style'
       preLoaderRoute: typeof LearningStyleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/learning-dna-dashboard': {
+      id: '/learning-dna-dashboard'
+      path: '/learning-dna-dashboard'
+      fullPath: '/learning-dna-dashboard'
+      preLoaderRoute: typeof LearningDnaDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/learning-dna': {
+      id: '/learning-dna'
+      path: '/learning-dna'
+      fullPath: '/learning-dna'
+      preLoaderRoute: typeof LearningDnaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/learning-coach': {
+      id: '/learning-coach'
+      path: '/learning-coach'
+      fullPath: '/learning-coach'
+      preLoaderRoute: typeof LearningCoachRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/labor-market': {
@@ -1314,6 +1374,9 @@ const rootRouteChildren: RootRouteChildren = {
   InstitutionsRoute: InstitutionsRouteWithChildren,
   JoinAsCoachRoute: JoinAsCoachRoute,
   LaborMarketRoute: LaborMarketRoute,
+  LearningCoachRoute: LearningCoachRoute,
+  LearningDnaRoute: LearningDnaRoute,
+  LearningDnaDashboardRoute: LearningDnaDashboardRoute,
   LearningStyleRoute: LearningStyleRoute,
   MyAssessmentsRoute: MyAssessmentsRoute,
   ParentDashboardRoute: ParentDashboardRoute,
@@ -1346,13 +1409,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
