@@ -31,6 +31,7 @@ import { Route as PathsRouteImport } from './routes/paths'
 import { Route as ParentDashboardRouteImport } from './routes/parent-dashboard'
 import { Route as MyAssessmentsRouteImport } from './routes/my-assessments'
 import { Route as LearningStyleRouteImport } from './routes/learning-style'
+import { Route as LearningDnaDashboardRouteImport } from './routes/learning-dna-dashboard'
 import { Route as LearningDnaRouteImport } from './routes/learning-dna'
 import { Route as LaborMarketRouteImport } from './routes/labor-market'
 import { Route as JoinAsCoachRouteImport } from './routes/join-as-coach'
@@ -180,6 +181,11 @@ const MyAssessmentsRoute = MyAssessmentsRouteImport.update({
 const LearningStyleRoute = LearningStyleRouteImport.update({
   id: '/learning-style',
   path: '/learning-style',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LearningDnaDashboardRoute = LearningDnaDashboardRouteImport.update({
+  id: '/learning-dna-dashboard',
+  path: '/learning-dna-dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LearningDnaRoute = LearningDnaRouteImport.update({
@@ -413,6 +419,7 @@ export interface FileRoutesByFullPath {
   '/join-as-coach': typeof JoinAsCoachRoute
   '/labor-market': typeof LaborMarketRoute
   '/learning-dna': typeof LearningDnaRoute
+  '/learning-dna-dashboard': typeof LearningDnaDashboardRoute
   '/learning-style': typeof LearningStyleRoute
   '/my-assessments': typeof MyAssessmentsRoute
   '/parent-dashboard': typeof ParentDashboardRoute
@@ -477,6 +484,7 @@ export interface FileRoutesByTo {
   '/join-as-coach': typeof JoinAsCoachRoute
   '/labor-market': typeof LaborMarketRoute
   '/learning-dna': typeof LearningDnaRoute
+  '/learning-dna-dashboard': typeof LearningDnaDashboardRoute
   '/learning-style': typeof LearningStyleRoute
   '/my-assessments': typeof MyAssessmentsRoute
   '/parent-dashboard': typeof ParentDashboardRoute
@@ -542,6 +550,7 @@ export interface FileRoutesById {
   '/join-as-coach': typeof JoinAsCoachRoute
   '/labor-market': typeof LaborMarketRoute
   '/learning-dna': typeof LearningDnaRoute
+  '/learning-dna-dashboard': typeof LearningDnaDashboardRoute
   '/learning-style': typeof LearningStyleRoute
   '/my-assessments': typeof MyAssessmentsRoute
   '/parent-dashboard': typeof ParentDashboardRoute
@@ -608,6 +617,7 @@ export interface FileRouteTypes {
     | '/join-as-coach'
     | '/labor-market'
     | '/learning-dna'
+    | '/learning-dna-dashboard'
     | '/learning-style'
     | '/my-assessments'
     | '/parent-dashboard'
@@ -672,6 +682,7 @@ export interface FileRouteTypes {
     | '/join-as-coach'
     | '/labor-market'
     | '/learning-dna'
+    | '/learning-dna-dashboard'
     | '/learning-style'
     | '/my-assessments'
     | '/parent-dashboard'
@@ -736,6 +747,7 @@ export interface FileRouteTypes {
     | '/join-as-coach'
     | '/labor-market'
     | '/learning-dna'
+    | '/learning-dna-dashboard'
     | '/learning-style'
     | '/my-assessments'
     | '/parent-dashboard'
@@ -801,6 +813,7 @@ export interface RootRouteChildren {
   JoinAsCoachRoute: typeof JoinAsCoachRoute
   LaborMarketRoute: typeof LaborMarketRoute
   LearningDnaRoute: typeof LearningDnaRoute
+  LearningDnaDashboardRoute: typeof LearningDnaDashboardRoute
   LearningStyleRoute: typeof LearningStyleRoute
   MyAssessmentsRoute: typeof MyAssessmentsRoute
   ParentDashboardRoute: typeof ParentDashboardRoute
@@ -985,6 +998,13 @@ declare module '@tanstack/react-router' {
       path: '/learning-style'
       fullPath: '/learning-style'
       preLoaderRoute: typeof LearningStyleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/learning-dna-dashboard': {
+      id: '/learning-dna-dashboard'
+      path: '/learning-dna-dashboard'
+      fullPath: '/learning-dna-dashboard'
+      preLoaderRoute: typeof LearningDnaDashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/learning-dna': {
@@ -1335,6 +1355,7 @@ const rootRouteChildren: RootRouteChildren = {
   JoinAsCoachRoute: JoinAsCoachRoute,
   LaborMarketRoute: LaborMarketRoute,
   LearningDnaRoute: LearningDnaRoute,
+  LearningDnaDashboardRoute: LearningDnaDashboardRoute,
   LearningStyleRoute: LearningStyleRoute,
   MyAssessmentsRoute: MyAssessmentsRoute,
   ParentDashboardRoute: ParentDashboardRoute,
