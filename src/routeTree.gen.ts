@@ -55,6 +55,7 @@ import { Route as CareerAnchorsRouteImport } from './routes/career-anchors'
 import { Route as BurnoutCheckRouteImport } from './routes/burnout-check'
 import { Route as BookingRouteImport } from './routes/booking'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuditReportRouteImport } from './routes/audit-report'
 import { Route as AcademicMajorRouteImport } from './routes/academic-major'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
@@ -304,6 +305,11 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuditReportRoute = AuditReportRouteImport.update({
+  id: '/audit-report',
+  path: '/audit-report',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AcademicMajorRoute = AcademicMajorRouteImport.update({
   id: '/academic-major',
   path: '/academic-major',
@@ -403,6 +409,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/academic-major': typeof AcademicMajorRoute
+  '/audit-report': typeof AuditReportRoute
   '/auth': typeof AuthRoute
   '/booking': typeof BookingRoute
   '/burnout-check': typeof BurnoutCheckRoute
@@ -469,6 +476,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/academic-major': typeof AcademicMajorRoute
+  '/audit-report': typeof AuditReportRoute
   '/auth': typeof AuthRoute
   '/booking': typeof BookingRoute
   '/burnout-check': typeof BurnoutCheckRoute
@@ -536,6 +544,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/academic-major': typeof AcademicMajorRoute
+  '/audit-report': typeof AuditReportRoute
   '/auth': typeof AuthRoute
   '/booking': typeof BookingRoute
   '/burnout-check': typeof BurnoutCheckRoute
@@ -604,6 +613,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/academic-major'
+    | '/audit-report'
     | '/auth'
     | '/booking'
     | '/burnout-check'
@@ -670,6 +680,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/academic-major'
+    | '/audit-report'
     | '/auth'
     | '/booking'
     | '/burnout-check'
@@ -736,6 +747,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/academic-major'
+    | '/audit-report'
     | '/auth'
     | '/booking'
     | '/burnout-check'
@@ -803,6 +815,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   AcademicMajorRoute: typeof AcademicMajorRoute
+  AuditReportRoute: typeof AuditReportRoute
   AuthRoute: typeof AuthRoute
   BookingRoute: typeof BookingRoute
   BurnoutCheckRoute: typeof BurnoutCheckRoute
@@ -1181,6 +1194,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/audit-report': {
+      id: '/audit-report'
+      path: '/audit-report'
+      fullPath: '/audit-report'
+      preLoaderRoute: typeof AuditReportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/academic-major': {
       id: '/academic-major'
       path: '/academic-major'
@@ -1353,6 +1373,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   AcademicMajorRoute: AcademicMajorRoute,
+  AuditReportRoute: AuditReportRoute,
   AuthRoute: AuthRoute,
   BookingRoute: BookingRoute,
   BurnoutCheckRoute: BurnoutCheckRoute,
