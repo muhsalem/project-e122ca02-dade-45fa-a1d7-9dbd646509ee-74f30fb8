@@ -641,11 +641,17 @@ function LearningStylePage() {
     <>
       <section className="border-b border-border bg-secondary/40">
         <div className="container-page py-12 text-center">
+          <div className="mx-auto mb-5 max-w-2xl rounded-xl border border-indigo-500/40 bg-indigo-500/10 p-3 text-right text-xs leading-6 text-indigo-900 dark:text-indigo-200">
+            <strong>نسخة كلاسيكية تمهيدية.</strong> هذا الاختبار يعتمد VARK/Kolb وهما نموذجان قديمان.
+            للحصول على قياس علمي حديث متعدّد الأبعاد مع اختبارات أداء فعلية، انتقل إلى{" "}
+            <Link to="/learning-dna" className="font-bold underline">Learning DNA — البصمة التعليمية</Link>.
+          </div>
           <span className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/10 px-4 py-1.5 text-xs font-medium text-primary">
             <Sparkles className="h-3.5 w-3.5 text-gold" />
-            تقييم أنماط التعلم الشامل
+            تقييم أنماط التعلم الكلاسيكي (Legacy)
           </span>
           <h1 className="mt-4 text-3xl text-primary md:text-4xl">اكتشف تفضيلاتك في التعلّم</h1>
+
           <p className="mx-auto mt-3 max-w-2xl text-sm text-muted-foreground">
             استبيان استرشادي يركّز على نموذجَي <strong>VARK</strong> (القنوات الحسيّة) و
             <strong> Kolb</strong> (دورة التعلّم التجريبي)، مع لمحات من نماذج أخرى للإثراء فقط،
