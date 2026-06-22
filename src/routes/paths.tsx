@@ -74,17 +74,28 @@ const TRACKS: Track[] = [
   {
     key: "learning",
     title: "المسار 4 — علم نفس التعلّم",
-    audience: "طالب/متدرّب/موظّف يريد تحسين طريقة تعلّمه",
-    outcome: "خريطة تعلّم شخصية: كيف تستوعب، تتذكّر، وتُترجم المعرفة إلى مهارة",
+    audience: "طالب/متدرّب يريد فهم قناة استقباله ودورة معالجته للمعرفة",
+    outcome: "تعرّف على نمط التعلّم الكلاسيكي (VARK/Kolb) كنقطة بداية تمهيدية",
     icon: BookOpen,
     accent: "from-violet-500/15 to-violet-500/5 border-violet-500/30",
     tests: [
-      { name: "1) اكتشاف نمط التعلّم (VARK + Kolb)", href: "/learning-style", note: "نموذجان متكاملان: قناة الاستقبال + دورة المعالجة" },
-      { name: "2) Learning DNA — البصمة التعليمية الشاملة", href: "/learning-dna", note: "30+ بُعد + 3 اختبارات أداء (ذاكرة، Stroop، حلّ مشكلات) + خطة شخصية" },
-      { name: "3) لوحة Learning DNA الشخصية", href: "/learning-dna-dashboard", note: "تابع تطوّر مؤشراتك السبعة عبر الزمن" },
-      { name: "4) AI Learning Coach — مدرّب التعلّم الذكي", href: "/learning-coach", note: "محادثة مع مدرّب يقرأ بصمتك ويعطيك توصيات فورية" },
+      { name: "اكتشاف نمط التعلّم (VARK + Kolb)", href: "/learning-style", note: "نموذجان كلاسيكيان تمهيديّان — للنتيجة الأعمق انتقل إلى Learning DNA" },
     ],
   },
+  {
+    key: "learning-dna",
+    title: "المسار 5 — Learning DNA · البصمة التعليمية",
+    audience: "كل من يريد قياساً علمياً متقدّماً لطريقة تعلّمه الفعلية",
+    outcome: "30+ بُعد + 3 اختبارات أداء + 7 مؤشرات مركّبة + خطة تعلّم شخصية ومدرّب AI",
+    icon: Brain,
+    accent: "from-indigo-500/15 to-indigo-500/5 border-indigo-500/30",
+    tests: [
+      { name: "1) Learning DNA — الاختبار الشامل", href: "/learning-dna", note: "استبيان (36 بنداً) + ذاكرة + Stroop + حلّ مشكلات" },
+      { name: "2) لوحة Learning DNA الشخصية", href: "/learning-dna-dashboard", note: "تابع تطوّر مؤشراتك السبعة (LES · RET · FOC · PSS · LAS · SLS · DLS)" },
+      { name: "3) AI Learning Coach — مدرّب التعلّم الذكي", href: "/learning-coach", note: "محادثة مع مدرّب يقرأ بصمتك ويعطيك توصيات فورية" },
+    ],
+  },
+
 
 
   {
