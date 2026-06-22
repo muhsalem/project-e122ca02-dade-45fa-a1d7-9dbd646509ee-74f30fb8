@@ -100,7 +100,7 @@ const TRACKS: Track[] = [
 
   {
     key: "screening",
-    title: "المسار 5 — الفرز النفسي",
+    title: "المسار 6 — الفرز النفسي",
     audience: "أداة عرضية لكل من يحتاج اطمئنانًا نفسيًا",
     outcome: "تقرير فرز موجز + توصية إحالة عند الحاجة",
     icon: HeartPulse,
@@ -111,7 +111,7 @@ const TRACKS: Track[] = [
   },
   {
     key: "poia",
-    title: "المسار 6 — الأثر المهني والصحي (POIA)",
+    title: "المسار 7 — الأثر المهني والصحي (POIA)",
     audience: "لكل موظّف أو مهني يريد قياس أثر وظيفته على حياته",
     outcome: "ستة مؤشرات (PI · OH · BRI · CSI · CFS · QWL) + تقرير ذكي + مقارنة مهن",
     icon: Activity,
@@ -122,6 +122,7 @@ const TRACKS: Track[] = [
       { name: "3) مقارنة المهن", href: "/poia-compare", note: "قارن مؤشراتك بمتوسطات 20 مهنة" },
     ],
   },
+
 ];
 
 function PathsPage() {
