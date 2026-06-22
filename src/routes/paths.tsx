@@ -1,17 +1,18 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Compass, GraduationCap, RefreshCw, TrendingUp, HeartPulse, BookOpen, Activity, ArrowLeft, CheckCircle2 } from "lucide-react";
+import { Compass, GraduationCap, RefreshCw, TrendingUp, HeartPulse, BookOpen, Activity, ArrowLeft, CheckCircle2, Brain } from "lucide-react";
 
 export const Route = createFileRoute("/paths")({
   head: () => ({
     meta: [
       { title: "اختر مسارك — خريطة الاختبارات | بوصلة" },
-      { name: "description", content: "اختبارات بوصلة منظَّمة في 5 مسارات: الاكتشاف، التغيير، التطوّر، علم نفس التعلّم، والفرز النفسي. اختر مسارك حسب مرحلتك." },
+      { name: "description", content: "اختبارات بوصلة منظَّمة في 7 مسارات: الاكتشاف، التغيير، التطوّر، علم نفس التعلّم، Learning DNA، الفرز النفسي، والأثر المهني والصحي." },
       { property: "og:title", content: "خريطة الاختبارات المهنية — بوصلة" },
-      { property: "og:description", content: "اختبارات منظَّمة في 5 مسارات حسب مرحلتك ووفق تسلسل قياسي معتمد في الإرشاد المهني." },
+      { property: "og:description", content: "اختبارات منظَّمة في سبعة مسارات حسب مرحلتك ووفق تسلسل قياسي معتمد في الإرشاد المهني." },
     ],
   }),
   component: PathsPage,
 });
+
 
 type TestItem = { name: string; href: string; note?: string };
 type Track = {
@@ -73,22 +74,33 @@ const TRACKS: Track[] = [
   {
     key: "learning",
     title: "المسار 4 — علم نفس التعلّم",
-    audience: "طالب/متدرّب/موظّف يريد تحسين طريقة تعلّمه",
-    outcome: "خريطة تعلّم شخصية: كيف تستوعب، تتذكّر، وتُترجم المعرفة إلى مهارة",
+    audience: "طالب/متدرّب يريد فهم قناة استقباله ودورة معالجته للمعرفة",
+    outcome: "تعرّف على نمط التعلّم الكلاسيكي (VARK/Kolb) كنقطة بداية تمهيدية",
     icon: BookOpen,
     accent: "from-violet-500/15 to-violet-500/5 border-violet-500/30",
     tests: [
-      { name: "1) اكتشاف نمط التعلّم (VARK + Kolb)", href: "/learning-style", note: "نموذجان متكاملان: قناة الاستقبال + دورة المعالجة" },
-      { name: "2) Learning DNA — البصمة التعليمية الشاملة", href: "/learning-dna", note: "30+ بُعد + 3 اختبارات أداء (ذاكرة، Stroop، حلّ مشكلات) + خطة شخصية" },
-      { name: "3) لوحة Learning DNA الشخصية", href: "/learning-dna-dashboard", note: "تابع تطوّر مؤشراتك السبعة عبر الزمن" },
-      { name: "4) AI Learning Coach — مدرّب التعلّم الذكي", href: "/learning-coach", note: "محادثة مع مدرّب يقرأ بصمتك ويعطيك توصيات فورية" },
+      { name: "اكتشاف نمط التعلّم (VARK + Kolb)", href: "/learning-style", note: "نموذجان كلاسيكيان تمهيديّان — للنتيجة الأعمق انتقل إلى Learning DNA" },
+    ],
+  },
+  {
+    key: "learning-dna",
+    title: "المسار 5 — Learning DNA · البصمة التعليمية",
+    audience: "كل من يريد قياساً علمياً متقدّماً لطريقة تعلّمه الفعلية",
+    outcome: "30+ بُعد + 3 اختبارات أداء + 7 مؤشرات مركّبة + خطة تعلّم شخصية ومدرّب AI",
+    icon: Brain,
+    accent: "from-indigo-500/15 to-indigo-500/5 border-indigo-500/30",
+    tests: [
+      { name: "1) Learning DNA — الاختبار الشامل", href: "/learning-dna", note: "استبيان (36 بنداً) + ذاكرة + Stroop + حلّ مشكلات" },
+      { name: "2) لوحة Learning DNA الشخصية", href: "/learning-dna-dashboard", note: "تابع تطوّر مؤشراتك السبعة (LES · RET · FOC · PSS · LAS · SLS · DLS)" },
+      { name: "3) AI Learning Coach — مدرّب التعلّم الذكي", href: "/learning-coach", note: "محادثة مع مدرّب يقرأ بصمتك ويعطيك توصيات فورية" },
     ],
   },
 
 
+
   {
     key: "screening",
-    title: "المسار 5 — الفرز النفسي",
+    title: "المسار 6 — الفرز النفسي",
     audience: "أداة عرضية لكل من يحتاج اطمئنانًا نفسيًا",
     outcome: "تقرير فرز موجز + توصية إحالة عند الحاجة",
     icon: HeartPulse,
@@ -99,7 +111,7 @@ const TRACKS: Track[] = [
   },
   {
     key: "poia",
-    title: "المسار 6 — الأثر المهني والصحي (POIA)",
+    title: "المسار 7 — الأثر المهني والصحي (POIA)",
     audience: "لكل موظّف أو مهني يريد قياس أثر وظيفته على حياته",
     outcome: "ستة مؤشرات (PI · OH · BRI · CSI · CFS · QWL) + تقرير ذكي + مقارنة مهن",
     icon: Activity,
@@ -110,6 +122,7 @@ const TRACKS: Track[] = [
       { name: "3) مقارنة المهن", href: "/poia-compare", note: "قارن مؤشراتك بمتوسطات 20 مهنة" },
     ],
   },
+
 ];
 
 function PathsPage() {
@@ -123,9 +136,10 @@ function PathsPage() {
         </div>
         <h1 className="mt-4 font-serif text-3xl text-primary md:text-5xl">اختر مسارك</h1>
         <p className="mx-auto mt-3 max-w-2xl text-sm leading-7 text-muted-foreground md:text-base">
-          نظّمنا اختبارات بوصلة في <span className="font-semibold text-primary">أربعة مسارات</span> واضحة حسب مرحلتك،
+          نظّمنا اختبارات بوصلة في <span className="font-semibold text-primary">سبعة مسارات</span> واضحة حسب مرحلتك،
           حتى لا تتشتّت بين عشرات الأدوات. ابدأ بالمسار الذي يصف حالتك الآن.
         </p>
+
       </div>
 
       {/* Tracks */}

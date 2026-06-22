@@ -60,13 +60,26 @@ export function FocusStroopTask({
         <div>
           <h2 className="font-serif text-lg text-primary">اختبار التركيز (Stroop)</h2>
           <p className="text-xs text-muted-foreground">انقر على <b>لون الخط</b> الذي كُتبت به الكلمة، وليس على معنى الكلمة.</p>
+          <p className="mt-1 text-[11px] text-amber-700 dark:text-amber-300">
+            ملاحظة وصول: إذا كنت تعاني عمى ألوان فهذا الاختبار قد لا يُعطي قراءة دقيقة — يمكنك تخطّيه أدناه.
+          </p>
         </div>
       </header>
 
       {phase === "intro" && (
-        <button onClick={() => setPhase("running")} className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground">
-          <Play className="h-4 w-4" /> ابدأ ({trials.length} محاولة)
-        </button>
+        <div className="flex flex-wrap items-center gap-2">
+          <button onClick={() => setPhase("running")} className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground">
+            <Play className="h-4 w-4" /> ابدأ ({trials.length} محاولة)
+          </button>
+          <button
+            type="button"
+            onClick={() => { setPhase("done"); onComplete({ stroop_accuracy: 0.75, stroop_avg_ms: 900, stroop_incong_cost_ms: 120 }); }}
+            className="rounded-lg border border-border bg-background px-3 py-2 text-xs text-muted-foreground hover:border-amber-400/50"
+            aria-label="تخطّي اختبار Stroop واستخدام قيمة متوسطة"
+          >
+            تخطّي (وصول)
+          </button>
+        </div>
       )}
 
       {phase === "running" && (
@@ -75,6 +88,7 @@ export function FocusStroopTask({
           <div
             className="text-5xl font-extrabold tracking-tight md:text-6xl"
             style={{ color: STROOP_HEX[trials[i].color] }}
+            aria-label={`كلمة ${trials[i].word} بلون ${trials[i].color}`}
           >
             {trials[i].word}
           </div>
@@ -83,14 +97,21 @@ export function FocusStroopTask({
               <button
                 key={c}
                 onClick={() => answer(c)}
-                className="rounded-lg border border-border bg-background px-3 py-2 text-sm font-semibold text-primary hover:border-gold/40"
+                aria-label={`اختر اللون ${c}`}
+                className="flex items-center justify-center gap-2 rounded-lg border border-border bg-background px-3 py-2 text-sm font-semibold text-primary hover:border-gold/40"
               >
+                <span
+                  aria-hidden
+                  className="inline-block h-4 w-4 rounded-sm border border-border"
+                  style={{ backgroundColor: STROOP_HEX[c] }}
+                />
                 {c}
               </button>
             ))}
           </div>
         </div>
       )}
+
 
       {phase === "done" && (
         <div className="rounded-md border border-emerald-500/30 bg-emerald-500/5 p-3 text-sm text-emerald-700 dark:text-emerald-300">
