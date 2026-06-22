@@ -136,9 +136,10 @@ function PathsPage() {
         </div>
         <h1 className="mt-4 font-serif text-3xl text-primary md:text-5xl">اختر مسارك</h1>
         <p className="mx-auto mt-3 max-w-2xl text-sm leading-7 text-muted-foreground md:text-base">
-          نظّمنا اختبارات بوصلة في <span className="font-semibold text-primary">أربعة مسارات</span> واضحة حسب مرحلتك،
+          نظّمنا اختبارات بوصلة في <span className="font-semibold text-primary">سبعة مسارات</span> واضحة حسب مرحلتك،
           حتى لا تتشتّت بين عشرات الأدوات. ابدأ بالمسار الذي يصف حالتك الآن.
         </p>
+
       </div>
 
       {/* Tracks */}
