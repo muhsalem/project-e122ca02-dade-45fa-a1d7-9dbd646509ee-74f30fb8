@@ -1,17 +1,18 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Compass, GraduationCap, RefreshCw, TrendingUp, HeartPulse, BookOpen, Activity, ArrowLeft, CheckCircle2 } from "lucide-react";
+import { Compass, GraduationCap, RefreshCw, TrendingUp, HeartPulse, BookOpen, Activity, ArrowLeft, CheckCircle2, Brain } from "lucide-react";
 
 export const Route = createFileRoute("/paths")({
   head: () => ({
     meta: [
       { title: "اختر مسارك — خريطة الاختبارات | بوصلة" },
-      { name: "description", content: "اختبارات بوصلة منظَّمة في 5 مسارات: الاكتشاف، التغيير، التطوّر، علم نفس التعلّم، والفرز النفسي. اختر مسارك حسب مرحلتك." },
+      { name: "description", content: "اختبارات بوصلة منظَّمة في 7 مسارات: الاكتشاف، التغيير، التطوّر، علم نفس التعلّم، Learning DNA، الفرز النفسي، والأثر المهني والصحي." },
       { property: "og:title", content: "خريطة الاختبارات المهنية — بوصلة" },
-      { property: "og:description", content: "اختبارات منظَّمة في 5 مسارات حسب مرحلتك ووفق تسلسل قياسي معتمد في الإرشاد المهني." },
+      { property: "og:description", content: "اختبارات منظَّمة في سبعة مسارات حسب مرحلتك ووفق تسلسل قياسي معتمد في الإرشاد المهني." },
     ],
   }),
   component: PathsPage,
 });
+
 
 type TestItem = { name: string; href: string; note?: string };
 type Track = {
