@@ -20,44 +20,47 @@ const assessmentsGroup = {
       ],
     },
     {
-      title: "أريد الاكتشاف",
+      title: "الإرشاد المهني (Career Guidance)",
       items: [
+        { to: "/academic-major", label: "اختيار التخصص الجامعي" },
+        { to: "/self-discovery", label: "اختيار المهنة (RIASEC + Big Five)" },
+        { to: "/career-type-assessment", label: "استكشاف المسار (ISCO-08)" },
         { to: "/work-values", label: "القيم المهنية (WVI)" },
         { to: "/career-anchors", label: "مرساة المسيرة (Schein)" },
-        { to: "/self-discovery", label: "اكتشف ذاتك (RIASEC + Big Five)" },
-        { to: "/career-type-assessment", label: "اكتشف مسارك المهني (ISCO-08)" },
-        { to: "/cognitive-profile", label: "الملف المعرفي (القدرات)" },
-        { to: "/academic-major", label: "تخصصك الجامعي" },
+        { to: "/career-change", label: "التحول الوظيفي" },
       ],
     },
     {
-      title: "أريد التغيير",
+      title: "الكوتشينج المهني (Career Coaching)",
       items: [
-        { to: "/clarity-check", label: "وضوح المسار المهني" },
-        { to: "/burnout-check", label: "مؤشر الاحتراق المهني (MBI)" },
-        { to: "/career-change", label: "تشخيص الرغبة في تغيير المسار" },
+        { to: "/career-growth", label: "بناء الخطة المهنية" },
+        { to: "/career-ladder", label: "تحقيق الأهداف وسلّم الترقي" },
+        { to: "/career-readiness", label: "تطوير الأداء والجاهزية" },
         { to: "/career-self-efficacy", label: "الكفاءة الذاتية لاتخاذ القرار" },
       ],
     },
     {
-      title: "أريد التطوير",
+      title: "الإرشاد النفسي المهني (Career Counseling)",
       items: [
-        { to: "/emotional-intelligence", label: "الذكاء العاطفي (WLEIS)" },
-        { to: "/career-growth", label: "خطة تطوير مساري الوظيفي" },
-        { to: "/career-ladder", label: "سلّم المسار الوظيفي" },
-        { to: "/career-readiness", label: "شهادة الجاهزية المهنية" },
+        { to: "/burnout-check", label: "الاحتراق الوظيفي (MBI)" },
+        { to: "/clarity-check", label: "القلق وعدم وضوح المسار" },
+        { to: "/emotional-intelligence", label: "الذكاء العاطفي والتكيّف (WLEIS)" },
+        { to: "/wellbeing-check", label: "الفرز النفسي المختصر" },
+      ],
+    },
+    {
+      title: "الإرشاد الريادي (Entrepreneurship Coaching)",
+      items: [
+        { to: "/cognitive-profile", label: "الملف المعرفي والقيادي" },
       ],
     },
     {
       title: "علم نفس التعلّم",
       items: [
-        { to: "/learning-style", label: "اكتشف نمط تعلّمك (VARK + Kolb)" },
-      ],
-    },
-    {
-      title: "الفرز النفسي",
-      items: [
-        { to: "/wellbeing-check", label: "الفحص النفسي المختصر" },
+        { to: "/learning-style", label: "نمط التعلّم (VARK + Kolb)" },
+        { to: "/learning-dna", label: "Learning DNA — البصمة التعليمية" },
+        { to: "/learning-dna-dashboard", label: "لوحة بصمة التعلّم" },
+        { to: "/learning-coach", label: "المدرّب الذكي للتعلّم" },
       ],
     },
   ],
