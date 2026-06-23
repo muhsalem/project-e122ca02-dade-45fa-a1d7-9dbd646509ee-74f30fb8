@@ -20,36 +20,38 @@ const assessmentsGroup = {
       ],
     },
     {
-      title: "الإرشاد المهني (Career Guidance)",
+      title: "أريد الاكتشاف",
       items: [
         { to: "/academic-major", label: "اختيار التخصص الجامعي" },
-        { to: "/self-discovery", label: "اختيار المهنة (RIASEC + Big Five)" },
+        { to: "/self-discovery", label: "اكتشاف المهنة (RIASEC + Big Five)" },
         { to: "/career-type-assessment", label: "استكشاف المسار (ISCO-08)" },
         { to: "/work-values", label: "القيم المهنية (WVI)" },
         { to: "/career-anchors", label: "مرساة المسيرة (Schein)" },
-        { to: "/career-change", label: "التحول الوظيفي" },
+        { to: "/learning-style", label: "نمط التعلّم (VARK + Kolb)" },
+        { to: "/learning-dna", label: "Learning DNA — البصمة التعليمية" },
       ],
     },
     {
-      title: "الكوتشينج المهني (Career Coaching)",
+      title: "أريد التغيير",
+      items: [
+        { to: "/career-change", label: "التحول الوظيفي" },
+        { to: "/clarity-check", label: "القلق وعدم وضوح المسار" },
+        { to: "/burnout-check", label: "الاحتراق الوظيفي (MBI)" },
+      ],
+    },
+    {
+      title: "أريد التطوير",
       items: [
         { to: "/career-growth", label: "بناء الخطة المهنية" },
         { to: "/career-ladder", label: "تحقيق الأهداف وسلّم الترقي" },
         { to: "/career-readiness", label: "تطوير الأداء والجاهزية" },
         { to: "/career-self-efficacy", label: "الكفاءة الذاتية لاتخاذ القرار" },
-      ],
-    },
-    {
-      title: "الإرشاد النفسي المهني (Career Counseling)",
-      items: [
-        { to: "/burnout-check", label: "الاحتراق الوظيفي (MBI)" },
-        { to: "/clarity-check", label: "القلق وعدم وضوح المسار" },
         { to: "/emotional-intelligence", label: "الذكاء العاطفي والتكيّف (WLEIS)" },
         { to: "/wellbeing-check", label: "الفرز النفسي المختصر" },
       ],
     },
     {
-      title: "الإرشاد الريادي (Entrepreneurship Coaching)",
+      title: "أريد أن أبدء مشروعي",
       items: [
         { to: "/cognitive-profile", label: "الملف المعرفي والقيادي" },
       ],
