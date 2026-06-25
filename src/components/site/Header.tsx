@@ -18,6 +18,7 @@ const assessmentsGroup = {
       items: [
         { to: "/paths", label: "خريطة الاختبارات (دليل الاختيار)" },
         { to: "/my-plan", label: "لوحة خطتي المهنية" },
+        { to: "/my-bookings", label: "حجوزاتي" },
       ],
     },
     {
