@@ -29,6 +29,7 @@ import { Route as PoiaCompareRouteImport } from './routes/poia-compare'
 import { Route as PoiaRouteImport } from './routes/poia'
 import { Route as PathsRouteImport } from './routes/paths'
 import { Route as ParentDashboardRouteImport } from './routes/parent-dashboard'
+import { Route as MyPlanRouteImport } from './routes/my-plan'
 import { Route as MyAssessmentsRouteImport } from './routes/my-assessments'
 import { Route as LearningStyleRouteImport } from './routes/learning-style'
 import { Route as LearningDnaDashboardRouteImport } from './routes/learning-dna-dashboard'
@@ -177,6 +178,11 @@ const PathsRoute = PathsRouteImport.update({
 const ParentDashboardRoute = ParentDashboardRouteImport.update({
   id: '/parent-dashboard',
   path: '/parent-dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MyPlanRoute = MyPlanRouteImport.update({
+  id: '/my-plan',
+  path: '/my-plan',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MyAssessmentsRoute = MyAssessmentsRouteImport.update({
@@ -460,6 +466,7 @@ export interface FileRoutesByFullPath {
   '/learning-dna-dashboard': typeof LearningDnaDashboardRoute
   '/learning-style': typeof LearningStyleRoute
   '/my-assessments': typeof MyAssessmentsRoute
+  '/my-plan': typeof MyPlanRoute
   '/parent-dashboard': typeof ParentDashboardRoute
   '/paths': typeof PathsRoute
   '/poia': typeof PoiaRoute
@@ -531,6 +538,7 @@ export interface FileRoutesByTo {
   '/learning-dna-dashboard': typeof LearningDnaDashboardRoute
   '/learning-style': typeof LearningStyleRoute
   '/my-assessments': typeof MyAssessmentsRoute
+  '/my-plan': typeof MyPlanRoute
   '/parent-dashboard': typeof ParentDashboardRoute
   '/paths': typeof PathsRoute
   '/poia': typeof PoiaRoute
@@ -603,6 +611,7 @@ export interface FileRoutesById {
   '/learning-dna-dashboard': typeof LearningDnaDashboardRoute
   '/learning-style': typeof LearningStyleRoute
   '/my-assessments': typeof MyAssessmentsRoute
+  '/my-plan': typeof MyPlanRoute
   '/parent-dashboard': typeof ParentDashboardRoute
   '/paths': typeof PathsRoute
   '/poia': typeof PoiaRoute
@@ -676,6 +685,7 @@ export interface FileRouteTypes {
     | '/learning-dna-dashboard'
     | '/learning-style'
     | '/my-assessments'
+    | '/my-plan'
     | '/parent-dashboard'
     | '/paths'
     | '/poia'
@@ -747,6 +757,7 @@ export interface FileRouteTypes {
     | '/learning-dna-dashboard'
     | '/learning-style'
     | '/my-assessments'
+    | '/my-plan'
     | '/parent-dashboard'
     | '/paths'
     | '/poia'
@@ -818,6 +829,7 @@ export interface FileRouteTypes {
     | '/learning-dna-dashboard'
     | '/learning-style'
     | '/my-assessments'
+    | '/my-plan'
     | '/parent-dashboard'
     | '/paths'
     | '/poia'
@@ -890,6 +902,7 @@ export interface RootRouteChildren {
   LearningDnaDashboardRoute: typeof LearningDnaDashboardRoute
   LearningStyleRoute: typeof LearningStyleRoute
   MyAssessmentsRoute: typeof MyAssessmentsRoute
+  MyPlanRoute: typeof MyPlanRoute
   ParentDashboardRoute: typeof ParentDashboardRoute
   PathsRoute: typeof PathsRoute
   PoiaRoute: typeof PoiaRoute
@@ -1062,6 +1075,13 @@ declare module '@tanstack/react-router' {
       path: '/parent-dashboard'
       fullPath: '/parent-dashboard'
       preLoaderRoute: typeof ParentDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/my-plan': {
+      id: '/my-plan'
+      path: '/my-plan'
+      fullPath: '/my-plan'
+      preLoaderRoute: typeof MyPlanRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/my-assessments': {
@@ -1480,6 +1500,7 @@ const rootRouteChildren: RootRouteChildren = {
   LearningDnaDashboardRoute: LearningDnaDashboardRoute,
   LearningStyleRoute: LearningStyleRoute,
   MyAssessmentsRoute: MyAssessmentsRoute,
+  MyPlanRoute: MyPlanRoute,
   ParentDashboardRoute: ParentDashboardRoute,
   PathsRoute: PathsRoute,
   PoiaRoute: PoiaRoute,
