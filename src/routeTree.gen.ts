@@ -61,6 +61,7 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ReportIndexRouteImport } from './routes/report.index'
 import { Route as TrackGrowthRouteImport } from './routes/track.growth'
+import { Route as TrackEntrepreneurshipRouteImport } from './routes/track.entrepreneurship'
 import { Route as TrackDiscoveryRouteImport } from './routes/track.discovery'
 import { Route as TrackChangeRouteImport } from './routes/track.change'
 import { Route as ReviewSubmitCodeRouteImport } from './routes/review-submit.$code'
@@ -338,6 +339,11 @@ const TrackGrowthRoute = TrackGrowthRouteImport.update({
   path: '/track/growth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TrackEntrepreneurshipRoute = TrackEntrepreneurshipRouteImport.update({
+  id: '/track/entrepreneurship',
+  path: '/track/entrepreneurship',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TrackDiscoveryRoute = TrackDiscoveryRouteImport.update({
   id: '/track/discovery',
   path: '/track/discovery',
@@ -490,6 +496,7 @@ export interface FileRoutesByFullPath {
   '/review-submit/$code': typeof ReviewSubmitCodeRoute
   '/track/change': typeof TrackChangeRoute
   '/track/discovery': typeof TrackDiscoveryRoute
+  '/track/entrepreneurship': typeof TrackEntrepreneurshipRoute
   '/track/growth': typeof TrackGrowthRoute
   '/report/': typeof ReportIndexRoute
 }
@@ -560,6 +567,7 @@ export interface FileRoutesByTo {
   '/review-submit/$code': typeof ReviewSubmitCodeRoute
   '/track/change': typeof TrackChangeRoute
   '/track/discovery': typeof TrackDiscoveryRoute
+  '/track/entrepreneurship': typeof TrackEntrepreneurshipRoute
   '/track/growth': typeof TrackGrowthRoute
   '/report': typeof ReportIndexRoute
 }
@@ -631,6 +639,7 @@ export interface FileRoutesById {
   '/review-submit/$code': typeof ReviewSubmitCodeRoute
   '/track/change': typeof TrackChangeRoute
   '/track/discovery': typeof TrackDiscoveryRoute
+  '/track/entrepreneurship': typeof TrackEntrepreneurshipRoute
   '/track/growth': typeof TrackGrowthRoute
   '/report/': typeof ReportIndexRoute
 }
@@ -703,6 +712,7 @@ export interface FileRouteTypes {
     | '/review-submit/$code'
     | '/track/change'
     | '/track/discovery'
+    | '/track/entrepreneurship'
     | '/track/growth'
     | '/report/'
   fileRoutesByTo: FileRoutesByTo
@@ -773,6 +783,7 @@ export interface FileRouteTypes {
     | '/review-submit/$code'
     | '/track/change'
     | '/track/discovery'
+    | '/track/entrepreneurship'
     | '/track/growth'
     | '/report'
   id:
@@ -843,6 +854,7 @@ export interface FileRouteTypes {
     | '/review-submit/$code'
     | '/track/change'
     | '/track/discovery'
+    | '/track/entrepreneurship'
     | '/track/growth'
     | '/report/'
   fileRoutesById: FileRoutesById
@@ -905,6 +917,7 @@ export interface RootRouteChildren {
   ReviewSubmitCodeRoute: typeof ReviewSubmitCodeRoute
   TrackChangeRoute: typeof TrackChangeRoute
   TrackDiscoveryRoute: typeof TrackDiscoveryRoute
+  TrackEntrepreneurshipRoute: typeof TrackEntrepreneurshipRoute
   TrackGrowthRoute: typeof TrackGrowthRoute
   ReportIndexRoute: typeof ReportIndexRoute
 }
@@ -1275,6 +1288,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TrackGrowthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/track/entrepreneurship': {
+      id: '/track/entrepreneurship'
+      path: '/track/entrepreneurship'
+      fullPath: '/track/entrepreneurship'
+      preLoaderRoute: typeof TrackEntrepreneurshipRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/track/discovery': {
       id: '/track/discovery'
       path: '/track/discovery'
@@ -1487,6 +1507,7 @@ const rootRouteChildren: RootRouteChildren = {
   ReviewSubmitCodeRoute: ReviewSubmitCodeRoute,
   TrackChangeRoute: TrackChangeRoute,
   TrackDiscoveryRoute: TrackDiscoveryRoute,
+  TrackEntrepreneurshipRoute: TrackEntrepreneurshipRoute,
   TrackGrowthRoute: TrackGrowthRoute,
   ReportIndexRoute: ReportIndexRoute,
 }
