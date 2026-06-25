@@ -1,7 +1,8 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Check, Calendar, Clock, User, ShieldCheck, Users } from "lucide-react";
 import { CalEmbed } from "@/components/site/CalEmbed";
+import { addBooking } from "@/lib/bookings-store";
 
 export const Route = createFileRoute("/booking")({
   head: () => ({
@@ -35,6 +36,10 @@ function BookingPage() {
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const c = COACHES.find((x) => x.id === coach);
+    if (c && date && time) {
+      addBooking({ coachId: c.id, coachName: c.name, date, time, notes });
+    }
     setSubmitted(true);
   };
 
@@ -53,6 +58,10 @@ function BookingPage() {
             </span>{" "}
             بتاريخ {date} الساعة {time}.
           </p>
+          <div className="mt-6 flex flex-wrap justify-center gap-2">
+            <Link to="/my-bookings" className="rounded-md bg-primary px-4 py-2 text-sm text-primary-foreground hover:opacity-90">عرض حجوزاتي</Link>
+            <Link to="/my-plan" className="rounded-md border border-border px-4 py-2 text-sm hover:bg-muted">لوحة خطتي</Link>
+          </div>
         </div>
       </section>
     );
