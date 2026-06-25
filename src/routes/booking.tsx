@@ -58,6 +58,10 @@ function BookingPage() {
             </span>{" "}
             بتاريخ {date} الساعة {time}.
           </p>
+          <div className="mt-6 flex flex-wrap justify-center gap-2">
+            <Link to="/my-bookings" className="rounded-md bg-primary px-4 py-2 text-sm text-primary-foreground hover:opacity-90">عرض حجوزاتي</Link>
+            <Link to="/my-plan" className="rounded-md border border-border px-4 py-2 text-sm hover:bg-muted">لوحة خطتي</Link>
+          </div>
         </div>
       </section>
     );
