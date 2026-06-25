@@ -36,6 +36,10 @@ function BookingPage() {
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const c = COACHES.find((x) => x.id === coach);
+    if (c && date && time) {
+      addBooking({ coachId: c.id, coachName: c.name, date, time, notes });
+    }
     setSubmitted(true);
   };
 
