@@ -29,6 +29,7 @@ import { Route as PoiaCompareRouteImport } from './routes/poia-compare'
 import { Route as PoiaRouteImport } from './routes/poia'
 import { Route as PathsRouteImport } from './routes/paths'
 import { Route as ParentDashboardRouteImport } from './routes/parent-dashboard'
+import { Route as MyPlanRouteImport } from './routes/my-plan'
 import { Route as MyAssessmentsRouteImport } from './routes/my-assessments'
 import { Route as LearningStyleRouteImport } from './routes/learning-style'
 import { Route as LearningDnaDashboardRouteImport } from './routes/learning-dna-dashboard'
@@ -60,6 +61,10 @@ import { Route as AcademicMajorRouteImport } from './routes/academic-major'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ReportIndexRouteImport } from './routes/report.index'
+import { Route as TrackGrowthRouteImport } from './routes/track.growth'
+import { Route as TrackEntrepreneurshipRouteImport } from './routes/track.entrepreneurship'
+import { Route as TrackDiscoveryRouteImport } from './routes/track.discovery'
+import { Route as TrackChangeRouteImport } from './routes/track.change'
 import { Route as ReviewSubmitCodeRouteImport } from './routes/review-submit.$code'
 import { Route as ReviewResultsCodeRouteImport } from './routes/review-results.$code'
 import { Route as ResourcesWhyWeWorkRouteImport } from './routes/resources.why-we-work'
@@ -173,6 +178,11 @@ const PathsRoute = PathsRouteImport.update({
 const ParentDashboardRoute = ParentDashboardRouteImport.update({
   id: '/parent-dashboard',
   path: '/parent-dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MyPlanRoute = MyPlanRouteImport.update({
+  id: '/my-plan',
+  path: '/my-plan',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MyAssessmentsRoute = MyAssessmentsRouteImport.update({
@@ -330,6 +340,26 @@ const ReportIndexRoute = ReportIndexRouteImport.update({
   path: '/report/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TrackGrowthRoute = TrackGrowthRouteImport.update({
+  id: '/track/growth',
+  path: '/track/growth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TrackEntrepreneurshipRoute = TrackEntrepreneurshipRouteImport.update({
+  id: '/track/entrepreneurship',
+  path: '/track/entrepreneurship',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TrackDiscoveryRoute = TrackDiscoveryRouteImport.update({
+  id: '/track/discovery',
+  path: '/track/discovery',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TrackChangeRoute = TrackChangeRouteImport.update({
+  id: '/track/change',
+  path: '/track/change',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ReviewSubmitCodeRoute = ReviewSubmitCodeRouteImport.update({
   id: '/review-submit/$code',
   path: '/review-submit/$code',
@@ -436,6 +466,7 @@ export interface FileRoutesByFullPath {
   '/learning-dna-dashboard': typeof LearningDnaDashboardRoute
   '/learning-style': typeof LearningStyleRoute
   '/my-assessments': typeof MyAssessmentsRoute
+  '/my-plan': typeof MyPlanRoute
   '/parent-dashboard': typeof ParentDashboardRoute
   '/paths': typeof PathsRoute
   '/poia': typeof PoiaRoute
@@ -470,6 +501,10 @@ export interface FileRoutesByFullPath {
   '/resources/why-we-work': typeof ResourcesWhyWeWorkRoute
   '/review-results/$code': typeof ReviewResultsCodeRoute
   '/review-submit/$code': typeof ReviewSubmitCodeRoute
+  '/track/change': typeof TrackChangeRoute
+  '/track/discovery': typeof TrackDiscoveryRoute
+  '/track/entrepreneurship': typeof TrackEntrepreneurshipRoute
+  '/track/growth': typeof TrackGrowthRoute
   '/report/': typeof ReportIndexRoute
 }
 export interface FileRoutesByTo {
@@ -503,6 +538,7 @@ export interface FileRoutesByTo {
   '/learning-dna-dashboard': typeof LearningDnaDashboardRoute
   '/learning-style': typeof LearningStyleRoute
   '/my-assessments': typeof MyAssessmentsRoute
+  '/my-plan': typeof MyPlanRoute
   '/parent-dashboard': typeof ParentDashboardRoute
   '/paths': typeof PathsRoute
   '/poia': typeof PoiaRoute
@@ -537,6 +573,10 @@ export interface FileRoutesByTo {
   '/resources/why-we-work': typeof ResourcesWhyWeWorkRoute
   '/review-results/$code': typeof ReviewResultsCodeRoute
   '/review-submit/$code': typeof ReviewSubmitCodeRoute
+  '/track/change': typeof TrackChangeRoute
+  '/track/discovery': typeof TrackDiscoveryRoute
+  '/track/entrepreneurship': typeof TrackEntrepreneurshipRoute
+  '/track/growth': typeof TrackGrowthRoute
   '/report': typeof ReportIndexRoute
 }
 export interface FileRoutesById {
@@ -571,6 +611,7 @@ export interface FileRoutesById {
   '/learning-dna-dashboard': typeof LearningDnaDashboardRoute
   '/learning-style': typeof LearningStyleRoute
   '/my-assessments': typeof MyAssessmentsRoute
+  '/my-plan': typeof MyPlanRoute
   '/parent-dashboard': typeof ParentDashboardRoute
   '/paths': typeof PathsRoute
   '/poia': typeof PoiaRoute
@@ -605,6 +646,10 @@ export interface FileRoutesById {
   '/resources/why-we-work': typeof ResourcesWhyWeWorkRoute
   '/review-results/$code': typeof ReviewResultsCodeRoute
   '/review-submit/$code': typeof ReviewSubmitCodeRoute
+  '/track/change': typeof TrackChangeRoute
+  '/track/discovery': typeof TrackDiscoveryRoute
+  '/track/entrepreneurship': typeof TrackEntrepreneurshipRoute
+  '/track/growth': typeof TrackGrowthRoute
   '/report/': typeof ReportIndexRoute
 }
 export interface FileRouteTypes {
@@ -640,6 +685,7 @@ export interface FileRouteTypes {
     | '/learning-dna-dashboard'
     | '/learning-style'
     | '/my-assessments'
+    | '/my-plan'
     | '/parent-dashboard'
     | '/paths'
     | '/poia'
@@ -674,6 +720,10 @@ export interface FileRouteTypes {
     | '/resources/why-we-work'
     | '/review-results/$code'
     | '/review-submit/$code'
+    | '/track/change'
+    | '/track/discovery'
+    | '/track/entrepreneurship'
+    | '/track/growth'
     | '/report/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -707,6 +757,7 @@ export interface FileRouteTypes {
     | '/learning-dna-dashboard'
     | '/learning-style'
     | '/my-assessments'
+    | '/my-plan'
     | '/parent-dashboard'
     | '/paths'
     | '/poia'
@@ -741,6 +792,10 @@ export interface FileRouteTypes {
     | '/resources/why-we-work'
     | '/review-results/$code'
     | '/review-submit/$code'
+    | '/track/change'
+    | '/track/discovery'
+    | '/track/entrepreneurship'
+    | '/track/growth'
     | '/report'
   id:
     | '__root__'
@@ -774,6 +829,7 @@ export interface FileRouteTypes {
     | '/learning-dna-dashboard'
     | '/learning-style'
     | '/my-assessments'
+    | '/my-plan'
     | '/parent-dashboard'
     | '/paths'
     | '/poia'
@@ -808,6 +864,10 @@ export interface FileRouteTypes {
     | '/resources/why-we-work'
     | '/review-results/$code'
     | '/review-submit/$code'
+    | '/track/change'
+    | '/track/discovery'
+    | '/track/entrepreneurship'
+    | '/track/growth'
     | '/report/'
   fileRoutesById: FileRoutesById
 }
@@ -842,6 +902,7 @@ export interface RootRouteChildren {
   LearningDnaDashboardRoute: typeof LearningDnaDashboardRoute
   LearningStyleRoute: typeof LearningStyleRoute
   MyAssessmentsRoute: typeof MyAssessmentsRoute
+  MyPlanRoute: typeof MyPlanRoute
   ParentDashboardRoute: typeof ParentDashboardRoute
   PathsRoute: typeof PathsRoute
   PoiaRoute: typeof PoiaRoute
@@ -867,6 +928,10 @@ export interface RootRouteChildren {
   ReportCodeRoute: typeof ReportCodeRoute
   ReviewResultsCodeRoute: typeof ReviewResultsCodeRoute
   ReviewSubmitCodeRoute: typeof ReviewSubmitCodeRoute
+  TrackChangeRoute: typeof TrackChangeRoute
+  TrackDiscoveryRoute: typeof TrackDiscoveryRoute
+  TrackEntrepreneurshipRoute: typeof TrackEntrepreneurshipRoute
+  TrackGrowthRoute: typeof TrackGrowthRoute
   ReportIndexRoute: typeof ReportIndexRoute
 }
 
@@ -1010,6 +1075,13 @@ declare module '@tanstack/react-router' {
       path: '/parent-dashboard'
       fullPath: '/parent-dashboard'
       preLoaderRoute: typeof ParentDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/my-plan': {
+      id: '/my-plan'
+      path: '/my-plan'
+      fullPath: '/my-plan'
+      preLoaderRoute: typeof MyPlanRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/my-assessments': {
@@ -1229,6 +1301,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ReportIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/track/growth': {
+      id: '/track/growth'
+      path: '/track/growth'
+      fullPath: '/track/growth'
+      preLoaderRoute: typeof TrackGrowthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/track/entrepreneurship': {
+      id: '/track/entrepreneurship'
+      path: '/track/entrepreneurship'
+      fullPath: '/track/entrepreneurship'
+      preLoaderRoute: typeof TrackEntrepreneurshipRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/track/discovery': {
+      id: '/track/discovery'
+      path: '/track/discovery'
+      fullPath: '/track/discovery'
+      preLoaderRoute: typeof TrackDiscoveryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/track/change': {
+      id: '/track/change'
+      path: '/track/change'
+      fullPath: '/track/change'
+      preLoaderRoute: typeof TrackChangeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/review-submit/$code': {
       id: '/review-submit/$code'
       path: '/review-submit/$code'
@@ -1400,6 +1500,7 @@ const rootRouteChildren: RootRouteChildren = {
   LearningDnaDashboardRoute: LearningDnaDashboardRoute,
   LearningStyleRoute: LearningStyleRoute,
   MyAssessmentsRoute: MyAssessmentsRoute,
+  MyPlanRoute: MyPlanRoute,
   ParentDashboardRoute: ParentDashboardRoute,
   PathsRoute: PathsRoute,
   PoiaRoute: PoiaRoute,
@@ -1425,6 +1526,10 @@ const rootRouteChildren: RootRouteChildren = {
   ReportCodeRoute: ReportCodeRoute,
   ReviewResultsCodeRoute: ReviewResultsCodeRoute,
   ReviewSubmitCodeRoute: ReviewSubmitCodeRoute,
+  TrackChangeRoute: TrackChangeRoute,
+  TrackDiscoveryRoute: TrackDiscoveryRoute,
+  TrackEntrepreneurshipRoute: TrackEntrepreneurshipRoute,
+  TrackGrowthRoute: TrackGrowthRoute,
   ReportIndexRoute: ReportIndexRoute,
 }
 export const routeTree = rootRouteImport

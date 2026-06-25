@@ -17,23 +17,24 @@ const assessmentsGroup = {
       title: "ابدأ من هنا",
       items: [
         { to: "/paths", label: "خريطة الاختبارات (دليل الاختيار)" },
+        { to: "/my-plan", label: "لوحة خطتي المهنية" },
       ],
     },
     {
       title: "أريد الاكتشاف",
       items: [
+        { to: "/track/discovery", label: "نظرة عامة — الاكتشاف" },
         { to: "/academic-major", label: "اختيار التخصص الجامعي" },
         { to: "/self-discovery", label: "اكتشاف المهنة (RIASEC + Big Five)" },
         { to: "/career-type-assessment", label: "استكشاف المسار (ISCO-08)" },
         { to: "/work-values", label: "القيم المهنية (WVI)" },
         { to: "/career-anchors", label: "مرساة المسيرة (Schein)" },
-        { to: "/learning-style", label: "نمط التعلّم (VARK + Kolb)" },
-        { to: "/learning-dna", label: "Learning DNA — البصمة التعليمية" },
       ],
     },
     {
       title: "أريد التغيير",
       items: [
+        { to: "/track/change", label: "نظرة عامة — التغيير" },
         { to: "/career-change", label: "التحول الوظيفي" },
         { to: "/clarity-check", label: "القلق وعدم وضوح المسار" },
         { to: "/burnout-check", label: "الاحتراق الوظيفي (MBI)" },
@@ -42,6 +43,7 @@ const assessmentsGroup = {
     {
       title: "أريد التطوير",
       items: [
+        { to: "/track/growth", label: "نظرة عامة — التطوير" },
         { to: "/career-growth", label: "بناء الخطة المهنية" },
         { to: "/career-ladder", label: "تحقيق الأهداف وسلّم الترقي" },
         { to: "/career-readiness", label: "تطوير الأداء والجاهزية" },
@@ -53,6 +55,7 @@ const assessmentsGroup = {
     {
       title: "أريد أن أبدء مشروعي",
       items: [
+        { to: "/track/entrepreneurship", label: "نظرة عامة — ريادة الأعمال" },
         { to: "/cognitive-profile", label: "الملف المعرفي والقيادي" },
       ],
     },
