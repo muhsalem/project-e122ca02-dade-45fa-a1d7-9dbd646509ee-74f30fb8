@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
-import { MessagesSquare, Send, Loader2 } from "lucide-react";
+import { MessagesSquare, Send, Loader2, Info, ChevronDown } from "lucide-react";
 import { listCoachHistory, sendCoachMessage } from "@/lib/learning-dna.functions";
 
 export const Route = createFileRoute("/learning-coach")({
@@ -57,6 +57,20 @@ function CoachPage() {
           </div>
         </header>
 
+        <details className="mb-3 rounded-xl border border-border bg-secondary/30 p-3 text-xs text-muted-foreground">
+          <summary className="flex cursor-pointer items-center gap-2 font-medium text-primary">
+            <Info className="h-3.5 w-3.5" />
+            لماذا هذه التوصيات؟ (شفافية الذكاء الاصطناعي)
+            <ChevronDown className="ms-auto h-3.5 w-3.5" />
+          </summary>
+          <div className="mt-3 space-y-2 leading-6">
+            <p>• التوصيات مبنية على <strong>آخر بصمة تعلّم</strong> سجّلتها (VARK + Kolb + Big Five).</p>
+            <p>• النموذج المستخدم: Google Gemini 2.5 Flash عبر Lovable AI Gateway، مع تعليمات نظامية لتقديم نصائح تربوية عملية فقط.</p>
+            <p>• <strong>حدود</strong>: لا يُشخّص الذكاء الاصطناعي حالات طبية/نفسية، وقد يحتوي على أخطاء — راجع القرارات المهمة مع مرشد بشري.</p>
+            <p>• بياناتك محفوظة في حسابك فقط بموجب سياسة RLS، ولا تُستخدم لتدريب النموذج.</p>
+          </div>
+        </details>
+
         <div className="flex h-[60vh] flex-col rounded-2xl border border-border bg-card p-3">
           <div className="flex-1 space-y-3 overflow-y-auto pr-1">
             {msgs.length === 0 && (
@@ -70,7 +84,18 @@ function CoachPage() {
                   m.role === "user"
                     ? "bg-primary text-primary-foreground"
                     : "border border-border bg-background text-primary"
-                }`}>{m.content}</div>
+                }`}>
+                  {m.content}
+                  {m.role === "assistant" && (
+                    <details className="mt-2 border-t border-border pt-2 text-xs text-muted-foreground">
+                      <summary className="cursor-pointer">لماذا هذا الرد؟</summary>
+                      <p className="mt-1 leading-6">
+                        استند الرد إلى بصمتك التعليمية المسجّلة وتاريخ محادثتك ضمن هذه الجلسة، عبر نموذج لغوي عام.
+                        قد تختلف الإجابات في كل محاولة، ولا تُعدّ بديلاً عن الاستشارة المتخصصة.
+                      </p>
+                    </details>
+                  )}
+                </div>
               </div>
             ))}
             {busy && (
