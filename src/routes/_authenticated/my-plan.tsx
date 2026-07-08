@@ -1,8 +1,10 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Target, CheckCircle2, Circle, Plus, Trash2, Calendar } from "lucide-react";
+import { useServerFn } from "@tanstack/react-start";
+import { Target, CheckCircle2, Circle, Plus, Trash2, Calendar, Loader2 } from "lucide-react";
+import { getMyPlan, saveMyPlan, type Goal } from "@/lib/plans.functions";
 
-export const Route = createFileRoute("/my-plan")({
+export const Route = createFileRoute("/_authenticated/my-plan")({
   head: () => ({
     meta: [
       { title: "لوحة خطتي المهنية — بوصلة" },
@@ -12,8 +14,6 @@ export const Route = createFileRoute("/my-plan")({
   component: MyPlanPage,
 });
 
-type Goal = { id: string; title: string; due?: string; done: boolean };
-type Plan = { track: TrackKey | ""; goals: Goal[] };
 type TrackKey = "discovery" | "change" | "growth" | "entrepreneurship";
 
 const TEMPLATES: Record<TrackKey, { label: string; goals: string[] }> = {
@@ -35,38 +35,66 @@ const TEMPLATES: Record<TrackKey, { label: string; goals: string[] }> = {
   },
 };
 
-const STORAGE_KEY = "bosla:my-plan:v1";
-
-function load(): Plan {
-  if (typeof window === "undefined") return { track: "", goals: [] };
-  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "") as Plan; } catch { return { track: "", goals: [] }; }
-}
-
 function MyPlanPage() {
-  const [plan, setPlan] = useState<Plan>({ track: "", goals: [] });
+  const router = useRouter();
+  const load = useServerFn(getMyPlan);
+  const save = useServerFn(saveMyPlan);
+  const [track, setTrack] = useState<string | null>(null);
+  const [goals, setGoals] = useState<Goal[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
   const [newGoal, setNewGoal] = useState("");
   const [newDue, setNewDue] = useState("");
 
-  useEffect(() => { setPlan(load()); }, []);
-  useEffect(() => { if (typeof window !== "undefined") localStorage.setItem(STORAGE_KEY, JSON.stringify(plan)); }, [plan]);
+  useEffect(() => {
+    load().then((p) => {
+      setTrack(p.track);
+      setGoals(p.goals);
+      setLoading(false);
+    }).catch(() => setLoading(false));
+  }, [load]);
 
-  const applyTemplate = (track: TrackKey) => {
-    const goals: Goal[] = TEMPLATES[track].goals.map((title, i) => ({ id: `${Date.now()}-${i}`, title, done: false }));
-    setPlan({ track, goals });
+  const persist = async (nextTrack: string | null, nextGoals: Goal[]) => {
+    setSaving(true);
+    try {
+      await save({ data: { track: nextTrack, goals: nextGoals } });
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const applyTemplate = (k: TrackKey) => {
+    const g: Goal[] = TEMPLATES[k].goals.map((title, i) => ({ id: `${Date.now()}-${i}`, title, done: false }));
+    setTrack(k); setGoals(g); persist(k, g);
   };
 
   const addGoal = () => {
     if (!newGoal.trim()) return;
-    setPlan((p) => ({ ...p, goals: [...p.goals, { id: `${Date.now()}`, title: newGoal.trim(), due: newDue || undefined, done: false }] }));
-    setNewGoal(""); setNewDue("");
+    const next = [...goals, { id: `${Date.now()}`, title: newGoal.trim(), due: newDue || undefined, done: false }];
+    setGoals(next); setNewGoal(""); setNewDue(""); persist(track, next);
   };
 
-  const toggle = (id: string) => setPlan((p) => ({ ...p, goals: p.goals.map((g) => g.id === id ? { ...g, done: !g.done } : g) }));
-  const remove = (id: string) => setPlan((p) => ({ ...p, goals: p.goals.filter((g) => g.id !== id) }));
+  const toggle = (id: string) => {
+    const next = goals.map((g) => g.id === id ? { ...g, done: !g.done } : g);
+    setGoals(next); persist(track, next);
+  };
+  const remove = (id: string) => {
+    const next = goals.filter((g) => g.id !== id);
+    setGoals(next); persist(track, next);
+  };
 
-  const done = plan.goals.filter((g) => g.done).length;
-  const total = plan.goals.length;
+  const done = goals.filter((g) => g.done).length;
+  const total = goals.length;
   const pct = total ? Math.round((done / total) * 100) : 0;
+
+  if (loading) {
+    return (
+      <section className="container-page py-24 text-center">
+        <Loader2 className="mx-auto h-8 w-8 animate-spin text-primary" />
+        <p className="mt-4 text-sm text-muted-foreground">جارٍ تحميل خطتك…</p>
+      </section>
+    );
+  }
 
   return (
     <>
@@ -75,8 +103,9 @@ function MyPlanPage() {
           <div className="flex items-center gap-3">
             <Target className="h-8 w-8 text-gold" />
             <h1 className="text-4xl text-primary md:text-5xl">لوحة خطتي المهنية</h1>
+            {saving && <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />}
           </div>
-          <p className="mt-4 max-w-2xl text-muted-foreground">حدّد مسارك، طبّق قالباً جاهزاً، وتابع تقدمك. تُحفظ بياناتك في متصفحك.</p>
+          <p className="mt-4 max-w-2xl text-muted-foreground">حدّد مسارك، طبّق قالباً جاهزاً، وتابع تقدمك. تُحفظ بياناتك تلقائياً في حسابك.</p>
         </div>
       </section>
 
@@ -84,7 +113,7 @@ function MyPlanPage() {
         <h2 className="font-serif text-xl text-primary">١. اختر مسارك (قوالب جاهزة)</h2>
         <div className="mt-4 grid gap-3 md:grid-cols-4">
           {(Object.keys(TEMPLATES) as TrackKey[]).map((k) => (
-            <button key={k} onClick={() => applyTemplate(k)} className={`rounded-xl border p-4 text-right transition ${plan.track === k ? "border-primary bg-primary/5" : "border-border bg-card hover:border-primary/40"}`}>
+            <button key={k} onClick={() => applyTemplate(k)} className={`rounded-xl border p-4 text-right transition ${track === k ? "border-primary bg-primary/5" : "border-border bg-card hover:border-primary/40"}`}>
               <div className="font-serif text-base text-primary">{TEMPLATES[k].label}</div>
               <div className="mt-1 text-xs text-muted-foreground">{TEMPLATES[k].goals.length} أهداف افتراضية</div>
             </button>
@@ -112,8 +141,8 @@ function MyPlanPage() {
           </div>
 
           <ul className="mt-5 space-y-2">
-            {plan.goals.length === 0 && <li className="rounded-lg border border-dashed border-border p-6 text-center text-sm text-muted-foreground">لا توجد أهداف بعد. اختر قالباً أو أضف هدفاً.</li>}
-            {plan.goals.map((g) => (
+            {goals.length === 0 && <li className="rounded-lg border border-dashed border-border p-6 text-center text-sm text-muted-foreground">لا توجد أهداف بعد. اختر قالباً أو أضف هدفاً.</li>}
+            {goals.map((g) => (
               <li key={g.id} className="flex items-center gap-3 rounded-lg border border-border bg-card px-4 py-3">
                 <button onClick={() => toggle(g.id)} aria-label="تبديل الحالة">
                   {g.done ? <CheckCircle2 className="h-5 w-5 text-gold" /> : <Circle className="h-5 w-5 text-muted-foreground" />}

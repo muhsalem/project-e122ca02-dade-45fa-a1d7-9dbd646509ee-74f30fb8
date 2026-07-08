@@ -1,17 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { CalendarClock, X, Edit3, Bell, Check } from "lucide-react";
-import {
-  listBookings,
-  cancelBooking,
-  updateBooking,
-  bookingDateTime,
-  requestNotificationPermission,
-  scheduleAllReminders,
-  type Booking,
-} from "@/lib/bookings-store";
+import { useServerFn } from "@tanstack/react-start";
+import { CalendarClock, X, Edit3, Bell, Check, Loader2 } from "lucide-react";
+import { listMyBookings, cancelBooking, updateBookingSchedule, type BookingDTO } from "@/lib/bookings.functions";
 
-export const Route = createFileRoute("/my-bookings")({
+export const Route = createFileRoute("/_authenticated/my-bookings")({
   head: () => ({
     meta: [
       { title: "حجوزاتي — بوصلة" },
@@ -21,55 +14,87 @@ export const Route = createFileRoute("/my-bookings")({
   component: MyBookingsPage,
 });
 
+function bookingDate(b: BookingDTO): Date {
+  return new Date(`${b.session_date}T${b.session_time}:00`);
+}
+
 function MyBookingsPage() {
-  const [items, setItems] = useState<Booking[]>([]);
+  const list = useServerFn(listMyBookings);
+  const cancel = useServerFn(cancelBooking);
+  const reschedule = useServerFn(updateBookingSchedule);
+  const [items, setItems] = useState<BookingDTO[]>([]);
+  const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState<string | null>(null);
   const [newDate, setNewDate] = useState("");
   const [newTime, setNewTime] = useState("");
   const [perm, setPerm] = useState<NotificationPermission>("default");
 
-  const refresh = () => setItems(listBookings());
+  const refresh = () => list().then(setItems);
 
   useEffect(() => {
-    refresh();
+    list().then((data) => { setItems(data); setLoading(false); }).catch(() => setLoading(false));
     if (typeof window !== "undefined" && "Notification" in window) {
       setPerm(Notification.permission);
-      if (Notification.permission === "granted") scheduleAllReminders();
     }
-  }, []);
+  }, [list]);
 
   const now = Date.now();
   const upcoming = items
-    .filter((b) => b.status === "confirmed" && bookingDateTime(b).getTime() >= now)
-    .sort((a, b) => bookingDateTime(a).getTime() - bookingDateTime(b).getTime());
+    .filter((b) => b.status === "confirmed" && bookingDate(b).getTime() >= now)
+    .sort((a, b) => bookingDate(a).getTime() - bookingDate(b).getTime());
   const past = items
-    .filter((b) => b.status !== "confirmed" || bookingDateTime(b).getTime() < now)
-    .sort((a, b) => bookingDateTime(b).getTime() - bookingDateTime(a).getTime());
+    .filter((b) => b.status !== "confirmed" || bookingDate(b).getTime() < now)
+    .sort((a, b) => bookingDate(b).getTime() - bookingDate(a).getTime());
 
-  const onCancel = (id: string) => {
+  const onCancel = async (id: string) => {
     if (!confirm("هل تريد إلغاء هذا الحجز؟")) return;
-    cancelBooking(id);
+    await cancel({ data: { id } });
     refresh();
   };
 
-  const startEdit = (b: Booking) => {
+  const startEdit = (b: BookingDTO) => {
     setEditing(b.id);
-    setNewDate(b.date);
-    setNewTime(b.time);
+    setNewDate(b.session_date);
+    setNewTime(b.session_time);
   };
 
-  const saveEdit = (id: string) => {
+  const saveEdit = async (id: string) => {
     if (!newDate || !newTime) return;
-    updateBooking(id, { date: newDate, time: newTime });
+    await reschedule({ data: { id, session_date: newDate, session_time: newTime } });
     setEditing(null);
     refresh();
   };
 
   const enableReminders = async () => {
-    const p = await requestNotificationPermission();
+    if (!("Notification" in window)) return;
+    const p = await Notification.requestPermission();
     setPerm(p);
-    if (p === "granted") scheduleAllReminders();
+    if (p === "granted") {
+      upcoming.forEach((b) => {
+        const fireAt = bookingDate(b).getTime() - 30 * 60 * 1000;
+        const delay = fireAt - Date.now();
+        if (delay > 0 && delay < 2_147_000_000) {
+          setTimeout(() => {
+            try {
+              new Notification("تذكير بجلسة بوصلة", {
+                body: `جلستك مع ${b.coach_name} بعد 30 دقيقة (${b.session_time}).`,
+                tag: `booking-${b.id}`,
+              });
+            } catch { /* ignore */ }
+          }, delay);
+        }
+      });
+    }
   };
+
+  if (loading) {
+    return (
+      <section className="container-page py-24 text-center">
+        <Loader2 className="mx-auto h-8 w-8 animate-spin text-primary" />
+        <p className="mt-4 text-sm text-muted-foreground">جارٍ تحميل حجوزاتك…</p>
+      </section>
+    );
+  }
 
   return (
     <>
@@ -114,9 +139,9 @@ function MyBookingsPage() {
             <li key={b.id} className="rounded-xl border border-border bg-card p-4">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div>
-                  <div className="font-serif text-base text-primary">{b.coachName}</div>
+                  <div className="font-serif text-base text-primary">{b.coach_name}</div>
                   <div className="mt-1 text-xs text-muted-foreground">
-                    {b.date} — {b.time}
+                    {b.session_date} — {b.session_time}
                   </div>
                   {b.notes && <p className="mt-2 text-xs text-foreground/70">{b.notes}</p>}
                 </div>
@@ -151,8 +176,8 @@ function MyBookingsPage() {
           {past.map((b) => (
             <li key={b.id} className="flex items-center justify-between rounded-lg border border-border bg-card px-4 py-3 text-sm">
               <div>
-                <span className="text-foreground/80">{b.coachName}</span>
-                <span className="mr-2 text-xs text-muted-foreground">— {b.date} {b.time}</span>
+                <span className="text-foreground/80">{b.coach_name}</span>
+                <span className="mr-2 text-xs text-muted-foreground">— {b.session_date} {b.session_time}</span>
               </div>
               <span className={`text-xs ${b.status === "cancelled" ? "text-destructive" : "text-muted-foreground"}`}>
                 {b.status === "cancelled" ? "ملغاة" : "منتهية"}

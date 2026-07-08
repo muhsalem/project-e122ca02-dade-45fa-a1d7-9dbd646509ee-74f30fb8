@@ -29,8 +29,6 @@ import { Route as PoiaCompareRouteImport } from './routes/poia-compare'
 import { Route as PoiaRouteImport } from './routes/poia'
 import { Route as PathsRouteImport } from './routes/paths'
 import { Route as ParentDashboardRouteImport } from './routes/parent-dashboard'
-import { Route as MyPlanRouteImport } from './routes/my-plan'
-import { Route as MyBookingsRouteImport } from './routes/my-bookings'
 import { Route as MyAssessmentsRouteImport } from './routes/my-assessments'
 import { Route as LearningStyleRouteImport } from './routes/learning-style'
 import { Route as LearningDnaDashboardRouteImport } from './routes/learning-dna-dashboard'
@@ -60,6 +58,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuditReportRouteImport } from './routes/audit-report'
 import { Route as AcademicMajorRouteImport } from './routes/academic-major'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ReportIndexRouteImport } from './routes/report.index'
 import { Route as TrackGrowthRouteImport } from './routes/track.growth'
@@ -80,6 +79,8 @@ import { Route as ReportCodeRouteImport } from './routes/report.$code'
 import { Route as RTokenRouteImport } from './routes/r.$token'
 import { Route as InstitutionsDashboardRouteImport } from './routes/institutions.dashboard'
 import { Route as IdpCodeRouteImport } from './routes/idp.$code'
+import { Route as AuthenticatedMyPlanRouteImport } from './routes/_authenticated/my-plan'
+import { Route as AuthenticatedMyBookingsRouteImport } from './routes/_authenticated/my-bookings'
 
 const WorkValuesRoute = WorkValuesRouteImport.update({
   id: '/work-values',
@@ -179,16 +180,6 @@ const PathsRoute = PathsRouteImport.update({
 const ParentDashboardRoute = ParentDashboardRouteImport.update({
   id: '/parent-dashboard',
   path: '/parent-dashboard',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MyPlanRoute = MyPlanRouteImport.update({
-  id: '/my-plan',
-  path: '/my-plan',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MyBookingsRoute = MyBookingsRouteImport.update({
-  id: '/my-bookings',
-  path: '/my-bookings',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MyAssessmentsRoute = MyAssessmentsRouteImport.update({
@@ -336,6 +327,10 @@ const AboutRoute = AboutRouteImport.update({
   path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -440,6 +435,16 @@ const IdpCodeRoute = IdpCodeRouteImport.update({
   path: '/idp/$code',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedMyPlanRoute = AuthenticatedMyPlanRouteImport.update({
+  id: '/my-plan',
+  path: '/my-plan',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedMyBookingsRoute = AuthenticatedMyBookingsRouteImport.update({
+  id: '/my-bookings',
+  path: '/my-bookings',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -472,8 +477,6 @@ export interface FileRoutesByFullPath {
   '/learning-dna-dashboard': typeof LearningDnaDashboardRoute
   '/learning-style': typeof LearningStyleRoute
   '/my-assessments': typeof MyAssessmentsRoute
-  '/my-bookings': typeof MyBookingsRoute
-  '/my-plan': typeof MyPlanRoute
   '/parent-dashboard': typeof ParentDashboardRoute
   '/paths': typeof PathsRoute
   '/poia': typeof PoiaRoute
@@ -494,6 +497,8 @@ export interface FileRoutesByFullPath {
   '/terms': typeof TermsRoute
   '/wellbeing-check': typeof WellbeingCheckRoute
   '/work-values': typeof WorkValuesRoute
+  '/my-bookings': typeof AuthenticatedMyBookingsRoute
+  '/my-plan': typeof AuthenticatedMyPlanRoute
   '/idp/$code': typeof IdpCodeRoute
   '/institutions/dashboard': typeof InstitutionsDashboardRoute
   '/r/$token': typeof RTokenRoute
@@ -545,8 +550,6 @@ export interface FileRoutesByTo {
   '/learning-dna-dashboard': typeof LearningDnaDashboardRoute
   '/learning-style': typeof LearningStyleRoute
   '/my-assessments': typeof MyAssessmentsRoute
-  '/my-bookings': typeof MyBookingsRoute
-  '/my-plan': typeof MyPlanRoute
   '/parent-dashboard': typeof ParentDashboardRoute
   '/paths': typeof PathsRoute
   '/poia': typeof PoiaRoute
@@ -567,6 +570,8 @@ export interface FileRoutesByTo {
   '/terms': typeof TermsRoute
   '/wellbeing-check': typeof WellbeingCheckRoute
   '/work-values': typeof WorkValuesRoute
+  '/my-bookings': typeof AuthenticatedMyBookingsRoute
+  '/my-plan': typeof AuthenticatedMyPlanRoute
   '/idp/$code': typeof IdpCodeRoute
   '/institutions/dashboard': typeof InstitutionsDashboardRoute
   '/r/$token': typeof RTokenRoute
@@ -590,6 +595,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/academic-major': typeof AcademicMajorRoute
   '/audit-report': typeof AuditReportRoute
@@ -619,8 +625,6 @@ export interface FileRoutesById {
   '/learning-dna-dashboard': typeof LearningDnaDashboardRoute
   '/learning-style': typeof LearningStyleRoute
   '/my-assessments': typeof MyAssessmentsRoute
-  '/my-bookings': typeof MyBookingsRoute
-  '/my-plan': typeof MyPlanRoute
   '/parent-dashboard': typeof ParentDashboardRoute
   '/paths': typeof PathsRoute
   '/poia': typeof PoiaRoute
@@ -641,6 +645,8 @@ export interface FileRoutesById {
   '/terms': typeof TermsRoute
   '/wellbeing-check': typeof WellbeingCheckRoute
   '/work-values': typeof WorkValuesRoute
+  '/_authenticated/my-bookings': typeof AuthenticatedMyBookingsRoute
+  '/_authenticated/my-plan': typeof AuthenticatedMyPlanRoute
   '/idp/$code': typeof IdpCodeRoute
   '/institutions/dashboard': typeof InstitutionsDashboardRoute
   '/r/$token': typeof RTokenRoute
@@ -694,8 +700,6 @@ export interface FileRouteTypes {
     | '/learning-dna-dashboard'
     | '/learning-style'
     | '/my-assessments'
-    | '/my-bookings'
-    | '/my-plan'
     | '/parent-dashboard'
     | '/paths'
     | '/poia'
@@ -716,6 +720,8 @@ export interface FileRouteTypes {
     | '/terms'
     | '/wellbeing-check'
     | '/work-values'
+    | '/my-bookings'
+    | '/my-plan'
     | '/idp/$code'
     | '/institutions/dashboard'
     | '/r/$token'
@@ -767,8 +773,6 @@ export interface FileRouteTypes {
     | '/learning-dna-dashboard'
     | '/learning-style'
     | '/my-assessments'
-    | '/my-bookings'
-    | '/my-plan'
     | '/parent-dashboard'
     | '/paths'
     | '/poia'
@@ -789,6 +793,8 @@ export interface FileRouteTypes {
     | '/terms'
     | '/wellbeing-check'
     | '/work-values'
+    | '/my-bookings'
+    | '/my-plan'
     | '/idp/$code'
     | '/institutions/dashboard'
     | '/r/$token'
@@ -811,6 +817,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
     | '/about'
     | '/academic-major'
     | '/audit-report'
@@ -840,8 +847,6 @@ export interface FileRouteTypes {
     | '/learning-dna-dashboard'
     | '/learning-style'
     | '/my-assessments'
-    | '/my-bookings'
-    | '/my-plan'
     | '/parent-dashboard'
     | '/paths'
     | '/poia'
@@ -862,6 +867,8 @@ export interface FileRouteTypes {
     | '/terms'
     | '/wellbeing-check'
     | '/work-values'
+    | '/_authenticated/my-bookings'
+    | '/_authenticated/my-plan'
     | '/idp/$code'
     | '/institutions/dashboard'
     | '/r/$token'
@@ -885,6 +892,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
   AcademicMajorRoute: typeof AcademicMajorRoute
   AuditReportRoute: typeof AuditReportRoute
@@ -914,8 +922,6 @@ export interface RootRouteChildren {
   LearningDnaDashboardRoute: typeof LearningDnaDashboardRoute
   LearningStyleRoute: typeof LearningStyleRoute
   MyAssessmentsRoute: typeof MyAssessmentsRoute
-  MyBookingsRoute: typeof MyBookingsRoute
-  MyPlanRoute: typeof MyPlanRoute
   ParentDashboardRoute: typeof ParentDashboardRoute
   PathsRoute: typeof PathsRoute
   PoiaRoute: typeof PoiaRoute
@@ -1088,20 +1094,6 @@ declare module '@tanstack/react-router' {
       path: '/parent-dashboard'
       fullPath: '/parent-dashboard'
       preLoaderRoute: typeof ParentDashboardRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/my-plan': {
-      id: '/my-plan'
-      path: '/my-plan'
-      fullPath: '/my-plan'
-      preLoaderRoute: typeof MyPlanRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/my-bookings': {
-      id: '/my-bookings'
-      path: '/my-bookings'
-      fullPath: '/my-bookings'
-      preLoaderRoute: typeof MyBookingsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/my-assessments': {
@@ -1307,6 +1299,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -1447,8 +1446,35 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IdpCodeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/my-plan': {
+      id: '/_authenticated/my-plan'
+      path: '/my-plan'
+      fullPath: '/my-plan'
+      preLoaderRoute: typeof AuthenticatedMyPlanRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/my-bookings': {
+      id: '/_authenticated/my-bookings'
+      path: '/my-bookings'
+      fullPath: '/my-bookings'
+      preLoaderRoute: typeof AuthenticatedMyBookingsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
+
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedMyBookingsRoute: typeof AuthenticatedMyBookingsRoute
+  AuthenticatedMyPlanRoute: typeof AuthenticatedMyPlanRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedMyBookingsRoute: AuthenticatedMyBookingsRoute,
+  AuthenticatedMyPlanRoute: AuthenticatedMyPlanRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
 interface InstitutionsRouteChildren {
   InstitutionsDashboardRoute: typeof InstitutionsDashboardRoute
@@ -1491,6 +1517,7 @@ const ResourcesRouteWithChildren = ResourcesRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AboutRoute: AboutRoute,
   AcademicMajorRoute: AcademicMajorRoute,
   AuditReportRoute: AuditReportRoute,
@@ -1520,8 +1547,6 @@ const rootRouteChildren: RootRouteChildren = {
   LearningDnaDashboardRoute: LearningDnaDashboardRoute,
   LearningStyleRoute: LearningStyleRoute,
   MyAssessmentsRoute: MyAssessmentsRoute,
-  MyBookingsRoute: MyBookingsRoute,
-  MyPlanRoute: MyPlanRoute,
   ParentDashboardRoute: ParentDashboardRoute,
   PathsRoute: PathsRoute,
   PoiaRoute: PoiaRoute,
@@ -1556,13 +1581,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
