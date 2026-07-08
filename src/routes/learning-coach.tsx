@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
-import { MessagesSquare, Send, Loader2 } from "lucide-react";
+import { MessagesSquare, Send, Loader2, Info, ChevronDown } from "lucide-react";
 import { listCoachHistory, sendCoachMessage } from "@/lib/learning-dna.functions";
 
 export const Route = createFileRoute("/learning-coach")({
