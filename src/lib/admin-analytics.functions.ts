@@ -29,7 +29,7 @@ export const getAdminAnalytics = createServerFn({ method: "GET" })
       coaches,
     ] = await Promise.all([
       supabaseAdmin.from("profiles").select("id", { count: "exact", head: true }),
-      supabaseAdmin.from("bookings").select("id, status, created_at, price_amount"),
+      supabaseAdmin.from("bookings").select("id, status, created_at"),
       supabaseAdmin.from("poia_submissions").select("id", { count: "exact", head: true }),
       supabaseAdmin.from("wellbeing_screenings").select("id", { count: "exact", head: true }),
       supabaseAdmin.from("clarity_scores").select("id", { count: "exact", head: true }),
@@ -43,7 +43,6 @@ export const getAdminAnalytics = createServerFn({ method: "GET" })
     const bookingsRows = (bookings.data ?? []) as Array<{
       status: string;
       created_at: string;
-      price_amount: number | null;
     }>;
 
     const now = Date.now();
