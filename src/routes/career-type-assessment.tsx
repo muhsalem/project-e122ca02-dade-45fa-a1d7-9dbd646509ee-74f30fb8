@@ -396,7 +396,7 @@ function CareerTypePage() {
   const isLastStep = step === totalSteps - 1;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-dvh bg-background">
       <div className="container-page py-10">
         {/* Track 1 unifier */}
         <div className="mx-auto mb-6 max-w-3xl rounded-xl border border-gold/30 bg-gold/5 px-4 py-3 text-center text-xs text-primary">

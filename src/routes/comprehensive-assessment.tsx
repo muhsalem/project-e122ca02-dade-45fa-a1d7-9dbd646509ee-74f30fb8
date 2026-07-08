@@ -84,7 +84,7 @@ function ComprehensivePage() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-dvh bg-background">
       <section className="border-b border-border bg-secondary/40">
         <div className="container-page py-14 text-center">
           <AutoIllustration topic="/comprehensive-assessment" className="mx-auto mb-3 h-24 w-24 text-primary" />
