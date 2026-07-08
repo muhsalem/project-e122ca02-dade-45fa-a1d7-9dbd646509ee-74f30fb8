@@ -48,6 +48,7 @@ function ProfilePage() {
           navigate({ to: "/counselor-crm" });
           return;
         }
+        setIsAdmin(!!roles?.some((r: { role: string }) => r.role === "admin"));
         supabase
           .from("profiles")
           .select("full_name, age, stage, country, phone")
