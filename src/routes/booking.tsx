@@ -265,12 +265,23 @@ function BookingPage() {
             </p>
           </div>
 
+          {error && (
+            <div className="rounded-md border border-destructive/40 bg-destructive/5 p-3 text-sm text-destructive">
+              {error}
+            </div>
+          )}
+          {!isAuthenticated && (
+            <p className="text-center text-xs text-muted-foreground">
+              يتطلب حفظ الحجز تسجيل الدخول — سنحوّلك للتسجيل عند الضغط.
+            </p>
+          )}
           <button
             type="submit"
-            disabled={!coach || !date || !time}
-            className="w-full rounded-md bg-primary py-4 text-base font-medium text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-40"
+            disabled={!coach || !date || !time || submitting}
+            className="inline-flex w-full items-center justify-center gap-2 rounded-md bg-primary py-4 text-base font-medium text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-40"
           >
-            تأكيد الحجز
+            {submitting && <Loader2 className="h-4 w-4 animate-spin" />}
+            {submitting ? "جارٍ الحفظ…" : "تأكيد الحجز"}
           </button>
         </form>
       </section>
