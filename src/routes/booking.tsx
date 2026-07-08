@@ -1,8 +1,10 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { Check, Calendar, Clock, User, ShieldCheck, Users } from "lucide-react";
+import { useServerFn } from "@tanstack/react-start";
+import { Check, Calendar, Clock, User, ShieldCheck, Users, Loader2 } from "lucide-react";
 import { CalEmbed } from "@/components/site/CalEmbed";
-import { addBooking } from "@/lib/bookings-store";
+import { createBooking } from "@/lib/bookings.functions";
+import { useAuth } from "@/hooks/use-auth";
 
 export const Route = createFileRoute("/booking")({
   head: () => ({
@@ -23,6 +25,9 @@ const COACHES = [
 const TIMES = ["10:00", "12:00", "14:00", "16:00", "18:00", "20:00"];
 
 function BookingPage() {
+  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+  const create = useServerFn(createBooking);
   const [coach, setCoach] = useState<string | null>(null);
   const [date, setDate] = useState("");
   const [time, setTime] = useState<string | null>(null);
@@ -33,14 +38,37 @@ function BookingPage() {
   const [genderPref, setGenderPref] = useState<"same" | "any">("same");
   const [payment, setPayment] = useState<string>("mada");
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const onSubmit = (e: React.FormEvent) => {
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const c = COACHES.find((x) => x.id === coach);
-    if (c && date && time) {
-      addBooking({ coachId: c.id, coachName: c.name, date, time, notes });
+    setError(null);
+    if (!isAuthenticated) {
+      navigate({ to: "/auth" });
+      return;
     }
-    setSubmitted(true);
+    const c = COACHES.find((x) => x.id === coach);
+    if (!c || !date || !time) return;
+    setSubmitting(true);
+    try {
+      await create({
+        data: {
+          coach_id: c.id,
+          coach_name: c.name,
+          session_date: date,
+          session_time: time,
+          notes: notes || undefined,
+          contact_email: email || undefined,
+          contact_phone: phone || undefined,
+        },
+      });
+      setSubmitted(true);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "تعذّر حفظ الحجز");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   if (submitted) {
