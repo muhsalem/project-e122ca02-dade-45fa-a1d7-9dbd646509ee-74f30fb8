@@ -28,6 +28,7 @@ function ProfilePage() {
   const { user, loading: authLoading, signOut } = useAuth();
   const navigate = useNavigate();
   const [profile, setProfile] = useState<Profile>({ full_name: "", age: null, stage: "", country: "", phone: "" });
+  const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
