@@ -86,6 +86,51 @@ export type Database = {
         }
         Relationships: []
       }
+      bookings: {
+        Row: {
+          coach_id: string
+          coach_name: string
+          contact_email: string | null
+          contact_phone: string | null
+          created_at: string
+          id: string
+          notes: string | null
+          session_date: string
+          session_time: string
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          coach_id: string
+          coach_name: string
+          contact_email?: string | null
+          contact_phone?: string | null
+          created_at?: string
+          id?: string
+          notes?: string | null
+          session_date: string
+          session_time: string
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          coach_id?: string
+          coach_name?: string
+          contact_email?: string | null
+          contact_phone?: string | null
+          created_at?: string
+          id?: string
+          notes?: string | null
+          session_date?: string
+          session_time?: string
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       career_ladders: {
         Row: {
           created_at: string
@@ -119,6 +164,30 @@ export type Database = {
           next_step_skills?: string
           role_family?: string
           years_experience?: string
+        }
+        Relationships: []
+      }
+      career_plans: {
+        Row: {
+          created_at: string
+          goals: Json
+          track: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          goals?: Json
+          track?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          goals?: Json
+          track?: string | null
+          updated_at?: string
+          user_id?: string
         }
         Relationships: []
       }
