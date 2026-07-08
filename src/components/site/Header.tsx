@@ -87,6 +87,7 @@ const institutionsGroup = {
 } as const;
 
 const navAfter = [
+  { to: "/labor-market", label: "نبض السوق" },
   { to: "/counselor", label: "للمرشدين والمدربين" },
   { to: "/pricing", label: "باقات الاشتراك" },
   { to: "/resources", label: "الموارد" },
