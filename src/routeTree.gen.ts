@@ -81,6 +81,7 @@ import { Route as InstitutionsDashboardRouteImport } from './routes/institutions
 import { Route as IdpCodeRouteImport } from './routes/idp.$code'
 import { Route as AuthenticatedMyPlanRouteImport } from './routes/_authenticated/my-plan'
 import { Route as AuthenticatedMyBookingsRouteImport } from './routes/_authenticated/my-bookings'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 
 const WorkValuesRoute = WorkValuesRouteImport.update({
   id: '/work-values',
@@ -445,6 +446,11 @@ const AuthenticatedMyBookingsRoute = AuthenticatedMyBookingsRouteImport.update({
   path: '/my-bookings',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -497,6 +503,7 @@ export interface FileRoutesByFullPath {
   '/terms': typeof TermsRoute
   '/wellbeing-check': typeof WellbeingCheckRoute
   '/work-values': typeof WorkValuesRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/my-bookings': typeof AuthenticatedMyBookingsRoute
   '/my-plan': typeof AuthenticatedMyPlanRoute
   '/idp/$code': typeof IdpCodeRoute
@@ -570,6 +577,7 @@ export interface FileRoutesByTo {
   '/terms': typeof TermsRoute
   '/wellbeing-check': typeof WellbeingCheckRoute
   '/work-values': typeof WorkValuesRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/my-bookings': typeof AuthenticatedMyBookingsRoute
   '/my-plan': typeof AuthenticatedMyPlanRoute
   '/idp/$code': typeof IdpCodeRoute
@@ -645,6 +653,7 @@ export interface FileRoutesById {
   '/terms': typeof TermsRoute
   '/wellbeing-check': typeof WellbeingCheckRoute
   '/work-values': typeof WorkValuesRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/_authenticated/my-bookings': typeof AuthenticatedMyBookingsRoute
   '/_authenticated/my-plan': typeof AuthenticatedMyPlanRoute
   '/idp/$code': typeof IdpCodeRoute
@@ -720,6 +729,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/wellbeing-check'
     | '/work-values'
+    | '/admin'
     | '/my-bookings'
     | '/my-plan'
     | '/idp/$code'
@@ -793,6 +803,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/wellbeing-check'
     | '/work-values'
+    | '/admin'
     | '/my-bookings'
     | '/my-plan'
     | '/idp/$code'
@@ -867,6 +878,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/wellbeing-check'
     | '/work-values'
+    | '/_authenticated/admin'
     | '/_authenticated/my-bookings'
     | '/_authenticated/my-plan'
     | '/idp/$code'
@@ -1460,15 +1472,24 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedMyBookingsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
   AuthenticatedMyBookingsRoute: typeof AuthenticatedMyBookingsRoute
   AuthenticatedMyPlanRoute: typeof AuthenticatedMyPlanRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
   AuthenticatedMyBookingsRoute: AuthenticatedMyBookingsRoute,
   AuthenticatedMyPlanRoute: AuthenticatedMyPlanRoute,
 }
