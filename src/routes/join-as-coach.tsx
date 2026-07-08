@@ -136,7 +136,7 @@ function JoinCoachPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-dvh bg-background">
       <section className="border-b border-border bg-secondary/40">
         <div className="container-page py-14 text-center">
           <span className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/10 px-4 py-1.5 text-xs font-medium text-primary">

@@ -27,7 +27,7 @@ export const Route = createFileRoute("/resources/why-we-work")({
 
 function WhyWeWorkArticle() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-dvh bg-background">
       <div className="container-page py-12">
         <div className="mb-12 text-center">
           <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-1.5 text-sm text-foreground/70">

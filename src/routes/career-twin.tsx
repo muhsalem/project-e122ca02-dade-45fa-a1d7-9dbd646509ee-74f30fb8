@@ -94,7 +94,7 @@ function CareerTwinPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-secondary/30">
+    <div className="min-h-dvh bg-gradient-to-b from-background to-secondary/30">
       <section className="container-page py-8">
         <div className="mx-auto max-w-3xl">
           {/* Header */}

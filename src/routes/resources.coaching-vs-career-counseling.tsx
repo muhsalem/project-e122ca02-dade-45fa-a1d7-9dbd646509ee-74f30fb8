@@ -72,7 +72,7 @@ const COMPARISON = [
 
 function ArticlePage() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-dvh bg-background">
       <div className="container-page py-12">
         {/* Breadcrumb */}
         <div className="mb-6 flex items-center gap-2 text-sm text-muted-foreground">

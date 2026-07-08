@@ -229,7 +229,7 @@ function SectorGuidePage() {
   const isLastStep = step === totalSteps - 1;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-dvh bg-background">
       <div className="container-page py-10">
         {/* Header */}
         <div className="mb-8 text-center">

@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
-import { Loader2, User as UserIcon, FileText, LogOut, ShieldAlert } from "lucide-react";
+import { Loader2, User as UserIcon, FileText, LogOut, ShieldAlert, LayoutDashboard } from "lucide-react";
 import { deleteMyAccount } from "@/lib/account.functions";
 
 export const Route = createFileRoute("/profile")({
@@ -28,6 +28,7 @@ function ProfilePage() {
   const { user, loading: authLoading, signOut } = useAuth();
   const navigate = useNavigate();
   const [profile, setProfile] = useState<Profile>({ full_name: "", age: null, stage: "", country: "", phone: "" });
+  const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
@@ -47,6 +48,7 @@ function ProfilePage() {
           navigate({ to: "/counselor-crm" });
           return;
         }
+        setIsAdmin(!!roles?.some((r: { role: string }) => r.role === "admin"));
         supabase
           .from("profiles")
           .select("full_name, age, stage, country, phone")
@@ -142,6 +144,20 @@ function ProfilePage() {
             </Button>
           </CardContent>
         </Card>
+
+        {isAdmin && (
+          <Card className="border-primary/40">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-primary"><LayoutDashboard className="h-5 w-5" /> لوحة الإدارة</CardTitle>
+              <CardDescription>مؤشرات الأداء الرئيسية للمنصة (KPIs)</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Button asChild>
+                <Link to="/admin">فتح لوحة الإدارة</Link>
+              </Button>
+            </CardContent>
+          </Card>
+        )}
 
         <DangerZone />
       </div>
