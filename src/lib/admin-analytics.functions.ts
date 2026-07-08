@@ -55,9 +55,7 @@ export const getAdminAnalytics = createServerFn({ method: "GET" })
       return acc;
     }, {});
 
-    const revenue = bookingsRows
-      .filter((b) => b.status === "confirmed" || b.status === "completed")
-      .reduce((sum, b) => sum + (Number(b.price_amount) || 0), 0);
+    const revenue = 0;
 
     const totalAssessments =
       (poia.count ?? 0) +
