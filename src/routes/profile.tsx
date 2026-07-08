@@ -145,6 +145,20 @@ function ProfilePage() {
           </CardContent>
         </Card>
 
+        {isAdmin && (
+          <Card className="border-primary/40">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-primary"><LayoutDashboard className="h-5 w-5" /> لوحة الإدارة</CardTitle>
+              <CardDescription>مؤشرات الأداء الرئيسية للمنصة (KPIs)</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Button asChild>
+                <Link to="/admin">فتح لوحة الإدارة</Link>
+              </Button>
+            </CardContent>
+          </Card>
+        )}
+
         <DangerZone />
       </div>
     </div>
