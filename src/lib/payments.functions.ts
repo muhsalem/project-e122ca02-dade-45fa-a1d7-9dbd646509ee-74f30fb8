@@ -59,7 +59,7 @@ export const initiateCheckout = createServerFn({ method: "POST" })
         customer_email: data.customer_email ?? null,
         customer_phone: data.customer_phone ?? null,
         customer_name: data.customer_name ?? null,
-        metadata: data.metadata ?? {},
+        metadata: (data.metadata ?? {}) as never,
       })
       .select("id, order_number")
       .single();

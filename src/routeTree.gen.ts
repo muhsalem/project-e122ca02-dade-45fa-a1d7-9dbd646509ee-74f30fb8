@@ -45,6 +45,7 @@ import { Route as CounselorRouteImport } from './routes/counselor'
 import { Route as ComprehensiveAssessmentRouteImport } from './routes/comprehensive-assessment'
 import { Route as CognitiveProfileRouteImport } from './routes/cognitive-profile'
 import { Route as ClarityCheckRouteImport } from './routes/clarity-check'
+import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as CareerTypeAssessmentRouteImport } from './routes/career-type-assessment'
 import { Route as CareerTwinRouteImport } from './routes/career-twin'
 import { Route as CareerSelfEfficacyRouteImport } from './routes/career-self-efficacy'
@@ -80,10 +81,14 @@ import { Route as ReportCodeRouteImport } from './routes/report.$code'
 import { Route as RTokenRouteImport } from './routes/r.$token'
 import { Route as InstitutionsDashboardRouteImport } from './routes/institutions.dashboard'
 import { Route as IdpCodeRouteImport } from './routes/idp.$code'
+import { Route as CheckoutSuccessRouteImport } from './routes/checkout.success'
 import { Route as AuthenticatedMyPlanRouteImport } from './routes/_authenticated/my-plan'
 import { Route as AuthenticatedMyBookingsRouteImport } from './routes/_authenticated/my-bookings'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as ApiPublicHealthRouteImport } from './routes/api/public/health'
+import { Route as ApiPublicWebhooksTapRouteImport } from './routes/api/public/webhooks/tap'
+import { Route as ApiPublicWebhooksPaymobRouteImport } from './routes/api/public/webhooks/paymob'
+import { Route as ApiPublicWebhooksMoyasarRouteImport } from './routes/api/public/webhooks/moyasar'
 
 const WorkValuesRoute = WorkValuesRouteImport.update({
   id: '/work-values',
@@ -265,6 +270,11 @@ const ClarityCheckRoute = ClarityCheckRouteImport.update({
   path: '/clarity-check',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CheckoutRoute = CheckoutRouteImport.update({
+  id: '/checkout',
+  path: '/checkout',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CareerTypeAssessmentRoute = CareerTypeAssessmentRouteImport.update({
   id: '/career-type-assessment',
   path: '/career-type-assessment',
@@ -443,6 +453,11 @@ const IdpCodeRoute = IdpCodeRouteImport.update({
   path: '/idp/$code',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CheckoutSuccessRoute = CheckoutSuccessRouteImport.update({
+  id: '/success',
+  path: '/success',
+  getParentRoute: () => CheckoutRoute,
+} as any)
 const AuthenticatedMyPlanRoute = AuthenticatedMyPlanRouteImport.update({
   id: '/my-plan',
   path: '/my-plan',
@@ -463,6 +478,22 @@ const ApiPublicHealthRoute = ApiPublicHealthRouteImport.update({
   path: '/api/public/health',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicWebhooksTapRoute = ApiPublicWebhooksTapRouteImport.update({
+  id: '/api/public/webhooks/tap',
+  path: '/api/public/webhooks/tap',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicWebhooksPaymobRoute = ApiPublicWebhooksPaymobRouteImport.update({
+  id: '/api/public/webhooks/paymob',
+  path: '/api/public/webhooks/paymob',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicWebhooksMoyasarRoute =
+  ApiPublicWebhooksMoyasarRouteImport.update({
+    id: '/api/public/webhooks/moyasar',
+    path: '/api/public/webhooks/moyasar',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -480,6 +511,7 @@ export interface FileRoutesByFullPath {
   '/career-self-efficacy': typeof CareerSelfEfficacyRoute
   '/career-twin': typeof CareerTwinRoute
   '/career-type-assessment': typeof CareerTypeAssessmentRoute
+  '/checkout': typeof CheckoutRouteWithChildren
   '/clarity-check': typeof ClarityCheckRoute
   '/cognitive-profile': typeof CognitiveProfileRoute
   '/comprehensive-assessment': typeof ComprehensiveAssessmentRoute
@@ -519,6 +551,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AuthenticatedAdminRoute
   '/my-bookings': typeof AuthenticatedMyBookingsRoute
   '/my-plan': typeof AuthenticatedMyPlanRoute
+  '/checkout/success': typeof CheckoutSuccessRoute
   '/idp/$code': typeof IdpCodeRoute
   '/institutions/dashboard': typeof InstitutionsDashboardRoute
   '/r/$token': typeof RTokenRoute
@@ -539,6 +572,9 @@ export interface FileRoutesByFullPath {
   '/track/growth': typeof TrackGrowthRoute
   '/report/': typeof ReportIndexRoute
   '/api/public/health': typeof ApiPublicHealthRoute
+  '/api/public/webhooks/moyasar': typeof ApiPublicWebhooksMoyasarRoute
+  '/api/public/webhooks/paymob': typeof ApiPublicWebhooksPaymobRoute
+  '/api/public/webhooks/tap': typeof ApiPublicWebhooksTapRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -556,6 +592,7 @@ export interface FileRoutesByTo {
   '/career-self-efficacy': typeof CareerSelfEfficacyRoute
   '/career-twin': typeof CareerTwinRoute
   '/career-type-assessment': typeof CareerTypeAssessmentRoute
+  '/checkout': typeof CheckoutRouteWithChildren
   '/clarity-check': typeof ClarityCheckRoute
   '/cognitive-profile': typeof CognitiveProfileRoute
   '/comprehensive-assessment': typeof ComprehensiveAssessmentRoute
@@ -595,6 +632,7 @@ export interface FileRoutesByTo {
   '/admin': typeof AuthenticatedAdminRoute
   '/my-bookings': typeof AuthenticatedMyBookingsRoute
   '/my-plan': typeof AuthenticatedMyPlanRoute
+  '/checkout/success': typeof CheckoutSuccessRoute
   '/idp/$code': typeof IdpCodeRoute
   '/institutions/dashboard': typeof InstitutionsDashboardRoute
   '/r/$token': typeof RTokenRoute
@@ -615,6 +653,9 @@ export interface FileRoutesByTo {
   '/track/growth': typeof TrackGrowthRoute
   '/report': typeof ReportIndexRoute
   '/api/public/health': typeof ApiPublicHealthRoute
+  '/api/public/webhooks/moyasar': typeof ApiPublicWebhooksMoyasarRoute
+  '/api/public/webhooks/paymob': typeof ApiPublicWebhooksPaymobRoute
+  '/api/public/webhooks/tap': typeof ApiPublicWebhooksTapRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -634,6 +675,7 @@ export interface FileRoutesById {
   '/career-self-efficacy': typeof CareerSelfEfficacyRoute
   '/career-twin': typeof CareerTwinRoute
   '/career-type-assessment': typeof CareerTypeAssessmentRoute
+  '/checkout': typeof CheckoutRouteWithChildren
   '/clarity-check': typeof ClarityCheckRoute
   '/cognitive-profile': typeof CognitiveProfileRoute
   '/comprehensive-assessment': typeof ComprehensiveAssessmentRoute
@@ -673,6 +715,7 @@ export interface FileRoutesById {
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/_authenticated/my-bookings': typeof AuthenticatedMyBookingsRoute
   '/_authenticated/my-plan': typeof AuthenticatedMyPlanRoute
+  '/checkout/success': typeof CheckoutSuccessRoute
   '/idp/$code': typeof IdpCodeRoute
   '/institutions/dashboard': typeof InstitutionsDashboardRoute
   '/r/$token': typeof RTokenRoute
@@ -693,6 +736,9 @@ export interface FileRoutesById {
   '/track/growth': typeof TrackGrowthRoute
   '/report/': typeof ReportIndexRoute
   '/api/public/health': typeof ApiPublicHealthRoute
+  '/api/public/webhooks/moyasar': typeof ApiPublicWebhooksMoyasarRoute
+  '/api/public/webhooks/paymob': typeof ApiPublicWebhooksPaymobRoute
+  '/api/public/webhooks/tap': typeof ApiPublicWebhooksTapRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -712,6 +758,7 @@ export interface FileRouteTypes {
     | '/career-self-efficacy'
     | '/career-twin'
     | '/career-type-assessment'
+    | '/checkout'
     | '/clarity-check'
     | '/cognitive-profile'
     | '/comprehensive-assessment'
@@ -751,6 +798,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/my-bookings'
     | '/my-plan'
+    | '/checkout/success'
     | '/idp/$code'
     | '/institutions/dashboard'
     | '/r/$token'
@@ -771,6 +819,9 @@ export interface FileRouteTypes {
     | '/track/growth'
     | '/report/'
     | '/api/public/health'
+    | '/api/public/webhooks/moyasar'
+    | '/api/public/webhooks/paymob'
+    | '/api/public/webhooks/tap'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -788,6 +839,7 @@ export interface FileRouteTypes {
     | '/career-self-efficacy'
     | '/career-twin'
     | '/career-type-assessment'
+    | '/checkout'
     | '/clarity-check'
     | '/cognitive-profile'
     | '/comprehensive-assessment'
@@ -827,6 +879,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/my-bookings'
     | '/my-plan'
+    | '/checkout/success'
     | '/idp/$code'
     | '/institutions/dashboard'
     | '/r/$token'
@@ -847,6 +900,9 @@ export interface FileRouteTypes {
     | '/track/growth'
     | '/report'
     | '/api/public/health'
+    | '/api/public/webhooks/moyasar'
+    | '/api/public/webhooks/paymob'
+    | '/api/public/webhooks/tap'
   id:
     | '__root__'
     | '/'
@@ -865,6 +921,7 @@ export interface FileRouteTypes {
     | '/career-self-efficacy'
     | '/career-twin'
     | '/career-type-assessment'
+    | '/checkout'
     | '/clarity-check'
     | '/cognitive-profile'
     | '/comprehensive-assessment'
@@ -904,6 +961,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin'
     | '/_authenticated/my-bookings'
     | '/_authenticated/my-plan'
+    | '/checkout/success'
     | '/idp/$code'
     | '/institutions/dashboard'
     | '/r/$token'
@@ -924,6 +982,9 @@ export interface FileRouteTypes {
     | '/track/growth'
     | '/report/'
     | '/api/public/health'
+    | '/api/public/webhooks/moyasar'
+    | '/api/public/webhooks/paymob'
+    | '/api/public/webhooks/tap'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -943,6 +1004,7 @@ export interface RootRouteChildren {
   CareerSelfEfficacyRoute: typeof CareerSelfEfficacyRoute
   CareerTwinRoute: typeof CareerTwinRoute
   CareerTypeAssessmentRoute: typeof CareerTypeAssessmentRoute
+  CheckoutRoute: typeof CheckoutRouteWithChildren
   ClarityCheckRoute: typeof ClarityCheckRoute
   CognitiveProfileRoute: typeof CognitiveProfileRoute
   ComprehensiveAssessmentRoute: typeof ComprehensiveAssessmentRoute
@@ -990,6 +1052,9 @@ export interface RootRouteChildren {
   TrackGrowthRoute: typeof TrackGrowthRoute
   ReportIndexRoute: typeof ReportIndexRoute
   ApiPublicHealthRoute: typeof ApiPublicHealthRoute
+  ApiPublicWebhooksMoyasarRoute: typeof ApiPublicWebhooksMoyasarRoute
+  ApiPublicWebhooksPaymobRoute: typeof ApiPublicWebhooksPaymobRoute
+  ApiPublicWebhooksTapRoute: typeof ApiPublicWebhooksTapRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -1246,6 +1311,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClarityCheckRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/checkout': {
+      id: '/checkout'
+      path: '/checkout'
+      fullPath: '/checkout'
+      preLoaderRoute: typeof CheckoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/career-type-assessment': {
       id: '/career-type-assessment'
       path: '/career-type-assessment'
@@ -1491,6 +1563,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IdpCodeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/checkout/success': {
+      id: '/checkout/success'
+      path: '/success'
+      fullPath: '/checkout/success'
+      preLoaderRoute: typeof CheckoutSuccessRouteImport
+      parentRoute: typeof CheckoutRoute
+    }
     '/_authenticated/my-plan': {
       id: '/_authenticated/my-plan'
       path: '/my-plan'
@@ -1519,6 +1598,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicHealthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/webhooks/tap': {
+      id: '/api/public/webhooks/tap'
+      path: '/api/public/webhooks/tap'
+      fullPath: '/api/public/webhooks/tap'
+      preLoaderRoute: typeof ApiPublicWebhooksTapRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/webhooks/paymob': {
+      id: '/api/public/webhooks/paymob'
+      path: '/api/public/webhooks/paymob'
+      fullPath: '/api/public/webhooks/paymob'
+      preLoaderRoute: typeof ApiPublicWebhooksPaymobRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/webhooks/moyasar': {
+      id: '/api/public/webhooks/moyasar'
+      path: '/api/public/webhooks/moyasar'
+      fullPath: '/api/public/webhooks/moyasar'
+      preLoaderRoute: typeof ApiPublicWebhooksMoyasarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -1536,6 +1636,18 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
 
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
+interface CheckoutRouteChildren {
+  CheckoutSuccessRoute: typeof CheckoutSuccessRoute
+}
+
+const CheckoutRouteChildren: CheckoutRouteChildren = {
+  CheckoutSuccessRoute: CheckoutSuccessRoute,
+}
+
+const CheckoutRouteWithChildren = CheckoutRoute._addFileChildren(
+  CheckoutRouteChildren,
+)
 
 interface InstitutionsRouteChildren {
   InstitutionsDashboardRoute: typeof InstitutionsDashboardRoute
@@ -1593,6 +1705,7 @@ const rootRouteChildren: RootRouteChildren = {
   CareerSelfEfficacyRoute: CareerSelfEfficacyRoute,
   CareerTwinRoute: CareerTwinRoute,
   CareerTypeAssessmentRoute: CareerTypeAssessmentRoute,
+  CheckoutRoute: CheckoutRouteWithChildren,
   ClarityCheckRoute: ClarityCheckRoute,
   CognitiveProfileRoute: CognitiveProfileRoute,
   ComprehensiveAssessmentRoute: ComprehensiveAssessmentRoute,
@@ -1640,6 +1753,9 @@ const rootRouteChildren: RootRouteChildren = {
   TrackGrowthRoute: TrackGrowthRoute,
   ReportIndexRoute: ReportIndexRoute,
   ApiPublicHealthRoute: ApiPublicHealthRoute,
+  ApiPublicWebhooksMoyasarRoute: ApiPublicWebhooksMoyasarRoute,
+  ApiPublicWebhooksPaymobRoute: ApiPublicWebhooksPaymobRoute,
+  ApiPublicWebhooksTapRoute: ApiPublicWebhooksTapRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
