@@ -27,6 +27,8 @@ export function Footer() {
             <li><Link to="/resources" className="hover:text-primary">الموارد والمقالات</Link></li>
             <li><Link to="/for-counselors" className="hover:text-primary">للمرشدين المهنيين</Link></li>
             <li><Link to="/about" className="hover:text-primary">عن المنصة</Link></li>
+            <li><Link to="/faq" className="hover:text-primary">الأسئلة الشائعة</Link></li>
+
 
           </ul>
         </div>

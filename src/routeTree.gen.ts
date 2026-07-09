@@ -38,6 +38,7 @@ import { Route as LaborMarketRouteImport } from './routes/labor-market'
 import { Route as JoinAsCoachRouteImport } from './routes/join-as-coach'
 import { Route as InstitutionsRouteImport } from './routes/institutions'
 import { Route as ForCounselorsRouteImport } from './routes/for-counselors'
+import { Route as FaqRouteImport } from './routes/faq'
 import { Route as EmotionalIntelligenceRouteImport } from './routes/emotional-intelligence'
 import { Route as CounselorCrmRouteImport } from './routes/counselor-crm'
 import { Route as CounselorRouteImport } from './routes/counselor'
@@ -82,6 +83,7 @@ import { Route as IdpCodeRouteImport } from './routes/idp.$code'
 import { Route as AuthenticatedMyPlanRouteImport } from './routes/_authenticated/my-plan'
 import { Route as AuthenticatedMyBookingsRouteImport } from './routes/_authenticated/my-bookings'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
+import { Route as ApiPublicHealthRouteImport } from './routes/api/public/health'
 
 const WorkValuesRoute = WorkValuesRouteImport.update({
   id: '/work-values',
@@ -226,6 +228,11 @@ const InstitutionsRoute = InstitutionsRouteImport.update({
 const ForCounselorsRoute = ForCounselorsRouteImport.update({
   id: '/for-counselors',
   path: '/for-counselors',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FaqRoute = FaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EmotionalIntelligenceRoute = EmotionalIntelligenceRouteImport.update({
@@ -451,6 +458,11 @@ const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
   path: '/admin',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const ApiPublicHealthRoute = ApiPublicHealthRouteImport.update({
+  id: '/api/public/health',
+  path: '/api/public/health',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -474,6 +486,7 @@ export interface FileRoutesByFullPath {
   '/counselor': typeof CounselorRoute
   '/counselor-crm': typeof CounselorCrmRoute
   '/emotional-intelligence': typeof EmotionalIntelligenceRoute
+  '/faq': typeof FaqRoute
   '/for-counselors': typeof ForCounselorsRoute
   '/institutions': typeof InstitutionsRouteWithChildren
   '/join-as-coach': typeof JoinAsCoachRoute
@@ -525,6 +538,7 @@ export interface FileRoutesByFullPath {
   '/track/entrepreneurship': typeof TrackEntrepreneurshipRoute
   '/track/growth': typeof TrackGrowthRoute
   '/report/': typeof ReportIndexRoute
+  '/api/public/health': typeof ApiPublicHealthRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -548,6 +562,7 @@ export interface FileRoutesByTo {
   '/counselor': typeof CounselorRoute
   '/counselor-crm': typeof CounselorCrmRoute
   '/emotional-intelligence': typeof EmotionalIntelligenceRoute
+  '/faq': typeof FaqRoute
   '/for-counselors': typeof ForCounselorsRoute
   '/institutions': typeof InstitutionsRouteWithChildren
   '/join-as-coach': typeof JoinAsCoachRoute
@@ -599,6 +614,7 @@ export interface FileRoutesByTo {
   '/track/entrepreneurship': typeof TrackEntrepreneurshipRoute
   '/track/growth': typeof TrackGrowthRoute
   '/report': typeof ReportIndexRoute
+  '/api/public/health': typeof ApiPublicHealthRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -624,6 +640,7 @@ export interface FileRoutesById {
   '/counselor': typeof CounselorRoute
   '/counselor-crm': typeof CounselorCrmRoute
   '/emotional-intelligence': typeof EmotionalIntelligenceRoute
+  '/faq': typeof FaqRoute
   '/for-counselors': typeof ForCounselorsRoute
   '/institutions': typeof InstitutionsRouteWithChildren
   '/join-as-coach': typeof JoinAsCoachRoute
@@ -675,6 +692,7 @@ export interface FileRoutesById {
   '/track/entrepreneurship': typeof TrackEntrepreneurshipRoute
   '/track/growth': typeof TrackGrowthRoute
   '/report/': typeof ReportIndexRoute
+  '/api/public/health': typeof ApiPublicHealthRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -700,6 +718,7 @@ export interface FileRouteTypes {
     | '/counselor'
     | '/counselor-crm'
     | '/emotional-intelligence'
+    | '/faq'
     | '/for-counselors'
     | '/institutions'
     | '/join-as-coach'
@@ -751,6 +770,7 @@ export interface FileRouteTypes {
     | '/track/entrepreneurship'
     | '/track/growth'
     | '/report/'
+    | '/api/public/health'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -774,6 +794,7 @@ export interface FileRouteTypes {
     | '/counselor'
     | '/counselor-crm'
     | '/emotional-intelligence'
+    | '/faq'
     | '/for-counselors'
     | '/institutions'
     | '/join-as-coach'
@@ -825,6 +846,7 @@ export interface FileRouteTypes {
     | '/track/entrepreneurship'
     | '/track/growth'
     | '/report'
+    | '/api/public/health'
   id:
     | '__root__'
     | '/'
@@ -849,6 +871,7 @@ export interface FileRouteTypes {
     | '/counselor'
     | '/counselor-crm'
     | '/emotional-intelligence'
+    | '/faq'
     | '/for-counselors'
     | '/institutions'
     | '/join-as-coach'
@@ -900,6 +923,7 @@ export interface FileRouteTypes {
     | '/track/entrepreneurship'
     | '/track/growth'
     | '/report/'
+    | '/api/public/health'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -925,6 +949,7 @@ export interface RootRouteChildren {
   CounselorRoute: typeof CounselorRoute
   CounselorCrmRoute: typeof CounselorCrmRoute
   EmotionalIntelligenceRoute: typeof EmotionalIntelligenceRoute
+  FaqRoute: typeof FaqRoute
   ForCounselorsRoute: typeof ForCounselorsRoute
   InstitutionsRoute: typeof InstitutionsRouteWithChildren
   JoinAsCoachRoute: typeof JoinAsCoachRoute
@@ -964,6 +989,7 @@ export interface RootRouteChildren {
   TrackEntrepreneurshipRoute: typeof TrackEntrepreneurshipRoute
   TrackGrowthRoute: typeof TrackGrowthRoute
   ReportIndexRoute: typeof ReportIndexRoute
+  ApiPublicHealthRoute: typeof ApiPublicHealthRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -1169,6 +1195,13 @@ declare module '@tanstack/react-router' {
       path: '/for-counselors'
       fullPath: '/for-counselors'
       preLoaderRoute: typeof ForCounselorsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/faq': {
+      id: '/faq'
+      path: '/faq'
+      fullPath: '/faq'
+      preLoaderRoute: typeof FaqRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/emotional-intelligence': {
@@ -1479,6 +1512,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/api/public/health': {
+      id: '/api/public/health'
+      path: '/api/public/health'
+      fullPath: '/api/public/health'
+      preLoaderRoute: typeof ApiPublicHealthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -1559,6 +1599,7 @@ const rootRouteChildren: RootRouteChildren = {
   CounselorRoute: CounselorRoute,
   CounselorCrmRoute: CounselorCrmRoute,
   EmotionalIntelligenceRoute: EmotionalIntelligenceRoute,
+  FaqRoute: FaqRoute,
   ForCounselorsRoute: ForCounselorsRoute,
   InstitutionsRoute: InstitutionsRouteWithChildren,
   JoinAsCoachRoute: JoinAsCoachRoute,
@@ -1598,6 +1639,7 @@ const rootRouteChildren: RootRouteChildren = {
   TrackEntrepreneurshipRoute: TrackEntrepreneurshipRoute,
   TrackGrowthRoute: TrackGrowthRoute,
   ReportIndexRoute: ReportIndexRoute,
+  ApiPublicHealthRoute: ApiPublicHealthRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

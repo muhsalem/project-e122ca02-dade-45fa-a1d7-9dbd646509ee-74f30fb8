@@ -7,12 +7,30 @@ export const Route = createFileRoute("/resources/grow-model")({
       { title: "نموذج GROW: الأداة الأساسية في الكوتشينج | بوصلة" },
       { name: "description", content: "تعرّف على إطار عمل GROW المعتمد من ICF: Goal, Reality, Options, Will — مع أمثلة عربية وأسئلة جاهزة." },
       { property: "og:title", content: "نموذج GROW في الكوتشينج" },
+      { property: "og:description", content: "إطار عمل GROW من ICF بأمثلة عربية." },
+      { property: "og:type", content: "article" },
       { property: "og:url", content: "/resources/grow-model" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [{ rel: "canonical", href: "/resources/grow-model" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Article",
+          headline: "نموذج GROW: أداة المدرب المهني (الكوتش) الأساسية",
+          description: "إطار عمل GROW المعتمد من ICF: Goal, Reality, Options, Will مع أمثلة عربية.",
+          inLanguage: "ar",
+          author: { "@type": "Organization", name: "بوصلة" },
+          publisher: { "@type": "Organization", name: "بوصلة" },
+        }),
+      },
+    ],
   }),
   component: Article,
 });
+
 
 const STEPS = [
   { letter: "G", title: "Goal — الهدف", color: "text-gold", desc: "اسأل: ما الذي تريد تحقيقه تحديدًا؟ كيف ستعرف أنك حققته؟ ما المهلة؟", qs: ["ما هدفك من جلستنا اليوم؟", "بنهاية 6 أشهر، كيف تبدو حياتك المهنية المثالية؟", "ما الذي يجعل هذا الهدف مهمًا لك الآن؟"] },
