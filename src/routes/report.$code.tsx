@@ -1,10 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useState } from "react";
-import { Copy, Check, Printer, ArrowLeft, Loader2, Share2, Sparkles } from "lucide-react";
+import { Copy, Check, Printer, ArrowLeft, Loader2, Share2, Sparkles, Heart } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { getReport } from "@/lib/report.functions";
 import { generateGlobalAdvisorReport } from "@/lib/global-advisor.functions";
+import { generateParentReport } from "@/lib/parent-report.functions";
 import { ContentProtection } from "@/components/site/ContentProtection";
 import { MarketPulseInsights } from "@/components/site/MarketPulseInsights";
 import { CareerLadderInsights } from "@/components/site/CareerLadderInsights";
@@ -193,30 +194,13 @@ function ViewToggle({ code, name, stage, report }: { code: string; name: string 
       ) : (
         <div className="space-y-5 rounded-2xl border border-gold/30 bg-gold/5 p-6">
           <div>
-            <p className="text-xs font-medium uppercase tracking-widest text-gold">ملخص لولي الأمر / المدير</p>
+            <p className="text-xs font-medium uppercase tracking-widest text-gold">تقرير مُرافِق لوليّ الأمر</p>
             <h2 className="mt-2 font-serif text-2xl text-primary">
-              {name ? `نظرة عامة على رحلة ${name}` : "نظرة عامة"}
+              {name ? `رفقة ${name} في اختياره المهني` : "رفقة ابنك/ابنتك في اختياره المهني"}
             </h2>
             {stage && <p className="mt-1 text-sm text-muted-foreground">{stage}</p>}
           </div>
-
-          <div className="rounded-lg bg-card p-4 text-sm leading-8 text-foreground/85">
-            <p className="font-semibold text-primary">ما الذي يحتاج إلى دعمك؟</p>
-            <ul className="mt-2 list-disc space-y-1.5 pr-5 text-muted-foreground">
-              <li>الإصغاء دون أحكام أو مقارنات بإخوته أو زملائه.</li>
-              <li>تشجيع تجربة الأنشطة المرتبطة باهتماماته المهنية الظاهرة في التقرير.</li>
-              <li>دعم قرار استشارة مرشد مهني محايد عند الحاجة.</li>
-              <li>احترام خصوصيته — التقرير الكامل ملكه، وهذا ملخص توجيهي لك فقط.</li>
-            </ul>
-          </div>
-
-          <div className="rounded-lg bg-card p-4 text-sm leading-8 text-foreground/85">
-            <p className="font-semibold text-primary">إشارات إيجابية يستحق التقدير عليها</p>
-            <p className="mt-2 text-muted-foreground">
-              إكمال التقييم بصدق دليل على وعي ذاتي ورغبة حقيقية في التطور. هذه خطوة شجاعة تستحق التقدير الصريح.
-            </p>
-          </div>
-
+          <ParentCompanionReport code={code} />
           <div className="rounded-lg border border-primary/30 bg-primary/5 p-4 text-sm">
             <p className="font-semibold text-primary">الخطوة التالية المقترحة</p>
             <p className="mt-2 text-muted-foreground">
@@ -224,9 +208,8 @@ function ViewToggle({ code, name, stage, report }: { code: string; name: string 
               مراجعة <Link to="/pricing" className="text-primary underline">الباقات المتاحة</Link> سوياً — القرار يبقى له.
             </p>
           </div>
-
           <p className="text-center text-xs text-muted-foreground">
-            هذه نسخة موجزة بلغة غير فنية. التفاصيل العلمية الكاملة في النسخة الأخرى.
+            هذه قراءة مُرافِقة استكشافية بلغة غير فنية. التفاصيل العلمية الكاملة في النسخة الأخرى.
           </p>
         </div>
       )}
@@ -234,6 +217,66 @@ function ViewToggle({ code, name, stage, report }: { code: string; name: string 
       <p className="mt-10 border-t border-border pt-4 text-center text-xs text-muted-foreground">
         © {new Date().getFullYear()} بوصلة® — هذا التقرير سري وشخصي. الكود {code} لمالكه فقط.
       </p>
+    </div>
+  );
+}
+
+function ParentCompanionReport({ code }: { code: string }) {
+  const fn = useServerFn(generateParentReport);
+  const [loading, setLoading] = useState(false);
+  const [report, setReport] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [cached, setCached] = useState(false);
+
+  const run = async () => {
+    setLoading(true); setError(null);
+    try {
+      const res = await fn({ data: { code } });
+      setReport(res.report);
+      setCached(res.cached);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "تعذّر توليد التقرير المُرافِق.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (!report) {
+    return (
+      <div className="rounded-xl border border-dashed border-gold/40 bg-card p-5 text-center">
+        <div className="mx-auto inline-flex h-10 w-10 items-center justify-center rounded-full bg-gold/15 text-gold">
+          <Heart className="h-5 w-5" />
+        </div>
+        <p className="mt-2 font-serif text-lg text-primary">تقريرك أنت — بلغتك</p>
+        <p className="mx-auto mt-1 max-w-md text-sm leading-7 text-muted-foreground">
+          يقرأ الذكاء الاصطناعي تقرير ابنك/ابنتك ويُعدّ لك رسالة شخصية دافئة تُخبرك:
+          كيف تدعمه هذا الأسبوع، ما تتجنّبه، وأسئلة قوّة تفتح بها حواراً حقيقياً.
+        </p>
+        {error && <p className="mt-3 text-xs text-destructive">{error}</p>}
+        <button
+          type="button"
+          onClick={run}
+          disabled={loading}
+          className="mt-4 inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground disabled:opacity-60"
+        >
+          {loading ? <><Loader2 className="h-4 w-4 animate-spin" /> جارٍ الإعداد…</> : <><Sparkles className="h-4 w-4" /> ولّد التقرير المُرافِق</>}
+        </button>
+        <p className="mt-2 text-[11px] text-muted-foreground">قد يستغرق 15-30 ثانية.</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="rounded-xl border border-border bg-card p-5">
+      <div className="mb-3 flex items-center justify-between gap-3 print:hidden">
+        <span className="inline-flex items-center gap-1.5 rounded-md bg-gold/15 px-2 py-1 text-[11px] font-semibold text-gold">
+          <Heart className="h-3 w-3" /> تقرير مُرافِق مُخصَّص
+        </span>
+        {cached && <span className="text-[11px] text-muted-foreground">من الأرشيف</span>}
+      </div>
+      <div className="report-content text-sm leading-8 text-foreground/85">
+        <ReactMarkdown>{report}</ReactMarkdown>
+      </div>
     </div>
   );
 }
