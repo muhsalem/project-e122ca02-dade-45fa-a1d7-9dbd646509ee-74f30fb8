@@ -30,7 +30,7 @@ async function logAudit(entry: {
       target_type: entry.target_type ?? null,
       target_id: entry.target_id ?? null,
       actor_ip: callerIp(),
-      metadata: entry.metadata ?? {},
+      metadata: (entry.metadata ?? {}) as never,
     });
   } catch (e) {
     console.error("[audit_log] failed:", e);
