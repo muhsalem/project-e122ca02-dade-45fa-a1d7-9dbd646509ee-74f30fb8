@@ -283,6 +283,8 @@ function ParentCompanionReport({ code }: { code: string }) {
     );
   }
 
+  const reportRef = useRef<HTMLDivElement>(null);
+
   return (
     <div className="rounded-xl border border-border bg-card p-5">
       <div className="mb-3 flex flex-wrap items-center justify-between gap-3 print:hidden">
@@ -291,13 +293,101 @@ function ParentCompanionReport({ code }: { code: string }) {
         </span>
         <div className="flex items-center gap-2">
           {cached && <span className="text-[11px] text-muted-foreground">من الأرشيف</span>}
+          <DownloadParentReportPdf targetRef={reportRef} code={code} />
           <ShareParentReport code={code} report={report} />
         </div>
       </div>
-      <div className="report-content text-sm leading-8 text-foreground/85">
+      <div ref={reportRef} className="report-content text-sm leading-8 text-foreground/85" dir="rtl">
+        <div className="pdf-only mb-4 hidden">
+          <p className="text-xs text-gold">تقرير مُرافِق لوليّ الأمر — بوصلة®</p>
+          <p className="text-xs text-muted-foreground">كود التقرير: {code} • {new Date().toLocaleDateString("ar-EG")}</p>
+        </div>
         <ReactMarkdown>{report}</ReactMarkdown>
       </div>
     </div>
+  );
+}
+
+function DownloadParentReportPdf({ targetRef, code }: { targetRef: React.RefObject<HTMLDivElement | null>; code: string }) {
+  const [busy, setBusy] = useState(false);
+
+  const download = async () => {
+    if (!targetRef.current) return;
+    setBusy(true);
+    try {
+      const [{ default: html2canvas }, jspdfMod] = await Promise.all([
+        import("html2canvas"),
+        import("jspdf"),
+      ]);
+      const jsPDF = jspdfMod.jsPDF;
+
+      const node = targetRef.current;
+      // reveal PDF-only header
+      const header = node.querySelector(".pdf-only") as HTMLElement | null;
+      if (header) header.classList.remove("hidden");
+
+      const canvas = await html2canvas(node, {
+        scale: 2,
+        backgroundColor: "#ffffff",
+        useCORS: true,
+        windowWidth: node.scrollWidth,
+      });
+
+      if (header) header.classList.add("hidden");
+
+      const pdf = new jsPDF({ orientation: "p", unit: "mm", format: "a4" });
+      const pageW = pdf.internal.pageSize.getWidth();
+      const pageH = pdf.internal.pageSize.getHeight();
+      const margin = 10;
+      const imgW = pageW - margin * 2;
+      const imgH = (canvas.height * imgW) / canvas.width;
+
+      // Split canvas into pages
+      const pxPerMm = canvas.width / imgW;
+      const pageHeightPx = Math.floor((pageH - margin * 2) * pxPerMm);
+      let renderedPx = 0;
+      let pageIdx = 0;
+      while (renderedPx < canvas.height) {
+        const sliceH = Math.min(pageHeightPx, canvas.height - renderedPx);
+        const pageCanvas = document.createElement("canvas");
+        pageCanvas.width = canvas.width;
+        pageCanvas.height = sliceH;
+        const ctx = pageCanvas.getContext("2d");
+        if (!ctx) break;
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0, 0, pageCanvas.width, pageCanvas.height);
+        ctx.drawImage(canvas, 0, renderedPx, canvas.width, sliceH, 0, 0, canvas.width, sliceH);
+        const imgData = pageCanvas.toDataURL("image/jpeg", 0.92);
+        if (pageIdx > 0) pdf.addPage();
+        pdf.addImage(imgData, "JPEG", margin, margin, imgW, (sliceH * imgW) / canvas.width);
+        // footer
+        pdf.setFontSize(8);
+        pdf.setTextColor(150);
+        pdf.text(`بوصلة® • ${code}`, pageW / 2, pageH - 4, { align: "center" });
+        renderedPx += sliceH;
+        pageIdx++;
+        if (imgH <= pageH - margin * 2) break;
+      }
+      pdf.save(`parent-companion-${code}.pdf`);
+      toast.success("تم تنزيل التقرير المُرافِق (PDF)");
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "تعذّر إنشاء الـ PDF");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  return (
+    <button
+      type="button"
+      onClick={download}
+      disabled={busy}
+      className="inline-flex items-center gap-1.5 rounded-md border border-gold bg-gold/10 px-3 py-1.5 text-[11px] font-semibold text-primary disabled:opacity-60"
+      aria-label="تنزيل PDF"
+    >
+      {busy ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Download className="h-3.5 w-3.5" />}
+      {busy ? "جارٍ الإعداد…" : "تنزيل PDF"}
+    </button>
   );
 }
 
