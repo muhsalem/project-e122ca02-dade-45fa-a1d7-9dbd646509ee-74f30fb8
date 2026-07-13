@@ -545,6 +545,7 @@ function GlobalAdvisorSection() {
             </p>
           )}
           <div className="report-content text-sm leading-loose text-foreground">
+            <ReportDisclaimer tool="هذا التقرير الاستشاري" />
             <ReactMarkdown>{result}</ReactMarkdown>
           </div>
         </div>
