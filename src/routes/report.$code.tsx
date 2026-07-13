@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Copy, Check, Printer, ArrowLeft, Loader2, Share2, Sparkles, Heart, MessageCircle, Download } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { getReport } from "@/lib/report.functions";
