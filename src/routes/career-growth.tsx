@@ -12,8 +12,16 @@ export const Route = createFileRoute("/career-growth")({
       { name: "description", content: "خطة تطوير لمن يحب وظيفته ويريد الترقي: قياس الأداء والكفاءة، اتخاذ القرار وحل المشكلات، والقيادة والإدارة." },
     ],
   }),
-  component: Page,
+  component: CareerGrowthGated,
 });
+
+function CareerGrowthGated() {
+  return (
+    <ParentalConsentGate assessmentKey="career-growth" assessmentTitle="تطوير مساري الوظيفي">
+      <Page />
+    </ParentalConsentGate>
+  );
+}
 
 type Group = { key: string; title: string; items: string[] };
 
