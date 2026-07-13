@@ -19,8 +19,16 @@ export const Route = createFileRoute("/learning-dna")({
       { property: "og:description", content: "30+ بُعد تعليمي، 7 مؤشرات مركّبة، تقرير ذكي وخطة عملية." },
     ],
   }),
-  component: LearningDnaPage,
+  component: LearningDnaGated,
 });
+
+function LearningDnaGated() {
+  return (
+    <ParentalConsentGate assessmentKey="learning-dna" assessmentTitle="Learning DNA — البصمة التعليمية">
+      <LearningDnaPage />
+    </ParentalConsentGate>
+  );
+}
 
 type TaskState = {
   memory_immediate?: number;
