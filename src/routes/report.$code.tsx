@@ -341,7 +341,9 @@ function ParentCompanionReport({ code }: { code: string }) {
 
           <p className="text-xs text-muted-foreground">كود التقرير: {code} • {new Date().toLocaleDateString("ar-EG")}</p>
         </div>
+        <ReportDisclaimer tool="هذا التقرير المُرافِق" />
         <ReactMarkdown>{report}</ReactMarkdown>
+        <ReportDisclaimer tool="هذا التقرير المُرافِق" />
       </div>
     </div>
   );
