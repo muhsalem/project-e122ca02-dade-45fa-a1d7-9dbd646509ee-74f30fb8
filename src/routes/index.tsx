@@ -9,9 +9,9 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "بوصلة — اكتشف مسارك المهني بثقة" },
-      { name: "description", content: "منصة إرشاد مهني عربية شاملة: تقييمات علمية مجانية، جلسات كوتشينج فردية مع مرشدين معتمدين، وخريطة لأكثر من 400 تخصص جامعي." },
+      { name: "description", content: "منصة إرشاد مهني عربية: تقييمات نفسية-مهنية تجريبية مبنية على مقاييس دولية، جلسات كوتشينج فردية، ودليل تخصصات جامعية موسّع." },
       { property: "og:title", content: "بوصلة — اكتشف مسارك المهني بثقة" },
-      { property: "og:description", content: "تقييمات علمية مجانية، جلسات كوتشينج معتمدة، وخريطة لأكثر من 400 تخصص جامعي." },
+      { property: "og:description", content: "تقييمات نفسية-مهنية تجريبية، جلسات كوتشينج فردية، ودليل تخصصات جامعية." },
       { property: "og:image", content: "/og-image.jpg" },
       { name: "twitter:image", content: "/og-image.jpg" },
       { property: "og:url", content: "/" },
