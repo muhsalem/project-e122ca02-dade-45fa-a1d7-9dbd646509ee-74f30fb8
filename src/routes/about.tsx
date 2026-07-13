@@ -6,9 +6,9 @@ export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
       { title: "من نحن — بوصلة" },
-      { name: "description", content: "منصة بوصلة: قصتنا، رسالتنا، وفريق المرشدين المعتمدين دولياً (ICF) المتخصصين في الإرشاد المهني للناطقين بالعربية." },
+      { name: "description", content: "منصة بوصلة: قصتنا، رسالتنا، وفريقنا للإرشاد المهني والكوتشينج للناطقين بالعربية." },
       { property: "og:title", content: "من نحن — بوصلة" },
-      { property: "og:description", content: "قصتنا، رسالتنا، وفريق المرشدين المعتمدين." },
+      { property: "og:description", content: "قصتنا، رسالتنا، ومنهجيتنا في الإرشاد المهني والكوتشينج العربي." },
       { property: "og:image", content: "/og-image.jpg" },
       { property: "og:url", content: "/about" },
     ],
