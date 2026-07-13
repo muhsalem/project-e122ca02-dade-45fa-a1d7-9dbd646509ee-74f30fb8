@@ -62,11 +62,11 @@ export const generateParentReport = createServerFn({ method: "POST" })
     const cacheKey = `parent:${data.code}`;
     const { data: cached } = await supabaseAdmin
       .from("report_cache")
-      .select("content, created_at")
+      .select("report, created_at")
       .eq("cache_key", cacheKey)
       .maybeSingle();
-    if (cached?.content) {
-      return { report: String(cached.content), cached: true as const };
+    if (cached?.report) {
+      return { report: String(cached.report), cached: true as const };
     }
 
     const { data: row, error } = await supabaseAdmin
@@ -115,7 +115,10 @@ ${String(row.report).slice(0, 8000)}`;
     // خزّن الكاش (تجاهل أخطاء الكاش لأنّها ثانوية)
     await supabaseAdmin
       .from("report_cache")
-      .upsert({ cache_key: cacheKey, content: report }, { onConflict: "cache_key" })
+      .upsert(
+        { cache_key: cacheKey, report_type: "parent_companion", report },
+        { onConflict: "cache_key" },
+      )
       .then(() => undefined, () => undefined);
 
     return { report, cached: false as const };
