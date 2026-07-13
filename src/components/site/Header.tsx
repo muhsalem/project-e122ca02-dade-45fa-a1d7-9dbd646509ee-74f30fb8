@@ -79,9 +79,9 @@ const institutionsGroup = {
     {
       title: "",
       items: [
-        { to: "/institutions", label: "بوصلة للجامعات والمؤسسات" },
-        { to: "/schools", label: "بوصلة للمدارس" },
-        { to: "/parent-dashboard", label: "لوحة وليّ الأمر" },
+        { to: "/institutions", label: "بوصلة للشركات والمؤسسات" },
+        { to: "/schools", label: "بوصلة للمدارس والجامعات" },
+        { to: "/parent-dashboard", label: "بوصلة لوليّ الأمر" },
       ],
     },
   ],
