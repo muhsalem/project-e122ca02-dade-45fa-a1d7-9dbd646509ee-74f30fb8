@@ -268,15 +268,62 @@ function ParentCompanionReport({ code }: { code: string }) {
 
   return (
     <div className="rounded-xl border border-border bg-card p-5">
-      <div className="mb-3 flex items-center justify-between gap-3 print:hidden">
+      <div className="mb-3 flex flex-wrap items-center justify-between gap-3 print:hidden">
         <span className="inline-flex items-center gap-1.5 rounded-md bg-gold/15 px-2 py-1 text-[11px] font-semibold text-gold">
           <Heart className="h-3 w-3" /> تقرير مُرافِق مُخصَّص
         </span>
-        {cached && <span className="text-[11px] text-muted-foreground">من الأرشيف</span>}
+        <div className="flex items-center gap-2">
+          {cached && <span className="text-[11px] text-muted-foreground">من الأرشيف</span>}
+          <ShareParentReport code={code} report={report} />
+        </div>
       </div>
       <div className="report-content text-sm leading-8 text-foreground/85">
         <ReactMarkdown>{report}</ReactMarkdown>
       </div>
+    </div>
+  );
+}
+
+function ShareParentReport({ code, report }: { code: string; report: string }) {
+  const [copied, setCopied] = useState(false);
+  const intro = `تقرير مُرافِق لوليّ الأمر — بوصلة®\nكود التقرير: ${code}\n\n`;
+  const footer = `\n\n— النسخة الكاملة: ${typeof window !== "undefined" ? window.location.href : ""}`;
+  const fullText = intro + report + footer;
+
+  const openWhatsApp = () => {
+    const url = `https://wa.me/?text=${encodeURIComponent(fullText)}`;
+    window.open(url, "_blank", "noopener,noreferrer");
+  };
+  const copyText = async () => {
+    try {
+      await navigator.clipboard.writeText(fullText);
+      setCopied(true);
+      toast.success("تم نسخ نص التقرير");
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      toast.error("تعذّر النسخ");
+    }
+  };
+
+  return (
+    <div className="flex items-center gap-1.5">
+      <button
+        type="button"
+        onClick={openWhatsApp}
+        className="inline-flex items-center gap-1.5 rounded-md bg-[#25D366] px-3 py-1.5 text-[11px] font-semibold text-white hover:opacity-90"
+        aria-label="مشاركة عبر واتساب"
+      >
+        <MessageCircle className="h-3.5 w-3.5" /> واتساب
+      </button>
+      <button
+        type="button"
+        onClick={copyText}
+        className="inline-flex items-center gap-1.5 rounded-md border border-border bg-background px-3 py-1.5 text-[11px] font-medium"
+        aria-label="نسخ نص التقرير"
+      >
+        {copied ? <Check className="h-3.5 w-3.5 text-emerald-600" /> : <Copy className="h-3.5 w-3.5" />}
+        {copied ? "تم النسخ" : "نسخ النص"}
+      </button>
     </div>
   );
 }
