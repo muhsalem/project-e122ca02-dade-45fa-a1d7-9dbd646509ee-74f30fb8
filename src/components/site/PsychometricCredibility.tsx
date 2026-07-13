@@ -43,9 +43,9 @@ export function PsychometricCredibility() {
 
         <div className="mt-8 grid gap-4 md:grid-cols-3">
           {[
-            { icon: BookOpen, t: "صدق وثبات", d: "Cronbach's α ≥ 0.78 للمقاييس المعرّبة بعد التحكيم." },
-            { icon: Users, t: "إشراف أكاديمي", d: "لجنة استشارية من مختصي علم النفس المهني والإرشاد." },
-            { icon: ShieldCheck, t: "أداة فحص لا تشخيص", d: "نوصي بإحالة الحالات السريرية إلى مختصين معتمدين." },
+            { icon: BookOpen, t: "قيد التحقّق السيكومتري", d: "سيُنشر جدول الصدق والثبات (α + CFA + Norms) فور اكتمال دراسة التحقّق." },
+            { icon: Users, t: "مراجعة داخلية", d: "المحتوى والصياغات تُراجَع داخلياً؛ نعمل حالياً على تشكيل لجنة استشارية مستقلة." },
+            { icon: ShieldCheck, t: "أداة استكشاف لا تشخيص", d: "نوصي بإحالة الحالات السريرية إلى مختصين معتمدين." },
           ].map((b) => (
             <div key={b.t} className="flex gap-3 rounded-xl border border-border bg-card p-4">
               <b.icon className="h-5 w-5 shrink-0 text-gold" />
