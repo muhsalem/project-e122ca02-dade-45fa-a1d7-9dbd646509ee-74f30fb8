@@ -16,8 +16,16 @@ export const Route = createFileRoute("/poia")({
       { property: "og:description", content: "ستة مؤشرات: الأثر المهني، الصحة، الاحتراق، الاستدامة، التوافق، جودة الحياة المهنية." },
     ],
   }),
-  component: PoiaPage,
+  component: PoiaGated,
 });
+
+function PoiaGated() {
+  return (
+    <ParentalConsentGate assessmentKey="poia" assessmentTitle="قياس الأثر المهني والصحي (POIA)">
+      <PoiaPage />
+    </ParentalConsentGate>
+  );
+}
 
 function PoiaPage() {
   const navigate = useNavigate();
