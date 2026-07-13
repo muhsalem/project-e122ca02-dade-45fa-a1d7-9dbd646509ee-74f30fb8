@@ -59,7 +59,7 @@ export const generateParentReport = createServerFn({ method: "POST" })
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
     // كاش: نستخدم report_cache إن وُجد بالمفتاح parent:{code}
-    const cacheKey = `parent:${data.code}`;
+    const cacheKey = `parent:v2:${data.code}`;
     const { data: cached } = await supabaseAdmin
       .from("report_cache")
       .select("report, created_at")
