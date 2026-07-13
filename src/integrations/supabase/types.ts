@@ -344,6 +344,54 @@ export type Database = {
         }
         Relationships: []
       }
+      consent_log: {
+        Row: {
+          assessment_key: string
+          consent_text: string | null
+          created_at: string
+          guardian_confirmed: boolean
+          guardian_contact: string | null
+          guardian_name: string | null
+          guardian_relation: string | null
+          id: string
+          ip_address: string | null
+          is_minor: boolean
+          student_age: number
+          user_agent: string | null
+          user_id: string
+        }
+        Insert: {
+          assessment_key: string
+          consent_text?: string | null
+          created_at?: string
+          guardian_confirmed?: boolean
+          guardian_contact?: string | null
+          guardian_name?: string | null
+          guardian_relation?: string | null
+          id?: string
+          ip_address?: string | null
+          is_minor: boolean
+          student_age: number
+          user_agent?: string | null
+          user_id: string
+        }
+        Update: {
+          assessment_key?: string
+          consent_text?: string | null
+          created_at?: string
+          guardian_confirmed?: boolean
+          guardian_contact?: string | null
+          guardian_name?: string | null
+          guardian_relation?: string | null
+          id?: string
+          ip_address?: string | null
+          is_minor?: boolean
+          student_age?: number
+          user_agent?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       development_plans: {
         Row: {
           career_goal: string
@@ -742,6 +790,7 @@ export type Database = {
         Row: {
           age: number | null
           avatar_url: string | null
+          birth_year: number | null
           country: string | null
           created_at: string
           full_name: string | null
@@ -754,6 +803,7 @@ export type Database = {
         Insert: {
           age?: number | null
           avatar_url?: string | null
+          birth_year?: number | null
           country?: string | null
           created_at?: string
           full_name?: string | null
@@ -766,6 +816,7 @@ export type Database = {
         Update: {
           age?: number | null
           avatar_url?: string | null
+          birth_year?: number | null
           country?: string | null
           created_at?: string
           full_name?: string | null
