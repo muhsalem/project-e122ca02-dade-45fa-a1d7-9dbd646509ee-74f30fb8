@@ -5,6 +5,7 @@ import { Loader2, Activity, ArrowLeft } from "lucide-react";
 import { LikertGroup } from "@/components/site/LikertGroup";
 import { POIA_SECTIONS, POIA_CONTEXT_FIELDS, POIA_ALL_ITEMS } from "@/data/poia-bank";
 import { submitPoia } from "@/lib/poia.functions";
+import { ParentalConsentGate } from "@/components/site/ParentalConsentGate";
 
 export const Route = createFileRoute("/poia")({
   head: () => ({
