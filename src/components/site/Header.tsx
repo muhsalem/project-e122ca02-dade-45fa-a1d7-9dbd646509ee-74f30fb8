@@ -65,6 +65,7 @@ const assessmentsGroup = {
       items: [
         { to: "/learning-style", label: "نمط التعلّم (VARK + Kolb)" },
         { to: "/learning-dna", label: "Learning DNA — البصمة التعليمية" },
+        { to: "/meta-learning", label: "التعلّم-الميتا (Grit + Mindset + MAI)" },
         { to: "/learning-dna-dashboard", label: "لوحة بصمة التعلّم" },
         { to: "/learning-coach", label: "المدرّب الذكي للتعلّم" },
       ],
