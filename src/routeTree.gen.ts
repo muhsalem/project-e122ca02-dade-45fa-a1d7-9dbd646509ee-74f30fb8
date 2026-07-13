@@ -21,6 +21,7 @@ import { Route as SectorGuideRouteImport } from './routes/sector-guide'
 import { Route as SchoolsRouteImport } from './routes/schools'
 import { Route as Review360RouteImport } from './routes/review360'
 import { Route as ResourcesRouteImport } from './routes/resources'
+import { Route as RefundRouteImport } from './routes/refund'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as PricingRouteImport } from './routes/pricing'
@@ -150,6 +151,11 @@ const Review360Route = Review360RouteImport.update({
 const ResourcesRoute = ResourcesRouteImport.update({
   id: '/resources',
   path: '/resources',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RefundRoute = RefundRouteImport.update({
+  id: '/refund',
+  path: '/refund',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProfileRoute = ProfileRouteImport.update({
@@ -550,6 +556,7 @@ export interface FileRoutesByFullPath {
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
   '/profile': typeof ProfileRoute
+  '/refund': typeof RefundRoute
   '/resources': typeof ResourcesRouteWithChildren
   '/review360': typeof Review360Route
   '/schools': typeof SchoolsRoute
@@ -633,6 +640,7 @@ export interface FileRoutesByTo {
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
   '/profile': typeof ProfileRoute
+  '/refund': typeof RefundRoute
   '/resources': typeof ResourcesRouteWithChildren
   '/review360': typeof Review360Route
   '/schools': typeof SchoolsRoute
@@ -718,6 +726,7 @@ export interface FileRoutesById {
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
   '/profile': typeof ProfileRoute
+  '/refund': typeof RefundRoute
   '/resources': typeof ResourcesRouteWithChildren
   '/review360': typeof Review360Route
   '/schools': typeof SchoolsRoute
@@ -803,6 +812,7 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/privacy'
     | '/profile'
+    | '/refund'
     | '/resources'
     | '/review360'
     | '/schools'
@@ -886,6 +896,7 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/privacy'
     | '/profile'
+    | '/refund'
     | '/resources'
     | '/review360'
     | '/schools'
@@ -970,6 +981,7 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/privacy'
     | '/profile'
+    | '/refund'
     | '/resources'
     | '/review360'
     | '/schools'
@@ -1055,6 +1067,7 @@ export interface RootRouteChildren {
   PricingRoute: typeof PricingRoute
   PrivacyRoute: typeof PrivacyRoute
   ProfileRoute: typeof ProfileRoute
+  RefundRoute: typeof RefundRoute
   ResourcesRoute: typeof ResourcesRouteWithChildren
   Review360Route: typeof Review360Route
   SchoolsRoute: typeof SchoolsRoute
@@ -1167,6 +1180,13 @@ declare module '@tanstack/react-router' {
       path: '/resources'
       fullPath: '/resources'
       preLoaderRoute: typeof ResourcesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/refund': {
+      id: '/refund'
+      path: '/refund'
+      fullPath: '/refund'
+      preLoaderRoute: typeof RefundRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/profile': {
@@ -1772,6 +1792,7 @@ const rootRouteChildren: RootRouteChildren = {
   PricingRoute: PricingRoute,
   PrivacyRoute: PrivacyRoute,
   ProfileRoute: ProfileRoute,
+  RefundRoute: RefundRoute,
   ResourcesRoute: ResourcesRouteWithChildren,
   Review360Route: Review360Route,
   SchoolsRoute: SchoolsRoute,
