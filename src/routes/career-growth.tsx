@@ -3,6 +3,7 @@ import { useState, useMemo } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { Loader2, Sparkles, TrendingUp, ArrowRight } from "lucide-react";
 import { submitCareerGrowth } from "@/lib/career-growth.functions";
+import { ParentalConsentGate } from "@/components/site/ParentalConsentGate";
 
 export const Route = createFileRoute("/career-growth")({
   head: () => ({
