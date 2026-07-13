@@ -221,85 +221,121 @@ function ViewToggle({ code, name, stage, report }: { code: string; name: string 
   );
 }
 
+type ParentStatus = "idle" | "loading" | "ready-fresh" | "ready-cached" | "error";
+
+function friendlyParentError(raw: string): { title: string; hint: string; kind: "rate" | "credits" | "auth" | "network" | "generic" } {
+  const s = raw.toLowerCase();
+  if (raw.includes("تجاوزت") || s.includes("rate") || s.includes("429")) {
+    return { title: "انتهت جلسة التوليد مؤقتاً", hint: "وصلنا الحد المسموح لهذه الساعة. جرّب بعد ~10 دقائق.", kind: "rate" };
+  }
+  if (raw.includes("رصيد") || s.includes("credit") || s.includes("402")) {
+    return { title: "نفد رصيد الذكاء الاصطناعي", hint: "سيُعاد التفعيل قريباً. راسل الدعم إن استمر الأمر.", kind: "credits" };
+  }
+  if (s.includes("unauthorized") || s.includes("401") || raw.includes("الجلسة")) {
+    return { title: "انتهت جلستك", hint: "سجّل الدخول مرة أخرى ثم أعد المحاولة.", kind: "auth" };
+  }
+  if (s.includes("failed to fetch") || s.includes("network")) {
+    return { title: "تعذّر الاتصال", hint: "تحقّق من اتصال الإنترنت وأعد المحاولة.", kind: "network" };
+  }
+  return { title: "تعذّر توليد التقرير المُرافِق", hint: raw || "حاول مرة أخرى بعد قليل.", kind: "generic" };
+}
+
 function ParentCompanionReport({ code }: { code: string }) {
   const fn = useServerFn(generateParentReport);
-  const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState<ParentStatus>("idle");
   const [report, setReport] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [cached, setCached] = useState(false);
+  const reportRef = useRef<HTMLDivElement>(null);
+
+  const run = async (isMounted: () => boolean = () => true) => {
+    setStatus("loading"); setError(null);
+    try {
+      const res = await fn({ data: { code } });
+      if (!isMounted()) return;
+      setReport(res.report);
+      setStatus(res.cached ? "ready-cached" : "ready-fresh");
+    } catch (e) {
+      if (!isMounted()) return;
+      setError(e instanceof Error ? e.message : "تعذّر توليد التقرير المُرافِق.");
+      setStatus("error");
+    }
+  };
 
   useEffect(() => {
     let mounted = true;
-    (async () => {
-      setLoading(true); setError(null);
-      try {
-        const res = await fn({ data: { code } });
-        if (!mounted) return;
-        setReport(res.report);
-        setCached(res.cached);
-      } catch (e) {
-        if (!mounted) return;
-        setError(e instanceof Error ? e.message : "تعذّر توليد التقرير المُرافِق.");
-      } finally {
-        if (mounted) setLoading(false);
-      }
-    })();
+    void run(() => mounted);
     return () => { mounted = false; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [code]);
 
-  if (!report) {
+  if (status === "loading" || status === "idle") {
     return (
-      <div className="rounded-xl border border-dashed border-gold/40 bg-card p-5 text-center">
-        <div className="mx-auto inline-flex h-10 w-10 items-center justify-center rounded-full bg-gold/15 text-gold">
-          {loading ? <Loader2 className="h-5 w-5 animate-spin" /> : <Heart className="h-5 w-5" />}
+      <div className="rounded-xl border border-dashed border-gold/40 bg-card p-6 text-center">
+        <div className="mx-auto inline-flex h-11 w-11 items-center justify-center rounded-full bg-gold/15 text-gold">
+          <Loader2 className="h-5 w-5 animate-spin" />
         </div>
-        <p className="mt-2 font-serif text-lg text-primary">
-          {loading ? "جارٍ إعداد رسالتك المُرافِقة…" : "تقريرك أنت — بلغتك"}
-        </p>
+        <p className="mt-3 font-serif text-lg text-primary">جارٍ توليد رسالتك المُرافِقة…</p>
         <p className="mx-auto mt-1 max-w-md text-sm leading-7 text-muted-foreground">
-          {loading
-            ? "يقرأ الذكاء الاصطناعي تقرير ابنك/ابنتك الآن ويُعدّ لك رسالة شخصية دافئة (15-30 ثانية)."
-            : "تعذّر التوليد التلقائي. يمكنك المحاولة مرة أخرى."}
+          يقرأ الذكاء الاصطناعي تقرير ابنك/ابنتك واهتماماته وسياقه الآن (عادةً 15-30 ثانية).
         </p>
-        {error && !loading && (
-          <>
-            <p className="mt-3 text-xs text-destructive">{error}</p>
-            <button
-              type="button"
-              onClick={() => { setReport(null); setError(null); void (async () => {
-                setLoading(true);
-                try { const res = await fn({ data: { code } }); setReport(res.report); setCached(res.cached); }
-                catch (e) { setError(e instanceof Error ? e.message : "تعذّر التوليد."); }
-                finally { setLoading(false); }
-              })(); }}
-              className="mt-4 inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground"
-            >
-              <Sparkles className="h-4 w-4" /> إعادة المحاولة
-            </button>
-          </>
-        )}
+        <div className="mx-auto mt-4 h-1.5 w-40 overflow-hidden rounded-full bg-muted">
+          <div className="h-full w-1/3 animate-pulse rounded-full bg-gold" />
+        </div>
       </div>
     );
   }
 
-  const reportRef = useRef<HTMLDivElement>(null);
+  if (status === "error") {
+    const info = friendlyParentError(error || "");
+    return (
+      <div className="rounded-xl border border-destructive/40 bg-destructive/5 p-6 text-center">
+        <p className="font-serif text-lg text-destructive">{info.title}</p>
+        <p className="mx-auto mt-1 max-w-md text-sm leading-7 text-muted-foreground">{info.hint}</p>
+        <button
+          type="button"
+          onClick={() => void run()}
+          className="mt-4 inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground"
+        >
+          <Sparkles className="h-4 w-4" /> إعادة المحاولة
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="rounded-xl border border-border bg-card p-5">
       <div className="mb-3 flex flex-wrap items-center justify-between gap-3 print:hidden">
-        <span className="inline-flex items-center gap-1.5 rounded-md bg-gold/15 px-2 py-1 text-[11px] font-semibold text-gold">
-          <Heart className="h-3 w-3" /> تقرير مُرافِق مُخصَّص
-        </span>
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="inline-flex items-center gap-1.5 rounded-md bg-gold/15 px-2 py-1 text-[11px] font-semibold text-gold">
+            <Heart className="h-3 w-3" /> تقرير مُرافِق مُخصَّص
+          </span>
+          {status === "ready-fresh" ? (
+            <span className="inline-flex items-center gap-1.5 rounded-md bg-emerald-500/15 px-2 py-1 text-[11px] font-semibold text-emerald-600">
+              <Sparkles className="h-3 w-3" /> تمّ توليده الآن
+            </span>
+          ) : (
+            <span className="inline-flex items-center gap-1.5 rounded-md bg-muted px-2 py-1 text-[11px] font-medium text-muted-foreground">
+              <Check className="h-3 w-3" /> جاهز من الأرشيف
+            </span>
+          )}
+        </div>
         <div className="flex items-center gap-2">
-          {cached && <span className="text-[11px] text-muted-foreground">من الأرشيف</span>}
+          <button
+            type="button"
+            onClick={() => void run()}
+            className="inline-flex items-center gap-1.5 rounded-md border border-border bg-background px-3 py-1.5 text-[11px] font-medium text-muted-foreground hover:text-primary"
+            aria-label="إعادة التوليد"
+          >
+            <Loader2 className="h-3.5 w-3.5" /> تحديث
+          </button>
           <DownloadParentReportPdf targetRef={reportRef} code={code} />
-          <ShareParentReport code={code} report={report} />
+          <ShareParentReport code={code} report={report!} />
         </div>
       </div>
       <div ref={reportRef} className="report-content text-sm leading-8 text-foreground/85" dir="rtl">
         <div className="pdf-only mb-4 hidden">
           <p className="text-xs text-gold">تقرير مُرافِق لوليّ الأمر — بوصلة®</p>
+
           <p className="text-xs text-muted-foreground">كود التقرير: {code} • {new Date().toLocaleDateString("ar-EG")}</p>
         </div>
         <ReactMarkdown>{report}</ReactMarkdown>
