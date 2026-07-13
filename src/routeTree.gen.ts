@@ -41,6 +41,7 @@ import { Route as InstitutionsRouteImport } from './routes/institutions'
 import { Route as ForCounselorsRouteImport } from './routes/for-counselors'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as EmotionalIntelligenceRouteImport } from './routes/emotional-intelligence'
+import { Route as DpaRouteImport } from './routes/dpa'
 import { Route as CounselorCrmRouteImport } from './routes/counselor-crm'
 import { Route as CounselorRouteImport } from './routes/counselor'
 import { Route as ComprehensiveAssessmentRouteImport } from './routes/comprehensive-assessment'
@@ -249,6 +250,11 @@ const FaqRoute = FaqRouteImport.update({
 const EmotionalIntelligenceRoute = EmotionalIntelligenceRouteImport.update({
   id: '/emotional-intelligence',
   path: '/emotional-intelligence',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DpaRoute = DpaRouteImport.update({
+  id: '/dpa',
+  path: '/dpa',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CounselorCrmRoute = CounselorCrmRouteImport.update({
@@ -523,6 +529,7 @@ export interface FileRoutesByFullPath {
   '/comprehensive-assessment': typeof ComprehensiveAssessmentRoute
   '/counselor': typeof CounselorRoute
   '/counselor-crm': typeof CounselorCrmRoute
+  '/dpa': typeof DpaRoute
   '/emotional-intelligence': typeof EmotionalIntelligenceRoute
   '/faq': typeof FaqRoute
   '/for-counselors': typeof ForCounselorsRoute
@@ -605,6 +612,7 @@ export interface FileRoutesByTo {
   '/comprehensive-assessment': typeof ComprehensiveAssessmentRoute
   '/counselor': typeof CounselorRoute
   '/counselor-crm': typeof CounselorCrmRoute
+  '/dpa': typeof DpaRoute
   '/emotional-intelligence': typeof EmotionalIntelligenceRoute
   '/faq': typeof FaqRoute
   '/for-counselors': typeof ForCounselorsRoute
@@ -689,6 +697,7 @@ export interface FileRoutesById {
   '/comprehensive-assessment': typeof ComprehensiveAssessmentRoute
   '/counselor': typeof CounselorRoute
   '/counselor-crm': typeof CounselorCrmRoute
+  '/dpa': typeof DpaRoute
   '/emotional-intelligence': typeof EmotionalIntelligenceRoute
   '/faq': typeof FaqRoute
   '/for-counselors': typeof ForCounselorsRoute
@@ -773,6 +782,7 @@ export interface FileRouteTypes {
     | '/comprehensive-assessment'
     | '/counselor'
     | '/counselor-crm'
+    | '/dpa'
     | '/emotional-intelligence'
     | '/faq'
     | '/for-counselors'
@@ -855,6 +865,7 @@ export interface FileRouteTypes {
     | '/comprehensive-assessment'
     | '/counselor'
     | '/counselor-crm'
+    | '/dpa'
     | '/emotional-intelligence'
     | '/faq'
     | '/for-counselors'
@@ -938,6 +949,7 @@ export interface FileRouteTypes {
     | '/comprehensive-assessment'
     | '/counselor'
     | '/counselor-crm'
+    | '/dpa'
     | '/emotional-intelligence'
     | '/faq'
     | '/for-counselors'
@@ -1022,6 +1034,7 @@ export interface RootRouteChildren {
   ComprehensiveAssessmentRoute: typeof ComprehensiveAssessmentRoute
   CounselorRoute: typeof CounselorRoute
   CounselorCrmRoute: typeof CounselorCrmRoute
+  DpaRoute: typeof DpaRoute
   EmotionalIntelligenceRoute: typeof EmotionalIntelligenceRoute
   FaqRoute: typeof FaqRoute
   ForCounselorsRoute: typeof ForCounselorsRoute
@@ -1294,6 +1307,13 @@ declare module '@tanstack/react-router' {
       path: '/emotional-intelligence'
       fullPath: '/emotional-intelligence'
       preLoaderRoute: typeof EmotionalIntelligenceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dpa': {
+      id: '/dpa'
+      path: '/dpa'
+      fullPath: '/dpa'
+      preLoaderRoute: typeof DpaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/counselor-crm': {
@@ -1731,6 +1751,7 @@ const rootRouteChildren: RootRouteChildren = {
   ComprehensiveAssessmentRoute: ComprehensiveAssessmentRoute,
   CounselorRoute: CounselorRoute,
   CounselorCrmRoute: CounselorCrmRoute,
+  DpaRoute: DpaRoute,
   EmotionalIntelligenceRoute: EmotionalIntelligenceRoute,
   FaqRoute: FaqRoute,
   ForCounselorsRoute: ForCounselorsRoute,
