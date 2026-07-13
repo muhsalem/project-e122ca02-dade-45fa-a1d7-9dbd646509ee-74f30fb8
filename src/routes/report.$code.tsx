@@ -1,10 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useState } from "react";
-import { Copy, Check, Printer, ArrowLeft, Loader2, Share2, Sparkles } from "lucide-react";
+import { Copy, Check, Printer, ArrowLeft, Loader2, Share2, Sparkles, Heart } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { getReport } from "@/lib/report.functions";
 import { generateGlobalAdvisorReport } from "@/lib/global-advisor.functions";
+import { generateParentReport } from "@/lib/parent-report.functions";
 import { ContentProtection } from "@/components/site/ContentProtection";
 import { MarketPulseInsights } from "@/components/site/MarketPulseInsights";
 import { CareerLadderInsights } from "@/components/site/CareerLadderInsights";
@@ -193,30 +194,13 @@ function ViewToggle({ code, name, stage, report }: { code: string; name: string 
       ) : (
         <div className="space-y-5 rounded-2xl border border-gold/30 bg-gold/5 p-6">
           <div>
-            <p className="text-xs font-medium uppercase tracking-widest text-gold">ملخص لولي الأمر / المدير</p>
+            <p className="text-xs font-medium uppercase tracking-widest text-gold">تقرير مُرافِق لوليّ الأمر</p>
             <h2 className="mt-2 font-serif text-2xl text-primary">
-              {name ? `نظرة عامة على رحلة ${name}` : "نظرة عامة"}
+              {name ? `رفقة ${name} في اختياره المهني` : "رفقة ابنك/ابنتك في اختياره المهني"}
             </h2>
             {stage && <p className="mt-1 text-sm text-muted-foreground">{stage}</p>}
           </div>
-
-          <div className="rounded-lg bg-card p-4 text-sm leading-8 text-foreground/85">
-            <p className="font-semibold text-primary">ما الذي يحتاج إلى دعمك؟</p>
-            <ul className="mt-2 list-disc space-y-1.5 pr-5 text-muted-foreground">
-              <li>الإصغاء دون أحكام أو مقارنات بإخوته أو زملائه.</li>
-              <li>تشجيع تجربة الأنشطة المرتبطة باهتماماته المهنية الظاهرة في التقرير.</li>
-              <li>دعم قرار استشارة مرشد مهني محايد عند الحاجة.</li>
-              <li>احترام خصوصيته — التقرير الكامل ملكه، وهذا ملخص توجيهي لك فقط.</li>
-            </ul>
-          </div>
-
-          <div className="rounded-lg bg-card p-4 text-sm leading-8 text-foreground/85">
-            <p className="font-semibold text-primary">إشارات إيجابية يستحق التقدير عليها</p>
-            <p className="mt-2 text-muted-foreground">
-              إكمال التقييم بصدق دليل على وعي ذاتي ورغبة حقيقية في التطور. هذه خطوة شجاعة تستحق التقدير الصريح.
-            </p>
-          </div>
-
+          <ParentCompanionReport code={code} />
           <div className="rounded-lg border border-primary/30 bg-primary/5 p-4 text-sm">
             <p className="font-semibold text-primary">الخطوة التالية المقترحة</p>
             <p className="mt-2 text-muted-foreground">
@@ -224,9 +208,8 @@ function ViewToggle({ code, name, stage, report }: { code: string; name: string 
               مراجعة <Link to="/pricing" className="text-primary underline">الباقات المتاحة</Link> سوياً — القرار يبقى له.
             </p>
           </div>
-
           <p className="text-center text-xs text-muted-foreground">
-            هذه نسخة موجزة بلغة غير فنية. التفاصيل العلمية الكاملة في النسخة الأخرى.
+            هذه قراءة مُرافِقة استكشافية بلغة غير فنية. التفاصيل العلمية الكاملة في النسخة الأخرى.
           </p>
         </div>
       )}
