@@ -7,19 +7,21 @@ export function PsychometricCredibility() {
         <div className="text-center">
           <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/5 px-4 py-1.5 text-xs text-primary">
             <Award className="h-3.5 w-3.5" />
-            مصداقية سيكومترية موثقة
+            شفافية سيكومترية
           </div>
           <h2 className="mt-4 font-serif text-2xl text-primary md:text-3xl">
-            مقاييس علمية معتمدة دولياً
+            مستوحاة من مقاييس دولية معروفة
           </h2>
           <p className="mx-auto mt-3 max-w-2xl text-sm text-muted-foreground leading-7">
-            جميع تقييماتنا مبنية على مقاييس نفسية محكّمة دولياً، معرّبة ومكيّفة للسياق العربي،
-            ومراجعة من قبل مختصين في علم النفس المهني.
+            تقييماتنا تستند إلى نسخ عربية تجريبية من مقاييس نفسية-مهنية دولية
+            معروفة، معرّبة داخلياً ومكيّفة للسياق العربي. نتائجها استكشافية
+            تربوية ومهنية، وليست تشخيصاً سريرياً.
           </p>
           <div className="mx-auto mt-4 max-w-2xl rounded-lg border border-amber-500/40 bg-amber-50 px-4 py-3 text-right text-xs leading-6 text-amber-900 dark:bg-amber-950/20 dark:text-amber-200">
-            <strong>إفصاح سيكومتري:</strong> النسخ العربية من المقاييس (Schein, WLEIS, WVI, CDSE,
-            VARK, MBI-GS) <strong>نُسخ تجريبية</strong> قيد التحقّق السيكومتري على عيّنة سعودية/عربية
-            (Pilot قيد التنفيذ). تُعرض النتائج بنطاق ثقة ±10٪ ولا تُعدّ تشخيصًا. سيُنشر جدول
+            <strong>إفصاح سيكومتري:</strong> النسخ العربية من المقاييس
+            (Schein, WLEIS, WVI, CDSE, VARK, MBI-GS) <strong>نسخ تجريبية</strong>{" "}
+            قيد التحقّق السيكومتري على عيّنة سعودية/عربية (Pilot قيد التنفيذ).
+            تُعرض النتائج بنطاق ثقة تقريبي ولا تُعدّ تشخيصاً. سيُنشر جدول
             الصدق والثبات (Cronbach's α + CFA + Norms) فور اكتماله.
           </div>
         </div>
@@ -41,9 +43,9 @@ export function PsychometricCredibility() {
 
         <div className="mt-8 grid gap-4 md:grid-cols-3">
           {[
-            { icon: BookOpen, t: "صدق وثبات", d: "Cronbach's α ≥ 0.78 للمقاييس المعرّبة بعد التحكيم." },
-            { icon: Users, t: "إشراف أكاديمي", d: "لجنة استشارية من مختصي علم النفس المهني والإرشاد." },
-            { icon: ShieldCheck, t: "أداة فحص لا تشخيص", d: "نوصي بإحالة الحالات السريرية إلى مختصين معتمدين." },
+            { icon: BookOpen, t: "قيد التحقّق السيكومتري", d: "سيُنشر جدول الصدق والثبات (α + CFA + Norms) فور اكتمال دراسة التحقّق." },
+            { icon: Users, t: "مراجعة داخلية", d: "المحتوى والصياغات تُراجَع داخلياً؛ نعمل حالياً على تشكيل لجنة استشارية مستقلة." },
+            { icon: ShieldCheck, t: "أداة استكشاف لا تشخيص", d: "نوصي بإحالة الحالات السريرية إلى مختصين معتمدين." },
           ].map((b) => (
             <div key={b.t} className="flex gap-3 rounded-xl border border-border bg-card p-4">
               <b.icon className="h-5 w-5 shrink-0 text-gold" />

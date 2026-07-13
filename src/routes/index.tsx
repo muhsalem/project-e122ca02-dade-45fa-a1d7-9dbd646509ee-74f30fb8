@@ -9,9 +9,9 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "بوصلة — اكتشف مسارك المهني بثقة" },
-      { name: "description", content: "منصة إرشاد مهني عربية شاملة: تقييمات علمية مجانية، جلسات كوتشينج فردية مع مرشدين معتمدين، وخريطة لأكثر من 400 تخصص جامعي." },
+      { name: "description", content: "منصة إرشاد مهني عربية: تقييمات نفسية-مهنية تجريبية مبنية على مقاييس دولية، جلسات كوتشينج فردية، ودليل تخصصات جامعية موسّع." },
       { property: "og:title", content: "بوصلة — اكتشف مسارك المهني بثقة" },
-      { property: "og:description", content: "تقييمات علمية مجانية، جلسات كوتشينج معتمدة، وخريطة لأكثر من 400 تخصص جامعي." },
+      { property: "og:description", content: "تقييمات نفسية-مهنية تجريبية، جلسات كوتشينج فردية، ودليل تخصصات جامعية." },
       { property: "og:image", content: "/og-image.jpg" },
       { name: "twitter:image", content: "/og-image.jpg" },
       { property: "og:url", content: "/" },
@@ -56,8 +56,8 @@ function HomePage() {
               وارسم <span className="text-gold">مسارك المهني</span> بثقة.
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-9 text-muted-foreground">
-              منصة عربية متكاملة للإرشاد المهني والكوتشينج، تخدم طلبة المدارس
-              والجامعات والخريجين عبر تقييمات علمية وجلسات فردية مع مرشدين معتمدين.
+              منصة عربية للإرشاد المهني والكوتشينج، تخدم طلبة المدارس
+              والجامعات والخريجين عبر تقييمات نفسية-مهنية تجريبية وجلسات فردية.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
@@ -74,19 +74,6 @@ function HomePage() {
                 احجز جلسة إرشاد أو كوتشينج
               </Link>
             </div>
-
-            <dl className="mt-12 grid grid-cols-3 gap-6 border-t border-border pt-8">
-              {[
-                { v: "+12K", l: "متدرب" },
-                { v: "50+", l: "مرشد معتمد" },
-                { v: "97%", l: "رضا المستفيدين" },
-              ].map((s) => (
-                <div key={s.l}>
-                  <dt className="font-serif text-3xl font-bold text-primary">{s.v}</dt>
-                  <dd className="mt-1 text-xs text-muted-foreground">{s.l}</dd>
-                </div>
-              ))}
-            </dl>
           </div>
 
           <div className="relative">
@@ -108,16 +95,17 @@ function HomePage() {
               أسس علمية، نتائج ملموسة
             </h2>
             <p className="mt-4 text-muted-foreground">
-              نعتمد على نماذج Holland و Super و ICF الدولية للكوتشينج، مع تكييف عربي
-              يحترم الثقافة وسوق العمل الإقليمي.
+              نستند إلى أُطر مرجعية معروفة في الإرشاد المهني مثل نموذج Holland
+              للميول ونموذج Super لتطوير المسار، مع بنية جلسات مستوحاة من نموذج
+              GROW للكوتشينج، وبتكييف يحترم الثقافة العربية وسوق العمل الإقليمي.
             </p>
           </div>
 
           <div className="mt-14 grid gap-6 md:grid-cols-3">
             {[
-              { icon: Brain, title: "علم النفس المهني", desc: "تقييم الميول والشخصية والقدرات بأدوات معيارية موثقة." },
-              { icon: Target, title: "تخطيط المسار", desc: "بناء خطة مهنية واضحة قصيرة وطويلة المدى وفق نموذج Super." },
-              { icon: ShieldCheck, title: "كوتشينج ICF", desc: "جلسات فردية مع مرشدين ملتزمين بأخلاقيات الفيدرالية الدولية." },
+              { icon: Brain, title: "علم النفس المهني", desc: "قياس الميول والشخصية عبر نسخ عربية تجريبية من مقاييس دولية معروفة." },
+              { icon: Target, title: "تخطيط المسار", desc: "بناء خطة مهنية واضحة قصيرة وطويلة المدى مستوحاة من نموذج Super." },
+              { icon: ShieldCheck, title: "كوتشينج ببنية GROW", desc: "جلسات فردية تتبع بنية GROW مع التزام بالأخلاقيات المهنية للكوتشينج." },
             ].map((p) => (
               <article key={p.title} className="rounded-2xl border border-border bg-card p-8 transition-shadow hover:shadow-[var(--shadow-soft)]">
                 <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary">
@@ -184,13 +172,13 @@ function HomePage() {
               <p className="mt-6 max-w-2xl text-lg leading-9 text-muted-foreground">
                 التيه في بداية الطريق ليس ضياعاً، بل فرصةٌ لتكتشف نفسك قبل أن تختار.
                 نأخذك خطوةً بخطوة من أسئلةٍ بسيطةٍ عن ميولك إلى صورةٍ واضحةٍ عن
-                تخصصك ومسارك المهني — بأدواتٍ علميةٍ معتمدةٍ دولياً ولغةٍ تشبهك.
+                تخصصك ومسارك المهني — بأدواتٍ مستوحاةٍ من مقاييس دوليةٍ معروفةٍ ولغةٍ تشبهك.
               </p>
               <ul className="mt-8 grid gap-3 text-sm text-muted-foreground sm:grid-cols-2">
                 {[
                   "اكتشاف الذات والميول وفق نموذج Holland",
                   "تحديد نمط تعلمك المفضل بدقة",
-                  "خريطة لأكثر من 400 تخصص جامعي",
+                  "دليل تخصصات جامعية موسّع",
                   "توصية بأنسب مسار مهني يشبه شخصيتك",
                 ].map((t) => (
                   <li key={t} className="flex items-start gap-2">
@@ -278,8 +266,8 @@ function HomePage() {
               </h2>
               <p className="mt-6 max-w-2xl text-lg leading-9 text-primary-foreground/85">
                 الاحتراق المهني ليس ضعفاً، بل إشارة من داخلك بأن المسار الذي تسير فيه
-                لم يعد يشبهك. آلاف الناجحين مرّوا من هنا، ثم نهضوا أقوى وأوضح وأكثر
-                توافقاً مع ذواتهم. اليوم دورك: قِف لحظة، اقرأ نفسك بصدق، ثم أعد رسم
+                لم يعد يشبهك. كثيرون مرّوا من هنا، ثم نهضوا أوضح وأكثر توافقاً مع
+                ذواتهم. اليوم دورك: قِف لحظة، اقرأ نفسك بصدق، ثم أعد رسم
                 خريطتك من جديد.
               </p>
               <ul className="mt-8 grid gap-3 text-sm text-primary-foreground/80 sm:grid-cols-2">

@@ -6,9 +6,9 @@ export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
       { title: "من نحن — بوصلة" },
-      { name: "description", content: "منصة بوصلة: قصتنا، رسالتنا، وفريق المرشدين المعتمدين دولياً (ICF) المتخصصين في الإرشاد المهني للناطقين بالعربية." },
+      { name: "description", content: "منصة بوصلة: قصتنا، رسالتنا، وفريقنا للإرشاد المهني والكوتشينج للناطقين بالعربية." },
       { property: "og:title", content: "من نحن — بوصلة" },
-      { property: "og:description", content: "قصتنا، رسالتنا، وفريق المرشدين المعتمدين." },
+      { property: "og:description", content: "قصتنا، رسالتنا، ومنهجيتنا في الإرشاد المهني والكوتشينج العربي." },
       { property: "og:image", content: "/og-image.jpg" },
       { property: "og:url", content: "/about" },
     ],
@@ -36,10 +36,9 @@ function AboutPage() {
             <p className="font-serif text-sm uppercase tracking-widest text-gold">رسالتنا</p>
             <h2 className="mt-3 text-3xl text-primary">تمكين جيل واعٍ بمساره</h2>
             <p className="mt-5 leading-9 text-muted-foreground">
-              نقدم خدمات إرشاد مهني وكوتشينج بمعايير علمية معتمدة من
-              International Coach Federation (ICF) ونماذج Holland و Super
-              المعترف بها عالمياً، مع تكييف يحترم خصوصية الثقافة العربية
-              وواقع سوق العمل الإقليمي.
+              نقدّم خدمات إرشاد مهني وكوتشينج مستوحاة من أُطر دولية معروفة مثل
+              نماذج Holland و Super وبنية GROW للكوتشينج، مع تكييف يحترم خصوصية
+              الثقافة العربية وواقع سوق العمل الإقليمي.
             </p>
           </div>
           <div>
