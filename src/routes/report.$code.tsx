@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useState } from "react";
-import { Copy, Check, Printer, ArrowLeft, Loader2, Share2, Sparkles, Heart, MessageCircle } from "lucide-react";
+import { Copy, Check, Printer, ArrowLeft, Loader2, Share2, Sparkles, Heart, MessageCircle, Download } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { getReport } from "@/lib/report.functions";
 import { generateGlobalAdvisorReport } from "@/lib/global-advisor.functions";
