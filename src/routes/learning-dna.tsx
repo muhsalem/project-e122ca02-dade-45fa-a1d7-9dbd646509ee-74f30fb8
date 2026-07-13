@@ -8,6 +8,7 @@ import { submitLearningDna } from "@/lib/learning-dna.functions";
 import { MemoryRecallTask } from "@/components/site/MemoryRecallTask";
 import { FocusStroopTask } from "@/components/site/FocusStroopTask";
 import { ProblemSolvingTask } from "@/components/site/ProblemSolvingTask";
+import { ParentalConsentGate } from "@/components/site/ParentalConsentGate";
 
 export const Route = createFileRoute("/learning-dna")({
   head: () => ({
