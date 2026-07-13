@@ -5,6 +5,7 @@ import { Loader2, Activity, ArrowLeft } from "lucide-react";
 import { LikertGroup } from "@/components/site/LikertGroup";
 import { POIA_SECTIONS, POIA_CONTEXT_FIELDS, POIA_ALL_ITEMS } from "@/data/poia-bank";
 import { submitPoia } from "@/lib/poia.functions";
+import { ParentalConsentGate } from "@/components/site/ParentalConsentGate";
 
 export const Route = createFileRoute("/poia")({
   head: () => ({
@@ -15,8 +16,16 @@ export const Route = createFileRoute("/poia")({
       { property: "og:description", content: "ستة مؤشرات: الأثر المهني، الصحة، الاحتراق، الاستدامة، التوافق، جودة الحياة المهنية." },
     ],
   }),
-  component: PoiaPage,
+  component: PoiaGated,
 });
+
+function PoiaGated() {
+  return (
+    <ParentalConsentGate assessmentKey="poia" assessmentTitle="قياس الأثر المهني والصحي (POIA)">
+      <PoiaPage />
+    </ParentalConsentGate>
+  );
+}
 
 function PoiaPage() {
   const navigate = useNavigate();

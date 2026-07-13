@@ -8,6 +8,7 @@ import { submitLearningDna } from "@/lib/learning-dna.functions";
 import { MemoryRecallTask } from "@/components/site/MemoryRecallTask";
 import { FocusStroopTask } from "@/components/site/FocusStroopTask";
 import { ProblemSolvingTask } from "@/components/site/ProblemSolvingTask";
+import { ParentalConsentGate } from "@/components/site/ParentalConsentGate";
 
 export const Route = createFileRoute("/learning-dna")({
   head: () => ({
@@ -18,8 +19,16 @@ export const Route = createFileRoute("/learning-dna")({
       { property: "og:description", content: "30+ بُعد تعليمي، 7 مؤشرات مركّبة، تقرير ذكي وخطة عملية." },
     ],
   }),
-  component: LearningDnaPage,
+  component: LearningDnaGated,
 });
+
+function LearningDnaGated() {
+  return (
+    <ParentalConsentGate assessmentKey="learning-dna" assessmentTitle="Learning DNA — البصمة التعليمية">
+      <LearningDnaPage />
+    </ParentalConsentGate>
+  );
+}
 
 type TaskState = {
   memory_immediate?: number;
