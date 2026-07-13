@@ -36,10 +36,9 @@ function AboutPage() {
             <p className="font-serif text-sm uppercase tracking-widest text-gold">رسالتنا</p>
             <h2 className="mt-3 text-3xl text-primary">تمكين جيل واعٍ بمساره</h2>
             <p className="mt-5 leading-9 text-muted-foreground">
-              نقدم خدمات إرشاد مهني وكوتشينج بمعايير علمية معتمدة من
-              International Coach Federation (ICF) ونماذج Holland و Super
-              المعترف بها عالمياً، مع تكييف يحترم خصوصية الثقافة العربية
-              وواقع سوق العمل الإقليمي.
+              نقدّم خدمات إرشاد مهني وكوتشينج مستوحاة من أُطر دولية معروفة مثل
+              نماذج Holland و Super وبنية GROW للكوتشينج، مع تكييف يحترم خصوصية
+              الثقافة العربية وواقع سوق العمل الإقليمي.
             </p>
           </div>
           <div>
