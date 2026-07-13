@@ -228,40 +228,57 @@ function ParentCompanionReport({ code }: { code: string }) {
   const [error, setError] = useState<string | null>(null);
   const [cached, setCached] = useState(false);
 
-  const run = async () => {
-    setLoading(true); setError(null);
-    try {
-      const res = await fn({ data: { code } });
-      setReport(res.report);
-      setCached(res.cached);
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "تعذّر توليد التقرير المُرافِق.");
-    } finally {
-      setLoading(false);
-    }
-  };
+  useEffect(() => {
+    let mounted = true;
+    (async () => {
+      setLoading(true); setError(null);
+      try {
+        const res = await fn({ data: { code } });
+        if (!mounted) return;
+        setReport(res.report);
+        setCached(res.cached);
+      } catch (e) {
+        if (!mounted) return;
+        setError(e instanceof Error ? e.message : "تعذّر توليد التقرير المُرافِق.");
+      } finally {
+        if (mounted) setLoading(false);
+      }
+    })();
+    return () => { mounted = false; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [code]);
 
   if (!report) {
     return (
       <div className="rounded-xl border border-dashed border-gold/40 bg-card p-5 text-center">
         <div className="mx-auto inline-flex h-10 w-10 items-center justify-center rounded-full bg-gold/15 text-gold">
-          <Heart className="h-5 w-5" />
+          {loading ? <Loader2 className="h-5 w-5 animate-spin" /> : <Heart className="h-5 w-5" />}
         </div>
-        <p className="mt-2 font-serif text-lg text-primary">تقريرك أنت — بلغتك</p>
-        <p className="mx-auto mt-1 max-w-md text-sm leading-7 text-muted-foreground">
-          يقرأ الذكاء الاصطناعي تقرير ابنك/ابنتك ويُعدّ لك رسالة شخصية دافئة تُخبرك:
-          كيف تدعمه هذا الأسبوع، ما تتجنّبه، وأسئلة قوّة تفتح بها حواراً حقيقياً.
+        <p className="mt-2 font-serif text-lg text-primary">
+          {loading ? "جارٍ إعداد رسالتك المُرافِقة…" : "تقريرك أنت — بلغتك"}
         </p>
-        {error && <p className="mt-3 text-xs text-destructive">{error}</p>}
-        <button
-          type="button"
-          onClick={run}
-          disabled={loading}
-          className="mt-4 inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground disabled:opacity-60"
-        >
-          {loading ? <><Loader2 className="h-4 w-4 animate-spin" /> جارٍ الإعداد…</> : <><Sparkles className="h-4 w-4" /> ولّد التقرير المُرافِق</>}
-        </button>
-        <p className="mt-2 text-[11px] text-muted-foreground">قد يستغرق 15-30 ثانية.</p>
+        <p className="mx-auto mt-1 max-w-md text-sm leading-7 text-muted-foreground">
+          {loading
+            ? "يقرأ الذكاء الاصطناعي تقرير ابنك/ابنتك الآن ويُعدّ لك رسالة شخصية دافئة (15-30 ثانية)."
+            : "تعذّر التوليد التلقائي. يمكنك المحاولة مرة أخرى."}
+        </p>
+        {error && !loading && (
+          <>
+            <p className="mt-3 text-xs text-destructive">{error}</p>
+            <button
+              type="button"
+              onClick={() => { setReport(null); setError(null); void (async () => {
+                setLoading(true);
+                try { const res = await fn({ data: { code } }); setReport(res.report); setCached(res.cached); }
+                catch (e) { setError(e instanceof Error ? e.message : "تعذّر التوليد."); }
+                finally { setLoading(false); }
+              })(); }}
+              className="mt-4 inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground"
+            >
+              <Sparkles className="h-4 w-4" /> إعادة المحاولة
+            </button>
+          </>
+        )}
       </div>
     );
   }
