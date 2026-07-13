@@ -56,8 +56,8 @@ function HomePage() {
               وارسم <span className="text-gold">مسارك المهني</span> بثقة.
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-9 text-muted-foreground">
-              منصة عربية متكاملة للإرشاد المهني والكوتشينج، تخدم طلبة المدارس
-              والجامعات والخريجين عبر تقييمات علمية وجلسات فردية مع مرشدين معتمدين.
+              منصة عربية للإرشاد المهني والكوتشينج، تخدم طلبة المدارس
+              والجامعات والخريجين عبر تقييمات نفسية-مهنية تجريبية وجلسات فردية.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
@@ -74,19 +74,6 @@ function HomePage() {
                 احجز جلسة إرشاد أو كوتشينج
               </Link>
             </div>
-
-            <dl className="mt-12 grid grid-cols-3 gap-6 border-t border-border pt-8">
-              {[
-                { v: "+12K", l: "متدرب" },
-                { v: "50+", l: "مرشد معتمد" },
-                { v: "97%", l: "رضا المستفيدين" },
-              ].map((s) => (
-                <div key={s.l}>
-                  <dt className="font-serif text-3xl font-bold text-primary">{s.v}</dt>
-                  <dd className="mt-1 text-xs text-muted-foreground">{s.l}</dd>
-                </div>
-              ))}
-            </dl>
           </div>
 
           <div className="relative">
