@@ -139,10 +139,26 @@ function ShareLinkButton({ code }: { code: string }) {
   const onClick = async () => {
     setBusy(true);
     try {
-      const { token } = await fn({ data: { code, ttlDays: 30 } });
+      const usePwd = window.confirm(
+        "هل تريد حماية الرابط بكلمة مرور؟\nاضغط «موافق» لإدخال كلمة مرور، أو «إلغاء» لإنشاء رابط بلا كلمة مرور.\nملاحظة: كل الروابط تنتهي تلقائياً خلال 7 أيام.",
+      );
+      let password: string | undefined;
+      if (usePwd) {
+        const p = window.prompt("أدخل كلمة مرور (4 أحرف فأكثر). ستحتاج مشاركتها يدوياً مع المُستلم:");
+        if (!p || p.length < 4) {
+          toast.error("كلمة المرور قصيرة جداً. لم يُنشأ الرابط.");
+          return;
+        }
+        password = p;
+      }
+      const { token, passwordProtected } = await fn({ data: { code, ttlDays: 7, password } });
       const url = `${window.location.origin}/r/${token}`;
       await navigator.clipboard.writeText(url);
-      toast.success("تم نسخ رابط مشاركة آمن (صالح 30 يوماً)");
+      toast.success(
+        passwordProtected
+          ? "تم نسخ رابط محميّ بكلمة مرور (صالح 7 أيام)"
+          : "تم نسخ رابط مشاركة آمن (صالح 7 أيام)",
+      );
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "تعذّر إنشاء الرابط");
     } finally {
