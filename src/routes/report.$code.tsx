@@ -9,6 +9,7 @@ import { generateParentReport } from "@/lib/parent-report.functions";
 import { ContentProtection } from "@/components/site/ContentProtection";
 import { MarketPulseInsights } from "@/components/site/MarketPulseInsights";
 import { CareerLadderInsights } from "@/components/site/CareerLadderInsights";
+import { ReportDisclaimer } from "@/components/site/ClinicalDisclaimer";
 import { createReportShareToken } from "@/lib/share.functions";
 import { toast } from "sonner";
 
@@ -186,10 +187,12 @@ function ViewToggle({ code, name, stage, report }: { code: string; name: string 
 
       {view === "full" ? (
         <div className="report-content text-base leading-relaxed text-foreground">
+          <ReportDisclaimer tool="هذا التقرير" />
           <ReactMarkdown>{report}</ReactMarkdown>
           <GlobalAdvisorSection />
           <CareerLadderInsights reportText={report} />
           <MarketPulseInsights reportText={report} />
+          <ReportDisclaimer tool="هذا التقرير" />
         </div>
       ) : (
         <div className="space-y-5 rounded-2xl border border-gold/30 bg-gold/5 p-6">
@@ -338,7 +341,9 @@ function ParentCompanionReport({ code }: { code: string }) {
 
           <p className="text-xs text-muted-foreground">كود التقرير: {code} • {new Date().toLocaleDateString("ar-EG")}</p>
         </div>
+        <ReportDisclaimer tool="هذا التقرير المُرافِق" />
         <ReactMarkdown>{report}</ReactMarkdown>
+        <ReportDisclaimer tool="هذا التقرير المُرافِق" />
       </div>
     </div>
   );
@@ -540,6 +545,7 @@ function GlobalAdvisorSection() {
             </p>
           )}
           <div className="report-content text-sm leading-loose text-foreground">
+            <ReportDisclaimer tool="هذا التقرير الاستشاري" />
             <ReactMarkdown>{result}</ReactMarkdown>
           </div>
         </div>
