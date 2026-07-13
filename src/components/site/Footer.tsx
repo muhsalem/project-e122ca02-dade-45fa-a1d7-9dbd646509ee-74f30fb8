@@ -39,6 +39,7 @@ export function Footer() {
             <li><Link to="/terms" className="hover:text-primary">الشروط والأحكام</Link></li>
             <li><Link to="/privacy" className="hover:text-primary">سياسة الخصوصية</Link></li>
             <li><Link to="/terms" hash="cookies" className="hover:text-primary">سياسة الكوكيز</Link></li>
+            <li><Link to="/dpa" className="hover:text-primary">ملحق معالجة البيانات (DPA) للمؤسسات</Link></li>
             <li><Link to="/terms" hash="ethics" className="hover:text-primary">الميثاق الأخلاقي</Link></li>
             <li className="flex items-center gap-2"><Mail className="h-4 w-4 text-gold" aria-hidden="true" /><span>info@bosla.app</span></li>
             <li className="flex items-center gap-2"><Phone className="h-4 w-4 text-gold" aria-hidden="true" /><span>+966 50 000 0000</span></li>
