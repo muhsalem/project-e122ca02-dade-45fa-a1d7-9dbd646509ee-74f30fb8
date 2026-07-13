@@ -95,16 +95,17 @@ function HomePage() {
               أسس علمية، نتائج ملموسة
             </h2>
             <p className="mt-4 text-muted-foreground">
-              نعتمد على نماذج Holland و Super و ICF الدولية للكوتشينج، مع تكييف عربي
-              يحترم الثقافة وسوق العمل الإقليمي.
+              نستند إلى أُطر مرجعية معروفة في الإرشاد المهني مثل نموذج Holland
+              للميول ونموذج Super لتطوير المسار، مع بنية جلسات مستوحاة من نموذج
+              GROW للكوتشينج، وبتكييف يحترم الثقافة العربية وسوق العمل الإقليمي.
             </p>
           </div>
 
           <div className="mt-14 grid gap-6 md:grid-cols-3">
             {[
-              { icon: Brain, title: "علم النفس المهني", desc: "تقييم الميول والشخصية والقدرات بأدوات معيارية موثقة." },
-              { icon: Target, title: "تخطيط المسار", desc: "بناء خطة مهنية واضحة قصيرة وطويلة المدى وفق نموذج Super." },
-              { icon: ShieldCheck, title: "كوتشينج ICF", desc: "جلسات فردية مع مرشدين ملتزمين بأخلاقيات الفيدرالية الدولية." },
+              { icon: Brain, title: "علم النفس المهني", desc: "قياس الميول والشخصية عبر نسخ عربية تجريبية من مقاييس دولية معروفة." },
+              { icon: Target, title: "تخطيط المسار", desc: "بناء خطة مهنية واضحة قصيرة وطويلة المدى مستوحاة من نموذج Super." },
+              { icon: ShieldCheck, title: "كوتشينج ببنية GROW", desc: "جلسات فردية تتبع بنية GROW مع التزام بالأخلاقيات المهنية للكوتشينج." },
             ].map((p) => (
               <article key={p.title} className="rounded-2xl border border-border bg-card p-8 transition-shadow hover:shadow-[var(--shadow-soft)]">
                 <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary">
