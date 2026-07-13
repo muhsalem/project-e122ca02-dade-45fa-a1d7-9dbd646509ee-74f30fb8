@@ -71,16 +71,79 @@ export const generateParentReport = createServerFn({ method: "POST" })
 
     const { data: row, error } = await supabaseAdmin
       .from("assessment_reports")
-      .select("name, stage, report")
+      .select("name, stage, age, report, user_id, answers")
       .eq("code", data.code)
       .maybeSingle();
     if (error || !row) throw new Error("تعذّر تحميل التقرير الأصلي.");
 
+    // ===== إثراء السياق (Personalization) =====
+    let profileCtx = "";
+    let poiaCtx = "";
+    let dnaCtx = "";
+    let interestsCtx = "";
+
+    // استخرج اهتمامات مباشرة من إجابات التقرير (حقول نصّية حرّة شائعة)
+    try {
+      const ans = (row.answers ?? {}) as Record<string, unknown>;
+      const pick = (keys: string[]) =>
+        keys.map((k) => ans[k]).filter((v) => typeof v === "string" && (v as string).trim()).join(" | ");
+      const interests = pick(["interests", "hobbies", "favorite_subjects", "favorite_subject", "dream_job", "passion", "الاهتمامات", "الهوايات", "المواد_المفضلة"]);
+      const goals = pick(["goals", "aspiration", "future", "الأهداف", "الطموح"]);
+      const bits: string[] = [];
+      if (interests) bits.push(`- اهتمامات/هوايات ذكرها: ${interests.slice(0, 400)}`);
+      if (goals) bits.push(`- طموحات ذكرها: ${goals.slice(0, 300)}`);
+      if (bits.length) interestsCtx = `\n### إشارات ذاتية من الطالب\n${bits.join("\n")}`;
+    } catch { /* noqa */ }
+
+    if (row.user_id) {
+      const [profRes, poiaRes, dnaRes] = await Promise.all([
+        supabaseAdmin.from("profiles").select("country, age, full_name").eq("user_id", row.user_id).maybeSingle(),
+        supabaseAdmin.from("poia_submissions").select("band, pi_score, oh_score, qwl_score, csi_score, cfs_score, bri_score, context").eq("user_id", row.user_id).order("created_at", { ascending: false }).limit(1).maybeSingle(),
+        supabaseAdmin.from("learning_dna_submissions").select("band, dimension_scores, dls, les, sls, las, pss, ret, foc").eq("user_id", row.user_id).order("created_at", { ascending: false }).limit(1).maybeSingle(),
+      ]);
+
+      const prof = profRes.data;
+      if (prof) {
+        const parts = [
+          prof.country ? `الدولة: ${prof.country}` : null,
+          prof.age ? `العمر: ${prof.age}` : null,
+        ].filter(Boolean);
+        if (parts.length) profileCtx = `\n### السياق الشخصي\n- ${parts.join(" • ")}`;
+      }
+
+      const poia = poiaRes.data;
+      if (poia) {
+        const scores = [
+          poia.pi_score != null ? `الشغف والاهتمام PI: ${poia.pi_score}` : null,
+          poia.oh_score != null ? `صحّة المهنة OH: ${poia.oh_score}` : null,
+          poia.qwl_score != null ? `جودة الحياة الوظيفية QWL: ${poia.qwl_score}` : null,
+          poia.csi_score != null ? `الملاءمة الوظيفية CSI: ${poia.csi_score}` : null,
+          poia.bri_score != null ? `الجاهزية للعمل BRI: ${poia.bri_score}` : null,
+        ].filter(Boolean).join(" | ");
+        poiaCtx = `\n### نتائج مؤشّر الميول والانسجام المهني (POIA)\n- المستوى العام: ${poia.band ?? "—"}\n- المؤشّرات: ${scores || "—"}`;
+      }
+
+      const dna = dnaRes.data;
+      if (dna) {
+        const dims = [
+          dna.dls != null ? `أسلوب التعلّم DLS: ${dna.dls}` : null,
+          dna.les != null ? `بيئة التعلّم LES: ${dna.les}` : null,
+          dna.sls != null ? `الاستراتيجيات SLS: ${dna.sls}` : null,
+          dna.las != null ? `الاستقلالية LAS: ${dna.las}` : null,
+          dna.pss != null ? `المثابرة PSS: ${dna.pss}` : null,
+          dna.ret != null ? `الاحتفاظ RET: ${dna.ret}` : null,
+          dna.foc != null ? `التركيز FOC: ${dna.foc}` : null,
+        ].filter(Boolean).join(" | ");
+        dnaCtx = `\n### الحمض النووي للتعلّم (Learning DNA)\n- المستوى: ${dna.band ?? "—"}\n- الأبعاد: ${dims || "—"}`;
+      }
+    }
+
     const studentContext = `الاسم (إن ذُكر): ${row.name ?? "غير محدد"}
-المرحلة: ${row.stage ?? "غير محدد"}
+المرحلة الدراسية: ${row.stage ?? "غير محدد"}
+${row.age ? `الفئة العمرية: ${row.age}` : ""}${profileCtx}${interestsCtx}${poiaCtx}${dnaCtx}
 
 --- تقرير الإرشاد المهني الأصلي ---
-${String(row.report).slice(0, 8000)}`;
+${String(row.report).slice(0, 7000)}`;
 
     const aiRes = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
@@ -92,7 +155,7 @@ ${String(row.report).slice(0, 8000)}`;
           { role: "system", content: SYSTEM_PROMPT + "\n\n" + AI_GUARDRAILS },
           {
             role: "user",
-            content: `فيما يلي تقرير ابن/ابنة أحد أولياء الأمور. اقرأه بعناية ثم أنتج التقرير المُرافِق لوليّ الأمر وفق الهيكل المحدّد كاملاً وبنبرة دافئة.\n\n${studentContext}`,
+            content: `فيما يلي تقرير ابن/ابنة أحد أولياء الأمور، مع سياق إثرائي (اهتمامات، مرحلة دراسية، سياق شخصي، ونتائج اختبارات مكمّلة إن وُجدت). ادمج هذا السياق طبيعياً داخل صياغة الرسالة — اذكر مادّة/هواية/طموح محدّد ذكره الطالب حين يوجد، واربط التوصيات بمرحلته الدراسية ودولته إن ذُكرت، ولا تعِد سرد الأرقام كجدول بل ترجمها إلى لغة أهل — ثم أنتج التقرير المُرافِق كاملاً وفق الهيكل المحدّد وبنبرة دافئة.\n\n${studentContext}`,
           },
         ],
       }),
