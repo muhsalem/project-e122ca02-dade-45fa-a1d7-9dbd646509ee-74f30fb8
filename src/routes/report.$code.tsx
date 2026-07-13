@@ -9,6 +9,7 @@ import { generateParentReport } from "@/lib/parent-report.functions";
 import { ContentProtection } from "@/components/site/ContentProtection";
 import { MarketPulseInsights } from "@/components/site/MarketPulseInsights";
 import { CareerLadderInsights } from "@/components/site/CareerLadderInsights";
+import { ReportDisclaimer } from "@/components/site/ClinicalDisclaimer";
 import { createReportShareToken } from "@/lib/share.functions";
 import { toast } from "sonner";
 
