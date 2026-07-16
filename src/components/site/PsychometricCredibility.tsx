@@ -1124,48 +1124,84 @@ function handleExportPdf(userName: string, userEmail: string) {
         setTimeout(run, 120);
       } else {
         var TIMEOUT_MS = 6000;
+        var MAX_ATTEMPTS = 3;              // محاولة أولى + إعادتان
+        var RETRY_BACKOFF_MS = 900;        // فاصل زمني بين المحاولات
+        var attempt = 0;
         var settled = false;
-        var perFontResults = REQUIRED_FONTS.map(function() { return null; }); // 'ok' | 'fail'
+        var timer = null;
+        var perFontResults = REQUIRED_FONTS.map(function() { return null; });
 
-        var timer = setTimeout(function() {
-          if (settled) return;
-          settled = true;
-          REQUIRED_FONTS.forEach(function(f, i) {
-            if (perFontResults[i] === 'ok') return;
-            setRow(i, '✕', 'err', 'انتهت المهلة (' + (TIMEOUT_MS/1000) + ' ث)');
-            perFontResults[i] = 'fail';
-          });
-          setReason('⚠ انتهت مهلة تحميل بعض الملفات — تحقّق من الاتصال أو من مصدر الخط (Google Fonts).');
-          finalize();
-        }, TIMEOUT_MS);
+        function attemptLabel() {
+          return 'المحاولة ' + attempt + '/' + MAX_ATTEMPTS;
+        }
 
-        // تحميل كل وزن على حدة لالتقاط سبب الفشل بدقّة
-        REQUIRED_FONTS.forEach(function(f, i) {
-          var spec = f.weight + ' 16px ' + f.family;
-          try {
-            document.fonts.load(spec).then(function(faces) {
-              if (settled) return;
-              var ok = (faces && faces.length > 0) || document.fonts.check('16px ' + f.family + ' ' + f.weight);
-              if (ok) {
-                perFontResults[i] = 'ok';
-                setRow(i, '✓', 'ok', 'محمّل ✓');
-              } else {
-                perFontResults[i] = 'fail';
-                setRow(i, '✕', 'err', 'الملف لم يُطابق أي FontFace');
-              }
-              maybeFinalize();
-            }).catch(function(err) {
-              if (settled) return;
-              perFontResults[i] = 'fail';
-              setRow(i, '✕', 'err', 'فشل التحميل: ' + (err && err.message ? err.message : 'خطأ غير معروف'));
-              maybeFinalize();
-            });
-          } catch (err) {
-            perFontResults[i] = 'fail';
-            setRow(i, '✕', 'err', 'استدعاء غير صالح: ' + (err && err.message ? err.message : String(err)));
-            maybeFinalize();
+        function scheduleRetry() {
+          if (attempt >= MAX_ATTEMPTS) return false;
+          var failedIdx = [];
+          for (var i = 0; i < perFontResults.length; i++) {
+            if (perFontResults[i] !== 'ok') failedIdx.push(i);
           }
-        });
+          if (!failedIdx.length) return false;
+          var nextAttempt = attempt + 1;
+          setFontsState('loading', '↻ إعادة محاولة تحميل الخطوط… (' + nextAttempt + '/' + MAX_ATTEMPTS + ')');
+          setReason('تعذّرت بعض الأوزان في ' + attemptLabel() + ' — سيُعاد المحاولة بعد ' + Math.round(RETRY_BACKOFF_MS/100)/10 + ' ث.');
+          setMeta('في انتظار إعادة المحاولة… (' + failedIdx.length + ' وزن متبقٍ)');
+          failedIdx.forEach(function(i) { setRow(i, '↻', 'pending', 'قيد الإعادة… (' + nextAttempt + '/' + MAX_ATTEMPTS + ')'); });
+          setTimeout(function() { runAttempt(failedIdx); }, RETRY_BACKOFF_MS);
+          return true;
+        }
+
+        function runAttempt(indices) {
+          attempt += 1;
+          settled = false;
+          if (timer) clearTimeout(timer);
+
+          timer = setTimeout(function() {
+            if (settled) return;
+            settled = true;
+            indices.forEach(function(i) {
+              if (perFontResults[i] === 'ok') return;
+              setRow(i, '✕', 'err', 'انتهت المهلة في ' + attemptLabel() + ' (' + (TIMEOUT_MS/1000) + ' ث)');
+              perFontResults[i] = 'fail';
+            });
+            setReason('⚠ انتهت مهلة تحميل بعض الملفات في ' + attemptLabel() + ' — تحقّق من الاتصال أو من مصدر الخط (Google Fonts).');
+            finalizeOrRetry();
+          }, TIMEOUT_MS);
+
+          indices.forEach(function(i) {
+            var f = REQUIRED_FONTS[i];
+            var spec = f.weight + ' 16px ' + f.family;
+            // إعادة تعيين حالة الوزن قبل هذه المحاولة
+            perFontResults[i] = null;
+            setRow(i, '⏳', 'pending', 'قيد التحميل… (' + attemptLabel() + ')');
+            try {
+              document.fonts.load(spec).then(function(faces) {
+                if (settled) return;
+                var ok = (faces && faces.length > 0) || document.fonts.check('16px ' + f.family + ' ' + f.weight);
+                if (ok) {
+                  perFontResults[i] = 'ok';
+                  setRow(i, '✓', 'ok', 'محمّل ✓ (' + attemptLabel() + ')');
+                } else {
+                  perFontResults[i] = 'fail';
+                  setRow(i, '✕', 'err', 'لم يُطابق أي FontFace — ' + attemptLabel());
+                }
+                maybeFinalize();
+              }).catch(function(err) {
+                if (settled) return;
+                perFontResults[i] = 'fail';
+                setRow(i, '✕', 'err', 'فشل — ' + attemptLabel() + ': ' + (err && err.message ? err.message : 'خطأ غير معروف'));
+                maybeFinalize();
+              });
+            } catch (err) {
+              perFontResults[i] = 'fail';
+              setRow(i, '✕', 'err', 'استدعاء غير صالح — ' + attemptLabel() + ': ' + (err && err.message ? err.message : String(err)));
+              maybeFinalize();
+            }
+          });
+        }
+
+        // بدء المحاولة الأولى على كل الأوزان
+        runAttempt(REQUIRED_FONTS.map(function(_, i) { return i; }));
 
         function maybeFinalize() {
           var loadedNow = perFontResults.filter(function(v) { return v === 'ok'; }).length;
@@ -1173,28 +1209,37 @@ function handleExportPdf(userName: string, userEmail: string) {
           var done = perFontResults.every(function(v) { return v !== null; });
           if (done && !settled) {
             settled = true;
-            clearTimeout(timer);
-            finalize();
+            if (timer) clearTimeout(timer);
+            finalizeOrRetry();
           }
         }
+
+        function finalizeOrRetry() {
+          var loaded = perFontResults.filter(function(v) { return v === 'ok'; }).length;
+          if (loaded < REQUIRED_FONTS.length && scheduleRetry()) return;
+          finalize();
+        }
+
 
         function finalize() {
           var loaded = perFontResults.filter(function(v) { return v === 'ok'; }).length;
           var total  = REQUIRED_FONTS.length;
           var elapsed = Math.round(((performance && performance.now) ? performance.now() : Date.now()) - t0);
-          setMeta('اكتمل الفحص خلال ' + elapsed + ' مللي ثانية · ' + loaded + '/' + total + ' وزنًا جاهزًا.');
+          var attemptsUsed = 'استُنفدت ' + attempt + '/' + MAX_ATTEMPTS + ' محاولة';
+          setMeta('اكتمل الفحص خلال ' + elapsed + ' مللي ثانية · ' + loaded + '/' + total + ' وزنًا جاهزًا · ' + attemptsUsed + '.');
           if (loaded === total) {
-            setFontsState('ready', '✓ الخطوط جاهزة (' + loaded + '/' + total + ')');
+            var suffix = attempt > 1 ? ' — بعد ' + attempt + ' محاولات' : '';
+            setFontsState('ready', '✓ الخطوط جاهزة (' + loaded + '/' + total + ')' + suffix);
             enablePrint(true, 'طباعة / حفظ PDF');
             setReason('');
           } else if (loaded === 0) {
-            setFontsState('fallback', '⚠ فشل تحميل الخطوط (0/' + total + ')');
+            setFontsState('fallback', '⚠ فشل تحميل الخطوط (0/' + total + ') بعد ' + attempt + ' محاولات');
             enablePrint(true, 'طباعة / حفظ PDF (خط بديل)');
-            if (!fontsReason.textContent) setReason('⚠ تعذّر تحميل أي وزن — سيُستخدم خط النظام. راجع التفاصيل لمعرفة السبب.');
+            setReason('⚠ تعذّر تحميل أي وزن بعد ' + attempt + '/' + MAX_ATTEMPTS + ' محاولة — سيُستخدم خط النظام. راجع التفاصيل لمعرفة السبب.');
           } else {
-            setFontsState('fallback', '⚠ بعض الأوزان غير متوفرة (' + loaded + '/' + total + ')');
+            setFontsState('fallback', '⚠ ' + loaded + '/' + total + ' أوزان فقط بعد ' + attempt + ' محاولات');
             enablePrint(true, 'طباعة / حفظ PDF (جودة أقل)');
-            if (!fontsReason.textContent) setReason('⚠ بعض الأوزان لم تُحمّل — قد تظهر الأحرف بخط بديل. راجع التفاصيل.');
+            setReason('⚠ بعض الأوزان لم تُحمّل بعد ' + attempt + '/' + MAX_ATTEMPTS + ' محاولة — قد تظهر الأحرف بخط بديل.');
           }
           setTimeout(run, 120);
         }
