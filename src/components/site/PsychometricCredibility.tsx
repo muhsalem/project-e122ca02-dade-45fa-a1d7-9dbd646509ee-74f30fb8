@@ -133,30 +133,67 @@ function handleExportPdf() {
 <head>
 <meta charset="utf-8" />
 <title>تقرير المقاييس السيكومترية المفتوحة — بوصلة</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet" />
 <style>
-  @page { size: A4; margin: 18mm 16mm; }
+  @page { size: A4; margin: 20mm 16mm 18mm; }
+  @page :first { margin-top: 24mm; }
   * { box-sizing: border-box; }
-  html, body { font-family: "Noto Naskh Arabic", "Amiri", "Segoe UI", "Tahoma", serif; color: #1a1a1a; line-height: 1.75; }
-  body { margin: 0; padding: 0; }
+  :root {
+    --arabic-stack: "Noto Naskh Arabic", "Amiri", "Sakkal Majalla", "Traditional Arabic",
+      "Geeza Pro", "Al Bayan", "Arabic Typesetting", "Segoe UI", "Tahoma", "Arial", serif;
+  }
+  html, body {
+    font-family: var(--arabic-stack);
+    color: #1a1a1a;
+    line-height: 1.9;
+    font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    font-variant-ligatures: common-ligatures;
+    word-spacing: 0.02em;
+    hyphens: none;
+  }
+  body { margin: 0; padding: 0; font-size: 11pt; }
   header.top { border-bottom: 2px solid #0f3d2e; padding-bottom: 10px; margin-bottom: 18px; }
-  header.top h1 { margin: 0 0 4px; font-size: 20pt; color: #0f3d2e; }
+  header.top h1 { margin: 0 0 4px; font-size: 20pt; color: #0f3d2e; font-weight: 700; }
   header.top .sub { font-size: 10pt; color: #555; }
-  .intro { background: #f4f8f6; border: 1px solid #cfe0d6; border-radius: 8px; padding: 12px 14px; margin: 0 0 16px; font-size: 10.5pt; }
+  .intro { background: #f4f8f6; border: 1px solid #cfe0d6; border-radius: 8px; padding: 14px 16px; margin: 0 0 18px; font-size: 10.5pt; line-height: 2; }
   .intro strong { color: #0f3d2e; }
-  section.scale { border: 1px solid #d8d8d8; border-radius: 8px; padding: 12px 14px; margin: 0 0 12px; page-break-inside: avoid; }
-  section.scale header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px; margin-bottom: 6px; border-bottom: 1px dashed #ddd; padding-bottom: 6px; }
-  section.scale h2 { margin: 0; font-size: 13pt; color: #0f3d2e; }
-  .code { font-family: "Courier New", monospace; font-size: 10pt; color: #a37b1e; background: #fff6e0; padding: 2px 6px; border-radius: 4px; }
-  .license { margin-inline-start: auto; font-size: 9pt; background: #e6f4ea; color: #1b6e3b; padding: 2px 6px; border-radius: 4px; }
-  p { margin: 6px 0; font-size: 10.5pt; }
-  .brief { background: #fafafa; padding: 6px 8px; border-inline-start: 3px solid #0f3d2e; }
-  .followup ul { margin: 4px 0 0; padding-inline-start: 20px; }
-  .followup li { margin: 2px 0; font-size: 10.5pt; }
-  .cite { font-size: 9.5pt; color: #444; }
-  .links { font-size: 9.5pt; }
+  section.scale {
+    border: 1px solid #d8d8d8;
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin: 0 0 14px;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    orphans: 3;
+    widows: 3;
+  }
+  /* الأقسام الطويلة: يُسمح بتقسيمها على صفحات مع هوامش داخلية أكبر للتنفس البصري */
+  section.scale.long {
+    page-break-inside: auto;
+    break-inside: auto;
+    padding-top: 18px;
+    padding-bottom: 18px;
+  }
+  section.scale.long .followup ul { page-break-inside: auto; break-inside: auto; }
+  section.scale.long .followup li { page-break-inside: avoid; break-inside: avoid; margin: 4px 0; }
+  section.scale header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px; margin-bottom: 8px; border-bottom: 1px dashed #ddd; padding-bottom: 6px; }
+  section.scale h2 { margin: 0; font-size: 13.5pt; color: #0f3d2e; font-weight: 700; }
+  .code { font-family: "Courier New", "Menlo", monospace; font-size: 10pt; color: #a37b1e; background: #fff6e0; padding: 2px 6px; border-radius: 4px; }
+  .license { margin-inline-start: auto; font-size: 9.5pt; background: #e6f4ea; color: #1b6e3b; padding: 2px 8px; border-radius: 4px; }
+  p { margin: 6px 0; font-size: 10.75pt; line-height: 1.95; }
+  .brief { background: #fafafa; padding: 8px 10px; border-inline-start: 3px solid #0f3d2e; border-radius: 4px; }
+  .followup ul { margin: 6px 0 0; padding-inline-start: 22px; }
+  .followup li { margin: 3px 0; font-size: 10.75pt; line-height: 1.9; }
+  .cite { font-size: 9.75pt; color: #444; line-height: 1.7; }
+  .links { font-size: 9.75pt; }
   .links a { color: #0f3d2e; text-decoration: underline; }
   .note { font-size: 9pt; color: #8a5a00; font-style: italic; }
-  footer { margin-top: 18px; border-top: 1px solid #ddd; padding-top: 8px; font-size: 9pt; color: #666; text-align: center; }
+  footer { margin-top: 20px; border-top: 1px solid #ddd; padding-top: 8px; font-size: 9pt; color: #666; text-align: center; }
+  @media print { a { color: #0f3d2e; } }
 </style>
 </head>
 <body>
@@ -171,7 +208,21 @@ function handleExportPdf() {
   </div>
   ${scalesHtml}
   <footer>© بوصلة — للتفاصيل القانونية الكاملة راجع صفحة تراخيص المقاييس على الموقع.</footer>
-  <script>window.addEventListener('load', () => setTimeout(() => window.print(), 250));</script>
+  <script>
+    (function() {
+      // ضبط تلقائي: أي قسم أطول من ثلثي صفحة A4 يُسمح بتقسيمه ويحصل على هوامش أوسع
+      var LONG_THRESHOLD_PX = 720;
+      document.querySelectorAll('section.scale').forEach(function(el) {
+        if (el.getBoundingClientRect().height > LONG_THRESHOLD_PX) {
+          el.classList.add('long');
+        }
+      });
+      window.addEventListener('load', function() {
+        var ready = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
+        ready.then(function() { setTimeout(function() { window.print(); }, 400); });
+      });
+    })();
+  </script>
 </body>
 </html>`;
 
