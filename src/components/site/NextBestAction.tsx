@@ -77,6 +77,11 @@ export function NextBestAction({ compact = false, limit = 3 }: Props) {
           </button>
           <div className="font-serif text-lg text-primary">{a.title}</div>
           <p className="mt-1 text-sm leading-6 text-muted-foreground">{a.description}</p>
+          {a.reason && (
+            <div className="mt-2 inline-flex items-center gap-1 rounded-md bg-emerald-100/70 px-2 py-0.5 text-[11px] text-emerald-900 dark:bg-emerald-900/30 dark:text-emerald-200">
+              <Sparkles className="h-3 w-3" /> بناءً على نتيجتك: {a.reason}
+            </div>
+          )}
           <Link
             to={a.href}
             className="mt-3 inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm text-primary-foreground hover:opacity-90"
