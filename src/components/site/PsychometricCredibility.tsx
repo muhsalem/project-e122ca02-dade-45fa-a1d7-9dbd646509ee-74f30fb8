@@ -529,6 +529,28 @@ function handleExportPdf(userName: string, userEmail: string) {
   .pb-btn-ghost:hover { background: rgba(255,255,255,0.1); }
   .pb-btn-toggle { background: rgba(208,67,58,0.9); color: #fff; border-color: rgba(255,255,255,0.15); }
   .pb-btn-toggle.off { background: rgba(255,255,255,0.14); color: #f4f8f6; border-color: rgba(255,255,255,0.35); }
+  .pb-btn:disabled, .pb-btn[aria-disabled="true"] {
+    opacity: 0.75; cursor: progress; filter: saturate(0.7);
+  }
+
+  /* مؤشر تحميل الخطوط */
+  .pb-fonts { display: inline-flex; align-items: center; gap: 6px; transition: background 0.25s, color 0.25s; }
+  .pb-fonts.loading  { background: rgba(255,214,107,0.18); color: #ffd66b; border-color: rgba(255,214,107,0.35); }
+  .pb-fonts.ready    { background: rgba(46,160,67,0.22);  color: #7ee08a; border-color: rgba(126,224,138,0.4); }
+  .pb-fonts.fallback { background: rgba(208,67,58,0.22);  color: #ffbaae; border-color: rgba(255,186,174,0.4); }
+  .pb-spinner {
+    width: 10px; height: 10px; border-radius: 50%;
+    border: 2px solid rgba(255,214,107,0.35);
+    border-top-color: #ffd66b;
+    display: inline-block;
+    animation: pb-spin 0.8s linear infinite;
+    flex: none;
+  }
+  .pb-spinner-dark {
+    border-color: rgba(74,50,8,0.25);
+    border-top-color: #4a3208;
+  }
+  @keyframes pb-spin { to { transform: rotate(360deg); } }
 
   /* قوائم اختيار حجم الصفحة والهوامش */
   .pb-select {
