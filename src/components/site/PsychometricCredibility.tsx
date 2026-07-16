@@ -973,9 +973,70 @@ function handleExportPdf(userName: string, userEmail: string) {
       updateFilename();
 
 
-      // انتظر تحميل الخطوط ثم احسب الفواصل، وأعد الحساب عند تغيير مقاس النافذة
-      var ready = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
-      ready.then(function() { setTimeout(run, 120); });
+      // ===== مؤشر تحميل الخطوط + تفعيل زر الطباعة =====
+      var fontsTag = document.getElementById('pb-fonts');
+      var fontsLabel = fontsTag ? fontsTag.querySelector('.pb-fonts-label') : null;
+      var printSpin = document.getElementById('pb-print-spin');
+      var printLabel = document.getElementById('pb-print-label');
+      var REQUIRED_FONTS = [
+        { family: '"Noto Naskh Arabic"', weight: '400' },
+        { family: '"Noto Naskh Arabic"', weight: '700' },
+        { family: 'Amiri',               weight: '400' },
+        { family: 'Amiri',               weight: '700' }
+      ];
+      function setFontsState(state, msg) {
+        if (!fontsTag) return;
+        fontsTag.classList.remove('loading', 'ready', 'fallback');
+        fontsTag.classList.add(state);
+        var spin = fontsTag.querySelector('.pb-spinner');
+        if (state !== 'loading' && spin) spin.remove();
+        if (fontsLabel) fontsLabel.textContent = msg;
+      }
+      function enablePrint(ok, label) {
+        if (!btnPrint) return;
+        btnPrint.disabled = !ok;
+        btnPrint.setAttribute('aria-disabled', ok ? 'false' : 'true');
+        if (printSpin && ok) printSpin.remove();
+        if (printLabel) printLabel.textContent = label;
+        btnPrint.title = ok
+          ? 'اسم الملف يُقترح تلقائيًا من عنوان الصفحة'
+          : 'سيتم التفعيل عند اكتمال تحميل الخطوط';
+        fontsAreReady = ok;
+      }
+
+      var readyPromise = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
+      // مهلة أمان: لا نعطّل الزر إلى الأبد إن فشل تحميل الخط
+      var TIMEOUT_MS = 6000;
+      var timedOut = false;
+      var timer = setTimeout(function() {
+        timedOut = true;
+        setFontsState('fallback', '⚠ تعذّر تحميل الخط — سيتم استخدام خط النظام');
+        enablePrint(true, 'طباعة / حفظ PDF (خط بديل)');
+      }, TIMEOUT_MS);
+
+      readyPromise.then(function() {
+        if (timedOut) return;
+        clearTimeout(timer);
+        // فحص إضافي للتأكد من توافر كل الأوزان
+        var checks = REQUIRED_FONTS.map(function(f) {
+          try { return document.fonts.check('16px ' + f.family + ' ' + f.weight); }
+          catch (e) { return true; }
+        });
+        var allOk = checks.every(Boolean);
+        if (allOk) {
+          setFontsState('ready', '✓ الخطوط جاهزة (' + REQUIRED_FONTS.length + '/' + REQUIRED_FONTS.length + ')');
+        } else {
+          var loaded = checks.filter(Boolean).length;
+          setFontsState('fallback', '⚠ بعض الأوزان غير متوفرة (' + loaded + '/' + REQUIRED_FONTS.length + ')');
+        }
+        enablePrint(true, 'طباعة / حفظ PDF');
+        setTimeout(run, 120);
+      }).catch(function() {
+        clearTimeout(timer);
+        setFontsState('fallback', '⚠ فشل تحميل الخطوط — خط بديل');
+        enablePrint(true, 'طباعة / حفظ PDF (خط بديل)');
+        setTimeout(run, 120);
+      });
       var t;
       window.addEventListener('resize', function() {
         clearTimeout(t);
