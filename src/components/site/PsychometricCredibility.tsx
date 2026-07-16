@@ -529,8 +529,31 @@ function handleExportPdf(userName: string, userEmail: string) {
   .pb-btn-ghost:hover { background: rgba(255,255,255,0.1); }
   .pb-btn-toggle { background: rgba(208,67,58,0.9); color: #fff; border-color: rgba(255,255,255,0.15); }
   .pb-btn-toggle.off { background: rgba(255,255,255,0.14); color: #f4f8f6; border-color: rgba(255,255,255,0.35); }
+  .pb-btn-warn {
+    background: rgba(208,67,58,0.9); color: #fff;
+    border-color: rgba(255,255,255,0.15);
+  }
+  .pb-btn-warn:hover { background: rgba(208,67,58,1); }
+  .pb-hidden { display: none !important; }
   .pb-btn:disabled, .pb-btn[aria-disabled="true"] {
     opacity: 0.75; cursor: progress; filter: saturate(0.7);
+  }
+
+  /* حوار تأكيد الطباعة رغم فشل الخطوط */
+  .pb-dialog {
+    padding: 0; border: 0; border-radius: 14px; max-width: 460px; width: 92%;
+    background: #1b2b26; color: #f4f8f6; direction: rtl; text-align: right;
+    font-family: "Noto Naskh Arabic", system-ui, sans-serif;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+  }
+  .pb-dialog::backdrop { background: rgba(0,0,0,0.55); }
+  .pb-dialog-body { padding: 20px 22px 8px; }
+  .pb-dialog h3 { margin: 0 0 10px; font-size: 17px; color: #ffd66b; }
+  .pb-dialog p { margin: 6px 0; font-size: 13.5px; line-height: 1.7; }
+  .pb-dialog ul { margin: 8px 0; padding-inline-start: 18px; font-size: 12.5px; color: #ffbaae; }
+  .pb-dialog-actions {
+    display: flex; gap: 8px; justify-content: flex-start;
+    padding: 12px 22px 18px; border-top: 1px solid rgba(255,255,255,0.08); margin-top: 8px;
   }
 
   /* مؤشر تحميل الخطوط */
@@ -742,8 +765,31 @@ function handleExportPdf(userName: string, userEmail: string) {
         <span class="pb-spinner pb-spinner-dark" aria-hidden="true" id="pb-print-spin"></span>
         <span id="pb-print-label">تحميل الخطوط…</span>
       </button>
+      <button type="button" id="pb-print-force" class="pb-btn pb-btn-warn pb-hidden"
+              aria-hidden="true" title="طباعة رغم تعذّر تحميل الخطوط العربية">
+        ⚠ الطباعة رغم تعذّر الخطوط
+      </button>
     </div>
   </div>
+
+  <!-- حوار تأكيد الطباعة رغم فشل الخطوط -->
+  <dialog id="pb-force-dialog" class="pb-dialog" aria-labelledby="pb-force-title" aria-describedby="pb-force-desc">
+    <form method="dialog" class="pb-dialog-body">
+      <h3 id="pb-force-title">⚠ تأكيد الطباعة بدون خطوط عربية أصلية</h3>
+      <p id="pb-force-desc">
+        تعذّر تحميل الخطوط العربية الرسمية للتقرير (Noto Naskh Arabic و/أو Amiri).
+        قد يظهر النص العربي بخط بديل من نظام التشغيل، مما يؤثر على شكل التشكيل والحروف المتّصلة وتناسق المسافات في PDF.
+      </p>
+      <p><strong>الأوزان المتعذّرة:</strong></p>
+      <ul id="pb-force-list"></ul>
+      <p>هل ترغب بمتابعة الطباعة / حفظ PDF على أي حال؟</p>
+    </form>
+    <div class="pb-dialog-actions">
+      <button type="button" id="pb-force-confirm" class="pb-btn pb-btn-warn">نعم، تابع الطباعة</button>
+      <button type="button" id="pb-force-cancel" class="pb-btn pb-btn-ghost">إلغاء</button>
+    </div>
+  </dialog>
+
 
   <script>
     (function() {
@@ -923,6 +969,46 @@ function handleExportPdf(userName: string, userEmail: string) {
       if (btnAudit) btnAudit.addEventListener('click', function() {
         body.classList.toggle('audit-hidden');
       });
+
+      // زر "الطباعة رغم تعذّر الخطوط" + حوار التأكيد
+      var btnForce      = document.getElementById('pb-print-force');
+      var forceDialog   = document.getElementById('pb-force-dialog');
+      var forceList     = document.getElementById('pb-force-list');
+      var btnForceOk    = document.getElementById('pb-force-confirm');
+      var btnForceNo    = document.getElementById('pb-force-cancel');
+      function openForceDialog(failedWeights) {
+        if (!forceDialog) return;
+        if (forceList) {
+          forceList.innerHTML = '';
+          failedWeights.forEach(function(w) {
+            var li = document.createElement('li');
+            li.textContent = w.label + ' · ' + w.weight + ' (' + w.style + ') — ' + w.file;
+            forceList.appendChild(li);
+          });
+        }
+        if (typeof forceDialog.showModal === 'function') {
+          forceDialog.showModal();
+        } else {
+          // fallback لمتصفحات لا تدعم <dialog>
+          if (window.confirm('تعذّر تحميل الخطوط العربية. متابعة الطباعة على أي حال؟')) {
+            window.print();
+          }
+        }
+      }
+      if (btnForceOk) btnForceOk.addEventListener('click', function() {
+        if (forceDialog && forceDialog.open) forceDialog.close();
+        setTimeout(function() { window.print(); }, 60);
+      });
+      if (btnForceNo) btnForceNo.addEventListener('click', function() {
+        if (forceDialog && forceDialog.open) forceDialog.close();
+      });
+      if (btnForce) btnForce.addEventListener('click', function() {
+        var failed = REQUIRED_FONTS
+          ? REQUIRED_FONTS.filter(function(_, i) { return perFontResults && perFontResults[i] !== 'ok'; })
+          : [];
+        openForceDialog(failed);
+      });
+
 
       // تكبير/تصغير المعاينة
       var ZOOM_MIN = 0.5, ZOOM_MAX = 2.0, ZOOM_STEP = 0.1;
@@ -1227,19 +1313,38 @@ function handleExportPdf(userName: string, userEmail: string) {
           var elapsed = Math.round(((performance && performance.now) ? performance.now() : Date.now()) - t0);
           var attemptsUsed = 'استُنفدت ' + attempt + '/' + MAX_ATTEMPTS + ' محاولة';
           setMeta('اكتمل الفحص خلال ' + elapsed + ' مللي ثانية · ' + loaded + '/' + total + ' وزنًا جاهزًا · ' + attemptsUsed + '.');
+
+          // تحديد ما إذا كانت عائلات الخطوط العربية الأساسية قد فشلت
+          var failedArabic = REQUIRED_FONTS.filter(function(f, i) {
+            if (perFontResults[i] === 'ok') return false;
+            return /Noto Naskh Arabic|Amiri/.test(f.family);
+          });
+          function toggleForceButton(show, count) {
+            if (!btnForce) return;
+            btnForce.classList.toggle('pb-hidden', !show);
+            btnForce.setAttribute('aria-hidden', show ? 'false' : 'true');
+            if (show) {
+              btnForce.textContent = '⚠ الطباعة رغم تعذّر الخطوط (' + count + ')';
+              btnForce.title = 'تعذّر تحميل ' + count + ' وزنًا من Noto Naskh / Amiri — يفتح حوار تأكيد';
+            }
+          }
+
           if (loaded === total) {
             var suffix = attempt > 1 ? ' — بعد ' + attempt + ' محاولات' : '';
             setFontsState('ready', '✓ الخطوط جاهزة (' + loaded + '/' + total + ')' + suffix);
             enablePrint(true, 'طباعة / حفظ PDF');
             setReason('');
+            toggleForceButton(false, 0);
           } else if (loaded === 0) {
             setFontsState('fallback', '⚠ فشل تحميل الخطوط (0/' + total + ') بعد ' + attempt + ' محاولات');
-            enablePrint(true, 'طباعة / حفظ PDF (خط بديل)');
-            setReason('⚠ تعذّر تحميل أي وزن بعد ' + attempt + '/' + MAX_ATTEMPTS + ' محاولة — سيُستخدم خط النظام. راجع التفاصيل لمعرفة السبب.');
+            enablePrint(false, 'الطباعة معطّلة — استخدم زر التأكيد');
+            setReason('⚠ تعذّر تحميل أي وزن بعد ' + attempt + '/' + MAX_ATTEMPTS + ' محاولة — اضغط «الطباعة رغم تعذّر الخطوط» للمتابعة بخط النظام.');
+            toggleForceButton(failedArabic.length > 0, failedArabic.length);
           } else {
             setFontsState('fallback', '⚠ ' + loaded + '/' + total + ' أوزان فقط بعد ' + attempt + ' محاولات');
             enablePrint(true, 'طباعة / حفظ PDF (جودة أقل)');
             setReason('⚠ بعض الأوزان لم تُحمّل بعد ' + attempt + '/' + MAX_ATTEMPTS + ' محاولة — قد تظهر الأحرف بخط بديل.');
+            toggleForceButton(failedArabic.length > 0, failedArabic.length);
           }
           setTimeout(run, 120);
         }
