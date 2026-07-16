@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Compass, CheckCircle2, Circle, RefreshCw, MapPin, Sparkles } from "lucide-react";
+import { Compass, CheckCircle2, Circle, RefreshCw, MapPin, Sparkles, TrendingUp, Target } from "lucide-react";
 import { getPassport, resetDismissed, STAGES } from "@/lib/passport.functions";
 import { NextBestAction } from "@/components/site/NextBestAction";
 
