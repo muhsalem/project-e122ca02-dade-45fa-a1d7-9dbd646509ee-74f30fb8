@@ -427,6 +427,55 @@ function handleExportPdf(userName: string, userEmail: string) {
     }
   }
 
+  /* علامات فواصل الصفحات المتوقّعة في المعاينة */
+  .page-break-marker {
+    position: absolute; left: 0; right: 0;
+    border-top: 2px dashed #d0433a;
+    pointer-events: none;
+    z-index: 50;
+  }
+  .page-break-marker::before {
+    content: attr(data-label);
+    position: absolute; top: -12px; right: 50%;
+    transform: translateX(50%);
+    background: #d0433a; color: #fff;
+    padding: 2px 10px; border-radius: 999px;
+    font-size: 9pt; font-weight: 700;
+    box-shadow: 0 2px 6px rgba(208,67,58,0.35);
+    white-space: nowrap;
+  }
+  .page-num-chip {
+    position: absolute; right: calc(50% + 108mm); top: 6px;
+    background: #0f3d2e; color: #ffd66b;
+    font-family: "Courier New", monospace;
+    font-size: 9pt; font-weight: 700;
+    padding: 3px 8px; border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    z-index: 40;
+    pointer-events: none;
+  }
+  .crosses-break {
+    outline: 2px solid #e2a72e !important;
+    outline-offset: 3px;
+    position: relative;
+  }
+  .crosses-break::after {
+    content: "⚠ ينكسر على صفحتين";
+    position: absolute; top: -12px; left: 8px;
+    background: #e2a72e; color: #4a3208;
+    padding: 2px 8px; border-radius: 4px;
+    font-size: 8.5pt; font-weight: 700;
+    z-index: 45;
+  }
+  body.breaks-hidden .page-break-marker,
+  body.breaks-hidden .page-num-chip { display: none !important; }
+  body.breaks-hidden .crosses-break { outline: none !important; }
+  body.breaks-hidden .crosses-break::after { display: none !important; }
+  @media print {
+    .page-break-marker, .page-num-chip, .crosses-break::after { display: none !important; }
+    .crosses-break { outline: none !important; }
+  }
+
   /* شريط المعاينة العائم */
   .preview-bar {
     position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
@@ -448,6 +497,7 @@ function handleExportPdf(userName: string, userEmail: string) {
     border: 1px solid rgba(255,255,255,0.18);
   }
   .pb-tag.pb-rev { font-family: "Courier New", monospace; color: #ffd66b; }
+  .pb-tag.pb-pages { background: rgba(255,214,107,0.18); color: #ffd66b; border-color: rgba(255,214,107,0.35); font-weight: 700; }
   .pb-actions { display: flex; gap: 8px; }
   .pb-btn {
     padding: 7px 14px; border-radius: 8px; font-size: 10pt; font-weight: 600;
@@ -457,6 +507,8 @@ function handleExportPdf(userName: string, userEmail: string) {
   .pb-btn-primary:hover { background: #ffce4d; }
   .pb-btn-ghost { background: transparent; color: #f4f8f6; border-color: rgba(255,255,255,0.35); }
   .pb-btn-ghost:hover { background: rgba(255,255,255,0.1); }
+  .pb-btn-toggle { background: rgba(208,67,58,0.9); color: #fff; border-color: rgba(255,255,255,0.15); }
+  .pb-btn-toggle.off { background: rgba(255,255,255,0.14); color: #f4f8f6; border-color: rgba(255,255,255,0.35); }
 </style>
 </head>
 <body>
@@ -498,9 +550,11 @@ function handleExportPdf(userName: string, userEmail: string) {
       <span class="pb-badge">معاينة قبل الحفظ</span>
       <span class="pb-tag">RTL · العربية</span>
       <span class="pb-tag">A4 · 210×297 مم</span>
+      <span class="pb-tag pb-pages" id="pb-pages">— صفحات</span>
       <span class="pb-tag pb-rev">${escapeHtml(REPORT_VERSION)}</span>
     </div>
     <div class="pb-actions">
+      <button type="button" id="pb-toggle-breaks" class="pb-btn pb-btn-toggle">إخفاء حدود الصفحات</button>
       <button type="button" id="pb-close" class="pb-btn pb-btn-ghost">إغلاق المعاينة</button>
       <button type="button" id="pb-print" class="pb-btn pb-btn-primary">طباعة / حفظ PDF</button>
     </div>
@@ -515,15 +569,120 @@ function handleExportPdf(userName: string, userEmail: string) {
           el.classList.add('long');
         }
       });
+
+      // حساب فواصل الصفحات المتوقعة داخل A4 وإبراز العناصر التي تنكسر
+      // أبعاد A4 عند 96dpi: العرض 794px، الارتفاع 1123px
+      // نأخذ في الحسبان هوامش @page (28mm أعلى / 24mm أسفل ≈ 106px + 91px)،
+      // مع هامش أعلى إضافي للصفحة الأولى (32mm ≈ 121px بدل 106).
+      var PAGE_H = 1123;                 // ارتفاع A4 بالبكسل
+      var MARGIN_TOP = 106;              // 28mm
+      var MARGIN_TOP_FIRST = 121;        // 32mm
+      var MARGIN_BOTTOM = 91;            // 24mm
+      var USABLE_FIRST = PAGE_H - MARGIN_TOP_FIRST - MARGIN_BOTTOM;   // ~911px
+      var USABLE = PAGE_H - MARGIN_TOP - MARGIN_BOTTOM;               // ~926px
+
+      var TOOLBAR_OFFSET = 76;  // padding-top للجسم في وضع الشاشة
+      var body = document.body;
+
+      function computeBreaks() {
+        // إزالة العلامات السابقة
+        document.querySelectorAll('.page-break-marker, .page-num-chip').forEach(function(n){ n.remove(); });
+        document.querySelectorAll('.crosses-break').forEach(function(n){ n.classList.remove('crosses-break'); });
+
+        // محتوى الصفحة يبدأ من أول عنصر بعد الشريط
+        var firstEl = document.querySelector('header.top');
+        if (!firstEl) return 0;
+        var startY = firstEl.offsetTop;   // نسبة إلى الجسم
+        // آخر عنصر
+        var endEl = document.querySelector('footer.doc-end');
+        var endY = endEl ? (endEl.offsetTop + endEl.offsetHeight) : document.body.scrollHeight;
+        var totalContent = endY - startY;
+
+        // احسب مواضع الفواصل المتوقعة
+        var boundaries = [];   // إحداثيات Y (نسبة إلى الجسم) حيث تبدأ صفحة جديدة
+        var cursor = startY + USABLE_FIRST;
+        var pageIdx = 2;
+        while (cursor < endY) {
+          boundaries.push({ y: cursor, page: pageIdx });
+          cursor += USABLE;
+          pageIdx++;
+        }
+
+        // ارسم علامة "بداية الصفحة N" عند كل حدّ
+        boundaries.forEach(function(b) {
+          var line = document.createElement('div');
+          line.className = 'page-break-marker';
+          line.style.top = b.y + 'px';
+          line.setAttribute('data-label', '⇤ بداية الصفحة ' + b.page);
+          body.appendChild(line);
+        });
+
+        // شارات رقم الصفحة على يسار الورقة عند بداية كل صفحة
+        var pageStarts = [{ y: startY, page: 1 }].concat(boundaries);
+        pageStarts.forEach(function(p) {
+          var chip = document.createElement('div');
+          chip.className = 'page-num-chip';
+          chip.style.top = (p.y + 4) + 'px';
+          chip.textContent = 'صفحة ' + p.page;
+          body.appendChild(chip);
+        });
+
+        // أبرز العناصر التي تعبر أي فاصل
+        var candidates = document.querySelectorAll(
+          'section.scale, section.overall, .meta-card, .intro, table.cmp, .followup, header.top'
+        );
+        candidates.forEach(function(el) {
+          var top = el.offsetTop;
+          var bottom = top + el.offsetHeight;
+          for (var i = 0; i < boundaries.length; i++) {
+            var by = boundaries[i].y;
+            if (top < by && bottom > by) {
+              // نتجاهل الأقسام التي وسمناها بـ .long عمدًا لأنها مصمّمة للتقسيم
+              if (!el.classList.contains('long')) {
+                el.classList.add('crosses-break');
+              }
+              break;
+            }
+          }
+        });
+
+        return pageStarts.length;
+      }
+
+      function refreshBadge(n) {
+        var badge = document.getElementById('pb-pages');
+        if (badge) badge.textContent = n + ' صفحات متوقّعة';
+      }
+
+      function run() {
+        var n = computeBreaks();
+        refreshBadge(n);
+      }
+
       // تفعيل أزرار المعاينة (بدون طباعة تلقائية — ينتظر المستخدم للمراجعة أولًا)
       var btnPrint = document.getElementById('pb-print');
       var btnClose = document.getElementById('pb-close');
+      var btnToggle = document.getElementById('pb-toggle-breaks');
       if (btnPrint) btnPrint.addEventListener('click', function() {
         var ready = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
         ready.then(function() { window.print(); });
       });
       if (btnClose) btnClose.addEventListener('click', function() { window.close(); });
-      // تمرير سلس إلى بداية الوثيقة
+      if (btnToggle) btnToggle.addEventListener('click', function() {
+        var hidden = body.classList.toggle('breaks-hidden');
+        btnToggle.classList.toggle('off', hidden);
+        btnToggle.textContent = hidden ? 'إظهار حدود الصفحات' : 'إخفاء حدود الصفحات';
+      });
+
+      // انتظر تحميل الخطوط ثم احسب الفواصل، وأعد الحساب عند تغيير مقاس النافذة
+      var ready = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
+      ready.then(function() { setTimeout(run, 120); });
+      var t;
+      window.addEventListener('resize', function() {
+        clearTimeout(t);
+        t = setTimeout(run, 200);
+      });
+
       window.scrollTo({ top: 0 });
     })();
   </script>
