@@ -58,7 +58,7 @@ type EvalPayload = {
 };
 
 function SimPage() {
-  const { sim } = Route.useLoaderData();
+  const { sim } = Route.useLoaderData() as { sim: CareerSim };
   const evaluate = useServerFn(evaluateCareerSim);
   const [stage, setStage] = useState<"intro" | "play" | "done">("intro");
   const [idx, setIdx] = useState(0);
@@ -301,10 +301,10 @@ function ScenarioCard({
   scenario,
   onPick,
 }: {
-  scenario: ReturnType<typeof getSim> extends infer T ? T extends { scenarios: infer S } ? S extends Array<infer U> ? U : never : never : never;
+  scenario: SimScenario;
   onPick: (choiceId: string) => void;
 }) {
-  const sc = scenario as { id: string; time: string; situation: string; question: string; choices: { id: string; label: string }[] };
+  const sc = scenario;
   return (
     <Card className="animate-in fade-in slide-in-from-bottom-2">
       <CardHeader>
