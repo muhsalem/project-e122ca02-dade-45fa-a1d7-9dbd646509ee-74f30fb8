@@ -607,6 +607,7 @@ function handleExportPdf(userName: string, userEmail: string) {
       <span class="pb-tag">RTL · العربية</span>
       <span class="pb-tag">A4 · 210×297 مم</span>
       <span class="pb-tag pb-pages" id="pb-pages">— صفحات</span>
+      <span class="pb-tag pb-pages" id="pb-audit" style="cursor:pointer" title="اضغط لإظهار/إخفاء تعليم مشاكل RTL">✓ RTL</span>
       <span class="pb-tag pb-rev">${escapeHtml(REPORT_VERSION)}</span>
     </div>
     <div class="pb-actions">
