@@ -86,6 +86,7 @@ import { Route as RTokenRouteImport } from './routes/r.$token'
 import { Route as InstitutionsDashboardRouteImport } from './routes/institutions.dashboard'
 import { Route as IdpCodeRouteImport } from './routes/idp.$code'
 import { Route as CheckoutSuccessRouteImport } from './routes/checkout.success'
+import { Route as AuthenticatedPassportRouteImport } from './routes/_authenticated/passport'
 import { Route as AuthenticatedMyPlanRouteImport } from './routes/_authenticated/my-plan'
 import { Route as AuthenticatedMyBookingsRouteImport } from './routes/_authenticated/my-bookings'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
@@ -483,6 +484,11 @@ const CheckoutSuccessRoute = CheckoutSuccessRouteImport.update({
   path: '/success',
   getParentRoute: () => CheckoutRoute,
 } as any)
+const AuthenticatedPassportRoute = AuthenticatedPassportRouteImport.update({
+  id: '/passport',
+  path: '/passport',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedMyPlanRoute = AuthenticatedMyPlanRouteImport.update({
   id: '/my-plan',
   path: '/my-plan',
@@ -586,6 +592,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/my-bookings': typeof AuthenticatedMyBookingsRoute
   '/my-plan': typeof AuthenticatedMyPlanRoute
+  '/passport': typeof AuthenticatedPassportRoute
   '/checkout/success': typeof CheckoutSuccessRoute
   '/idp/$code': typeof IdpCodeRoute
   '/institutions/dashboard': typeof InstitutionsDashboardRoute
@@ -672,6 +679,7 @@ export interface FileRoutesByTo {
   '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/my-bookings': typeof AuthenticatedMyBookingsRoute
   '/my-plan': typeof AuthenticatedMyPlanRoute
+  '/passport': typeof AuthenticatedPassportRoute
   '/checkout/success': typeof CheckoutSuccessRoute
   '/idp/$code': typeof IdpCodeRoute
   '/institutions/dashboard': typeof InstitutionsDashboardRoute
@@ -760,6 +768,7 @@ export interface FileRoutesById {
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
   '/_authenticated/my-bookings': typeof AuthenticatedMyBookingsRoute
   '/_authenticated/my-plan': typeof AuthenticatedMyPlanRoute
+  '/_authenticated/passport': typeof AuthenticatedPassportRoute
   '/checkout/success': typeof CheckoutSuccessRoute
   '/idp/$code': typeof IdpCodeRoute
   '/institutions/dashboard': typeof InstitutionsDashboardRoute
@@ -848,6 +857,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/my-bookings'
     | '/my-plan'
+    | '/passport'
     | '/checkout/success'
     | '/idp/$code'
     | '/institutions/dashboard'
@@ -934,6 +944,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/my-bookings'
     | '/my-plan'
+    | '/passport'
     | '/checkout/success'
     | '/idp/$code'
     | '/institutions/dashboard'
@@ -1021,6 +1032,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin'
     | '/_authenticated/my-bookings'
     | '/_authenticated/my-plan'
+    | '/_authenticated/passport'
     | '/checkout/success'
     | '/idp/$code'
     | '/institutions/dashboard'
@@ -1663,6 +1675,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CheckoutSuccessRouteImport
       parentRoute: typeof CheckoutRoute
     }
+    '/_authenticated/passport': {
+      id: '/_authenticated/passport'
+      path: '/passport'
+      fullPath: '/passport'
+      preLoaderRoute: typeof AuthenticatedPassportRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/my-plan': {
       id: '/_authenticated/my-plan'
       path: '/my-plan'
@@ -1737,12 +1756,14 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminRoute: typeof AuthenticatedAdminRouteWithChildren
   AuthenticatedMyBookingsRoute: typeof AuthenticatedMyBookingsRoute
   AuthenticatedMyPlanRoute: typeof AuthenticatedMyPlanRoute
+  AuthenticatedPassportRoute: typeof AuthenticatedPassportRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminRoute: AuthenticatedAdminRouteWithChildren,
   AuthenticatedMyBookingsRoute: AuthenticatedMyBookingsRoute,
   AuthenticatedMyPlanRoute: AuthenticatedMyPlanRoute,
+  AuthenticatedPassportRoute: AuthenticatedPassportRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
