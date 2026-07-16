@@ -8,18 +8,29 @@ const OPEN_SCALES = [
     use: "الشخصية (60 بند)",
     license: "مجاني للبحث · Soto & John (2017)",
     note: "الاستخدام التجاري يتطلب إذناً من المؤلفين",
+    authors: "Soto, C. J., & John, O. P. (2017)",
+    citation: "Journal of Personality and Social Psychology, 113(1), 117–143.",
+    doi: "https://doi.org/10.1037/pspp0000096",
+    url: "https://www.colby.edu/psych/personality-lab/",
   },
   {
     code: "O*NET IP",
     name: "Interest Profiler",
     use: "الميول المهنية RIASEC",
     license: "Public Domain (U.S. DoL)",
+    authors: "U.S. Department of Labor / O*NET Resource Center",
+    citation: "Rounds, J., Su, R., Lewis, P., & Rivkin, D. (2010). O*NET Interest Profiler Short Form Psychometric Characteristics.",
+    url: "https://www.onetcenter.org/IP.html",
   },
   {
     code: "OLBI",
     name: "Oldenburg Burnout Inventory",
     use: "الاحتراق المهني (بُعدَي الإنهاك والانفصال)",
     license: "مجاني للبحث · Demerouti et al.",
+    authors: "Demerouti, E., Bakker, A. B., Vardakou, I., & Kantas, A. (2003)",
+    citation: "European Journal of Psychological Assessment, 19(1), 12–23.",
+    doi: "https://doi.org/10.1027/1015-5759.19.1.12",
+    url: "https://www.wilmarschaufeli.nl/tests/",
   },
   {
     code: "UWES-9",
@@ -27,14 +38,23 @@ const OPEN_SCALES = [
     use: "الاندماج الوظيفي (9 بنود)",
     license: "مجاني للبحث · Schaufeli & Bakker",
     note: "يتطلب إذناً كتابياً للاستخدام التجاري",
+    authors: "Schaufeli, W. B., Bakker, A. B., & Salanova, M. (2006)",
+    citation: "Educational and Psychological Measurement, 66(4), 701–716.",
+    doi: "https://doi.org/10.1177/0013164405282471",
+    url: "https://www.wilmarschaufeli.nl/tests/",
   },
   {
     code: "VISA",
     name: "Vocational Identity Status Assessment",
     use: "الهوية والاستكشاف المهني",
     license: "Open Access · Porfeli et al.",
+    authors: "Porfeli, E. J., Lee, B., Vondracek, F. W., & Weigold, I. K. (2011)",
+    citation: "Journal of Vocational Behavior, 79(3), 853–871.",
+    doi: "https://doi.org/10.1016/j.jvb.2011.02.001",
+    url: "https://sites.google.com/view/erik-porfeli/measures",
   },
 ];
+
 
 export function PsychometricCredibility() {
   return (
