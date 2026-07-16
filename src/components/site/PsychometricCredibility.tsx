@@ -137,6 +137,82 @@ function handleExportPdf(userName: string, userEmail: string) {
   const reportId = `BSL-${Date.now().toString(36).toUpperCase()}`;
   const displayName = userName?.trim() || "زائر";
   const emailLine = userEmail ? ` · ${userEmail}` : "";
+
+  // مؤشرات إجمالية للمقارنة السريعة بين المقاييس
+  const maxItems = Math.max(...OPEN_SCALES.map((s) => s.items));
+  const maxDomains = Math.max(...OPEN_SCALES.map((s) => s.domains));
+  const maxGranularity = Math.max(...OPEN_SCALES.map((s) => s.respMax - s.respMin + 1));
+  const avgItems = Math.round(OPEN_SCALES.reduce((a, s) => a + s.items, 0) / OPEN_SCALES.length);
+  const avgDomains = (OPEN_SCALES.reduce((a, s) => a + s.domains, 0) / OPEN_SCALES.length).toFixed(1);
+  const avgAlpha = (OPEN_SCALES.reduce((a, s) => a + s.typicalAlpha, 0) / OPEN_SCALES.length).toFixed(2);
+  const totalItems = OPEN_SCALES.reduce((a, s) => a + s.items, 0);
+
+  const summaryRows = OPEN_SCALES.map((s) => {
+    const coverage = Math.round((s.items / maxItems) * 100);
+    const depth = Math.round((s.domains / maxDomains) * 100);
+    const granularity = Math.round(((s.respMax - s.respMin + 1) / maxGranularity) * 100);
+    const alphaPct = Math.round(s.typicalAlpha * 100);
+    return `
+      <tr>
+        <td class="c-code">${escapeHtml(s.code)}</td>
+        <td>${s.items}</td>
+        <td>${s.domains}</td>
+        <td>${s.respMin}–${s.respMax}</td>
+        <td>${s.typicalAlpha.toFixed(2)}</td>
+        <td class="bar-cell">
+          <div class="bar"><span style="width:${coverage}%"></span></div>
+          <em>${coverage}٪</em>
+        </td>
+        <td class="bar-cell">
+          <div class="bar bar-b"><span style="width:${depth}%"></span></div>
+          <em>${depth}٪</em>
+        </td>
+        <td class="bar-cell">
+          <div class="bar bar-c"><span style="width:${granularity}%"></span></div>
+          <em>${granularity}٪</em>
+        </td>
+        <td class="bar-cell">
+          <div class="bar bar-d"><span style="width:${alphaPct}%"></span></div>
+          <em>α ${s.typicalAlpha.toFixed(2)}</em>
+        </td>
+      </tr>`;
+  }).join("");
+
+  const summaryHtml = `
+    <section class="overall">
+      <h2>الملخص الإجمالي · مقارنة سريعة بين المقاييس الخمسة</h2>
+      <div class="kpis">
+        <div class="kpi"><span class="k-lbl">إجمالي البنود</span><span class="k-val">${totalItems}</span></div>
+        <div class="kpi"><span class="k-lbl">متوسط البنود / مقياس</span><span class="k-val">${avgItems}</span></div>
+        <div class="kpi"><span class="k-lbl">متوسط النطاقات</span><span class="k-val">${avgDomains}</span></div>
+        <div class="kpi"><span class="k-lbl">متوسط الثبات α</span><span class="k-val">${avgAlpha}</span></div>
+        <div class="kpi"><span class="k-lbl">عدد المقاييس</span><span class="k-val">${OPEN_SCALES.length}</span></div>
+      </div>
+      <table class="cmp">
+        <thead>
+          <tr>
+            <th>المقياس</th>
+            <th>البنود</th>
+            <th>النطاقات</th>
+            <th>مدى الاستجابة</th>
+            <th>α النموذجي</th>
+            <th>تغطية البنود</th>
+            <th>عمق النطاقات</th>
+            <th>دقّة التدرّج</th>
+            <th>ثبات الأداة</th>
+          </tr>
+        </thead>
+        <tbody>${summaryRows}</tbody>
+      </table>
+      <p class="legend">
+        <strong>كيف تُقرأ الأشرطة؟</strong>
+        <span class="lg lg-a"></span> تغطية البنود = البنود ÷ أعلى مقياس.
+        <span class="lg lg-b"></span> عمق النطاقات = عدد الأبعاد ÷ أعلى مقياس.
+        <span class="lg lg-c"></span> دقّة التدرّج = مدى الاستجابة ÷ أوسع مدى.
+        <span class="lg lg-d"></span> الثبات α النموذجي المُبلَّغ في الأدبيات.
+      </p>
+    </section>`;
+
   const scalesHtml = OPEN_SCALES.map((s) => {
     const interp = INTERPRETATIONS[s.code];
     return `
