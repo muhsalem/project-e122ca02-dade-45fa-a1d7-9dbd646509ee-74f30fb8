@@ -828,6 +828,187 @@ export type Database = {
         }
         Relationships: []
       }
+      psych_scale_items: {
+        Row: {
+          created_at: string
+          dimension: string | null
+          id: string
+          item_code: string
+          reverse_scored: boolean
+          scale_id: string
+          sort_order: number
+          text_ar: string
+          text_en: string | null
+          updated_at: string
+          version_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          dimension?: string | null
+          id?: string
+          item_code: string
+          reverse_scored?: boolean
+          scale_id: string
+          sort_order?: number
+          text_ar: string
+          text_en?: string | null
+          updated_at?: string
+          version_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          dimension?: string | null
+          id?: string
+          item_code?: string
+          reverse_scored?: boolean
+          scale_id?: string
+          sort_order?: number
+          text_ar?: string
+          text_en?: string | null
+          updated_at?: string
+          version_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "psych_scale_items_scale_id_fkey"
+            columns: ["scale_id"]
+            isOneToOne: false
+            referencedRelation: "psych_scales"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "psych_scale_items_version_id_fkey"
+            columns: ["version_id"]
+            isOneToOne: false
+            referencedRelation: "psych_scale_versions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      psych_scale_sources: {
+        Row: {
+          citation: string
+          created_at: string
+          id: string
+          license_ref: string | null
+          retrieved_at: string | null
+          scale_id: string
+          url: string | null
+        }
+        Insert: {
+          citation: string
+          created_at?: string
+          id?: string
+          license_ref?: string | null
+          retrieved_at?: string | null
+          scale_id: string
+          url?: string | null
+        }
+        Update: {
+          citation?: string
+          created_at?: string
+          id?: string
+          license_ref?: string | null
+          retrieved_at?: string | null
+          scale_id?: string
+          url?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "psych_scale_sources_scale_id_fkey"
+            columns: ["scale_id"]
+            isOneToOne: false
+            referencedRelation: "psych_scales"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      psych_scale_versions: {
+        Row: {
+          changelog: string | null
+          created_at: string
+          id: string
+          is_current: boolean
+          released_at: string | null
+          scale_id: string
+          updated_at: string
+          version: string
+        }
+        Insert: {
+          changelog?: string | null
+          created_at?: string
+          id?: string
+          is_current?: boolean
+          released_at?: string | null
+          scale_id: string
+          updated_at?: string
+          version: string
+        }
+        Update: {
+          changelog?: string | null
+          created_at?: string
+          id?: string
+          is_current?: boolean
+          released_at?: string | null
+          scale_id?: string
+          updated_at?: string
+          version?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "psych_scale_versions_scale_id_fkey"
+            columns: ["scale_id"]
+            isOneToOne: false
+            referencedRelation: "psych_scales"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      psych_scales: {
+        Row: {
+          code: string
+          created_at: string
+          id: string
+          is_active: boolean
+          license: string
+          license_status: string
+          name_ar: string
+          name_en: string | null
+          notes: string | null
+          source_org: string | null
+          source_url: string | null
+          updated_at: string
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          license?: string
+          license_status?: string
+          name_ar: string
+          name_en?: string | null
+          notes?: string | null
+          source_org?: string | null
+          source_url?: string | null
+          updated_at?: string
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          license?: string
+          license_status?: string
+          name_ar?: string
+          name_en?: string | null
+          notes?: string | null
+          source_org?: string | null
+          source_url?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       rate_limits: {
         Row: {
           bucket: string
