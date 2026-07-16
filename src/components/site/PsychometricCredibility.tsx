@@ -309,6 +309,10 @@ function handleExportPdf(userName: string, userEmail: string) {
 
 
 export function PsychometricCredibility() {
+  const { user } = useAuth();
+  const meta = (user?.user_metadata ?? {}) as { full_name?: string; name?: string };
+  const userName = meta.full_name || meta.name || user?.email?.split("@")[0] || "زائر";
+  const userEmail = user?.email ?? "";
   return (
     <section className="border-y border-border bg-secondary/30">
       <div className="container-page py-14">
