@@ -7,31 +7,32 @@ export function PsychometricCredibility() {
         <div className="text-center">
           <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/5 px-4 py-1.5 text-xs text-primary">
             <Award className="h-3.5 w-3.5" />
-            شفافية سيكومترية
+            سيكومترية مفتوحة الترخيص
           </div>
           <h2 className="mt-4 font-serif text-2xl text-primary md:text-3xl">
-            مستوحاة من مقاييس دولية معروفة
+            مقاييس عالمية مفتوحة المصدر — بأمانة علمية
           </h2>
           <p className="mx-auto mt-3 max-w-2xl text-sm text-muted-foreground leading-7">
-            تقييماتنا تستند إلى نسخ عربية تجريبية من مقاييس نفسية-مهنية دولية
-            معروفة، معرّبة داخلياً ومكيّفة للسياق العربي. نتائجها استكشافية
+            استبدلنا المقاييس المقيّدة بأخرى مفتوحة الترخيص (Public Domain أو مفتوحة للاستخدام
+            البحثي)، مع حفظ حقوق مؤلّفيها والاستشهاد بها في كل تقرير. نتائجها استكشافية
             تربوية ومهنية، وليست تشخيصاً سريرياً.
           </p>
           <div className="mx-auto mt-4 max-w-2xl rounded-lg border border-amber-500/40 bg-amber-50 px-4 py-3 text-right text-xs leading-6 text-amber-900 dark:bg-amber-950/20 dark:text-amber-200">
-            <strong>إفصاح سيكومتري:</strong> النسخ العربية من المقاييس
-            (Schein, WLEIS, WVI, CDSE, VARK, MBI-GS) <strong>نسخ تجريبية</strong>{" "}
-            قيد التحقّق السيكومتري على عيّنة سعودية/عربية (Pilot قيد التنفيذ).
-            تُعرض النتائج بنطاق ثقة تقريبي ولا تُعدّ تشخيصاً. سيُنشر جدول
-            الصدق والثبات (Cronbach's α + CFA + Norms) فور اكتماله.
+            <strong>إفصاح سيكومتري:</strong> النسخ العربية من هذه المقاييس (IPIP-NEO، O*NET IP،
+            OLBI، IPIP-EI، O*NET Work Values، VISA) <strong>ترجمات تجريبية داخلية</strong> لم
+            تُقنّن بعد على عيّنة عربية. تُعرض النتائج بنطاق ثقة تقريبي ±10٪. سيُنشر جدول
+            الصدق والثبات (Cronbach's α + CFA + Norms) فور اكتمال دراسة التقنين.
           </div>
         </div>
 
-        <div className="mt-10 grid gap-4 md:grid-cols-4">
+        <div className="mt-10 grid gap-4 md:grid-cols-3 lg:grid-cols-6">
           {[
-            { code: "RIASEC", name: "Holland Codes", use: "اكتشاف الميول المهنية" },
-            { code: "MBI", name: "Maslach Burnout Inventory", use: "قياس الاحتراق المهني" },
-            { code: "UWES", name: "Utrecht Work Engagement", use: "قياس الانخراط الوظيفي" },
-            { code: "GROW", name: "Whitmore Coaching Model", use: "بنية جلسات الكوتشينج" },
+            { code: "IPIP-NEO", name: "Big Five (60 بند)", use: "الشخصية — Public Domain" },
+            { code: "O*NET IP", name: "Interest Profiler", use: "الميول RIASEC — Public Domain" },
+            { code: "OLBI", name: "Oldenburg Burnout", use: "الاحتراق المهني — بحثي مفتوح" },
+            { code: "IPIP-EI", name: "الذكاء العاطفي", use: "16 بند — Public Domain" },
+            { code: "Work Values", name: "O*NET Work Values", use: "القيم المهنية — Public Domain" },
+            { code: "VISA", name: "Vocational Identity", use: "الهوية المهنية — بحثي مفتوح" },
           ].map((m) => (
             <div key={m.code} className="rounded-xl border border-border bg-card p-4">
               <div className="font-mono text-xs text-gold">{m.code}</div>
@@ -43,8 +44,8 @@ export function PsychometricCredibility() {
 
         <div className="mt-8 grid gap-4 md:grid-cols-3">
           {[
-            { icon: BookOpen, t: "قيد التحقّق السيكومتري", d: "سيُنشر جدول الصدق والثبات (α + CFA + Norms) فور اكتمال دراسة التحقّق." },
-            { icon: Users, t: "مراجعة داخلية", d: "المحتوى والصياغات تُراجَع داخلياً؛ نعمل حالياً على تشكيل لجنة استشارية مستقلة." },
+            { icon: BookOpen, t: "شفافية المصدر", d: "كل مقياس يظهر اسمه ومؤلفيه وترخيصه ورابطه الأصلي في صفحته وفي التقرير." },
+            { icon: Users, t: "ترجمة داخلية موثّقة", d: "الترجمات العربية أعدّها فريق بوصلة، وهي قيد التقنين على عيّنة عربية." },
             { icon: ShieldCheck, t: "أداة استكشاف لا تشخيص", d: "نوصي بإحالة الحالات السريرية إلى مختصين معتمدين." },
           ].map((b) => (
             <div key={b.t} className="flex gap-3 rounded-xl border border-border bg-card p-4">

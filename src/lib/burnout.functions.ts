@@ -2,13 +2,13 @@ import { AI_GUARDRAILS } from "./ai-guardrails";
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
+// OLBI subscales: each is 8 items × 1..4 = 8..32
 const Schema = z.object({
   name: z.string().max(100).optional(),
   age: z.string().max(20).optional(),
   stage: z.string().max(100).optional(),
-  exhaustion: z.number().min(0).max(36),
-  cynicism: z.number().min(0).max(30),
-  efficacy: z.number().min(0).max(36),
+  exhaustion: z.number().min(8).max(32),
+  disengagement: z.number().min(8).max(32),
   context: z.string().max(1000).optional(),
 });
 
@@ -19,13 +19,14 @@ function code() {
   return `BRN-${s.slice(0, 4)}-${s.slice(4)}`;
 }
 
-function riskLevel(ex: number, cy: number, ef: number) {
-  // High burnout: high exhaustion + high cynicism + low efficacy
+// Halbesleben & Demerouti (2005) suggested cutoffs: EX mean ≥ 2.25 (=18/8), DIS mean ≥ 2.10 (=17/8)
+function riskLevel(ex: number, dis: number) {
+  const exAvg = ex / 8;
+  const disAvg = dis / 8;
   let score = 0;
-  if (ex >= 27) score += 2; else if (ex >= 17) score += 1;
-  if (cy >= 13) score += 2; else if (cy >= 7) score += 1;
-  if (ef <= 23) score += 2; else if (ef <= 30) score += 1;
-  if (score >= 5) return "مرتفع جداً";
+  if (exAvg >= 3.0) score += 2; else if (exAvg >= 2.25) score += 1;
+  if (disAvg >= 3.0) score += 2; else if (disAvg >= 2.10) score += 1;
+  if (score >= 4) return "مرتفع جداً";
   if (score >= 3) return "مرتفع";
   if (score >= 2) return "متوسط";
   return "منخفض";
@@ -39,33 +40,31 @@ export const submitBurnout = createServerFn({ method: "POST" })
     const apiKey = process.env.LOVABLE_API_KEY;
     if (!apiKey) throw new Error("LOVABLE_API_KEY غير مهيأ");
 
-    const risk = riskLevel(data.exhaustion, data.cynicism, data.efficacy);
+    const risk = riskLevel(data.exhaustion, data.disengagement);
 
-    const system = `أنت أخصائي صحة نفسية مهنية، مرجعيتك Maslach Burnout Inventory (MBI-GS) ومعايير ICD-11 لاحتراق العمل (QD85).
+    const system = `أنت أخصائي صحة نفسية مهنية، مرجعيتك مقياس Oldenburg Burnout Inventory (OLBI — Demerouti et al., 2003) ومعايير ICD-11 لاحتراق العمل (QD85).
 
 **الدرجات المحسوبة (لا تُعدّل):**
-- Emotional Exhaustion: ${data.exhaustion}/36
-- Cynicism / Depersonalization: ${data.cynicism}/30
-- Professional Efficacy: ${data.efficacy}/36
+- Exhaustion (الإنهاك): ${data.exhaustion}/32 (متوسط ${(data.exhaustion / 8).toFixed(2)}/4)
+- Disengagement (الانفصال عن العمل): ${data.disengagement}/32 (متوسط ${(data.disengagement / 8).toFixed(2)}/4)
 - **مستوى الخطر: ${risk}**
 
 أصدر تقريراً بالعربية (Markdown) — حانٍ، علمي، عملي:
 
-# مؤشر صحتك المهنية — Burnout Index
+# مؤشر صحتك المهنية — Burnout Index (OLBI)
 
 ## ١. مستواك الحالي
 اشرح بصدق ومحبة معنى المستوى (${risk}) دون مبالغة ولا تهوين.
 
-## ٢. تحليل الأبعاد الثلاثة
-- الإرهاق العاطفي ${data.exhaustion}/36 — ما يعنيه.
-- التبلّد/السلبية ${data.cynicism}/30 — ما يعنيه.
-- الفاعلية المهنية ${data.efficacy}/36 — ما يعنيها.
+## ٢. تحليل البعدين
+- الإنهاك ${data.exhaustion}/32 — الأعراض الجسدية والذهنية للاستنزاف.
+- الانفصال ${data.disengagement}/32 — تراجع المعنى والحماس تجاه العمل.
 
 ## ٣. الأعراض التي قد تلاحظها
 جسديّة + ذهنيّة + سلوكيّة + علاقيّة (مبنية على درجاتك).
 
 ## ٤. الأسباب المحتملة (Job-Person Mismatch)
-حسب نموذج Maslach: عبء العمل، التحكم، المكافأة، المجتمع، العدالة، القيم.
+عبء العمل، التحكم، المكافأة، المجتمع، العدالة، القيم.
 
 ## ٥. خطة تعافٍ 30 يوماً
 - أسبوع 1: استرداد جسدي (نوم، رياضة، تغذية).
@@ -88,7 +87,7 @@ ${risk === "مرتفع" || risk === "مرتفع جداً" ? "**مستواك يس
 > راحتك عبادة، والاهتمام بنفسك أمانة.
 
 ## ٩. حدود التقرير
-أداة فرز (Screening) مبنية على MBI-GS مختصر — ليست تشخيصاً سريرياً.`;
+أداة استكشاف تربوي مبنية على OLBI مفتوح الترخيص — ليست تشخيصاً سريرياً، والترجمة العربية تجريبية لم تُقنّن بعد.`;
 
     const userPayload = JSON.stringify({ ...data, risk }, null, 2);
 
@@ -120,7 +119,7 @@ ${risk === "مرتفع" || risk === "مرتفع جداً" ? "**مستواك يس
       if (!e) break;
       rcode = code();
     }
-    const header = `# مؤشر الاحتراق المهني\n\n**الاسم:** ${data.name ?? "—"}  \n**كود التقرير:** \`${rcode}\`  \n**مستوى الخطر:** **${risk}**\n\n---\n\n`;
+    const header = `# مؤشر الاحتراق المهني (OLBI)\n\n**الاسم:** ${data.name ?? "—"}  \n**كود التقرير:** \`${rcode}\`  \n**مستوى الخطر:** **${risk}**\n\n---\n\n`;
     const report = header + aiReport;
 
     const { error } = await supabaseAdmin.from("assessment_reports").insert({
