@@ -22,6 +22,7 @@ export function Footer() {
           <ul className="space-y-2 text-sm text-muted-foreground">
             <li><Link to="/start" className="hover:text-primary">ابدأ رحلتك</Link></li>
             <li><Link to="/passport" className="hover:text-primary">جواز بوصلة (منظّم الرحلة)</Link></li>
+            <li><Link to="/study-os" className="hover:text-primary">Study OS — نظام المذاكرة الذكي</Link></li>
             <li><Link to="/pricing" className="hover:text-primary">الأسعار والباقات</Link></li>
             <li><Link to="/institutions" className="hover:text-primary">للمؤسسات (B2B)</Link></li>
             <li><Link to="/booking" className="hover:text-primary">حجز جلسة إرشاد أو كوتشينج</Link></li>
