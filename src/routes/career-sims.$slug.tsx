@@ -1,7 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
-import { getSim } from "@/data/career-sims";
+import { getSim, type CareerSim, type SimScenario } from "@/data/career-sims";
 import { evaluateCareerSim } from "@/lib/career-sim.functions";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";

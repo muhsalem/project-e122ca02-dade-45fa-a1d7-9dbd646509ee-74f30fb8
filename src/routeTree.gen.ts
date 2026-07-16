@@ -68,6 +68,7 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ReportIndexRouteImport } from './routes/report.index'
+import { Route as CareerSimsIndexRouteImport } from './routes/career-sims.index'
 import { Route as TrackGrowthRouteImport } from './routes/track.growth'
 import { Route as TrackEntrepreneurshipRouteImport } from './routes/track.entrepreneurship'
 import { Route as TrackDiscoveryRouteImport } from './routes/track.discovery'
@@ -87,6 +88,7 @@ import { Route as RTokenRouteImport } from './routes/r.$token'
 import { Route as InstitutionsDashboardRouteImport } from './routes/institutions.dashboard'
 import { Route as IdpCodeRouteImport } from './routes/idp.$code'
 import { Route as CheckoutSuccessRouteImport } from './routes/checkout.success'
+import { Route as CareerSimsSlugRouteImport } from './routes/career-sims.$slug'
 import { Route as AuthenticatedPassportRouteImport } from './routes/_authenticated/passport'
 import { Route as AuthenticatedMyPlanRouteImport } from './routes/_authenticated/my-plan'
 import { Route as AuthenticatedMyBookingsRouteImport } from './routes/_authenticated/my-bookings'
@@ -391,6 +393,11 @@ const ReportIndexRoute = ReportIndexRouteImport.update({
   path: '/report/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CareerSimsIndexRoute = CareerSimsIndexRouteImport.update({
+  id: '/career-sims/',
+  path: '/career-sims/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TrackGrowthRoute = TrackGrowthRouteImport.update({
   id: '/track/growth',
   path: '/track/growth',
@@ -489,6 +496,11 @@ const CheckoutSuccessRoute = CheckoutSuccessRouteImport.update({
   id: '/success',
   path: '/success',
   getParentRoute: () => CheckoutRoute,
+} as any)
+const CareerSimsSlugRoute = CareerSimsSlugRouteImport.update({
+  id: '/career-sims/$slug',
+  path: '/career-sims/$slug',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedPassportRoute = AuthenticatedPassportRouteImport.update({
   id: '/passport',
@@ -600,6 +612,7 @@ export interface FileRoutesByFullPath {
   '/my-bookings': typeof AuthenticatedMyBookingsRoute
   '/my-plan': typeof AuthenticatedMyPlanRoute
   '/passport': typeof AuthenticatedPassportRoute
+  '/career-sims/$slug': typeof CareerSimsSlugRoute
   '/checkout/success': typeof CheckoutSuccessRoute
   '/idp/$code': typeof IdpCodeRoute
   '/institutions/dashboard': typeof InstitutionsDashboardRoute
@@ -619,6 +632,7 @@ export interface FileRoutesByFullPath {
   '/track/discovery': typeof TrackDiscoveryRoute
   '/track/entrepreneurship': typeof TrackEntrepreneurshipRoute
   '/track/growth': typeof TrackGrowthRoute
+  '/career-sims/': typeof CareerSimsIndexRoute
   '/report/': typeof ReportIndexRoute
   '/admin/scales': typeof AuthenticatedAdminScalesRoute
   '/api/public/health': typeof ApiPublicHealthRoute
@@ -688,6 +702,7 @@ export interface FileRoutesByTo {
   '/my-bookings': typeof AuthenticatedMyBookingsRoute
   '/my-plan': typeof AuthenticatedMyPlanRoute
   '/passport': typeof AuthenticatedPassportRoute
+  '/career-sims/$slug': typeof CareerSimsSlugRoute
   '/checkout/success': typeof CheckoutSuccessRoute
   '/idp/$code': typeof IdpCodeRoute
   '/institutions/dashboard': typeof InstitutionsDashboardRoute
@@ -707,6 +722,7 @@ export interface FileRoutesByTo {
   '/track/discovery': typeof TrackDiscoveryRoute
   '/track/entrepreneurship': typeof TrackEntrepreneurshipRoute
   '/track/growth': typeof TrackGrowthRoute
+  '/career-sims': typeof CareerSimsIndexRoute
   '/report': typeof ReportIndexRoute
   '/admin/scales': typeof AuthenticatedAdminScalesRoute
   '/api/public/health': typeof ApiPublicHealthRoute
@@ -778,6 +794,7 @@ export interface FileRoutesById {
   '/_authenticated/my-bookings': typeof AuthenticatedMyBookingsRoute
   '/_authenticated/my-plan': typeof AuthenticatedMyPlanRoute
   '/_authenticated/passport': typeof AuthenticatedPassportRoute
+  '/career-sims/$slug': typeof CareerSimsSlugRoute
   '/checkout/success': typeof CheckoutSuccessRoute
   '/idp/$code': typeof IdpCodeRoute
   '/institutions/dashboard': typeof InstitutionsDashboardRoute
@@ -797,6 +814,7 @@ export interface FileRoutesById {
   '/track/discovery': typeof TrackDiscoveryRoute
   '/track/entrepreneurship': typeof TrackEntrepreneurshipRoute
   '/track/growth': typeof TrackGrowthRoute
+  '/career-sims/': typeof CareerSimsIndexRoute
   '/report/': typeof ReportIndexRoute
   '/_authenticated/admin/scales': typeof AuthenticatedAdminScalesRoute
   '/api/public/health': typeof ApiPublicHealthRoute
@@ -868,6 +886,7 @@ export interface FileRouteTypes {
     | '/my-bookings'
     | '/my-plan'
     | '/passport'
+    | '/career-sims/$slug'
     | '/checkout/success'
     | '/idp/$code'
     | '/institutions/dashboard'
@@ -887,6 +906,7 @@ export interface FileRouteTypes {
     | '/track/discovery'
     | '/track/entrepreneurship'
     | '/track/growth'
+    | '/career-sims/'
     | '/report/'
     | '/admin/scales'
     | '/api/public/health'
@@ -956,6 +976,7 @@ export interface FileRouteTypes {
     | '/my-bookings'
     | '/my-plan'
     | '/passport'
+    | '/career-sims/$slug'
     | '/checkout/success'
     | '/idp/$code'
     | '/institutions/dashboard'
@@ -975,6 +996,7 @@ export interface FileRouteTypes {
     | '/track/discovery'
     | '/track/entrepreneurship'
     | '/track/growth'
+    | '/career-sims'
     | '/report'
     | '/admin/scales'
     | '/api/public/health'
@@ -1045,6 +1067,7 @@ export interface FileRouteTypes {
     | '/_authenticated/my-bookings'
     | '/_authenticated/my-plan'
     | '/_authenticated/passport'
+    | '/career-sims/$slug'
     | '/checkout/success'
     | '/idp/$code'
     | '/institutions/dashboard'
@@ -1064,6 +1087,7 @@ export interface FileRouteTypes {
     | '/track/discovery'
     | '/track/entrepreneurship'
     | '/track/growth'
+    | '/career-sims/'
     | '/report/'
     | '/_authenticated/admin/scales'
     | '/api/public/health'
@@ -1131,6 +1155,7 @@ export interface RootRouteChildren {
   TermsRoute: typeof TermsRoute
   WellbeingCheckRoute: typeof WellbeingCheckRoute
   WorkValuesRoute: typeof WorkValuesRoute
+  CareerSimsSlugRoute: typeof CareerSimsSlugRoute
   IdpCodeRoute: typeof IdpCodeRoute
   RTokenRoute: typeof RTokenRoute
   ReportCodeRoute: typeof ReportCodeRoute
@@ -1140,6 +1165,7 @@ export interface RootRouteChildren {
   TrackDiscoveryRoute: typeof TrackDiscoveryRoute
   TrackEntrepreneurshipRoute: typeof TrackEntrepreneurshipRoute
   TrackGrowthRoute: typeof TrackGrowthRoute
+  CareerSimsIndexRoute: typeof CareerSimsIndexRoute
   ReportIndexRoute: typeof ReportIndexRoute
   ApiPublicHealthRoute: typeof ApiPublicHealthRoute
   ApiPublicWebhooksMoyasarRoute: typeof ApiPublicWebhooksMoyasarRoute
@@ -1562,6 +1588,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ReportIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/career-sims/': {
+      id: '/career-sims/'
+      path: '/career-sims'
+      fullPath: '/career-sims/'
+      preLoaderRoute: typeof CareerSimsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/track/growth': {
       id: '/track/growth'
       path: '/track/growth'
@@ -1694,6 +1727,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/checkout/success'
       preLoaderRoute: typeof CheckoutSuccessRouteImport
       parentRoute: typeof CheckoutRoute
+    }
+    '/career-sims/$slug': {
+      id: '/career-sims/$slug'
+      path: '/career-sims/$slug'
+      fullPath: '/career-sims/$slug'
+      preLoaderRoute: typeof CareerSimsSlugRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_authenticated/passport': {
       id: '/_authenticated/passport'
@@ -1899,6 +1939,7 @@ const rootRouteChildren: RootRouteChildren = {
   TermsRoute: TermsRoute,
   WellbeingCheckRoute: WellbeingCheckRoute,
   WorkValuesRoute: WorkValuesRoute,
+  CareerSimsSlugRoute: CareerSimsSlugRoute,
   IdpCodeRoute: IdpCodeRoute,
   RTokenRoute: RTokenRoute,
   ReportCodeRoute: ReportCodeRoute,
@@ -1908,6 +1949,7 @@ const rootRouteChildren: RootRouteChildren = {
   TrackDiscoveryRoute: TrackDiscoveryRoute,
   TrackEntrepreneurshipRoute: TrackEntrepreneurshipRoute,
   TrackGrowthRoute: TrackGrowthRoute,
+  CareerSimsIndexRoute: CareerSimsIndexRoute,
   ReportIndexRoute: ReportIndexRoute,
   ApiPublicHealthRoute: ApiPublicHealthRoute,
   ApiPublicWebhooksMoyasarRoute: ApiPublicWebhooksMoyasarRoute,
