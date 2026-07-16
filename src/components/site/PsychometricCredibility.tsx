@@ -427,6 +427,55 @@ function handleExportPdf(userName: string, userEmail: string) {
     }
   }
 
+  /* علامات فواصل الصفحات المتوقّعة في المعاينة */
+  .page-break-marker {
+    position: absolute; left: 0; right: 0;
+    border-top: 2px dashed #d0433a;
+    pointer-events: none;
+    z-index: 50;
+  }
+  .page-break-marker::before {
+    content: attr(data-label);
+    position: absolute; top: -12px; right: 50%;
+    transform: translateX(50%);
+    background: #d0433a; color: #fff;
+    padding: 2px 10px; border-radius: 999px;
+    font-size: 9pt; font-weight: 700;
+    box-shadow: 0 2px 6px rgba(208,67,58,0.35);
+    white-space: nowrap;
+  }
+  .page-num-chip {
+    position: absolute; right: calc(50% + 108mm); top: 6px;
+    background: #0f3d2e; color: #ffd66b;
+    font-family: "Courier New", monospace;
+    font-size: 9pt; font-weight: 700;
+    padding: 3px 8px; border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    z-index: 40;
+    pointer-events: none;
+  }
+  .crosses-break {
+    outline: 2px solid #e2a72e !important;
+    outline-offset: 3px;
+    position: relative;
+  }
+  .crosses-break::after {
+    content: "⚠ ينكسر على صفحتين";
+    position: absolute; top: -12px; left: 8px;
+    background: #e2a72e; color: #4a3208;
+    padding: 2px 8px; border-radius: 4px;
+    font-size: 8.5pt; font-weight: 700;
+    z-index: 45;
+  }
+  body.breaks-hidden .page-break-marker,
+  body.breaks-hidden .page-num-chip { display: none !important; }
+  body.breaks-hidden .crosses-break { outline: none !important; }
+  body.breaks-hidden .crosses-break::after { display: none !important; }
+  @media print {
+    .page-break-marker, .page-num-chip, .crosses-break::after { display: none !important; }
+    .crosses-break { outline: none !important; }
+  }
+
   /* شريط المعاينة العائم */
   .preview-bar {
     position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
@@ -448,6 +497,7 @@ function handleExportPdf(userName: string, userEmail: string) {
     border: 1px solid rgba(255,255,255,0.18);
   }
   .pb-tag.pb-rev { font-family: "Courier New", monospace; color: #ffd66b; }
+  .pb-tag.pb-pages { background: rgba(255,214,107,0.18); color: #ffd66b; border-color: rgba(255,214,107,0.35); font-weight: 700; }
   .pb-actions { display: flex; gap: 8px; }
   .pb-btn {
     padding: 7px 14px; border-radius: 8px; font-size: 10pt; font-weight: 600;
@@ -457,6 +507,8 @@ function handleExportPdf(userName: string, userEmail: string) {
   .pb-btn-primary:hover { background: #ffce4d; }
   .pb-btn-ghost { background: transparent; color: #f4f8f6; border-color: rgba(255,255,255,0.35); }
   .pb-btn-ghost:hover { background: rgba(255,255,255,0.1); }
+  .pb-btn-toggle { background: rgba(208,67,58,0.9); color: #fff; border-color: rgba(255,255,255,0.15); }
+  .pb-btn-toggle.off { background: rgba(255,255,255,0.14); color: #f4f8f6; border-color: rgba(255,255,255,0.35); }
 </style>
 </head>
 <body>
