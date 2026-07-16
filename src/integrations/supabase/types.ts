@@ -634,6 +634,33 @@ export type Database = {
         }
         Relationships: []
       }
+      passport_journeys: {
+        Row: {
+          created_at: string
+          dismissed_actions: string[]
+          meta: Json
+          stage: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          dismissed_actions?: string[]
+          meta?: Json
+          stage?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          dismissed_actions?: string[]
+          meta?: Json
+          stage?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       payments: {
         Row: {
           amount_minor: number
