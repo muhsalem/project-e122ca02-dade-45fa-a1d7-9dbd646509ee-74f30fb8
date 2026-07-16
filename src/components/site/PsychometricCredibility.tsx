@@ -611,6 +611,24 @@ function handleExportPdf(userName: string, userEmail: string) {
       <span class="pb-tag pb-rev">${escapeHtml(REPORT_VERSION)}</span>
     </div>
     <div class="pb-actions">
+      <label class="pb-select" title="حجم الصفحة">
+        <span>الحجم</span>
+        <select id="pb-size">
+          <option value="A4">A4</option>
+          <option value="A4-landscape">A4 عرضي</option>
+          <option value="Letter">Letter</option>
+          <option value="Legal">Legal</option>
+        </select>
+      </label>
+      <label class="pb-select" title="نمط الهوامش">
+        <span>الهوامش</span>
+        <select id="pb-margins">
+          <option value="standard">قياسية (28/16/24)</option>
+          <option value="wide">واسعة (32/22/28)</option>
+          <option value="narrow">ضيّقة (18/12/16)</option>
+          <option value="custom">مخصّصة…</option>
+        </select>
+      </label>
       <div class="pb-zoom" role="group" aria-label="تكبير وتصغير المعاينة">
         <button type="button" id="pb-zoom-out" title="تصغير" aria-label="تصغير">−</button>
         <span class="pb-zoom-val" id="pb-zoom-val">100٪</span>
@@ -619,7 +637,7 @@ function handleExportPdf(userName: string, userEmail: string) {
       </div>
       <button type="button" id="pb-toggle-breaks" class="pb-btn pb-btn-toggle">إخفاء حدود الصفحات</button>
       <button type="button" id="pb-close" class="pb-btn pb-btn-ghost">إغلاق المعاينة</button>
-      <button type="button" id="pb-print" class="pb-btn pb-btn-primary">طباعة / حفظ PDF</button>
+      <button type="button" id="pb-print" class="pb-btn pb-btn-primary" title="اسم الملف يُقترح تلقائيًا من عنوان الصفحة">طباعة / حفظ PDF</button>
     </div>
   </div>
 
