@@ -529,8 +529,31 @@ function handleExportPdf(userName: string, userEmail: string) {
   .pb-btn-ghost:hover { background: rgba(255,255,255,0.1); }
   .pb-btn-toggle { background: rgba(208,67,58,0.9); color: #fff; border-color: rgba(255,255,255,0.15); }
   .pb-btn-toggle.off { background: rgba(255,255,255,0.14); color: #f4f8f6; border-color: rgba(255,255,255,0.35); }
+  .pb-btn-warn {
+    background: rgba(208,67,58,0.9); color: #fff;
+    border-color: rgba(255,255,255,0.15);
+  }
+  .pb-btn-warn:hover { background: rgba(208,67,58,1); }
+  .pb-hidden { display: none !important; }
   .pb-btn:disabled, .pb-btn[aria-disabled="true"] {
     opacity: 0.75; cursor: progress; filter: saturate(0.7);
+  }
+
+  /* حوار تأكيد الطباعة رغم فشل الخطوط */
+  .pb-dialog {
+    padding: 0; border: 0; border-radius: 14px; max-width: 460px; width: 92%;
+    background: #1b2b26; color: #f4f8f6; direction: rtl; text-align: right;
+    font-family: "Noto Naskh Arabic", system-ui, sans-serif;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+  }
+  .pb-dialog::backdrop { background: rgba(0,0,0,0.55); }
+  .pb-dialog-body { padding: 20px 22px 8px; }
+  .pb-dialog h3 { margin: 0 0 10px; font-size: 17px; color: #ffd66b; }
+  .pb-dialog p { margin: 6px 0; font-size: 13.5px; line-height: 1.7; }
+  .pb-dialog ul { margin: 8px 0; padding-inline-start: 18px; font-size: 12.5px; color: #ffbaae; }
+  .pb-dialog-actions {
+    display: flex; gap: 8px; justify-content: flex-start;
+    padding: 12px 22px 18px; border-top: 1px solid rgba(255,255,255,0.08); margin-top: 8px;
   }
 
   /* مؤشر تحميل الخطوط */
