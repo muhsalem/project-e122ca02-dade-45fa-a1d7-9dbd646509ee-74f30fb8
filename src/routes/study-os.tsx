@@ -161,7 +161,7 @@ function Pomodoro() {
 
 /* ============================== Flashcards (SM-2) ============================== */
 
-type Card = {
+type FCard = {
   id: string;
   front: string;
   back: string;
@@ -175,14 +175,14 @@ type Card = {
 
 const CARDS_KEY = "bosla:flashcards:v1";
 
-function loadCards(): Card[] {
+function loadCards(): FCard[] {
   if (typeof window === "undefined") return [];
   try { return JSON.parse(localStorage.getItem(CARDS_KEY) || "[]"); } catch { return []; }
 }
-function saveCards(c: Card[]) { localStorage.setItem(CARDS_KEY, JSON.stringify(c)); }
+function saveCards(c: FCard[]) { localStorage.setItem(CARDS_KEY, JSON.stringify(c)); }
 
 // SM-2 grading: q 0..5 (we use 1=صعب,3=مقبول,5=سهل)
-function reviewCard(card: Card, quality: number): Card {
+function reviewCard(card: FCard, quality: number): FCard {
   let { ease, interval, reps } = card;
   if (quality < 3) {
     reps = 0;
@@ -199,7 +199,7 @@ function reviewCard(card: Card, quality: number): Card {
 }
 
 function Flashcards() {
-  const [cards, setCards] = useState<Card[]>([]);
+  const [cards, setCards] = useState<FCard[]>([]);
   const [front, setFront] = useState("");
   const [back, setBack] = useState("");
   const [deck, setDeck] = useState("عام");
@@ -216,7 +216,7 @@ function Flashcards() {
 
   function addCard() {
     if (!front.trim() || !back.trim()) { toast.error("املأ الوجهين"); return; }
-    const c: Card = {
+    const c: FCard = {
       id: crypto.randomUUID(), front: front.trim(), back: back.trim(),
       deck: deck.trim() || "عام", ease: 2.5, interval: 0, reps: 0,
       dueAt: Date.now(), createdAt: Date.now(),
