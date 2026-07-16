@@ -863,6 +863,86 @@ function handleExportPdf(userName: string, userEmail: string) {
         applyZoom();
       }, { passive: false });
 
+      // ===== خيارات التصدير: حجم الصفحة والهوامش واسم الملف =====
+      // ملاحظة: اسم ملف PDF يُقترح من document.title في معظم المتصفحات
+      var MARGIN_PRESETS = {
+        standard: { top: 28, side: 16, bottom: 24, first: 32, label: 'قياسية' },
+        wide:     { top: 32, side: 22, bottom: 28, first: 36, label: 'واسعة' },
+        narrow:   { top: 18, side: 12, bottom: 16, first: 22, label: 'ضيّقة' }
+      };
+      var SIZE_PRESETS = {
+        'A4':           { css: 'A4',           w: 794,  h: 1123, label: 'A4' },
+        'A4-landscape': { css: 'A4 landscape', w: 1123, h: 794,  label: 'A4-Landscape' },
+        'Letter':       { css: 'Letter',       w: 816,  h: 1056, label: 'Letter' },
+        'Legal':        { css: 'Legal',        w: 816,  h: 1344, label: 'Legal' }
+      };
+      var currentSize = 'A4';
+      var currentMargins = MARGIN_PRESETS.standard;
+      var pageStyle = document.getElementById('page-style');
+      var selSize = document.getElementById('pb-size');
+      var selMar = document.getElementById('pb-margins');
+
+      function slug(s) {
+        return (s || '').toString().trim()
+          .replace(/[\\/:*?"<>|]+/g, '')
+          .replace(/\s+/g, '-')
+          .replace(/-+/g, '-')
+          .slice(0, 40) || 'user';
+      }
+      function pad(n) { return String(n).padStart(2, '0'); }
+      function updateFilename() {
+        var d = new Date();
+        var ymd = d.getFullYear() + pad(d.getMonth() + 1) + pad(d.getDate());
+        var hm  = pad(d.getHours()) + pad(d.getMinutes());
+        var name = 'Bosla-Psychometric_' + slug(${JSON.stringify(displayName)}) + '_' + ymd + '-' + hm + '_' + ${JSON.stringify(reportId)};
+        // اسم ملف PDF المقترح = document.title في متصفحات Chromium/Edge
+        document.title = name;
+      }
+      function applyPageStyle() {
+        var sz = SIZE_PRESETS[currentSize] || SIZE_PRESETS.A4;
+        var m = currentMargins;
+        pageStyle.textContent =
+          '@page { size: ' + sz.css + '; margin: ' + m.top + 'mm ' + m.side + 'mm ' + m.bottom + 'mm; }\\n' +
+          '@page :first { margin-top: ' + m.first + 'mm; }';
+        // حدّث ثوابت حساب فواصل الصفحات
+        PAGE_H = sz.h;
+        PAGE_W = sz.w;
+        MARGIN_TOP = Math.round(m.top * 3.7795);
+        MARGIN_TOP_FIRST = Math.round(m.first * 3.7795);
+        MARGIN_BOTTOM = Math.round(m.bottom * 3.7795);
+        USABLE_FIRST = PAGE_H - MARGIN_TOP_FIRST - MARGIN_BOTTOM;
+        USABLE = PAGE_H - MARGIN_TOP - MARGIN_BOTTOM;
+        // حدّث شارة الحجم في الشريط
+        var tag = document.querySelector('.pb-info .pb-tag:nth-child(3)');
+        if (tag) tag.textContent = sz.label + ' · هوامش ' + m.label;
+        updateFilename();
+        setTimeout(run, 60);
+      }
+      if (selSize) selSize.addEventListener('change', function() {
+        currentSize = selSize.value; applyPageStyle();
+      });
+      if (selMar) selMar.addEventListener('change', function() {
+        if (selMar.value === 'custom') {
+          var raw = prompt('أدخل الهوامش بالميليمتر بالصيغة: أعلى, جانبي, أسفل, أعلى-أوّل\\nمثال: 30, 18, 26, 34',
+            currentMargins.top + ', ' + currentMargins.side + ', ' + currentMargins.bottom + ', ' + currentMargins.first);
+          if (!raw) { selMar.value = 'standard'; return; }
+          var parts = raw.split(/[,\\s]+/).map(Number).filter(function(n){ return !isNaN(n); });
+          if (parts.length < 3) { alert('صيغة غير صحيحة.'); selMar.value = 'standard'; return; }
+          currentMargins = {
+            top: parts[0], side: parts[1], bottom: parts[2],
+            first: parts[3] || parts[0] + 4,
+            label: 'مخصّصة'
+          };
+        } else {
+          currentMargins = MARGIN_PRESETS[selMar.value] || MARGIN_PRESETS.standard;
+        }
+        applyPageStyle();
+      });
+
+      // تعيين اسم الملف الافتراضي فور فتح المعاينة
+      updateFilename();
+
+
       // انتظر تحميل الخطوط ثم احسب الفواصل، وأعد الحساب عند تغيير مقاس النافذة
       var ready = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
       ready.then(function() { setTimeout(run, 120); });
