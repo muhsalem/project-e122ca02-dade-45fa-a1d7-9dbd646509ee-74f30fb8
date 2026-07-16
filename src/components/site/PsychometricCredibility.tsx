@@ -717,15 +717,78 @@ function handleExportPdf(userName: string, userEmail: string) {
         if (badge) badge.textContent = n + ' صفحات متوقّعة';
       }
 
+      // تدقيق RTL: فحص الاتجاه والمحاذاة لكل عنصر نصي داخل الصفحة
+      function auditRtl() {
+        // تنظيف الوسوم السابقة
+        document.querySelectorAll('.rtl-issue').forEach(function(n) {
+          n.classList.remove('rtl-issue');
+          n.removeAttribute('data-rtl-issue');
+        });
+        var count = 0;
+        var selector = 'header.top, .meta-card, .meta-card > div, .intro, section.overall, section.overall *, section.scale, section.scale *, footer.doc-end';
+        var nodes = document.querySelectorAll(selector);
+        nodes.forEach(function(el) {
+          if (el.closest('.preview-bar')) return;
+          if (!el.textContent || !el.textContent.trim()) return;
+          var cs = getComputedStyle(el);
+          var issues = [];
+          // 1) اتجاه معكوس (LTR داخل مستند RTL)
+          if (cs.direction === 'ltr') issues.push('اتجاه LTR');
+          // 2) محاذاة يسار صريحة (يجب أن تكون right/start/center داخل RTL)
+          var ta = cs.textAlign;
+          // getComputedStyle يُرجع 'start' أو 'end' أو 'left'/'right'/'center'/'justify'
+          if (ta === 'left') {
+            // اسمح باليسار للعناصر أحادية النص اللاتيني الصريح (مثل خانات monospace)
+            var txt = (el.textContent || '').trim();
+            var isLatinOnly = /^[\x00-\x7F\s·—–\-]+$/.test(txt);
+            var tag = el.tagName.toLowerCase();
+            if (!(isLatinOnly && (tag === 'code' || cs.fontFamily.indexOf('Courier') >= 0))) {
+              issues.push('محاذاة يسار');
+            }
+          }
+          // 3) عنصر بلوك رئيسي بدون textAlign صريح لكن دِر=ltr على الأب
+          if (el.getAttribute('dir') === 'ltr') issues.push('dir=ltr');
+          if (issues.length) {
+            el.classList.add('rtl-issue');
+            el.setAttribute('data-rtl-issue', '⚠ ' + issues.join(' · '));
+            count++;
+          }
+        });
+        return count;
+      }
+
+      function refreshBadge(n) {
+        var badge = document.getElementById('pb-pages');
+        if (badge) badge.textContent = n + ' صفحات متوقّعة';
+      }
+      function refreshAuditBadge(k) {
+        var b = document.getElementById('pb-audit');
+        if (!b) return;
+        if (k === 0) {
+          b.textContent = '✓ RTL سليم';
+          b.style.background = 'rgba(46,160,67,0.20)';
+          b.style.color = '#7ee08a';
+          b.style.borderColor = 'rgba(126,224,138,0.35)';
+        } else {
+          b.textContent = '⚠ ' + k + ' تنبيه RTL';
+          b.style.background = 'rgba(178,58,140,0.22)';
+          b.style.color = '#ffb7e0';
+          b.style.borderColor = 'rgba(255,183,224,0.4)';
+        }
+      }
+
       function run() {
         var n = computeBreaks();
         refreshBadge(n);
+        var k = auditRtl();
+        refreshAuditBadge(k);
       }
 
       // تفعيل أزرار المعاينة (بدون طباعة تلقائية — ينتظر المستخدم للمراجعة أولًا)
       var btnPrint = document.getElementById('pb-print');
       var btnClose = document.getElementById('pb-close');
       var btnToggle = document.getElementById('pb-toggle-breaks');
+      var btnAudit = document.getElementById('pb-audit');
       if (btnPrint) btnPrint.addEventListener('click', function() {
         var ready = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
         ready.then(function() { window.print(); });
@@ -735,6 +798,9 @@ function handleExportPdf(userName: string, userEmail: string) {
         var hidden = body.classList.toggle('breaks-hidden');
         btnToggle.classList.toggle('off', hidden);
         btnToggle.textContent = hidden ? 'إظهار حدود الصفحات' : 'إخفاء حدود الصفحات';
+      });
+      if (btnAudit) btnAudit.addEventListener('click', function() {
+        body.classList.toggle('audit-hidden');
       });
 
       // تكبير/تصغير المعاينة
