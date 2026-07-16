@@ -1174,6 +1174,105 @@ export type Database = {
         }
         Relationships: []
       }
+      study_daily_plans: {
+        Row: {
+          created_at: string
+          day: string
+          id: string
+          inputs: Json | null
+          plan: Json
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          day?: string
+          id?: string
+          inputs?: Json | null
+          plan: Json
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          day?: string
+          id?: string
+          inputs?: Json | null
+          plan?: Json
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      study_flashcards: {
+        Row: {
+          back: string
+          created_at: string
+          deck: string
+          due_at: string
+          ease: number
+          front: string
+          id: string
+          interval_days: number
+          reps: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          back: string
+          created_at?: string
+          deck?: string
+          due_at?: string
+          ease?: number
+          front: string
+          id?: string
+          interval_days?: number
+          reps?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          back?: string
+          created_at?: string
+          deck?: string
+          due_at?: string
+          ease?: number
+          front?: string
+          id?: string
+          interval_days?: number
+          reps?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      study_pomodoro_days: {
+        Row: {
+          completed_count: number
+          created_at: string
+          day: string
+          id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          completed_count?: number
+          created_at?: string
+          day?: string
+          id?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          completed_count?: number
+          created_at?: string
+          day?: string
+          id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string
