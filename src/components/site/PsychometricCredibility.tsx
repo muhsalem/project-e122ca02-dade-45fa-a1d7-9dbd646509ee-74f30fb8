@@ -712,6 +712,33 @@ function handleExportPdf(userName: string, userEmail: string) {
         btnToggle.textContent = hidden ? 'إظهار حدود الصفحات' : 'إخفاء حدود الصفحات';
       });
 
+      // تكبير/تصغير المعاينة
+      var ZOOM_MIN = 0.5, ZOOM_MAX = 2.0, ZOOM_STEP = 0.1;
+      var zoom = 1;
+      var zVal = document.getElementById('pb-zoom-val');
+      var zIn = document.getElementById('pb-zoom-in');
+      var zOut = document.getElementById('pb-zoom-out');
+      var zReset = document.getElementById('pb-zoom-reset');
+      function applyZoom() {
+        zoom = Math.max(ZOOM_MIN, Math.min(ZOOM_MAX, Math.round(zoom * 100) / 100));
+        body.style.setProperty('--zoom', String(zoom));
+        if (zVal) zVal.textContent = Math.round(zoom * 100) + '٪';
+        if (zIn) zIn.disabled = zoom >= ZOOM_MAX - 0.001;
+        if (zOut) zOut.disabled = zoom <= ZOOM_MIN + 0.001;
+        // أعد حساب فواصل الصفحات لأن التكبير يغيّر ارتفاعات العناصر
+        setTimeout(run, 60);
+      }
+      if (zIn) zIn.addEventListener('click', function() { zoom += ZOOM_STEP; applyZoom(); });
+      if (zOut) zOut.addEventListener('click', function() { zoom -= ZOOM_STEP; applyZoom(); });
+      if (zReset) zReset.addEventListener('click', function() { zoom = 1; applyZoom(); });
+      // Ctrl/Cmd + عجلة الفأرة = تكبير/تصغير
+      window.addEventListener('wheel', function(ev) {
+        if (!(ev.ctrlKey || ev.metaKey)) return;
+        ev.preventDefault();
+        zoom += (ev.deltaY < 0 ? ZOOM_STEP : -ZOOM_STEP);
+        applyZoom();
+      }, { passive: false });
+
       // انتظر تحميل الخطوط ثم احسب الفواصل، وأعد الحساب عند تغيير مقاس النافذة
       var ready = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
       ready.then(function() { setTimeout(run, 120); });
