@@ -685,17 +685,22 @@ function handleExportPdf(userName: string, userEmail: string) {
       <span class="pb-tag">A4 · 210×297 مم</span>
       <span class="pb-tag pb-pages" id="pb-pages">— صفحات</span>
       <span class="pb-tag pb-pages" id="pb-audit" style="cursor:pointer" title="اضغط لإظهار/إخفاء تعليم مشاكل RTL">✓ RTL</span>
-      <span class="pb-tag pb-fonts loading" id="pb-fonts" tabindex="0" aria-live="polite" title="مرّر للاطّلاع على تفاصيل الخطوط">
-        <span class="pb-spinner" aria-hidden="true"></span>
+      <span class="pb-tag pb-fonts loading" id="pb-fonts" tabindex="0"
+            role="status" aria-live="polite" aria-atomic="true" aria-busy="true"
+            title="مرّر للاطّلاع على تفاصيل الخطوط">
+        <span class="pb-spinner" id="pb-fonts-spinner"
+              role="progressbar" aria-label="جاري تحميل الخطوط"
+              aria-valuemin="0" aria-valuemax="4" aria-valuenow="0"></span>
         <span class="pb-fonts-label">جاري تحميل الخطوط…</span>
         <span class="pb-fonts-caret" aria-hidden="true">▾</span>
         <div class="pb-fonts-details" id="pb-fonts-details" role="tooltip">
           <h4>حالة تحميل الخطوط</h4>
-          <ul id="pb-fonts-list"></ul>
-          <div class="pb-fd-reason" id="pb-fonts-reason"></div>
+          <ul id="pb-fonts-list" role="list" aria-label="حالة كل وزن خط"></ul>
+          <div class="pb-fd-reason" id="pb-fonts-reason" role="alert" aria-live="assertive"></div>
           <div class="pb-fd-meta" id="pb-fonts-meta">قيد الفحص…</div>
         </div>
       </span>
+      <span id="pb-fonts-announcer" class="pb-sr-only" role="status" aria-live="assertive" aria-atomic="true"></span>
       <span class="pb-tag pb-rev">${escapeHtml(REPORT_VERSION)}</span>
     </div>
     <div class="pb-actions">
