@@ -586,6 +586,12 @@ function handleExportPdf(userName: string, userEmail: string) {
       <span class="pb-tag pb-rev">${escapeHtml(REPORT_VERSION)}</span>
     </div>
     <div class="pb-actions">
+      <div class="pb-zoom" role="group" aria-label="تكبير وتصغير المعاينة">
+        <button type="button" id="pb-zoom-out" title="تصغير" aria-label="تصغير">−</button>
+        <span class="pb-zoom-val" id="pb-zoom-val">100٪</span>
+        <button type="button" id="pb-zoom-in" title="تكبير" aria-label="تكبير">+</button>
+        <button type="button" id="pb-zoom-reset" title="إعادة ضبط" aria-label="إعادة ضبط">⟳</button>
+      </div>
       <button type="button" id="pb-toggle-breaks" class="pb-btn pb-btn-toggle">إخفاء حدود الصفحات</button>
       <button type="button" id="pb-close" class="pb-btn pb-btn-ghost">إغلاق المعاينة</button>
       <button type="button" id="pb-print" class="pb-btn pb-btn-primary">طباعة / حفظ PDF</button>
