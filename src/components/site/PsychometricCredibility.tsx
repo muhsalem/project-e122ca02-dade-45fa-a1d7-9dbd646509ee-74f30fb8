@@ -851,9 +851,10 @@ function handleExportPdf(userName: string, userEmail: string) {
       var btnClose = document.getElementById('pb-close');
       var btnToggle = document.getElementById('pb-toggle-breaks');
       var btnAudit = document.getElementById('pb-audit');
+      var fontsAreReady = false;
       if (btnPrint) btnPrint.addEventListener('click', function() {
-        var ready = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
-        ready.then(function() { window.print(); });
+        if (!fontsAreReady) return;   // محمي بالحالة، والحقل معطّل بصريًا حتى الجاهزية
+        window.print();
       });
       if (btnClose) btnClose.addEventListener('click', function() { window.close(); });
       if (btnToggle) btnToggle.addEventListener('click', function() {
