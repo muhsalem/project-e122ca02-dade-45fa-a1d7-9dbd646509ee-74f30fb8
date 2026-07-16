@@ -3,91 +3,42 @@ import { useMemo, useState } from "react";
 import { Compass, RotateCcw, ArrowLeft, CheckCircle2 } from "lucide-react";
 import { LikertGroup } from "@/components/site/LikertGroup";
 import { ShariaNotice } from "@/components/site/ShariaNotice";
+import { SourceAttribution } from "@/components/site/SourceAttribution";
 import { LikertValue, scoreSubscale, toPercent, rankSubscales } from "@/lib/psychometrics";
+import { IPIP_VALUES_ITEMS, IPIP_VALUES_SOURCE, WORK_VALUES_LABELS, type WorkValue } from "@/data/scales/ipip-values";
 
 export const Route = createFileRoute("/work-values")({
   head: () => ({
     meta: [
-      { title: "القيم المهنية (WVI) — ما الذي لا تتنازل عنه؟ | بوصلة" },
-      { name: "description", content: "اكتشف أهم 3 قيم مهنية لديك من 10 قيم (الإنجاز، الاستقلالية، الخدمة، الاستقرار، الإبداع، القيادة، التوازن، الدخل، التعلّم، الانتماء) — مبني على Work Values Inventory." },
+      { title: "القيم المهنية — مبني على O*NET Work Values | بوصلة" },
+      { name: "description", content: "اكتشف أهم 3 قيم مهنية لديك من الأبعاد الستة لـ O*NET Work Values باستخدام بنود IPIP مفتوحة المصدر." },
     ],
   }),
   component: WorkValuesPage,
 });
 
-type Anchor = "achievement" | "autonomy" | "service" | "security" | "creativity" | "leadership" | "balance" | "income" | "learning" | "belonging";
+const VALUES: WorkValue[] = ["ACHIEVEMENT", "INDEPENDENCE", "RECOGNITION", "RELATIONSHIPS", "SUPPORT", "WORKING"];
 
-const ANCHORS: Record<Anchor, { ar: string; desc: string }> = {
-  achievement: { ar: "الإنجاز", desc: "تستمتع برؤية نتائج ملموسة لعملك وتحب التحدّيات والأهداف الصعبة." },
-  autonomy: { ar: "الاستقلالية", desc: "تحب أن تقرّر متى وكيف تعمل دون رقابة لصيقة." },
-  service: { ar: "الخدمة وأثر الآخرين", desc: "تتحفّز حين يكون لعملك أثر إنساني ومجتمعي." },
-  security: { ar: "الاستقرار والأمان", desc: "تفضّل البيئة المستقرة والدخل المضمون على المغامرة." },
-  creativity: { ar: "الإبداع والابتكار", desc: "تستمتع بالخلق والتجريب وكسر القوالب." },
-  leadership: { ar: "القيادة والتأثير", desc: "تحب توجيه الفِرَق وتحمّل المسؤولية." },
-  balance: { ar: "التوازن وجودة الحياة", desc: "وقتك الشخصي وأسرتك أولوية لا تساوم عليها." },
-  income: { ar: "الدخل المرتفع", desc: "العائد المادي محرّك أساسي لاختياراتك." },
-  learning: { ar: "التعلّم والنموّ", desc: "تتشوّق دائمًا لاكتساب معارف ومهارات جديدة." },
-  belonging: { ar: "الانتماء والعمل الجماعي", desc: "تزدهر في فِرَق متماسكة وعلاقات عمل دافئة." },
-};
-
-const ITEMS: Record<Anchor, { id: string; text: string }[]> = {
-  achievement: [
-    { id: "ach1", text: "أشعر بالرضا حين أحقّق هدفًا صعبًا حدّدته لنفسي." },
-    { id: "ach2", text: "أفضّل الأعمال التي تُقاس نتائجها بوضوح." },
-  ],
-  autonomy: [
-    { id: "aut1", text: "أعمل بكفاءة أعلى حين أتحكّم في وقتي وطريقتي." },
-    { id: "aut2", text: "أنفر من الإشراف اللصيق على تفاصيل عملي." },
-  ],
-  service: [
-    { id: "ser1", text: "أتحفّز أكثر حين يخدم عملي شريحة محتاجة." },
-    { id: "ser2", text: "أرى الأثر الإنساني أهم من العائد المادي أحيانًا." },
-  ],
-  security: [
-    { id: "sec1", text: "أفضّل الوظيفة المستقرّة على المشروع الواعد لكن المخاطر." },
-    { id: "sec2", text: "الاستقرار المالي شرط لقبولي بأي فرصة." },
-  ],
-  creativity: [
-    { id: "cre1", text: "أستمتع بابتكار حلول جديدة وغير مألوفة." },
-    { id: "cre2", text: "أمَلّ من المهام النمطية المتكرّرة." },
-  ],
-  leadership: [
-    { id: "lea1", text: "أحب أن أكون مرجعًا يقصده الفريق لاتخاذ القرار." },
-    { id: "lea2", text: "أتطلّع لتولّي مسؤوليات قيادية أوسع مع الوقت." },
-  ],
-  balance: [
-    { id: "bal1", text: "أرفض الوظيفة مهما كانت إن أضرّت بصحتي أو أسرتي." },
-    { id: "bal2", text: "وقتي خارج العمل لا يقلّ أهمية عن وقت العمل." },
-  ],
-  income: [
-    { id: "inc1", text: "الراتب والمزايا المالية من أهم معايير اختياري للوظيفة." },
-    { id: "inc2", text: "أسعى لرفع دخلي باستمرار حتى لو زاد ذلك من الضغط." },
-  ],
-  learning: [
-    { id: "lrn1", text: "أتحمّس للوظيفة التي تُعلّمني مهارات جديدة باستمرار." },
-    { id: "lrn2", text: "أخصّص وقتًا للتعلّم الذاتي حتى دون مقابل." },
-  ],
-  belonging: [
-    { id: "blg1", text: "العلاقات الإنسانية في العمل تؤثّر على إنتاجيتي بشكل كبير." },
-    { id: "blg2", text: "أفضّل العمل ضمن فريق على العمل منفردًا." },
-  ],
+const ITEMS_BY_VALUE: Record<WorkValue, typeof IPIP_VALUES_ITEMS> = {
+  ACHIEVEMENT: IPIP_VALUES_ITEMS.filter((i) => i.value === "ACHIEVEMENT"),
+  INDEPENDENCE: IPIP_VALUES_ITEMS.filter((i) => i.value === "INDEPENDENCE"),
+  RECOGNITION: IPIP_VALUES_ITEMS.filter((i) => i.value === "RECOGNITION"),
+  RELATIONSHIPS: IPIP_VALUES_ITEMS.filter((i) => i.value === "RELATIONSHIPS"),
+  SUPPORT: IPIP_VALUES_ITEMS.filter((i) => i.value === "SUPPORT"),
+  WORKING: IPIP_VALUES_ITEMS.filter((i) => i.value === "WORKING"),
 };
 
 function WorkValuesPage() {
   const [answers, setAnswers] = useState<Record<string, number | undefined>>({});
   const [showRes, setShowRes] = useState(false);
 
-  const allItems = useMemo(
-    () => (Object.keys(ITEMS) as Anchor[]).flatMap((k) => ITEMS[k].map((it) => ({ ...it, anchor: k }))),
-    [],
-  );
+  const total = IPIP_VALUES_ITEMS.length;
   const answeredCount = Object.values(answers).filter((v) => typeof v === "number").length;
-  const total = allItems.length;
   const progress = Math.round((answeredCount / total) * 100);
 
   const scores = useMemo(() => {
-    const out = {} as Record<Anchor, number>;
-    (Object.keys(ITEMS) as Anchor[]).forEach((k) => { out[k] = scoreSubscale(answers, ITEMS[k]); });
+    const out = {} as Record<WorkValue, number>;
+    VALUES.forEach((k) => { out[k] = scoreSubscale(answers, ITEMS_BY_VALUE[k]); });
     return out;
   }, [answers]);
 
@@ -101,8 +52,8 @@ function WorkValuesPage() {
           <Compass className="mx-auto h-10 w-10 text-gold" />
           <h1 className="mt-4 font-serif text-3xl text-primary md:text-4xl">القيم المهنية</h1>
           <p className="mx-auto mt-3 max-w-2xl text-sm leading-7 text-muted-foreground">
-            ما الذي لا تتنازل عنه في عملك؟ هذا التقييم (مستوحى من <strong>Work Values Inventory</strong>) يكشف أهم 3 قيم مهنية
-            لديك من بين 10 قيم — معيار أساسي لاختيار الوظيفة والمسار المناسبَين.
+            24 عبارة لتحديد أهم 3 قيم مهنية لديك — مبني على الأبعاد الستّة لـ <strong>O*NET Work Values</strong>
+            (الإنجاز، الاستقلالية، التقدير، العلاقات، الدعم، بيئة العمل) وبنود IPIP مفتوحة المصدر.
           </p>
         </header>
 
@@ -121,12 +72,12 @@ function WorkValuesPage() {
             </div>
 
             <div className="space-y-5">
-              {(Object.keys(ITEMS) as Anchor[]).map((k) => (
+              {VALUES.map((k) => (
                 <LikertGroup
                   key={k}
-                  title={ANCHORS[k].ar}
-                  intro={ANCHORS[k].desc}
-                  items={ITEMS[k]}
+                  title={WORK_VALUES_LABELS[k].ar}
+                  intro={WORK_VALUES_LABELS[k].desc}
+                  items={ITEMS_BY_VALUE[k]}
                   answers={answers}
                   onChange={(id, v) => setAnswers((a) => ({ ...a, [id]: v as LikertValue }))}
                 />
@@ -158,10 +109,10 @@ function WorkValuesPage() {
                     </span>
                     <div>
                       <div className="flex items-center gap-2">
-                        <h3 className="font-semibold text-primary">{ANCHORS[r.key].ar}</h3>
+                        <h3 className="font-semibold text-primary">{WORK_VALUES_LABELS[r.key].ar}</h3>
                         <span className="rounded-md bg-primary/10 px-2 py-0.5 text-[11px] text-primary">{r.pct}%</span>
                       </div>
-                      <p className="mt-1 text-xs leading-6 text-muted-foreground">{ANCHORS[r.key].desc}</p>
+                      <p className="mt-1 text-xs leading-6 text-muted-foreground">{WORK_VALUES_LABELS[r.key].desc}</p>
                     </div>
                   </li>
                 ))}
@@ -173,7 +124,7 @@ function WorkValuesPage() {
               <ul className="mt-4 space-y-2">
                 {ranked.map((r) => (
                   <li key={r.key} className="flex items-center gap-3">
-                    <span className="w-32 shrink-0 text-sm text-primary">{ANCHORS[r.key].ar}</span>
+                    <span className="w-32 shrink-0 text-sm text-primary">{WORK_VALUES_LABELS[r.key].ar}</span>
                     <div className="h-2 flex-1 rounded-full bg-muted">
                       <div className="h-full rounded-full bg-gradient-to-r from-primary to-gold" style={{ width: `${toPercent(r.avg)}%` }} />
                     </div>
@@ -207,6 +158,8 @@ function WorkValuesPage() {
             </div>
           </div>
         )}
+
+        <SourceAttribution source={IPIP_VALUES_SOURCE} />
       </div>
     </section>
   );

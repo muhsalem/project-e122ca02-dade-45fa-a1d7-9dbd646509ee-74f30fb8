@@ -3,82 +3,55 @@ import { useMemo, useState } from "react";
 import { Target, RotateCcw, ArrowLeft } from "lucide-react";
 import { LikertGroup } from "@/components/site/LikertGroup";
 import { ShariaNotice } from "@/components/site/ShariaNotice";
+import { SourceAttribution } from "@/components/site/SourceAttribution";
 import { LikertValue, scoreSubscale, toPercent, bandFromAvg } from "@/lib/psychometrics";
+import { VISA_ITEMS, VISA_SOURCE, VISA_LABELS, type VisaDim } from "@/data/scales/visa";
 
 export const Route = createFileRoute("/career-self-efficacy")({
   head: () => ({
     meta: [
-      { title: "الكفاءة الذاتية لاتخاذ القرار المهني (CDSE) | بوصلة" },
-      { name: "description", content: "إلى أي مدى تثق بقدرتك على اختيار مسارك المهني؟ تقييم من 5 أبعاد مبني على Career Decision Self-Efficacy Short Form." },
+      { title: "حالة الهوية المهنية (VISA) | بوصلة" },
+      { name: "description", content: "قيّم حالة هويتك المهنية عبر 6 أبعاد وفق مقياس Vocational Identity Status Assessment (Porfeli & Lee, 2011) — مفتوح للاستخدام البحثي." },
     ],
   }),
-  component: CDSEPage,
+  component: VISAPage,
 });
 
-type Dim = "selfApp" | "occInfo" | "goalSel" | "planning" | "problem";
-const DIMS: Record<Dim, { ar: string; desc: string }> = {
-  selfApp: { ar: "تقييم الذات بدقة", desc: "ثقتك في معرفتك بميولك ومهاراتك وقيمك." },
-  occInfo: { ar: "جمع معلومات المهن", desc: "ثقتك في إيجاد معلومات موثوقة عن المسارات والوظائف." },
-  goalSel: { ar: "اختيار الهدف", desc: "ثقتك في تحديد مسار مهني واضح والالتزام به." },
-  planning: { ar: "وضع الخطّة", desc: "ثقتك في رسم خطوات عملية للوصول للهدف." },
-  problem: { ar: "حلّ المشكلات", desc: "ثقتك في تجاوز العقبات التي قد تواجهك في الطريق." },
+const DIMS: VisaDim[] = ["CE", "CI", "CC", "IC", "CSC", "CFC"];
+
+const ITEMS_BY_DIM: Record<VisaDim, typeof VISA_ITEMS> = {
+  CE: VISA_ITEMS.filter((i) => i.dim === "CE"),
+  CI: VISA_ITEMS.filter((i) => i.dim === "CI"),
+  CC: VISA_ITEMS.filter((i) => i.dim === "CC"),
+  IC: VISA_ITEMS.filter((i) => i.dim === "IC"),
+  CSC: VISA_ITEMS.filter((i) => i.dim === "CSC"),
+  CFC: VISA_ITEMS.filter((i) => i.dim === "CFC"),
 };
 
-const ITEMS: Record<Dim, { id: string; text: string }[]> = {
-  selfApp: [
-    { id: "sa1", text: "أعرف بدقّة المهارات التي أُجيدها." },
-    { id: "sa2", text: "أفهم ميولي وما يُسعدني في العمل." },
-    { id: "sa3", text: "أستطيع تحديد قيمي المهنية الأساسية." },
-    { id: "sa4", text: "أعرف نقاط ضعفي وأتقبّلها." },
-    { id: "sa5", text: "أميّز بين ما أحبّ وما أنا جيد فيه فعلًا." },
-  ],
-  occInfo: [
-    { id: "oi1", text: "أستطيع إيجاد معلومات موثوقة عن أي مهنة تستهويني." },
-    { id: "oi2", text: "أعرف كيف أتحدّث إلى أشخاص يعملون في المجال الذي يهمّني." },
-    { id: "oi3", text: "أعرف متطلبات سوق العمل في مجالي المحتمل." },
-    { id: "oi4", text: "أستطيع تقييم سمعة جهة العمل قبل التقديم لها." },
-    { id: "oi5", text: "أتابع تطوّر المهن وتغيّر متطلباتها." },
-  ],
-  goalSel: [
-    { id: "gs1", text: "أستطيع تحديد مسار مهني واحد أركّز عليه." },
-    { id: "gs2", text: "لديّ القدرة على الالتزام بالقرار بعد اتخاذه." },
-    { id: "gs3", text: "أعرف كيف أوازن بين عدة فرص متضاربة." },
-    { id: "gs4", text: "أستطيع رفض الفرص التي لا تخدم هدفي." },
-    { id: "gs5", text: "أثق بحَدسي عند اتخاذ القرارات المصيرية." },
-  ],
-  planning: [
-    { id: "pl1", text: "أستطيع تقسيم هدفي الكبير إلى مراحل قابلة للتنفيذ." },
-    { id: "pl2", text: "أعرف ما يجب تعلّمه في كل مرحلة من خطّتي." },
-    { id: "pl3", text: "أضع جدولًا زمنيًا واقعيًا لخطواتي." },
-    { id: "pl4", text: "أراجع خطّتي وأعدّلها حين تظهر بيانات جديدة." },
-    { id: "pl5", text: "أعرف الموارد التي أحتاجها (مال، وقت، شبكة علاقات)." },
-  ],
-  problem: [
-    { id: "pr1", text: "أتعامل بهدوء حين تتعطّل خطّتي." },
-    { id: "pr2", text: "أبحث عن بدائل بدل اليأس عند العقبات." },
-    { id: "pr3", text: "أطلب المساعدة من الخبراء حين أحتاج." },
-    { id: "pr4", text: "أتعلّم من إخفاقاتي السابقة." },
-    { id: "pr5", text: "أستطيع الصمود أمام رفض جهات العمل." },
-  ],
-};
-
-function CDSEPage() {
+function VISAPage() {
   const [answers, setAnswers] = useState<Record<string, number | undefined>>({});
   const [showRes, setShowRes] = useState(false);
 
-  const total = 25;
+  const total = VISA_ITEMS.length;
   const answered = Object.values(answers).filter((v) => typeof v === "number").length;
   const progress = Math.round((answered / total) * 100);
 
   const scores = useMemo(() => {
-    const out = {} as Record<Dim, number>;
-    (Object.keys(ITEMS) as Dim[]).forEach((k) => { out[k] = scoreSubscale(answers, ITEMS[k]); });
+    const out = {} as Record<VisaDim, number>;
+    DIMS.forEach((k) => { out[k] = scoreSubscale(answers, ITEMS_BY_DIM[k]); });
     return out;
   }, [answers]);
-  const overall = useMemo(() => Object.values(scores).reduce((s, v) => s + v, 0) / 5, [scores]);
 
-  const weakest = useMemo(() => {
-    return (Object.keys(scores) as Dim[]).reduce((min, k) => (scores[k] < scores[min] ? k : min));
+  // High commitment + high identification + low self-doubt = "Achieved" identity
+  const identityStatus = useMemo(() => {
+    const commit = (scores.CC + scores.IC) / 2;
+    const doubt = scores.CSC;
+    const explore = (scores.CE + scores.CI) / 2;
+    if (commit >= 3.75 && doubt < 2.5) return { label: "هوية مهنية ناضجة (Achieved)", tone: "emerald" };
+    if (explore >= 3.5 && commit < 3.0) return { label: "مرحلة استكشاف نشط (Moratorium)", tone: "sky" };
+    if (commit >= 3.5 && explore < 2.5) return { label: "التزام مبكّر دون استكشاف كافٍ (Foreclosed)", tone: "amber" };
+    if (explore < 2.5 && commit < 2.5) return { label: "هوية غير متبلورة بعد (Diffused)", tone: "rose" };
+    return { label: "هوية قيد التشكّل", tone: "primary" };
   }, [scores]);
 
   return (
@@ -86,10 +59,10 @@ function CDSEPage() {
       <div className="mx-auto max-w-3xl">
         <header className="text-center">
           <Target className="mx-auto h-10 w-10 text-gold" />
-          <h1 className="mt-4 font-serif text-3xl text-primary md:text-4xl">الكفاءة الذاتية لاتخاذ القرار المهني</h1>
+          <h1 className="mt-4 font-serif text-3xl text-primary md:text-4xl">حالة الهوية المهنية</h1>
           <p className="mx-auto mt-3 max-w-2xl text-sm leading-7 text-muted-foreground">
-            كم تثق بقدرتك على اختيار مسارك المهني؟ هذا الاختبار (مبني على <strong>CDSE-SF</strong>) يقيس 5 مهارات
-            أساسية: <strong>تقييم الذات، جمع المعلومات، اختيار الهدف، التخطيط، حلّ المشكلات</strong>.
+            30 عبارة تكشف مرحلتك في بناء الهوية المهنية عبر 6 أبعاد — مبني على مقياس <strong>VISA</strong>
+            (Porfeli, Lee, Vondracek & Weigold, 2011).
           </p>
         </header>
 
@@ -107,12 +80,12 @@ function CDSEPage() {
             </div>
 
             <div className="space-y-5">
-              {(Object.keys(ITEMS) as Dim[]).map((k) => (
+              {DIMS.map((k) => (
                 <LikertGroup
                   key={k}
-                  title={DIMS[k].ar}
-                  intro={DIMS[k].desc}
-                  items={ITEMS[k]}
+                  title={VISA_LABELS[k].ar}
+                  intro={VISA_LABELS[k].desc}
+                  items={ITEMS_BY_DIM[k]}
                   answers={answers}
                   onChange={(id, v) => setAnswers((a) => ({ ...a, [id]: v as LikertValue }))}
                 />
@@ -122,7 +95,7 @@ function CDSEPage() {
             <div className="mt-6 flex justify-center">
               <button type="button" disabled={answered < total} onClick={() => setShowRes(true)}
                 className="rounded-full bg-gradient-to-r from-primary to-gold px-6 py-2.5 text-sm font-medium text-primary-foreground disabled:opacity-50">
-                احسب كفاءتي
+                اكشف حالتي
               </button>
             </div>
           </>
@@ -131,32 +104,26 @@ function CDSEPage() {
         {showRes && (
           <div className="mt-8 space-y-6">
             <div className="rounded-2xl border border-gold/30 bg-gradient-to-br from-gold/10 to-transparent p-6 text-center">
-              <p className="text-xs text-muted-foreground">كفاءتك الإجمالية</p>
-              <p className="mt-1 font-serif text-4xl text-primary">{toPercent(overall)}%</p>
-              <p className="mt-2 text-sm text-muted-foreground">المستوى: <strong className="text-primary">{bandFromAvg(overall)}</strong></p>
+              <p className="text-xs text-muted-foreground">حالة هويتك المهنية</p>
+              <p className="mt-1 font-serif text-2xl text-primary md:text-3xl">{identityStatus.label}</p>
             </div>
 
             <div className="rounded-2xl border border-border bg-card p-6">
-              <h3 className="font-serif text-lg text-primary">تفصيل المهارات الخمس</h3>
+              <h3 className="font-serif text-lg text-primary">تفصيل الأبعاد الستة</h3>
               <ul className="mt-4 space-y-3">
-                {(Object.keys(scores) as Dim[]).map((k) => (
+                {DIMS.map((k) => (
                   <li key={k}>
                     <div className="mb-1 flex items-center justify-between gap-2 text-sm">
-                      <span className="font-medium text-primary">{DIMS[k].ar}</span>
+                      <span className="font-medium text-primary">{VISA_LABELS[k].ar}</span>
                       <span className="text-xs text-muted-foreground">{toPercent(scores[k])}% — {bandFromAvg(scores[k])}</span>
                     </div>
                     <div className="h-2 rounded-full bg-muted">
                       <div className="h-full rounded-full bg-gradient-to-r from-primary to-gold" style={{ width: `${toPercent(scores[k])}%` }} />
                     </div>
+                    <p className="mt-1 text-[11px] text-muted-foreground">{VISA_LABELS[k].desc}</p>
                   </li>
                 ))}
               </ul>
-            </div>
-
-            <div className="rounded-2xl border border-amber-500/30 bg-amber-500/5 p-5 text-sm leading-7 text-primary">
-              <strong>أضعف نقطة لديك:</strong> {DIMS[weakest].ar}.
-              <br />
-              ابدأ بتطويرها قبل أي شيء آخر — فهي عُنق الزجاجة في رحلتك المهنية.
             </div>
 
             <div className="flex flex-wrap items-center justify-between gap-3">
@@ -170,6 +137,8 @@ function CDSEPage() {
             </div>
           </div>
         )}
+
+        <SourceAttribution source={VISA_SOURCE} />
       </div>
     </section>
   );
