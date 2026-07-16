@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Compass, CheckCircle2, Circle, RefreshCw, MapPin } from "lucide-react";
+import { Compass, CheckCircle2, Circle, RefreshCw, MapPin, Sparkles } from "lucide-react";
 import { getPassport, resetDismissed, STAGES } from "@/lib/passport.functions";
 import { NextBestAction } from "@/components/site/NextBestAction";
 
@@ -9,21 +9,20 @@ export const Route = createFileRoute("/_authenticated/passport")({
   head: () => ({
     meta: [
       { title: "جواز بوصلة — منظّم رحلتك المهنية" },
-      { name: "description", content: "منظّم رحلتك في بوصلة: مرحلتك الحالية، ما أنجزته، والخطوة التالية المقترحة." },
+      { name: "description", content: "منظّم رحلتك في بوصلة: مرحلتك الحالية، نتائج المقاييس الخمسة، والخطوة التالية المقترحة." },
     ],
   }),
   component: PassportPage,
 });
 
 const COMPLETED_LABELS: Record<string, string> = {
-  selfDiscovery: "اكتشاف السمات",
-  careerType: "الميول المهنية (RIASEC)",
-  workValues: "قيم العمل",
-  emotionalIntelligence: "الذكاء العاطفي",
+  bfi2: "BFI-2 · الشخصية",
+  onet_ip: "O*NET IP · الميول (RIASEC)",
+  olbi: "OLBI · مؤشّر الاحتراق",
+  uwes9: "UWES-9 · الاندماج الوظيفي",
+  visa: "VISA · الهوية المهنية",
   poia: "التقييم المهني POIA",
   clarity: "فحص الوضوح",
-  learningDna: "الحمض التعليمي",
-  wellbeing: "فحص الصحة النفسية",
   plan: "الخطة المهنية",
   booking: "جلسة إرشاد/كوتشينج",
 };
