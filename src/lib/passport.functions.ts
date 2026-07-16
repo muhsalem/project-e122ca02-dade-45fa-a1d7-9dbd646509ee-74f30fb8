@@ -226,6 +226,152 @@ function deriveStage(c: PassportSnapshot["completed"]): Stage {
   return "discover";
 }
 
+// ============ Unified interpretive summary ============
+// Links BFI-2 (personality) × O*NET IP (interests) × VISA (identity) ×
+// UWES-9 (engagement) × OLBI (burnout) into strengths & development areas.
+
+const BFI_STRENGTH: Record<string, { title: string; detail: string }> = {
+  O: { title: "فضول وانفتاح ذهني", detail: "ميل للتعلّم واستكشاف الأفكار الجديدة — مفيد في البيئات المتغيّرة." },
+  openness: { title: "فضول وانفتاح ذهني", detail: "ميل للتعلّم واستكشاف الأفكار الجديدة — مفيد في البيئات المتغيّرة." },
+  C: { title: "انضباط وإنجاز", detail: "قدرة على التخطيط والالتزام بالمواعيد والتفاصيل." },
+  conscientiousness: { title: "انضباط وإنجاز", detail: "قدرة على التخطيط والالتزام بالمواعيد والتفاصيل." },
+  E: { title: "طاقة اجتماعية", detail: "راحة في التواصل والقيادة والعمل ضمن الفرق." },
+  extraversion: { title: "طاقة اجتماعية", detail: "راحة في التواصل والقيادة والعمل ضمن الفرق." },
+  A: { title: "تعاون وتعاطف", detail: "مهارة في بناء علاقات عمل صحيّة وحلّ الخلافات." },
+  agreeableness: { title: "تعاون وتعاطف", detail: "مهارة في بناء علاقات عمل صحيّة وحلّ الخلافات." },
+  N: { title: "حساسية للتفاصيل العاطفية", detail: "وعي بالمخاطر والمشاعر — يحتاج أدوات تنظيم ضغط." },
+  neuroticism: { title: "حساسية للتفاصيل العاطفية", detail: "وعي بالمخاطر والمشاعر — يحتاج أدوات تنظيم ضغط." },
+};
+
+const RIASEC_STRENGTH: Record<string, { title: string; detail: string }> = {
+  R: { title: "توجّه عملي (Realistic)", detail: "تفضّل المهام الملموسة والأدوات والتطبيق العملي." },
+  I: { title: "تفكير استقصائي (Investigative)", detail: "تنجذب للتحليل والبحث وحلّ المشكلات المعقّدة." },
+  A: { title: "حسّ إبداعي (Artistic)", detail: "تُبدع حين تُترك لك مساحة للتعبير والابتكار." },
+  S: { title: "توجّه خدمي (Social)", detail: "طاقتك تعلو حين تُعلّم أو تُساعد أو تُرشد الآخرين." },
+  E: { title: "روح ريادية (Enterprising)", detail: "تحبّ الإقناع والقيادة وبناء الفرص." },
+  C: { title: "دقّة تنظيمية (Conventional)", detail: "تُتقن الأنظمة والبيانات والإجراءات المنظّمة." },
+};
+
+const VISA_READ: Record<string, { strength?: { title: string; detail: string }; dev?: { title: string; detail: string } }> = {
+  achieved: { strength: { title: "هوية مهنية واضحة", detail: "قرارك مبنيّ على استكشاف والتزام — ركّز على التنفيذ." } },
+  moratorium: { dev: { title: "استكشاف نشط جارٍ", detail: "أنت في مرحلة تجريب — حدّد موعدًا نهائيًا للحسم." } },
+  foreclosed: { dev: { title: "قرار مبكّر دون استكشاف كافٍ", detail: "جرّب Micro-Sims وقابل ممارسين قبل تثبيت الاختيار." } },
+  diffused: { dev: { title: "غياب اتجاه واضح", detail: "ابدأ بخطوة صغيرة: تقييم واحد + محادثة مهنية واحدة." } },
+  searching: { dev: { title: "بحث فعّال عن الهوية", detail: "استمرّ في الاستكشاف مع تدوين ما يجذبك ويُنفّرك." } },
+};
+
+function buildUnifiedSummary(insights: Map<ScaleCode, ScaleInsight>): UnifiedSummary | null {
+  if (insights.size === 0) return null;
+
+  const strengths: UnifiedSummary["strengths"] = [];
+  const dev: UnifiedSummary["developmentAreas"] = [];
+
+  const bfi = insights.get("bfi2");
+  const onet = insights.get("onet_ip");
+  const olbi = insights.get("olbi");
+  const uwes = insights.get("uwes9");
+  const visa = insights.get("visa");
+
+  // Personality strengths / dev
+  if (bfi) {
+    const top = bfi.meta?.top as string | undefined;
+    if (top && BFI_STRENGTH[top]) {
+      const s = BFI_STRENGTH[top];
+      if (top === "N" || top === "neuroticism") {
+        dev.push({ ...s, source: ["bfi2"] });
+      } else {
+        strengths.push({ ...s, source: ["bfi2"] });
+      }
+    }
+  }
+
+  // Interest strengths
+  if (onet) {
+    const top = onet.meta?.top as string | undefined;
+    if (top && RIASEC_STRENGTH[top]) {
+      strengths.push({ ...RIASEC_STRENGTH[top], source: ["onet_ip"] });
+    }
+  }
+
+  // Identity read
+  if (visa) {
+    const status = ((visa.meta?.status as string) ?? "").toLowerCase();
+    const r = VISA_READ[status];
+    if (r?.strength) strengths.push({ ...r.strength, source: ["visa"] });
+    if (r?.dev) dev.push({ ...r.dev, source: ["visa"] });
+  }
+
+  // Engagement
+  if (uwes) {
+    const band = uwes.meta?.band as string | undefined;
+    if (band === "high") {
+      strengths.push({
+        title: "اندماج وظيفي عالٍ",
+        detail: "لديك حيوية وتفانٍ — استثمر هذا الزخم في مشاريع طموحة.",
+        source: ["uwes9"],
+      });
+    } else if (band === "low") {
+      dev.push({
+        title: "اندماج وظيفي منخفض",
+        detail: "ابحث عن معنى في مهامك اليومية أو أعِد تصميم دورك.",
+        source: ["uwes9"],
+      });
+    }
+  }
+
+  // Burnout
+  if (olbi) {
+    const risk = olbi.meta?.risk as string | undefined;
+    if (risk === "high") {
+      dev.push({
+        title: "أولوية: التعافي من الاحتراق",
+        detail: "الإنهاك والانفصال مرتفعان — راحة منظّمة وجلسة كوتشينج قبل قرارات كبرى.",
+        source: ["olbi"],
+      });
+    } else if (risk === "low") {
+      strengths.push({
+        title: "طاقة نفسية مستقرّة",
+        detail: "لا مؤشّرات احتراق واضحة — وقت مناسب للتخطيط طويل المدى.",
+        source: ["olbi"],
+      });
+    }
+  }
+
+  // Cross-scale synthesis narrative
+  const bits: string[] = [];
+  if (bfi?.meta?.top && onet?.meta?.top) {
+    bits.push(
+      `شخصيتك (${bfi.summary.replace("سمتك البارزة: ", "")}) تلتقي مع ميلك المهني (${
+        RIASEC_LABEL[(onet.meta.top as string)] ?? onet.meta.top
+      }) لترسم اتجاهًا واضحًا.`,
+    );
+  }
+  if (visa?.meta?.status) {
+    bits.push(`أنت الآن في ${visa.summary.replace("وضع هويتك المهنية: ", "")}.`);
+  }
+  if (uwes?.meta?.band && olbi?.meta?.risk) {
+    bits.push(
+      `طاقتك اليومية: اندماج ${uwes.summary.replace("اندماجك الوظيفي: ", "")} مع مؤشّر احتراق ${olbi.summary.replace("مؤشّر الاحتراق: ", "")}.`,
+    );
+  }
+
+  const coverage = insights.size / 5;
+  const headline =
+    strengths.length && dev.length
+      ? "لديك أساس واضح، ومنطقتان تستحقّان التطوير."
+      : strengths.length
+        ? "نقاط قوّتك بارزة — ابنِ عليها."
+        : dev.length
+          ? "المؤشّرات تدعو للاهتمام قبل أيّ قرار كبير."
+          : "أكمل مزيدًا من المقاييس لتوليد قراءة أعمق.";
+
+  const narrative =
+    bits.join(" ") ||
+    "أكمل بقية المقاييس الخمسة لتحصل على تفسير متكامل يربط شخصيتك بميولك وهويتك المهنية وطاقتك اليومية.";
+
+  return { headline, narrative, strengths, developmentAreas: dev, coverage };
+}
+
 function buildActions(
   c: PassportSnapshot["completed"],
   insights: Map<ScaleCode, ScaleInsight>,
