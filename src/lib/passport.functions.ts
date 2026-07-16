@@ -21,11 +21,13 @@ export const STAGES: { key: Stage; label: string; blurb: string }[] = [
 
 export type ScaleCode = "bfi2" | "onet_ip" | "olbi" | "uwes9" | "visa";
 
+type JSONValue = string | number | boolean | null | JSONValue[] | { [k: string]: JSONValue };
+
 export type ScaleInsight = {
   code: ScaleCode;
   label: string;
-  summary: string; // human-readable one-liner derived from the answers
-  meta?: Record<string, unknown>;
+  summary: string;
+  meta?: { [k: string]: JSONValue };
 };
 
 export type NextAction = {
