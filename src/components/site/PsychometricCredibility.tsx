@@ -529,6 +529,28 @@ function handleExportPdf(userName: string, userEmail: string) {
   .pb-btn-ghost:hover { background: rgba(255,255,255,0.1); }
   .pb-btn-toggle { background: rgba(208,67,58,0.9); color: #fff; border-color: rgba(255,255,255,0.15); }
   .pb-btn-toggle.off { background: rgba(255,255,255,0.14); color: #f4f8f6; border-color: rgba(255,255,255,0.35); }
+  .pb-btn:disabled, .pb-btn[aria-disabled="true"] {
+    opacity: 0.75; cursor: progress; filter: saturate(0.7);
+  }
+
+  /* مؤشر تحميل الخطوط */
+  .pb-fonts { display: inline-flex; align-items: center; gap: 6px; transition: background 0.25s, color 0.25s; }
+  .pb-fonts.loading  { background: rgba(255,214,107,0.18); color: #ffd66b; border-color: rgba(255,214,107,0.35); }
+  .pb-fonts.ready    { background: rgba(46,160,67,0.22);  color: #7ee08a; border-color: rgba(126,224,138,0.4); }
+  .pb-fonts.fallback { background: rgba(208,67,58,0.22);  color: #ffbaae; border-color: rgba(255,186,174,0.4); }
+  .pb-spinner {
+    width: 10px; height: 10px; border-radius: 50%;
+    border: 2px solid rgba(255,214,107,0.35);
+    border-top-color: #ffd66b;
+    display: inline-block;
+    animation: pb-spin 0.8s linear infinite;
+    flex: none;
+  }
+  .pb-spinner-dark {
+    border-color: rgba(74,50,8,0.25);
+    border-top-color: #4a3208;
+  }
+  @keyframes pb-spin { to { transform: rotate(360deg); } }
 
   /* قوائم اختيار حجم الصفحة والهوامش */
   .pb-select {
@@ -625,6 +647,10 @@ function handleExportPdf(userName: string, userEmail: string) {
       <span class="pb-tag">A4 · 210×297 مم</span>
       <span class="pb-tag pb-pages" id="pb-pages">— صفحات</span>
       <span class="pb-tag pb-pages" id="pb-audit" style="cursor:pointer" title="اضغط لإظهار/إخفاء تعليم مشاكل RTL">✓ RTL</span>
+      <span class="pb-tag pb-fonts loading" id="pb-fonts" aria-live="polite">
+        <span class="pb-spinner" aria-hidden="true"></span>
+        <span class="pb-fonts-label">جاري تحميل الخطوط…</span>
+      </span>
       <span class="pb-tag pb-rev">${escapeHtml(REPORT_VERSION)}</span>
     </div>
     <div class="pb-actions">
@@ -654,7 +680,10 @@ function handleExportPdf(userName: string, userEmail: string) {
       </div>
       <button type="button" id="pb-toggle-breaks" class="pb-btn pb-btn-toggle">إخفاء حدود الصفحات</button>
       <button type="button" id="pb-close" class="pb-btn pb-btn-ghost">إغلاق المعاينة</button>
-      <button type="button" id="pb-print" class="pb-btn pb-btn-primary" title="اسم الملف يُقترح تلقائيًا من عنوان الصفحة">طباعة / حفظ PDF</button>
+      <button type="button" id="pb-print" class="pb-btn pb-btn-primary" disabled aria-disabled="true" title="سيتم التفعيل عند اكتمال تحميل الخطوط">
+        <span class="pb-spinner pb-spinner-dark" aria-hidden="true" id="pb-print-spin"></span>
+        <span id="pb-print-label">تحميل الخطوط…</span>
+      </button>
     </div>
   </div>
 
@@ -822,9 +851,10 @@ function handleExportPdf(userName: string, userEmail: string) {
       var btnClose = document.getElementById('pb-close');
       var btnToggle = document.getElementById('pb-toggle-breaks');
       var btnAudit = document.getElementById('pb-audit');
+      var fontsAreReady = false;
       if (btnPrint) btnPrint.addEventListener('click', function() {
-        var ready = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
-        ready.then(function() { window.print(); });
+        if (!fontsAreReady) return;   // محمي بالحالة، والحقل معطّل بصريًا حتى الجاهزية
+        window.print();
       });
       if (btnClose) btnClose.addEventListener('click', function() { window.close(); });
       if (btnToggle) btnToggle.addEventListener('click', function() {
@@ -943,9 +973,70 @@ function handleExportPdf(userName: string, userEmail: string) {
       updateFilename();
 
 
-      // انتظر تحميل الخطوط ثم احسب الفواصل، وأعد الحساب عند تغيير مقاس النافذة
-      var ready = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
-      ready.then(function() { setTimeout(run, 120); });
+      // ===== مؤشر تحميل الخطوط + تفعيل زر الطباعة =====
+      var fontsTag = document.getElementById('pb-fonts');
+      var fontsLabel = fontsTag ? fontsTag.querySelector('.pb-fonts-label') : null;
+      var printSpin = document.getElementById('pb-print-spin');
+      var printLabel = document.getElementById('pb-print-label');
+      var REQUIRED_FONTS = [
+        { family: '"Noto Naskh Arabic"', weight: '400' },
+        { family: '"Noto Naskh Arabic"', weight: '700' },
+        { family: 'Amiri',               weight: '400' },
+        { family: 'Amiri',               weight: '700' }
+      ];
+      function setFontsState(state, msg) {
+        if (!fontsTag) return;
+        fontsTag.classList.remove('loading', 'ready', 'fallback');
+        fontsTag.classList.add(state);
+        var spin = fontsTag.querySelector('.pb-spinner');
+        if (state !== 'loading' && spin) spin.remove();
+        if (fontsLabel) fontsLabel.textContent = msg;
+      }
+      function enablePrint(ok, label) {
+        if (!btnPrint) return;
+        btnPrint.disabled = !ok;
+        btnPrint.setAttribute('aria-disabled', ok ? 'false' : 'true');
+        if (printSpin && ok) printSpin.remove();
+        if (printLabel) printLabel.textContent = label;
+        btnPrint.title = ok
+          ? 'اسم الملف يُقترح تلقائيًا من عنوان الصفحة'
+          : 'سيتم التفعيل عند اكتمال تحميل الخطوط';
+        fontsAreReady = ok;
+      }
+
+      var readyPromise = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
+      // مهلة أمان: لا نعطّل الزر إلى الأبد إن فشل تحميل الخط
+      var TIMEOUT_MS = 6000;
+      var timedOut = false;
+      var timer = setTimeout(function() {
+        timedOut = true;
+        setFontsState('fallback', '⚠ تعذّر تحميل الخط — سيتم استخدام خط النظام');
+        enablePrint(true, 'طباعة / حفظ PDF (خط بديل)');
+      }, TIMEOUT_MS);
+
+      readyPromise.then(function() {
+        if (timedOut) return;
+        clearTimeout(timer);
+        // فحص إضافي للتأكد من توافر كل الأوزان
+        var checks = REQUIRED_FONTS.map(function(f) {
+          try { return document.fonts.check('16px ' + f.family + ' ' + f.weight); }
+          catch (e) { return true; }
+        });
+        var allOk = checks.every(Boolean);
+        if (allOk) {
+          setFontsState('ready', '✓ الخطوط جاهزة (' + REQUIRED_FONTS.length + '/' + REQUIRED_FONTS.length + ')');
+        } else {
+          var loaded = checks.filter(Boolean).length;
+          setFontsState('fallback', '⚠ بعض الأوزان غير متوفرة (' + loaded + '/' + REQUIRED_FONTS.length + ')');
+        }
+        enablePrint(true, 'طباعة / حفظ PDF');
+        setTimeout(run, 120);
+      }).catch(function() {
+        clearTimeout(timer);
+        setFontsState('fallback', '⚠ فشل تحميل الخطوط — خط بديل');
+        enablePrint(true, 'طباعة / حفظ PDF (خط بديل)');
+        setTimeout(run, 120);
+      });
       var t;
       window.addEventListener('resize', function() {
         clearTimeout(t);
