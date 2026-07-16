@@ -195,7 +195,7 @@ function visaInsight(row: ReportRow): ScaleInsight {
     code: "visa",
     label: SCALE_LABELS.visa,
     summary: label ? `وضع هويتك المهنية: ${label}` : "تمّ إكمال VISA.",
-    meta: { status },
+    meta: { status: status ?? null },
   };
 }
 
