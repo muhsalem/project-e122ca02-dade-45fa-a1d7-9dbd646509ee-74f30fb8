@@ -425,7 +425,7 @@ export function PsychometricCredibility() {
           </Link>
           <button
             type="button"
-            onClick={handleExportPdf}
+            onClick={() => handleExportPdf(userName, userEmail)}
             className="inline-flex items-center gap-2 rounded-lg border border-emerald-500/40 bg-emerald-50 px-4 py-2 text-sm font-semibold text-emerald-800 hover:bg-emerald-100 dark:bg-emerald-950/30 dark:text-emerald-200 dark:hover:bg-emerald-950/50"
           >
             <FileDown className="h-4 w-4" />
