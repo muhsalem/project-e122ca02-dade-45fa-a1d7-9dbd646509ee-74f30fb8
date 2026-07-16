@@ -415,6 +415,21 @@ function handleExportPdf(userName: string, userEmail: string) {
   ${summaryHtml}
   ${scalesHtml}
   <footer class="doc-end">© بوصلة — للتفاصيل القانونية الكاملة راجع صفحة تراخيص المقاييس على الموقع.</footer>
+
+  <!-- شريط المعاينة (لا يظهر عند الطباعة) -->
+  <div class="preview-bar" role="toolbar" aria-label="شريط معاينة PDF">
+    <div class="pb-info">
+      <span class="pb-badge">معاينة قبل الحفظ</span>
+      <span class="pb-tag">RTL · العربية</span>
+      <span class="pb-tag">A4 · 210×297 مم</span>
+      <span class="pb-tag pb-rev">${escapeHtml(REPORT_VERSION)}</span>
+    </div>
+    <div class="pb-actions">
+      <button type="button" id="pb-close" class="pb-btn pb-btn-ghost">إغلاق المعاينة</button>
+      <button type="button" id="pb-print" class="pb-btn pb-btn-primary">طباعة / حفظ PDF</button>
+    </div>
+  </div>
+
   <script>
     (function() {
       // ضبط تلقائي: أي قسم أطول من ثلثي صفحة A4 يُسمح بتقسيمه ويحصل على هوامش أوسع
@@ -424,10 +439,16 @@ function handleExportPdf(userName: string, userEmail: string) {
           el.classList.add('long');
         }
       });
-      window.addEventListener('load', function() {
+      // تفعيل أزرار المعاينة (بدون طباعة تلقائية — ينتظر المستخدم للمراجعة أولًا)
+      var btnPrint = document.getElementById('pb-print');
+      var btnClose = document.getElementById('pb-close');
+      if (btnPrint) btnPrint.addEventListener('click', function() {
         var ready = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
-        ready.then(function() { setTimeout(function() { window.print(); }, 400); });
+        ready.then(function() { window.print(); });
       });
+      if (btnClose) btnClose.addEventListener('click', function() { window.close(); });
+      // تمرير سلس إلى بداية الوثيقة
+      window.scrollTo({ top: 0 });
     })();
   </script>
 </body>
