@@ -1069,13 +1069,32 @@ function handleExportPdf(userName: string, userEmail: string) {
       function setMeta(txt) { if (fontsMeta) fontsMeta.textContent = txt; }
       function setReason(txt) { if (fontsReason) fontsReason.textContent = txt || ''; }
 
+      var announcer = document.getElementById('pb-fonts-announcer');
+      function announce(msg) {
+        if (!announcer) return;
+        // إعادة تعيين النص لضمان إعلان القارئات عن كل تغيير
+        announcer.textContent = '';
+        setTimeout(function() { announcer.textContent = msg; }, 30);
+      }
+      function updateProgress(loaded, total) {
+        var spin = document.getElementById('pb-fonts-spinner');
+        if (!spin) return;
+        spin.setAttribute('aria-valuenow', String(loaded));
+        spin.setAttribute('aria-valuemax', String(total));
+        spin.setAttribute('aria-label', 'جاري تحميل الخطوط: ' + loaded + ' من ' + total);
+      }
       function setFontsState(state, msg) {
         if (!fontsTag) return;
         fontsTag.classList.remove('loading', 'ready', 'fallback');
         fontsTag.classList.add(state);
+        fontsTag.setAttribute('aria-busy', state === 'loading' ? 'true' : 'false');
         var spin = fontsTag.querySelector('.pb-spinner');
         if (state !== 'loading' && spin) spin.remove();
         if (fontsLabel) fontsLabel.textContent = msg;
+        var prefix = state === 'ready'    ? 'تم تحميل خطوط التقرير: '
+                   : state === 'fallback' ? 'تنبيه بشأن خطوط التقرير: '
+                   :                        'حالة الخطوط: ';
+        announce(prefix + msg);
       }
       function enablePrint(ok, label) {
         if (!btnPrint) return;
