@@ -970,6 +970,46 @@ function handleExportPdf(userName: string, userEmail: string) {
         body.classList.toggle('audit-hidden');
       });
 
+      // زر "الطباعة رغم تعذّر الخطوط" + حوار التأكيد
+      var btnForce      = document.getElementById('pb-print-force');
+      var forceDialog   = document.getElementById('pb-force-dialog');
+      var forceList     = document.getElementById('pb-force-list');
+      var btnForceOk    = document.getElementById('pb-force-confirm');
+      var btnForceNo    = document.getElementById('pb-force-cancel');
+      function openForceDialog(failedWeights) {
+        if (!forceDialog) return;
+        if (forceList) {
+          forceList.innerHTML = '';
+          failedWeights.forEach(function(w) {
+            var li = document.createElement('li');
+            li.textContent = w.label + ' · ' + w.weight + ' (' + w.style + ') — ' + w.file;
+            forceList.appendChild(li);
+          });
+        }
+        if (typeof forceDialog.showModal === 'function') {
+          forceDialog.showModal();
+        } else {
+          // fallback لمتصفحات لا تدعم <dialog>
+          if (window.confirm('تعذّر تحميل الخطوط العربية. متابعة الطباعة على أي حال؟')) {
+            window.print();
+          }
+        }
+      }
+      if (btnForceOk) btnForceOk.addEventListener('click', function() {
+        if (forceDialog && forceDialog.open) forceDialog.close();
+        setTimeout(function() { window.print(); }, 60);
+      });
+      if (btnForceNo) btnForceNo.addEventListener('click', function() {
+        if (forceDialog && forceDialog.open) forceDialog.close();
+      });
+      if (btnForce) btnForce.addEventListener('click', function() {
+        var failed = REQUIRED_FONTS
+          ? REQUIRED_FONTS.filter(function(_, i) { return perFontResults && perFontResults[i] !== 'ok'; })
+          : [];
+        openForceDialog(failed);
+      });
+
+
       // تكبير/تصغير المعاينة
       var ZOOM_MIN = 0.5, ZOOM_MAX = 2.0, ZOOM_STEP = 0.1;
       var zoom = 1;
