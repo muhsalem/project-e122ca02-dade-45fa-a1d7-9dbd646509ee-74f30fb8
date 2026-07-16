@@ -42,6 +42,14 @@ export type NextAction = {
   sourceScale?: ScaleCode;
 };
 
+export type UnifiedSummary = {
+  headline: string;
+  narrative: string;
+  strengths: { title: string; detail: string; source: ScaleCode[] }[];
+  developmentAreas: { title: string; detail: string; source: ScaleCode[] }[];
+  coverage: number; // 0..1 — how many of the 5 scales are completed
+};
+
 export type PassportSnapshot = {
   stage: Stage;
   stageIndex: number;
@@ -58,6 +66,7 @@ export type PassportSnapshot = {
     booking: boolean;
   };
   insights: ScaleInsight[];
+  unifiedSummary: UnifiedSummary | null;
   nextActions: NextAction[];
   primaryAction: NextAction | null;
   dismissed: string[];
