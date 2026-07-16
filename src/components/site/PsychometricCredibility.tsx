@@ -288,7 +288,7 @@ export function PsychometricCredibility() {
           </ul>
         </div>
 
-        <div className="mt-8 text-center">
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-3 text-center">
           <Link
             to="/licensing"
             className="inline-flex items-center gap-2 rounded-lg border border-primary/30 bg-primary/5 px-4 py-2 text-sm text-primary hover:bg-primary/10"
@@ -297,6 +297,14 @@ export function PsychometricCredibility() {
             استعرض جدول التراخيص الكامل
             <ExternalLink className="h-3.5 w-3.5" />
           </Link>
+          <button
+            type="button"
+            onClick={handleExportPdf}
+            className="inline-flex items-center gap-2 rounded-lg border border-emerald-500/40 bg-emerald-50 px-4 py-2 text-sm font-semibold text-emerald-800 hover:bg-emerald-100 dark:bg-emerald-950/30 dark:text-emerald-200 dark:hover:bg-emerald-950/50"
+          >
+            <FileDown className="h-4 w-4" />
+            تصدير تقرير PDF
+          </button>
         </div>
 
       </div>
