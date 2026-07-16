@@ -12,6 +12,7 @@ import appCss from "../styles.css?url";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { CookieConsent } from "@/components/site/CookieConsent";
+import { AssessmentConsentGate } from "@/components/site/AssessmentConsentGate";
 
 function NotFoundComponent() {
   return (
@@ -138,7 +139,9 @@ function RootComponent() {
       <div className="flex min-h-dvh flex-col">
         <Header />
         <main id="main-content" tabIndex={-1} className="flex-1 focus:outline-none">
-          <Outlet />
+          <AssessmentConsentGate>
+            <Outlet />
+          </AssessmentConsentGate>
         </main>
         <Footer />
         <CookieConsent />
