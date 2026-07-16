@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as WorkValuesRouteImport } from './routes/work-values'
 import { Route as WellbeingCheckRouteImport } from './routes/wellbeing-check'
 import { Route as TermsRouteImport } from './routes/terms'
+import { Route as StudyOsRouteImport } from './routes/study-os'
 import { Route as StartRouteImport } from './routes/start'
 import { Route as SpecializationsRouteImport } from './routes/specializations'
 import { Route as SkillsGapRouteImport } from './routes/skills-gap'
@@ -109,6 +110,11 @@ const WellbeingCheckRoute = WellbeingCheckRouteImport.update({
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
   path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StudyOsRoute = StudyOsRouteImport.update({
+  id: '/study-os',
+  path: '/study-os',
   getParentRoute: () => rootRouteImport,
 } as any)
 const StartRoute = StartRouteImport.update({
@@ -586,6 +592,7 @@ export interface FileRoutesByFullPath {
   '/skills-gap': typeof SkillsGapRoute
   '/specializations': typeof SpecializationsRoute
   '/start': typeof StartRoute
+  '/study-os': typeof StudyOsRoute
   '/terms': typeof TermsRoute
   '/wellbeing-check': typeof WellbeingCheckRoute
   '/work-values': typeof WorkValuesRoute
@@ -673,6 +680,7 @@ export interface FileRoutesByTo {
   '/skills-gap': typeof SkillsGapRoute
   '/specializations': typeof SpecializationsRoute
   '/start': typeof StartRoute
+  '/study-os': typeof StudyOsRoute
   '/terms': typeof TermsRoute
   '/wellbeing-check': typeof WellbeingCheckRoute
   '/work-values': typeof WorkValuesRoute
@@ -762,6 +770,7 @@ export interface FileRoutesById {
   '/skills-gap': typeof SkillsGapRoute
   '/specializations': typeof SpecializationsRoute
   '/start': typeof StartRoute
+  '/study-os': typeof StudyOsRoute
   '/terms': typeof TermsRoute
   '/wellbeing-check': typeof WellbeingCheckRoute
   '/work-values': typeof WorkValuesRoute
@@ -851,6 +860,7 @@ export interface FileRouteTypes {
     | '/skills-gap'
     | '/specializations'
     | '/start'
+    | '/study-os'
     | '/terms'
     | '/wellbeing-check'
     | '/work-values'
@@ -938,6 +948,7 @@ export interface FileRouteTypes {
     | '/skills-gap'
     | '/specializations'
     | '/start'
+    | '/study-os'
     | '/terms'
     | '/wellbeing-check'
     | '/work-values'
@@ -1026,6 +1037,7 @@ export interface FileRouteTypes {
     | '/skills-gap'
     | '/specializations'
     | '/start'
+    | '/study-os'
     | '/terms'
     | '/wellbeing-check'
     | '/work-values'
@@ -1115,6 +1127,7 @@ export interface RootRouteChildren {
   SkillsGapRoute: typeof SkillsGapRoute
   SpecializationsRoute: typeof SpecializationsRoute
   StartRoute: typeof StartRoute
+  StudyOsRoute: typeof StudyOsRoute
   TermsRoute: typeof TermsRoute
   WellbeingCheckRoute: typeof WellbeingCheckRoute
   WorkValuesRoute: typeof WorkValuesRoute
@@ -1155,6 +1168,13 @@ declare module '@tanstack/react-router' {
       path: '/terms'
       fullPath: '/terms'
       preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/study-os': {
+      id: '/study-os'
+      path: '/study-os'
+      fullPath: '/study-os'
+      preLoaderRoute: typeof StudyOsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/start': {
@@ -1875,6 +1895,7 @@ const rootRouteChildren: RootRouteChildren = {
   SkillsGapRoute: SkillsGapRoute,
   SpecializationsRoute: SpecializationsRoute,
   StartRoute: StartRoute,
+  StudyOsRoute: StudyOsRoute,
   TermsRoute: TermsRoute,
   WellbeingCheckRoute: WellbeingCheckRoute,
   WorkValuesRoute: WorkValuesRoute,
