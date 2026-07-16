@@ -380,7 +380,83 @@ function handleExportPdf(userName: string, userEmail: string) {
   .links a { color: #0f3d2e; text-decoration: underline; }
   .note { font-size: 9pt; color: #8a5a00; font-style: italic; }
   footer.doc-end { margin-top: 20px; border-top: 1px solid #ddd; padding-top: 8px; font-size: 9pt; color: #666; text-align: center; }
-  @media print { a { color: #0f3d2e; } }
+  @media print {
+    a { color: #0f3d2e; }
+    .preview-bar { display: none !important; }
+    body { background: #ffffff !important; padding: 0 !important; }
+  }
+
+  /* وضع المعاينة على الشاشة: إطار A4 بلون خلفية رمادي ليتضح تخطيط الصفحة */
+  @media screen {
+    body {
+      background: #e6ecea;
+      padding: 76px 20px 40px;   /* مساحة أعلى الصفحة للشريط الثابت */
+    }
+    /* لفّ المحتوى داخل إطار A4 عبر عناصر body المباشرة (باستثناء الشريط) */
+    body > .page-header,
+    body > .page-footer { display: none; }  /* هذه للطباعة فقط */
+    body > header.top,
+    body > .meta-card,
+    body > .intro,
+    body > section.overall,
+    body > section.scale,
+    body > footer.doc-end {
+      max-width: 210mm;
+      margin-inline: auto;
+      background: #ffffff;
+    }
+    body > header.top {
+      padding: 16mm 16mm 6mm;
+      margin-top: 0;
+      border-radius: 8px 8px 0 0;
+      box-shadow: 0 6px 24px rgba(15,61,46,0.08);
+    }
+    body > footer.doc-end {
+      padding: 8mm 16mm 12mm;
+      border-radius: 0 0 8px 8px;
+      box-shadow: 0 6px 24px rgba(15,61,46,0.08);
+      margin-bottom: 40px;
+    }
+    body > .meta-card,
+    body > .intro,
+    body > section.overall,
+    body > section.scale {
+      margin-inline: auto;
+      padding-inline: 16mm;
+      border-inline: 1px solid #eef1ef;
+    }
+  }
+
+  /* شريط المعاينة العائم */
+  .preview-bar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 12px; padding: 10px 18px;
+    background: linear-gradient(180deg, #0f3d2e 0%, #14503c 100%);
+    color: #f4f8f6;
+    box-shadow: 0 4px 14px rgba(15,61,46,0.25);
+    font-size: 10.5pt;
+  }
+  .pb-info { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .pb-badge {
+    background: #ffd66b; color: #4a3208; font-weight: 700;
+    padding: 3px 10px; border-radius: 999px; font-size: 9.5pt;
+  }
+  .pb-tag {
+    background: rgba(255,255,255,0.14); color: #f4f8f6;
+    padding: 3px 8px; border-radius: 6px; font-size: 9pt;
+    border: 1px solid rgba(255,255,255,0.18);
+  }
+  .pb-tag.pb-rev { font-family: "Courier New", monospace; color: #ffd66b; }
+  .pb-actions { display: flex; gap: 8px; }
+  .pb-btn {
+    padding: 7px 14px; border-radius: 8px; font-size: 10pt; font-weight: 600;
+    cursor: pointer; border: 1px solid transparent; font-family: inherit;
+  }
+  .pb-btn-primary { background: #ffd66b; color: #4a3208; }
+  .pb-btn-primary:hover { background: #ffce4d; }
+  .pb-btn-ghost { background: transparent; color: #f4f8f6; border-color: rgba(255,255,255,0.35); }
+  .pb-btn-ghost:hover { background: rgba(255,255,255,0.1); }
 </style>
 </head>
 <body>
@@ -415,6 +491,21 @@ function handleExportPdf(userName: string, userEmail: string) {
   ${summaryHtml}
   ${scalesHtml}
   <footer class="doc-end">© بوصلة — للتفاصيل القانونية الكاملة راجع صفحة تراخيص المقاييس على الموقع.</footer>
+
+  <!-- شريط المعاينة (لا يظهر عند الطباعة) -->
+  <div class="preview-bar" role="toolbar" aria-label="شريط معاينة PDF">
+    <div class="pb-info">
+      <span class="pb-badge">معاينة قبل الحفظ</span>
+      <span class="pb-tag">RTL · العربية</span>
+      <span class="pb-tag">A4 · 210×297 مم</span>
+      <span class="pb-tag pb-rev">${escapeHtml(REPORT_VERSION)}</span>
+    </div>
+    <div class="pb-actions">
+      <button type="button" id="pb-close" class="pb-btn pb-btn-ghost">إغلاق المعاينة</button>
+      <button type="button" id="pb-print" class="pb-btn pb-btn-primary">طباعة / حفظ PDF</button>
+    </div>
+  </div>
+
   <script>
     (function() {
       // ضبط تلقائي: أي قسم أطول من ثلثي صفحة A4 يُسمح بتقسيمه ويحصل على هوامش أوسع
@@ -424,10 +515,16 @@ function handleExportPdf(userName: string, userEmail: string) {
           el.classList.add('long');
         }
       });
-      window.addEventListener('load', function() {
+      // تفعيل أزرار المعاينة (بدون طباعة تلقائية — ينتظر المستخدم للمراجعة أولًا)
+      var btnPrint = document.getElementById('pb-print');
+      var btnClose = document.getElementById('pb-close');
+      if (btnPrint) btnPrint.addEventListener('click', function() {
         var ready = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
-        ready.then(function() { setTimeout(function() { window.print(); }, 400); });
+        ready.then(function() { window.print(); });
       });
+      if (btnClose) btnClose.addEventListener('click', function() { window.close(); });
+      // تمرير سلس إلى بداية الوثيقة
+      window.scrollTo({ top: 0 });
     })();
   </script>
 </body>
