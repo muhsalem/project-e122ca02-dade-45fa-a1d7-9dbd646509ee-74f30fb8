@@ -970,12 +970,32 @@ function handleExportPdf(userName: string, userEmail: string) {
         body.classList.toggle('audit-hidden');
       });
 
+      // ===== Analytics helper: يبعث للحدث في dataLayer/gtag/parent + CustomEvent =====
+      function trackAnalytics(eventName, payload) {
+        try {
+          var data = Object.assign({ event: eventName, ts: Date.now(), source: 'psychometric-preview' }, payload || {});
+          var targets = [window];
+          try { if (window.parent && window.parent !== window) targets.push(window.parent); } catch (_) {}
+          targets.forEach(function(w) {
+            try {
+              if (w.dataLayer && typeof w.dataLayer.push === 'function') w.dataLayer.push(data);
+              if (typeof w.gtag === 'function') w.gtag('event', eventName, data);
+              if (typeof w.CustomEvent === 'function') {
+                w.dispatchEvent(new w.CustomEvent('pb:analytics', { detail: data }));
+              }
+            } catch (_) {}
+          });
+          if (window.console && console.info) console.info('[analytics]', eventName, data);
+        } catch (_) {}
+      }
+
       // زر "الطباعة رغم تعذّر الخطوط" + حوار التأكيد
       var btnForce      = document.getElementById('pb-print-force');
       var forceDialog   = document.getElementById('pb-force-dialog');
       var forceList     = document.getElementById('pb-force-list');
       var btnForceOk    = document.getElementById('pb-force-confirm');
       var btnForceNo    = document.getElementById('pb-force-cancel');
+      var lastForceContext = null;
       function openForceDialog(failedWeights) {
         if (!forceDialog) return;
         if (forceList) {
@@ -986,20 +1006,31 @@ function handleExportPdf(userName: string, userEmail: string) {
             forceList.appendChild(li);
           });
         }
+        lastForceContext = {
+          failed_count: failedWeights.length,
+          failed_weights: failedWeights.map(function(w) { return w.family + ':' + w.weight + ':' + w.style; }),
+          attempts_used: (typeof attempt === 'number' ? attempt : null),
+          max_attempts: (typeof MAX_ATTEMPTS === 'number' ? MAX_ATTEMPTS : null),
+        };
+        trackAnalytics('font_force_print_opened', lastForceContext);
         if (typeof forceDialog.showModal === 'function') {
           forceDialog.showModal();
         } else {
-          // fallback لمتصفحات لا تدعم <dialog>
           if (window.confirm('تعذّر تحميل الخطوط العربية. متابعة الطباعة على أي حال؟')) {
+            trackAnalytics('font_force_print_confirmed', Object.assign({ fallback_confirm: true }, lastForceContext || {}));
             window.print();
+          } else {
+            trackAnalytics('font_force_print_cancelled', Object.assign({ fallback_confirm: true }, lastForceContext || {}));
           }
         }
       }
       if (btnForceOk) btnForceOk.addEventListener('click', function() {
+        trackAnalytics('font_force_print_confirmed', lastForceContext || { failed_count: 0 });
         if (forceDialog && forceDialog.open) forceDialog.close();
         setTimeout(function() { window.print(); }, 60);
       });
       if (btnForceNo) btnForceNo.addEventListener('click', function() {
+        trackAnalytics('font_force_print_cancelled', lastForceContext || {});
         if (forceDialog && forceDialog.open) forceDialog.close();
       });
       if (btnForce) btnForce.addEventListener('click', function() {
