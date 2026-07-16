@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Compass, CheckCircle2, Circle, RefreshCw, MapPin } from "lucide-react";
+import { Compass, CheckCircle2, Circle, RefreshCw, MapPin, Sparkles } from "lucide-react";
 import { getPassport, resetDismissed, STAGES } from "@/lib/passport.functions";
 import { NextBestAction } from "@/components/site/NextBestAction";
 
@@ -9,21 +9,20 @@ export const Route = createFileRoute("/_authenticated/passport")({
   head: () => ({
     meta: [
       { title: "جواز بوصلة — منظّم رحلتك المهنية" },
-      { name: "description", content: "منظّم رحلتك في بوصلة: مرحلتك الحالية، ما أنجزته، والخطوة التالية المقترحة." },
+      { name: "description", content: "منظّم رحلتك في بوصلة: مرحلتك الحالية، نتائج المقاييس الخمسة، والخطوة التالية المقترحة." },
     ],
   }),
   component: PassportPage,
 });
 
 const COMPLETED_LABELS: Record<string, string> = {
-  selfDiscovery: "اكتشاف السمات",
-  careerType: "الميول المهنية (RIASEC)",
-  workValues: "قيم العمل",
-  emotionalIntelligence: "الذكاء العاطفي",
+  bfi2: "BFI-2 · الشخصية",
+  onet_ip: "O*NET IP · الميول (RIASEC)",
+  olbi: "OLBI · مؤشّر الاحتراق",
+  uwes9: "UWES-9 · الاندماج الوظيفي",
+  visa: "VISA · الهوية المهنية",
   poia: "التقييم المهني POIA",
   clarity: "فحص الوضوح",
-  learningDna: "الحمض التعليمي",
-  wellbeing: "فحص الصحة النفسية",
   plan: "الخطة المهنية",
   booking: "جلسة إرشاد/كوتشينج",
 };
@@ -103,6 +102,27 @@ function PassportPage() {
             })}
           </ol>
         </div>
+
+        {/* Insights from the 5 open-license scales */}
+        {data.insights.length > 0 && (
+          <div className="mb-10 rounded-2xl border border-emerald-200 bg-emerald-50/40 p-6 dark:border-emerald-900/40 dark:bg-emerald-950/20">
+            <div className="mb-3 flex items-center gap-2">
+              <Sparkles className="h-4 w-4 text-emerald-700 dark:text-emerald-300" />
+              <h3 className="font-serif text-base text-emerald-900 dark:text-emerald-100">قراءتك من المقاييس الخمسة</h3>
+            </div>
+            <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
+              {data.insights.map((i) => (
+                <div key={i.code} className="rounded-xl border border-emerald-200/60 bg-background p-3 text-sm">
+                  <div className="font-mono text-[11px] text-emerald-800 dark:text-emerald-300">{i.label}</div>
+                  <div className="mt-1 text-foreground">{i.summary}</div>
+                </div>
+              ))}
+            </div>
+            <p className="mt-3 text-[11px] leading-6 text-muted-foreground">
+              الخطوات التالية أدناه مقترحة تلقائياً بناءً على هذه القراءة ومرحلتك الحالية.
+            </p>
+          </div>
+        )}
 
         {/* Next Best Action */}
         <div className="grid gap-6 lg:grid-cols-[1fr_320px]">
