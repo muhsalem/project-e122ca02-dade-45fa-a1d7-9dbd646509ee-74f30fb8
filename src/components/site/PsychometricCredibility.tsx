@@ -1168,6 +1168,8 @@ function handleExportPdf(userName: string, userEmail: string) {
         });
 
         function maybeFinalize() {
+          var loadedNow = perFontResults.filter(function(v) { return v === 'ok'; }).length;
+          updateProgress(loadedNow, REQUIRED_FONTS.length);
           var done = perFontResults.every(function(v) { return v !== null; });
           if (done && !settled) {
             settled = true;
