@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -13,27 +13,61 @@ import { Slider } from "@/components/ui/slider";
 import { toast } from "sonner";
 import {
   Play, Pause, RotateCcw, SkipForward, Plus, Trash2, Brain, Timer,
-  CalendarDays, Sparkles, CheckCircle2, XCircle, BookOpen, Loader2,
+  CalendarDays, Sparkles, CheckCircle2, XCircle, BookOpen, Loader2, Cloud, CloudOff,
 } from "lucide-react";
 import { studyDailyCheckin } from "@/lib/study-checkin.functions";
+import {
+  listFlashcards, upsertFlashcard, deleteFlashcard,
+  getPomodoroToday, incrementPomodoro,
+  getTodayPlan, saveTodayPlan,
+} from "@/lib/study-sync.functions";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/study-os")({
   head: () => ({
     meta: [
       { title: "Study OS — نظام المذاكرة الذكي | بوصلة" },
-      { name: "description", content: "نظام مذاكرة متكامل: Pomodoro، بطاقات Flashcards بالتكرار المتباعد (SM-2)، جدول يومي متكيّف، وفحص يومي بالذكاء الاصطناعي." },
+      { name: "description", content: "نظام مذاكرة متكامل مع مزامنة سحابية: Pomodoro، بطاقات Flashcards بالتكرار المتباعد (SM-2)، جدول يومي متكيّف، وفحص يومي بالذكاء الاصطناعي." },
     ],
   }),
   component: StudyOS,
 });
 
+/* ============================== Auth hook ============================== */
+
+function useAuthUser() {
+  const [userId, setUserId] = useState<string | null>(null);
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data }) => {
+      setUserId(data.user?.id ?? null);
+      setReady(true);
+    });
+    const { data: sub } = supabase.auth.onAuthStateChange((_e, session) => {
+      setUserId(session?.user?.id ?? null);
+    });
+    return () => sub.subscription.unsubscribe();
+  }, []);
+  return { userId, ready, signedIn: !!userId };
+}
+
+function SyncBadge({ signedIn }: { signedIn: boolean }) {
+  return signedIn ? (
+    <Badge variant="secondary" className="gap-1"><Cloud className="h-3 w-3" /> مزامنة مفعّلة</Badge>
+  ) : (
+    <Badge variant="outline" className="gap-1"><CloudOff className="h-3 w-3" /> محلي فقط — سجّل الدخول للمزامنة</Badge>
+  );
+}
+
 function StudyOS() {
+  const auth = useAuthUser();
   return (
     <main dir="rtl" className="container-page py-10">
       <header className="mb-8 text-center">
         <Badge className="mb-3 bg-primary/10 text-primary hover:bg-primary/15">Study OS v1</Badge>
         <h1 className="font-serif text-3xl font-bold text-primary md:text-4xl">نظام المذاكرة الذكي</h1>
         <p className="mt-3 text-muted-foreground">Pomodoro • بطاقات بالتكرار المتباعد • جدول يومي متكيّف • فحص يومي بالذكاء الاصطناعي</p>
+        <div className="mt-3 flex justify-center"><SyncBadge signedIn={auth.signedIn} /></div>
       </header>
 
       <Tabs defaultValue="checkin" className="mx-auto max-w-5xl">
@@ -44,10 +78,10 @@ function StudyOS() {
           <TabsTrigger value="schedule"><CalendarDays className="ms-1 h-4 w-4" />الجدول</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="checkin" className="mt-6"><DailyCheckin /></TabsContent>
-        <TabsContent value="pomodoro" className="mt-6"><Pomodoro /></TabsContent>
-        <TabsContent value="flashcards" className="mt-6"><Flashcards /></TabsContent>
-        <TabsContent value="schedule" className="mt-6"><ScheduleView /></TabsContent>
+        <TabsContent value="checkin" className="mt-6"><DailyCheckin signedIn={auth.signedIn} authReady={auth.ready} /></TabsContent>
+        <TabsContent value="pomodoro" className="mt-6"><Pomodoro signedIn={auth.signedIn} authReady={auth.ready} /></TabsContent>
+        <TabsContent value="flashcards" className="mt-6"><Flashcards signedIn={auth.signedIn} authReady={auth.ready} /></TabsContent>
+        <TabsContent value="schedule" className="mt-6"><ScheduleView signedIn={auth.signedIn} authReady={auth.ready} /></TabsContent>
       </Tabs>
     </main>
   );
@@ -62,17 +96,30 @@ const PHASES: Record<PomoPhase, { label: string; minutes: number; color: string 
   long: { label: "راحة طويلة", minutes: 15, color: "bg-amber-500" },
 };
 
-function Pomodoro() {
+function pomoLocalKey() { return `bosla:pomo:count:${new Date().toDateString()}`; }
+
+function Pomodoro({ signedIn, authReady }: { signedIn: boolean; authReady: boolean }) {
+  const getToday = useServerFn(getPomodoroToday);
+  const incr = useServerFn(incrementPomodoro);
   const [phase, setPhase] = useState<PomoPhase>("focus");
   const [secondsLeft, setSecondsLeft] = useState(PHASES.focus.minutes * 60);
   const [running, setRunning] = useState(false);
-  const [completed, setCompleted] = useState<number>(() => {
-    if (typeof window === "undefined") return 0;
-    const key = `bosla:pomo:count:${new Date().toDateString()}`;
-    return Number(localStorage.getItem(key) || 0);
-  });
+  const [completed, setCompleted] = useState<number>(0);
   const [currentTask, setCurrentTask] = useState("");
   const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  // Hydrate from localStorage (offline) then overwrite from server (source of truth)
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    setCompleted(Number(localStorage.getItem(pomoLocalKey()) || 0));
+  }, []);
+  useEffect(() => {
+    if (!authReady || !signedIn) return;
+    getToday().then((r) => {
+      setCompleted(r.completed);
+      localStorage.setItem(pomoLocalKey(), String(r.completed));
+    }).catch(() => {});
+  }, [authReady, signedIn, getToday]);
 
   useEffect(() => {
     if (!running) return;
@@ -86,14 +133,20 @@ function Pomodoro() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [running, phase]);
 
-  function onPhaseEnd() {
+  async function onPhaseEnd() {
     setRunning(false);
-    try { audioRef.current?.play(); } catch {}
+    try { audioRef.current?.play(); } catch { /* noop */ }
     if (phase === "focus") {
       const next = completed + 1;
       setCompleted(next);
-      const key = `bosla:pomo:count:${new Date().toDateString()}`;
-      localStorage.setItem(key, String(next));
+      localStorage.setItem(pomoLocalKey(), String(next));
+      if (signedIn) {
+        try {
+          const r = await incr();
+          setCompleted(r.completed);
+          localStorage.setItem(pomoLocalKey(), String(r.completed));
+        } catch { /* keep local */ }
+      }
       const nextPhase: PomoPhase = next % 4 === 0 ? "long" : "short";
       switchPhase(nextPhase);
       toast.success("أحسنت! أكملت جلسة تركيز.");
@@ -166,22 +219,36 @@ type FCard = {
   front: string;
   back: string;
   deck: string;
-  ease: number;   // SM-2 EF
+  ease: number;
   interval: number; // days
   reps: number;
   dueAt: number; // ms epoch
   createdAt: number;
 };
 
+type ServerCard = {
+  id: string; front: string; back: string; deck: string;
+  ease: number | string; interval_days: number; reps: number;
+  due_at: string; created_at: string;
+};
+
 const CARDS_KEY = "bosla:flashcards:v1";
 
-function loadCards(): FCard[] {
+function loadLocalCards(): FCard[] {
   if (typeof window === "undefined") return [];
   try { return JSON.parse(localStorage.getItem(CARDS_KEY) || "[]"); } catch { return []; }
 }
-function saveCards(c: FCard[]) { localStorage.setItem(CARDS_KEY, JSON.stringify(c)); }
+function saveLocalCards(c: FCard[]) { localStorage.setItem(CARDS_KEY, JSON.stringify(c)); }
 
-// SM-2 grading: q 0..5 (we use 1=صعب,3=مقبول,5=سهل)
+function fromServer(r: ServerCard): FCard {
+  return {
+    id: r.id, front: r.front, back: r.back, deck: r.deck,
+    ease: Number(r.ease), interval: r.interval_days, reps: r.reps,
+    dueAt: new Date(r.due_at).getTime(),
+    createdAt: new Date(r.created_at).getTime(),
+  };
+}
+
 function reviewCard(card: FCard, quality: number): FCard {
   let { ease, interval, reps } = card;
   if (quality < 3) {
@@ -198,8 +265,13 @@ function reviewCard(card: FCard, quality: number): FCard {
   return { ...card, ease, interval, reps, dueAt };
 }
 
-function Flashcards() {
+function Flashcards({ signedIn, authReady }: { signedIn: boolean; authReady: boolean }) {
+  const listFn = useServerFn(listFlashcards);
+  const upsertFn = useServerFn(upsertFlashcard);
+  const deleteFn = useServerFn(deleteFlashcard);
+
   const [cards, setCards] = useState<FCard[]>([]);
+  const [syncing, setSyncing] = useState(false);
   const [front, setFront] = useState("");
   const [back, setBack] = useState("");
   const [deck, setDeck] = useState("عام");
@@ -207,14 +279,29 @@ function Flashcards() {
   const [showBack, setShowBack] = useState(false);
   const [idx, setIdx] = useState(0);
 
-  useEffect(() => { setCards(loadCards()); }, []);
+  useEffect(() => { setCards(loadLocalCards()); }, []);
+
+  const refreshFromServer = useCallback(async () => {
+    if (!signedIn) return;
+    setSyncing(true);
+    try {
+      const rows = (await listFn()) as ServerCard[];
+      const mapped = rows.map(fromServer);
+      setCards(mapped);
+      saveLocalCards(mapped);
+    } catch (e) {
+      console.warn("flashcards sync failed", e);
+    } finally { setSyncing(false); }
+  }, [signedIn, listFn]);
+
+  useEffect(() => { if (authReady && signedIn) void refreshFromServer(); }, [authReady, signedIn, refreshFromServer]);
 
   const dueCards = useMemo(
     () => cards.filter((c) => c.dueAt <= Date.now()).sort((a, b) => a.dueAt - b.dueAt),
     [cards],
   );
 
-  function addCard() {
+  async function addCard() {
     if (!front.trim() || !back.trim()) { toast.error("املأ الوجهين"); return; }
     const c: FCard = {
       id: crypto.randomUUID(), front: front.trim(), back: back.trim(),
@@ -222,23 +309,49 @@ function Flashcards() {
       dueAt: Date.now(), createdAt: Date.now(),
     };
     const next = [...cards, c];
-    setCards(next); saveCards(next);
+    setCards(next); saveLocalCards(next);
     setFront(""); setBack("");
     toast.success("أُضيفت البطاقة");
+    if (signedIn) {
+      try {
+        const saved = (await upsertFn({ data: {
+          id: c.id, front: c.front, back: c.back, deck: c.deck,
+          ease: c.ease, interval_days: c.interval, reps: c.reps,
+          due_at: new Date(c.dueAt).toISOString(),
+        } })) as ServerCard;
+        const merged = next.map((x) => x.id === c.id ? fromServer(saved) : x);
+        setCards(merged); saveLocalCards(merged);
+      } catch (e) {
+        console.warn("card upsert failed", e);
+        toast.error("تعذّرت المزامنة — حُفظت محلياً");
+      }
+    }
   }
 
-  function removeCard(id: string) {
+  async function removeCard(id: string) {
     const next = cards.filter((c) => c.id !== id);
-    setCards(next); saveCards(next);
+    setCards(next); saveLocalCards(next);
+    if (signedIn) {
+      try { await deleteFn({ data: { id } }); } catch { toast.error("تعذّر الحذف من السحابة"); }
+    }
   }
 
-  function grade(quality: number) {
+  async function grade(quality: number) {
     const current = dueCards[idx];
     if (!current) return;
     const updated = reviewCard(current, quality);
     const next = cards.map((c) => c.id === current.id ? updated : c);
-    setCards(next); saveCards(next);
+    setCards(next); saveLocalCards(next);
     setShowBack(false);
+    if (signedIn) {
+      try {
+        await upsertFn({ data: {
+          id: updated.id, front: updated.front, back: updated.back, deck: updated.deck,
+          ease: updated.ease, interval_days: updated.interval, reps: updated.reps,
+          due_at: new Date(updated.dueAt).toISOString(),
+        } });
+      } catch { /* keep local */ }
+    }
     if (idx + 1 >= dueCards.length) {
       setReviewing(false); setIdx(0);
       toast.success("أنهيت جلسة المراجعة!");
@@ -292,7 +405,10 @@ function Flashcards() {
         <CardHeader>
           <CardTitle className="flex items-center justify-between">
             <span>البطاقات — تكرار متباعد (SM-2)</span>
-            <Badge variant="secondary">مستحق اليوم: {dueCards.length}</Badge>
+            <div className="flex items-center gap-2">
+              {syncing && <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />}
+              <Badge variant="secondary">مستحق اليوم: {dueCards.length}</Badge>
+            </div>
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -361,8 +477,24 @@ type Plan = {
 
 const PLAN_KEY = "bosla:studyplan:v1";
 
-function DailyCheckin() {
+function loadLocalPlan(): Plan | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const saved = localStorage.getItem(PLAN_KEY);
+    if (!saved) return null;
+    const p = JSON.parse(saved);
+    if (p.date === new Date().toDateString()) return p.plan as Plan;
+  } catch { /* noop */ }
+  return null;
+}
+function saveLocalPlan(plan: Plan) {
+  localStorage.setItem(PLAN_KEY, JSON.stringify({ date: new Date().toDateString(), plan }));
+}
+
+function DailyCheckin({ signedIn, authReady }: { signedIn: boolean; authReady: boolean }) {
   const checkin = useServerFn(studyDailyCheckin);
+  const getPlan = useServerFn(getTodayPlan);
+  const savePlan = useServerFn(saveTodayPlan);
   const [mood, setMood] = useState(3);
   const [energy, setEnergy] = useState(3);
   const [focus, setFocus] = useState(3);
@@ -374,23 +506,28 @@ function DailyCheckin() {
   const [loading, setLoading] = useState(false);
   const [plan, setPlan] = useState<Plan | null>(null);
 
+  useEffect(() => { setPlan(loadLocalPlan()); }, []);
   useEffect(() => {
-    if (typeof window === "undefined") return;
-    try {
-      const saved = localStorage.getItem(PLAN_KEY);
-      if (saved) {
-        const p = JSON.parse(saved);
-        if (p.date === new Date().toDateString()) setPlan(p.plan);
+    if (!authReady || !signedIn) return;
+    getPlan().then((r) => {
+      if (r?.plan) {
+        setPlan(r.plan as Plan);
+        saveLocalPlan(r.plan as Plan);
       }
-    } catch {}
-  }, []);
+    }).catch(() => {});
+  }, [authReady, signedIn, getPlan]);
 
   async function submit() {
     setLoading(true);
     try {
-      const res = await checkin({ data: { mood, energy, focus, sleepHours, yesterdayDone, todayGoals, blockers, availableMinutes } });
+      const inputs = { mood, energy, focus, sleepHours, yesterdayDone, todayGoals, blockers, availableMinutes };
+      const res = await checkin({ data: inputs });
       setPlan(res.plan);
-      localStorage.setItem(PLAN_KEY, JSON.stringify({ date: new Date().toDateString(), plan: res.plan }));
+      saveLocalPlan(res.plan);
+      if (signedIn) {
+        try { await savePlan({ data: { plan: res.plan, inputs } }); }
+        catch { toast.error("تعذّرت المزامنة — حُفظت الخطة محلياً"); }
+      }
       toast.success("تم توليد خطتك اليومية.");
     } catch (e: unknown) {
       toast.error(e instanceof Error ? e.message : "خطأ غير متوقع");
@@ -478,18 +615,19 @@ function SliderRow({ label, value, onChange }: { label: string; value: number; o
 
 /* ============================== Schedule (from saved plan) ============================== */
 
-function ScheduleView() {
+function ScheduleView({ signedIn, authReady }: { signedIn: boolean; authReady: boolean }) {
+  const getPlan = useServerFn(getTodayPlan);
   const [plan, setPlan] = useState<Plan | null>(null);
+  useEffect(() => { setPlan(loadLocalPlan()); }, []);
   useEffect(() => {
-    if (typeof window === "undefined") return;
-    try {
-      const saved = localStorage.getItem(PLAN_KEY);
-      if (saved) {
-        const p = JSON.parse(saved);
-        if (p.date === new Date().toDateString()) setPlan(p.plan);
+    if (!authReady || !signedIn) return;
+    getPlan().then((r) => {
+      if (r?.plan) {
+        setPlan(r.plan as Plan);
+        saveLocalPlan(r.plan as Plan);
       }
-    } catch {}
-  }, []);
+    }).catch(() => {});
+  }, [authReady, signedIn, getPlan]);
 
   return (
     <Card>
