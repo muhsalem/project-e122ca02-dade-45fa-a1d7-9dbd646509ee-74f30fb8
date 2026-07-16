@@ -124,6 +124,70 @@ function PassportPage() {
           </div>
         )}
 
+        {/* Unified interpretive summary — links the 5 scales into strengths & dev */}
+        {data.unifiedSummary && (data.unifiedSummary.strengths.length > 0 || data.unifiedSummary.developmentAreas.length > 0) && (
+          <div className="mb-10 rounded-2xl border border-primary/20 bg-primary/5 p-6">
+            <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
+              <h3 className="font-serif text-lg text-primary">قراءتك التفسيرية الموحّدة</h3>
+              <span className="rounded-full bg-background px-2 py-0.5 text-[11px] text-muted-foreground">
+                تغطية المقاييس: {Math.round(data.unifiedSummary.coverage * 100)}٪
+              </span>
+            </div>
+            <p className="font-serif text-base text-foreground">{data.unifiedSummary.headline}</p>
+            <p className="mt-2 text-sm leading-7 text-muted-foreground">{data.unifiedSummary.narrative}</p>
+
+            <div className="mt-5 grid gap-4 md:grid-cols-2">
+              <div className="rounded-xl border border-emerald-200 bg-background p-4">
+                <div className="mb-3 flex items-center gap-2 text-emerald-800 dark:text-emerald-300">
+                  <TrendingUp className="h-4 w-4" />
+                  <h4 className="font-serif text-sm">نقاط قوّتك</h4>
+                </div>
+                {data.unifiedSummary.strengths.length ? (
+                  <ul className="space-y-3">
+                    {data.unifiedSummary.strengths.map((s, idx) => (
+                      <li key={idx} className="text-sm">
+                        <div className="font-medium text-foreground">{s.title}</div>
+                        <div className="text-[13px] leading-6 text-muted-foreground">{s.detail}</div>
+                        <div className="mt-1 flex flex-wrap gap-1">
+                          {s.source.map((c) => (
+                            <span key={c} className="rounded bg-emerald-50 px-1.5 py-0.5 font-mono text-[10px] text-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-200">{c}</span>
+                          ))}
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="text-sm text-muted-foreground">أكمل مزيدًا من المقاييس لاستخراج نقاط القوّة.</p>
+                )}
+              </div>
+
+              <div className="rounded-xl border border-amber-200 bg-background p-4">
+                <div className="mb-3 flex items-center gap-2 text-amber-800 dark:text-amber-300">
+                  <Target className="h-4 w-4" />
+                  <h4 className="font-serif text-sm">مجالات التطوير</h4>
+                </div>
+                {data.unifiedSummary.developmentAreas.length ? (
+                  <ul className="space-y-3">
+                    {data.unifiedSummary.developmentAreas.map((s, idx) => (
+                      <li key={idx} className="text-sm">
+                        <div className="font-medium text-foreground">{s.title}</div>
+                        <div className="text-[13px] leading-6 text-muted-foreground">{s.detail}</div>
+                        <div className="mt-1 flex flex-wrap gap-1">
+                          {s.source.map((c) => (
+                            <span key={c} className="rounded bg-amber-50 px-1.5 py-0.5 font-mono text-[10px] text-amber-800 dark:bg-amber-950/40 dark:text-amber-200">{c}</span>
+                          ))}
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="text-sm text-muted-foreground">لا توجد مؤشّرات تستدعي انتباهًا فوريًا.</p>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Next Best Action */}
         <div className="grid gap-6 lg:grid-cols-[1fr_320px]">
           <div>
