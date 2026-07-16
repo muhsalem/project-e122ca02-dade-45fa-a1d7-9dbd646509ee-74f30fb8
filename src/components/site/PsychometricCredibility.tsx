@@ -530,6 +530,23 @@ function handleExportPdf(userName: string, userEmail: string) {
   .pb-btn-toggle { background: rgba(208,67,58,0.9); color: #fff; border-color: rgba(255,255,255,0.15); }
   .pb-btn-toggle.off { background: rgba(255,255,255,0.14); color: #f4f8f6; border-color: rgba(255,255,255,0.35); }
 
+  /* قوائم اختيار حجم الصفحة والهوامش */
+  .pb-select {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(255,255,255,0.10);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 8px; padding: 4px 8px;
+    color: #f4f8f6; font-size: 9pt;
+  }
+  .pb-select span { color: #cfe0d6; font-size: 8.5pt; }
+  .pb-select select {
+    background: rgba(0,0,0,0.25); color: #ffd66b;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 6px; padding: 4px 6px;
+    font-size: 9pt; font-family: inherit; cursor: pointer;
+  }
+  .pb-select select:focus { outline: 2px solid #ffd66b; outline-offset: 1px; }
+
   /* مجموعة تكبير/تصغير المعاينة */
   .pb-zoom {
     display: inline-flex; align-items: stretch;
