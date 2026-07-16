@@ -246,11 +246,7 @@ function handleExportPdf(userName: string, userEmail: string) {
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet" />
 <style>
-  @page {
-    size: A4;
-    margin: 28mm 16mm 24mm;
-  }
-  @page :first { margin-top: 32mm; }
+  /* قواعد @page تُحدَّث ديناميكياً من <style id="page-style"> */
   * { box-sizing: border-box; }
   :root {
     --arabic-stack: "Noto Naskh Arabic", "Amiri", "Sakkal Majalla", "Traditional Arabic",
@@ -534,6 +530,23 @@ function handleExportPdf(userName: string, userEmail: string) {
   .pb-btn-toggle { background: rgba(208,67,58,0.9); color: #fff; border-color: rgba(255,255,255,0.15); }
   .pb-btn-toggle.off { background: rgba(255,255,255,0.14); color: #f4f8f6; border-color: rgba(255,255,255,0.35); }
 
+  /* قوائم اختيار حجم الصفحة والهوامش */
+  .pb-select {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(255,255,255,0.10);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 8px; padding: 4px 8px;
+    color: #f4f8f6; font-size: 9pt;
+  }
+  .pb-select span { color: #cfe0d6; font-size: 8.5pt; }
+  .pb-select select {
+    background: rgba(0,0,0,0.25); color: #ffd66b;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 6px; padding: 4px 6px;
+    font-size: 9pt; font-family: inherit; cursor: pointer;
+  }
+  .pb-select select:focus { outline: 2px solid #ffd66b; outline-offset: 1px; }
+
   /* مجموعة تكبير/تصغير المعاينة */
   .pb-zoom {
     display: inline-flex; align-items: stretch;
@@ -565,6 +578,10 @@ function handleExportPdf(userName: string, userEmail: string) {
     body > section.scale,
     body > footer.doc-end { zoom: var(--zoom); }
   }
+</style>
+<style id="page-style">
+  @page { size: A4; margin: 28mm 16mm 24mm; }
+  @page :first { margin-top: 32mm; }
 </style>
 </head>
 <body>
@@ -611,6 +628,24 @@ function handleExportPdf(userName: string, userEmail: string) {
       <span class="pb-tag pb-rev">${escapeHtml(REPORT_VERSION)}</span>
     </div>
     <div class="pb-actions">
+      <label class="pb-select" title="حجم الصفحة">
+        <span>الحجم</span>
+        <select id="pb-size">
+          <option value="A4">A4</option>
+          <option value="A4-landscape">A4 عرضي</option>
+          <option value="Letter">Letter</option>
+          <option value="Legal">Legal</option>
+        </select>
+      </label>
+      <label class="pb-select" title="نمط الهوامش">
+        <span>الهوامش</span>
+        <select id="pb-margins">
+          <option value="standard">قياسية (28/16/24)</option>
+          <option value="wide">واسعة (32/22/28)</option>
+          <option value="narrow">ضيّقة (18/12/16)</option>
+          <option value="custom">مخصّصة…</option>
+        </select>
+      </label>
       <div class="pb-zoom" role="group" aria-label="تكبير وتصغير المعاينة">
         <button type="button" id="pb-zoom-out" title="تصغير" aria-label="تصغير">−</button>
         <span class="pb-zoom-val" id="pb-zoom-val">100٪</span>
@@ -619,7 +654,7 @@ function handleExportPdf(userName: string, userEmail: string) {
       </div>
       <button type="button" id="pb-toggle-breaks" class="pb-btn pb-btn-toggle">إخفاء حدود الصفحات</button>
       <button type="button" id="pb-close" class="pb-btn pb-btn-ghost">إغلاق المعاينة</button>
-      <button type="button" id="pb-print" class="pb-btn pb-btn-primary">طباعة / حفظ PDF</button>
+      <button type="button" id="pb-print" class="pb-btn pb-btn-primary" title="اسم الملف يُقترح تلقائيًا من عنوان الصفحة">طباعة / حفظ PDF</button>
     </div>
   </div>
 
@@ -827,6 +862,86 @@ function handleExportPdf(userName: string, userEmail: string) {
         zoom += (ev.deltaY < 0 ? ZOOM_STEP : -ZOOM_STEP);
         applyZoom();
       }, { passive: false });
+
+      // ===== خيارات التصدير: حجم الصفحة والهوامش واسم الملف =====
+      // ملاحظة: اسم ملف PDF يُقترح من document.title في معظم المتصفحات
+      var MARGIN_PRESETS = {
+        standard: { top: 28, side: 16, bottom: 24, first: 32, label: 'قياسية' },
+        wide:     { top: 32, side: 22, bottom: 28, first: 36, label: 'واسعة' },
+        narrow:   { top: 18, side: 12, bottom: 16, first: 22, label: 'ضيّقة' }
+      };
+      var SIZE_PRESETS = {
+        'A4':           { css: 'A4',           w: 794,  h: 1123, label: 'A4' },
+        'A4-landscape': { css: 'A4 landscape', w: 1123, h: 794,  label: 'A4-Landscape' },
+        'Letter':       { css: 'Letter',       w: 816,  h: 1056, label: 'Letter' },
+        'Legal':        { css: 'Legal',        w: 816,  h: 1344, label: 'Legal' }
+      };
+      var currentSize = 'A4';
+      var currentMargins = MARGIN_PRESETS.standard;
+      var pageStyle = document.getElementById('page-style');
+      var selSize = document.getElementById('pb-size');
+      var selMar = document.getElementById('pb-margins');
+
+      function slug(s) {
+        return (s || '').toString().trim()
+          .replace(/[\\/:*?"<>|]+/g, '')
+          .replace(/\s+/g, '-')
+          .replace(/-+/g, '-')
+          .slice(0, 40) || 'user';
+      }
+      function pad(n) { return String(n).padStart(2, '0'); }
+      function updateFilename() {
+        var d = new Date();
+        var ymd = d.getFullYear() + pad(d.getMonth() + 1) + pad(d.getDate());
+        var hm  = pad(d.getHours()) + pad(d.getMinutes());
+        var name = 'Bosla-Psychometric_' + slug(${JSON.stringify(displayName)}) + '_' + ymd + '-' + hm + '_' + ${JSON.stringify(reportId)};
+        // اسم ملف PDF المقترح = document.title في متصفحات Chromium/Edge
+        document.title = name;
+      }
+      function applyPageStyle() {
+        var sz = SIZE_PRESETS[currentSize] || SIZE_PRESETS.A4;
+        var m = currentMargins;
+        pageStyle.textContent =
+          '@page { size: ' + sz.css + '; margin: ' + m.top + 'mm ' + m.side + 'mm ' + m.bottom + 'mm; }\\n' +
+          '@page :first { margin-top: ' + m.first + 'mm; }';
+        // حدّث ثوابت حساب فواصل الصفحات
+        PAGE_H = sz.h;
+        PAGE_W = sz.w;
+        MARGIN_TOP = Math.round(m.top * 3.7795);
+        MARGIN_TOP_FIRST = Math.round(m.first * 3.7795);
+        MARGIN_BOTTOM = Math.round(m.bottom * 3.7795);
+        USABLE_FIRST = PAGE_H - MARGIN_TOP_FIRST - MARGIN_BOTTOM;
+        USABLE = PAGE_H - MARGIN_TOP - MARGIN_BOTTOM;
+        // حدّث شارة الحجم في الشريط
+        var tag = document.querySelector('.pb-info .pb-tag:nth-child(3)');
+        if (tag) tag.textContent = sz.label + ' · هوامش ' + m.label;
+        updateFilename();
+        setTimeout(run, 60);
+      }
+      if (selSize) selSize.addEventListener('change', function() {
+        currentSize = selSize.value; applyPageStyle();
+      });
+      if (selMar) selMar.addEventListener('change', function() {
+        if (selMar.value === 'custom') {
+          var raw = prompt('أدخل الهوامش بالميليمتر بالصيغة: أعلى, جانبي, أسفل, أعلى-أوّل\\nمثال: 30, 18, 26, 34',
+            currentMargins.top + ', ' + currentMargins.side + ', ' + currentMargins.bottom + ', ' + currentMargins.first);
+          if (!raw) { selMar.value = 'standard'; return; }
+          var parts = raw.split(/[,\\s]+/).map(Number).filter(function(n){ return !isNaN(n); });
+          if (parts.length < 3) { alert('صيغة غير صحيحة.'); selMar.value = 'standard'; return; }
+          currentMargins = {
+            top: parts[0], side: parts[1], bottom: parts[2],
+            first: parts[3] || parts[0] + 4,
+            label: 'مخصّصة'
+          };
+        } else {
+          currentMargins = MARGIN_PRESETS[selMar.value] || MARGIN_PRESETS.standard;
+        }
+        applyPageStyle();
+      });
+
+      // تعيين اسم الملف الافتراضي فور فتح المعاينة
+      updateFilename();
+
 
       // انتظر تحميل الخطوط ثم احسب الفواصل، وأعد الحساب عند تغيير مقاس النافذة
       var ready = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
