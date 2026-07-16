@@ -562,6 +562,10 @@ function handleExportPdf(userName: string, userEmail: string) {
     body > footer.doc-end { zoom: var(--zoom); }
   }
 </style>
+<style id="page-style">
+  @page { size: A4; margin: 28mm 16mm 24mm; }
+  @page :first { margin-top: 32mm; }
+</style>
 </head>
 <body>
   <div class="page-header">
