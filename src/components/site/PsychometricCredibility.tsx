@@ -55,6 +55,136 @@ const OPEN_SCALES = [
   },
 ];
 
+const INTERPRETATIONS: Record<string, { brief: string; followUp: string[] }> = {
+  "BFI-2": {
+    brief: "يقيس السمات الخمس الكبرى (الانفتاح، الضمير الحي، الانبساط، المقبولية، العصابية) عبر 60 بندًا. يعطي قراءة متوازنة للشخصية دون تصنيف تشخيصي.",
+    followUp: [
+      "اربط سمتك الأعلى بميولك في O*NET IP لتحديد بيئات العمل الأنسب.",
+      "إن كانت العصابية مرتفعة، ابدأ بأدوات تنظيم الضغط (Study OS · Pomodoro).",
+      "راجع النتيجة بعد 6 أشهر لرصد التغيّر الطبيعي في السمات.",
+    ],
+  },
+  "O*NET IP": {
+    brief: "يحدّد ملفك المهني وفق نموذج RIASEC (واقعي/استقصائي/فنّي/اجتماعي/ريادي/تقليدي) اعتمادًا على 60 نشاطًا مهنيًا.",
+    followUp: [
+      "استخدم أعلى حرفين من RIASEC كفلتر لاختيار Career Micro-Sims.",
+      "ابحث في قاعدة O*NET عن مهن مطابقة لملفك ذات الطلب المرتفع.",
+      "قابل ممارسًا واحدًا على الأقل في مجالك الأعلى قبل تثبيت القرار.",
+    ],
+  },
+  "OLBI": {
+    brief: "يقيس الاحتراق عبر بُعدَي الإنهاك والانفصال (16 بندًا). أداة استكشاف — ليست تشخيصًا سريريًا.",
+    followUp: [
+      "إن كان المؤشّر مرتفعًا: احجز جلسة كوتشينج قصيرة قبل أي قرار مهني كبير.",
+      "راجع نمط النوم وحدود العمل، وطبّق فحصًا يوميًا في Study OS.",
+      "أعِد التقييم بعد 4–6 أسابيع من تطبيق التوصيات.",
+    ],
+  },
+  "UWES-9": {
+    brief: "يقيس الاندماج الوظيفي عبر الحيوية والتفاني والاستغراق (9 بنود). يعكس علاقتك الإيجابية بعملك.",
+    followUp: [
+      "اندماج منخفض؟ ابحث عن معنى داخل مهامك أو أعِد تصميم دورك (Job Crafting).",
+      "اندماج عالٍ؟ وقت مناسب لمشاريع تطويرية طموحة أو قيادة مبادرة.",
+      "قارن نتيجتك مع نتيجة OLBI: الاندماج العالي مع احتراق مرتفع مؤشّر إنذار.",
+    ],
+  },
+  "VISA": {
+    brief: "يصنّف وضعك في تكوين الهوية المهنية: مُحقّقة، تسويف/استكشاف نشط، مُغلقة، مُشتّتة، أو باحثة.",
+    followUp: [
+      "هوية مُحقّقة: انتقل مباشرة إلى التخطيط والتنفيذ.",
+      "استكشاف نشط: حدّد موعدًا نهائيًا للحسم، وجرّب Micro-Sims.",
+      "هوية مُغلقة أو مُشتّتة: قابل ممارسين واستكشف قبل الالتزام.",
+    ],
+  },
+};
+
+function escapeHtml(s: string): string {
+  return s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c] as string));
+}
+
+function handleExportPdf() {
+  const today = new Date().toLocaleDateString("ar-EG", { year: "numeric", month: "long", day: "numeric" });
+  const scalesHtml = OPEN_SCALES.map((s) => {
+    const interp = INTERPRETATIONS[s.code];
+    return `
+      <section class="scale">
+        <header>
+          <span class="code">${escapeHtml(s.code)}</span>
+          <h2>${escapeHtml(s.name)}</h2>
+          <span class="license">${escapeHtml(s.license)}</span>
+        </header>
+        <p class="use"><strong>الاستخدام:</strong> ${escapeHtml(s.use)}</p>
+        <p class="brief"><strong>تفسير مختصر:</strong> ${escapeHtml(interp?.brief ?? "")}</p>
+        <div class="followup">
+          <strong>توصيات المتابعة:</strong>
+          <ul>${(interp?.followUp ?? []).map((f) => `<li>${escapeHtml(f)}</li>`).join("")}</ul>
+        </div>
+        <p class="cite">${escapeHtml(s.authors)}. <em>${escapeHtml(s.citation)}</em></p>
+        <p class="links">
+          <a href="${escapeHtml(s.url)}">المصدر الرسمي</a>
+          ${s.doi ? `· <a href="${escapeHtml(s.doi)}">DOI</a>` : ""}
+        </p>
+        ${s.note ? `<p class="note">ملاحظة ترخيص: ${escapeHtml(s.note)}</p>` : ""}
+      </section>`;
+  }).join("");
+
+  const html = `<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<title>تقرير المقاييس السيكومترية المفتوحة — بوصلة</title>
+<style>
+  @page { size: A4; margin: 18mm 16mm; }
+  * { box-sizing: border-box; }
+  html, body { font-family: "Noto Naskh Arabic", "Amiri", "Segoe UI", "Tahoma", serif; color: #1a1a1a; line-height: 1.75; }
+  body { margin: 0; padding: 0; }
+  header.top { border-bottom: 2px solid #0f3d2e; padding-bottom: 10px; margin-bottom: 18px; }
+  header.top h1 { margin: 0 0 4px; font-size: 20pt; color: #0f3d2e; }
+  header.top .sub { font-size: 10pt; color: #555; }
+  .intro { background: #f4f8f6; border: 1px solid #cfe0d6; border-radius: 8px; padding: 12px 14px; margin: 0 0 16px; font-size: 10.5pt; }
+  .intro strong { color: #0f3d2e; }
+  section.scale { border: 1px solid #d8d8d8; border-radius: 8px; padding: 12px 14px; margin: 0 0 12px; page-break-inside: avoid; }
+  section.scale header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px; margin-bottom: 6px; border-bottom: 1px dashed #ddd; padding-bottom: 6px; }
+  section.scale h2 { margin: 0; font-size: 13pt; color: #0f3d2e; }
+  .code { font-family: "Courier New", monospace; font-size: 10pt; color: #a37b1e; background: #fff6e0; padding: 2px 6px; border-radius: 4px; }
+  .license { margin-inline-start: auto; font-size: 9pt; background: #e6f4ea; color: #1b6e3b; padding: 2px 6px; border-radius: 4px; }
+  p { margin: 6px 0; font-size: 10.5pt; }
+  .brief { background: #fafafa; padding: 6px 8px; border-inline-start: 3px solid #0f3d2e; }
+  .followup ul { margin: 4px 0 0; padding-inline-start: 20px; }
+  .followup li { margin: 2px 0; font-size: 10.5pt; }
+  .cite { font-size: 9.5pt; color: #444; }
+  .links { font-size: 9.5pt; }
+  .links a { color: #0f3d2e; text-decoration: underline; }
+  .note { font-size: 9pt; color: #8a5a00; font-style: italic; }
+  footer { margin-top: 18px; border-top: 1px solid #ddd; padding-top: 8px; font-size: 9pt; color: #666; text-align: center; }
+</style>
+</head>
+<body>
+  <header class="top">
+    <h1>تقرير المقاييس السيكومترية المفتوحة</h1>
+    <div class="sub">بوصلة · Bosla — تاريخ الإصدار: ${escapeHtml(today)}</div>
+  </header>
+  <div class="intro">
+    <strong>ملخص:</strong> يعتمد نظام بوصلة على خمس أدوات مفتوحة الترخيص فقط (BFI-2، O*NET IP، OLBI، UWES-9، VISA)،
+    ويستبعد كل الأدوات التجارية المقيّدة. هذا التقرير يعرض لكل أداة تفسيرًا مختصرًا وتوصيات متابعة عملية.
+    الأدوات استكشافية وليست تشخيصية؛ ننصح بإحالة الحالات السريرية إلى مختص معتمد.
+  </div>
+  ${scalesHtml}
+  <footer>© بوصلة — للتفاصيل القانونية الكاملة راجع صفحة تراخيص المقاييس على الموقع.</footer>
+  <script>window.addEventListener('load', () => setTimeout(() => window.print(), 250));</script>
+</body>
+</html>`;
+
+  const w = window.open("", "_blank", "width=900,height=1100");
+  if (!w) {
+    alert("يرجى السماح بالنوافذ المنبثقة لتصدير التقرير.");
+    return;
+  }
+  w.document.open();
+  w.document.write(html);
+  w.document.close();
+}
+
 
 export function PsychometricCredibility() {
   return (
