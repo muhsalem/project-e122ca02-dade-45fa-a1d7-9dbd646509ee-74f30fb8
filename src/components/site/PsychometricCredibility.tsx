@@ -685,9 +685,16 @@ function handleExportPdf(userName: string, userEmail: string) {
       <span class="pb-tag">A4 · 210×297 مم</span>
       <span class="pb-tag pb-pages" id="pb-pages">— صفحات</span>
       <span class="pb-tag pb-pages" id="pb-audit" style="cursor:pointer" title="اضغط لإظهار/إخفاء تعليم مشاكل RTL">✓ RTL</span>
-      <span class="pb-tag pb-fonts loading" id="pb-fonts" aria-live="polite">
+      <span class="pb-tag pb-fonts loading" id="pb-fonts" tabindex="0" aria-live="polite" title="مرّر للاطّلاع على تفاصيل الخطوط">
         <span class="pb-spinner" aria-hidden="true"></span>
         <span class="pb-fonts-label">جاري تحميل الخطوط…</span>
+        <span class="pb-fonts-caret" aria-hidden="true">▾</span>
+        <div class="pb-fonts-details" id="pb-fonts-details" role="tooltip">
+          <h4>حالة تحميل الخطوط</h4>
+          <ul id="pb-fonts-list"></ul>
+          <div class="pb-fd-reason" id="pb-fonts-reason"></div>
+          <div class="pb-fd-meta" id="pb-fonts-meta">قيد الفحص…</div>
+        </div>
       </span>
       <span class="pb-tag pb-rev">${escapeHtml(REPORT_VERSION)}</span>
     </div>
