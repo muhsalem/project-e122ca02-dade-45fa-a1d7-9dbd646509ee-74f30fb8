@@ -712,10 +712,8 @@ function handleExportPdf(userName: string, userEmail: string) {
         return pageStarts.length;
       }
 
-      function refreshBadge(n) {
-        var badge = document.getElementById('pb-pages');
-        if (badge) badge.textContent = n + ' صفحات متوقّعة';
-      }
+
+
 
       // تدقيق RTL: فحص الاتجاه والمحاذاة لكل عنصر نصي داخل الصفحة
       function auditRtl() {
