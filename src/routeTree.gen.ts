@@ -90,6 +90,7 @@ import { Route as AuthenticatedMyPlanRouteImport } from './routes/_authenticated
 import { Route as AuthenticatedMyBookingsRouteImport } from './routes/_authenticated/my-bookings'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as ApiPublicHealthRouteImport } from './routes/api/public/health'
+import { Route as AuthenticatedAdminScalesRouteImport } from './routes/_authenticated/admin.scales'
 import { Route as ApiPublicWebhooksTapRouteImport } from './routes/api/public/webhooks/tap'
 import { Route as ApiPublicWebhooksPaymobRouteImport } from './routes/api/public/webhooks/paymob'
 import { Route as ApiPublicWebhooksMoyasarRouteImport } from './routes/api/public/webhooks/moyasar'
@@ -502,6 +503,12 @@ const ApiPublicHealthRoute = ApiPublicHealthRouteImport.update({
   path: '/api/public/health',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAdminScalesRoute =
+  AuthenticatedAdminScalesRouteImport.update({
+    id: '/scales',
+    path: '/scales',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const ApiPublicWebhooksTapRoute = ApiPublicWebhooksTapRouteImport.update({
   id: '/api/public/webhooks/tap',
   path: '/api/public/webhooks/tap',
@@ -576,7 +583,7 @@ export interface FileRoutesByFullPath {
   '/terms': typeof TermsRoute
   '/wellbeing-check': typeof WellbeingCheckRoute
   '/work-values': typeof WorkValuesRoute
-  '/admin': typeof AuthenticatedAdminRoute
+  '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/my-bookings': typeof AuthenticatedMyBookingsRoute
   '/my-plan': typeof AuthenticatedMyPlanRoute
   '/checkout/success': typeof CheckoutSuccessRoute
@@ -599,6 +606,7 @@ export interface FileRoutesByFullPath {
   '/track/entrepreneurship': typeof TrackEntrepreneurshipRoute
   '/track/growth': typeof TrackGrowthRoute
   '/report/': typeof ReportIndexRoute
+  '/admin/scales': typeof AuthenticatedAdminScalesRoute
   '/api/public/health': typeof ApiPublicHealthRoute
   '/api/public/webhooks/moyasar': typeof ApiPublicWebhooksMoyasarRoute
   '/api/public/webhooks/paymob': typeof ApiPublicWebhooksPaymobRoute
@@ -661,7 +669,7 @@ export interface FileRoutesByTo {
   '/terms': typeof TermsRoute
   '/wellbeing-check': typeof WellbeingCheckRoute
   '/work-values': typeof WorkValuesRoute
-  '/admin': typeof AuthenticatedAdminRoute
+  '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/my-bookings': typeof AuthenticatedMyBookingsRoute
   '/my-plan': typeof AuthenticatedMyPlanRoute
   '/checkout/success': typeof CheckoutSuccessRoute
@@ -684,6 +692,7 @@ export interface FileRoutesByTo {
   '/track/entrepreneurship': typeof TrackEntrepreneurshipRoute
   '/track/growth': typeof TrackGrowthRoute
   '/report': typeof ReportIndexRoute
+  '/admin/scales': typeof AuthenticatedAdminScalesRoute
   '/api/public/health': typeof ApiPublicHealthRoute
   '/api/public/webhooks/moyasar': typeof ApiPublicWebhooksMoyasarRoute
   '/api/public/webhooks/paymob': typeof ApiPublicWebhooksPaymobRoute
@@ -748,7 +757,7 @@ export interface FileRoutesById {
   '/terms': typeof TermsRoute
   '/wellbeing-check': typeof WellbeingCheckRoute
   '/work-values': typeof WorkValuesRoute
-  '/_authenticated/admin': typeof AuthenticatedAdminRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
   '/_authenticated/my-bookings': typeof AuthenticatedMyBookingsRoute
   '/_authenticated/my-plan': typeof AuthenticatedMyPlanRoute
   '/checkout/success': typeof CheckoutSuccessRoute
@@ -771,6 +780,7 @@ export interface FileRoutesById {
   '/track/entrepreneurship': typeof TrackEntrepreneurshipRoute
   '/track/growth': typeof TrackGrowthRoute
   '/report/': typeof ReportIndexRoute
+  '/_authenticated/admin/scales': typeof AuthenticatedAdminScalesRoute
   '/api/public/health': typeof ApiPublicHealthRoute
   '/api/public/webhooks/moyasar': typeof ApiPublicWebhooksMoyasarRoute
   '/api/public/webhooks/paymob': typeof ApiPublicWebhooksPaymobRoute
@@ -858,6 +868,7 @@ export interface FileRouteTypes {
     | '/track/entrepreneurship'
     | '/track/growth'
     | '/report/'
+    | '/admin/scales'
     | '/api/public/health'
     | '/api/public/webhooks/moyasar'
     | '/api/public/webhooks/paymob'
@@ -943,6 +954,7 @@ export interface FileRouteTypes {
     | '/track/entrepreneurship'
     | '/track/growth'
     | '/report'
+    | '/admin/scales'
     | '/api/public/health'
     | '/api/public/webhooks/moyasar'
     | '/api/public/webhooks/paymob'
@@ -1029,6 +1041,7 @@ export interface FileRouteTypes {
     | '/track/entrepreneurship'
     | '/track/growth'
     | '/report/'
+    | '/_authenticated/admin/scales'
     | '/api/public/health'
     | '/api/public/webhooks/moyasar'
     | '/api/public/webhooks/paymob'
@@ -1678,6 +1691,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicHealthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/admin/scales': {
+      id: '/_authenticated/admin/scales'
+      path: '/scales'
+      fullPath: '/admin/scales'
+      preLoaderRoute: typeof AuthenticatedAdminScalesRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/api/public/webhooks/tap': {
       id: '/api/public/webhooks/tap'
       path: '/api/public/webhooks/tap'
@@ -1702,14 +1722,25 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AuthenticatedAdminRouteChildren {
+  AuthenticatedAdminScalesRoute: typeof AuthenticatedAdminScalesRoute
+}
+
+const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
+  AuthenticatedAdminScalesRoute: AuthenticatedAdminScalesRoute,
+}
+
+const AuthenticatedAdminRouteWithChildren =
+  AuthenticatedAdminRoute._addFileChildren(AuthenticatedAdminRouteChildren)
+
 interface AuthenticatedRouteRouteChildren {
-  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRouteWithChildren
   AuthenticatedMyBookingsRoute: typeof AuthenticatedMyBookingsRoute
   AuthenticatedMyPlanRoute: typeof AuthenticatedMyPlanRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
-  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
+  AuthenticatedAdminRoute: AuthenticatedAdminRouteWithChildren,
   AuthenticatedMyBookingsRoute: AuthenticatedMyBookingsRoute,
   AuthenticatedMyPlanRoute: AuthenticatedMyPlanRoute,
 }

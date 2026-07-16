@@ -15,7 +15,7 @@ import {
 } from "@/lib/psych-scales.functions";
 import { ShieldAlert, Plus, Trash2, Save, X, BookOpen, GitBranch, FileText, Link2 } from "lucide-react";
 
-export const Route = createFileRoute("/_authenticated/admin.scales")({
+export const Route = createFileRoute("/_authenticated/admin/scales")({
   head: () => ({ meta: [{ title: "إدارة المقاييس النفسية — بوصلة" }] }),
   component: ScalesAdmin,
 });
