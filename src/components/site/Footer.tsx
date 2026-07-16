@@ -21,6 +21,7 @@ export function Footer() {
           <h4 className="mb-4 font-serif text-base text-primary">روابط</h4>
           <ul className="space-y-2 text-sm text-muted-foreground">
             <li><Link to="/start" className="hover:text-primary">ابدأ رحلتك</Link></li>
+            <li><Link to="/passport" className="hover:text-primary">جواز بوصلة (منظّم الرحلة)</Link></li>
             <li><Link to="/pricing" className="hover:text-primary">الأسعار والباقات</Link></li>
             <li><Link to="/institutions" className="hover:text-primary">للمؤسسات (B2B)</Link></li>
             <li><Link to="/booking" className="hover:text-primary">حجز جلسة إرشاد أو كوتشينج</Link></li>
