@@ -43,36 +43,14 @@ export function PsychometricCredibility() {
         <div className="text-center">
           <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/40 bg-emerald-50 px-4 py-1.5 text-xs font-semibold text-emerald-800 dark:bg-emerald-950/30 dark:text-emerald-200">
             <BadgeCheck className="h-4 w-4" />
-            Open-license psychometrics · 100% مقاييس مفتوحة الترخيص
+            Open-license psychometrics · 5 أدوات مفتوحة الترخيص فقط
           </div>
-          <h2 className="mt-4 font-serif text-2xl text-primary md:text-3xl">
-            كل مقياس نستخدمه مفتوح المصدر أو Public Domain
-          </h2>
-          <p className="mx-auto mt-3 max-w-2xl text-sm leading-7 text-muted-foreground">
-            استبعدنا كل المقاييس التجارية المقيّدة (MBI، NEO-PI-R، Schein Anchors، CDSE…)
-            واعتمدنا فقط أدوات مفتوحة يمكن استخدامها تجاريًا مع الاستشهاد بالمصدر.
-            كل التفاصيل القانونية في{" "}
-            <Link to="/licensing" className="text-primary underline-offset-4 hover:underline">
-              صفحة تراخيص المقاييس
-            </Link>.
-          </p>
-          <div className="mx-auto mt-4 max-w-2xl rounded-lg border border-amber-500/40 bg-amber-50 px-4 py-3 text-right text-xs leading-6 text-amber-900 dark:bg-amber-950/20 dark:text-amber-200">
-            <strong>إفصاح سيكومتري:</strong> النسخ العربية من هذه المقاييس ترجمات داخلية أعدّها
-            فريق بوصلة، وهي قيد التقنين على عيّنة عربية. تُعرض النتائج بنطاق ثقة تقريبي ±10٪،
-            وستُنشر جداول الصدق والثبات (Cronbach's α + CFA + Norms) فور اكتمال الدراسة.
-          </div>
-        </div>
-
-        <div className="mt-10 grid gap-4 md:grid-cols-3 lg:grid-cols-4">
-          {OPEN_SCALES.map((m) => (
-            <div key={m.code} className="relative rounded-xl border border-border bg-card p-4">
-              <span className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-md bg-emerald-100 px-1.5 py-0.5 text-[10px] font-semibold text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-200">
           <h2 className="mt-4 font-serif text-2xl text-primary md:text-3xl">
             خمس أدوات مفتوحة الترخيص — لا مقاييس تجارية مقيّدة
           </h2>
           <p className="mx-auto mt-3 max-w-2xl text-sm leading-7 text-muted-foreground">
-            اعتمدنا فقط: <strong>BFI-2</strong> للشخصية، <strong>O*NET Interest Profiler</strong> للميول،
-            <strong> OLBI</strong> للاحتراق، <strong>UWES-9</strong> للاندماج الوظيفي، و<strong>VISA</strong> للهوية المهنية.
+            اعتمدنا فقط: <strong>BFI-2</strong> للشخصية، <strong>O*NET Interest Profiler</strong> للميول،{" "}
+            <strong>OLBI</strong> للاحتراق، <strong>UWES-9</strong> للاندماج الوظيفي، و<strong>VISA</strong> للهوية المهنية.
             استبعدنا كل الأدوات التجارية المقيّدة (MBI، NEO-PI-R، Schein Anchors…). التفاصيل القانونية في{" "}
             <Link to="/licensing" className="text-primary underline-offset-4 hover:underline">
               صفحة تراخيص المقاييس
@@ -81,8 +59,8 @@ export function PsychometricCredibility() {
           <div className="mx-auto mt-4 max-w-2xl rounded-lg border border-amber-500/40 bg-amber-50 px-4 py-3 text-right text-xs leading-6 text-amber-900 dark:bg-amber-950/20 dark:text-amber-200">
             <strong>إفصاح سيكومتري:</strong> النسخ العربية من هذه المقاييس ترجمات داخلية أعدّها
             فريق بوصلة، وهي قيد التقنين على عيّنة عربية. تُعرض النتائج بنطاق ثقة تقريبي ±10٪،
-            وستُنشر جداول الصدق والثبات (Cronbach's α + CFA + Norms) فور اكتمال الدراسة.
-            الأدوات ذات ترخيص "مجاني للبحث" (BFI-2 و UWES-9) نستخدمها بعد الحصول على إذن كتابي من مؤلفيها.
+            وستُنشر جداول الصدق والثبات (Cronbach&apos;s α + CFA + Norms) فور اكتمال الدراسة.
+            الأدوات ذات ترخيص «مجاني للبحث» (BFI-2 و UWES-9) نستخدمها بعد الحصول على إذن كتابي من مؤلفيها.
           </div>
         </div>
 
@@ -96,7 +74,25 @@ export function PsychometricCredibility() {
               <div className="mt-1 font-serif text-sm font-semibold text-primary">{m.name}</div>
               <div className="mt-1 text-xs text-muted-foreground">{m.use}</div>
               <div className="mt-2 text-[11px] text-muted-foreground/80">{m.license}</div>
-              {m.note && <div className="mt-1 text-[10px] italic text-amber-700 dark:text-amber-300">{m.note}</div>}
+              {m.note && (
+                <div className="mt-1 text-[10px] italic text-amber-700 dark:text-amber-300">{m.note}</div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-8 grid gap-4 md:grid-cols-3">
+          {[
+            { icon: BookOpen, t: "شفافية المصدر", d: "كل مقياس يظهر اسمه ومؤلفيه وترخيصه ورابطه الأصلي في صفحته وفي التقرير." },
+            { icon: Users, t: "ترجمة داخلية موثّقة", d: "الترجمات العربية أعدّها فريق بوصلة، وهي قيد التقنين على عيّنة عربية." },
+            { icon: ShieldCheck, t: "أداة استكشاف لا تشخيص", d: "نوصي بإحالة الحالات السريرية إلى مختصين معتمدين." },
+          ].map((b) => (
+            <div key={b.t} className="flex gap-3 rounded-xl border border-border bg-card p-4">
+              <b.icon className="h-5 w-5 shrink-0 text-gold" />
+              <div>
+                <div className="font-serif text-sm font-semibold text-primary">{b.t}</div>
+                <div className="mt-1 text-xs leading-6 text-muted-foreground">{b.d}</div>
+              </div>
             </div>
           ))}
         </div>
