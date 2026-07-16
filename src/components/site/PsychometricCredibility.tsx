@@ -476,6 +476,30 @@ function handleExportPdf(userName: string, userEmail: string) {
     .crosses-break { outline: none !important; }
   }
 
+  /* تدقيق RTL: تعليم العناصر ذات الاتجاه/المحاذاة غير الصحيحة */
+  .rtl-issue {
+    outline: 2px dashed #b23a8c !important;
+    outline-offset: 3px;
+    position: relative;
+    background: rgba(178,58,140,0.06);
+  }
+  .rtl-issue::before {
+    content: attr(data-rtl-issue);
+    position: absolute; top: -12px; right: 8px;
+    background: #b23a8c; color: #fff;
+    padding: 2px 8px; border-radius: 4px;
+    font-size: 8.5pt; font-weight: 700;
+    z-index: 55;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+  body.audit-hidden .rtl-issue { outline: none !important; background: transparent !important; }
+  body.audit-hidden .rtl-issue::before { display: none !important; }
+  @media print {
+    .rtl-issue { outline: none !important; background: transparent !important; }
+    .rtl-issue::before { display: none !important; }
+  }
+
   /* شريط المعاينة العائم */
   .preview-bar {
     position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
