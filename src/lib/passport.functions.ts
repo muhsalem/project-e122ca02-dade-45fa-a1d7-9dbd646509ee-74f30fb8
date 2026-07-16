@@ -556,9 +556,11 @@ export const getPassport = createServerFn({ method: "GET" })
         { onConflict: "user_id" },
       );
 
+    const unifiedSummary = buildUnifiedSummary(insightMap);
+
     return {
       stage, stageIndex, progress, completed,
-      insights, nextActions,
+      insights, unifiedSummary, nextActions,
       primaryAction: nextActions[0] ?? null,
       dismissed,
       updatedAt: new Date().toISOString(),
