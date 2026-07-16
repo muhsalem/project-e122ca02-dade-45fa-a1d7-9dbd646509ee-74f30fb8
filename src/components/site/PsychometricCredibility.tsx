@@ -509,6 +509,38 @@ function handleExportPdf(userName: string, userEmail: string) {
   .pb-btn-ghost:hover { background: rgba(255,255,255,0.1); }
   .pb-btn-toggle { background: rgba(208,67,58,0.9); color: #fff; border-color: rgba(255,255,255,0.15); }
   .pb-btn-toggle.off { background: rgba(255,255,255,0.14); color: #f4f8f6; border-color: rgba(255,255,255,0.35); }
+
+  /* مجموعة تكبير/تصغير المعاينة */
+  .pb-zoom {
+    display: inline-flex; align-items: stretch;
+    background: rgba(255,255,255,0.10);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 8px; overflow: hidden;
+  }
+  .pb-zoom button {
+    background: transparent; color: #f4f8f6;
+    border: 0; padding: 6px 10px; font-size: 12pt; font-weight: 700;
+    cursor: pointer; font-family: inherit; line-height: 1;
+  }
+  .pb-zoom button:hover:not(:disabled) { background: rgba(255,255,255,0.14); }
+  .pb-zoom button:disabled { opacity: 0.4; cursor: not-allowed; }
+  .pb-zoom .pb-zoom-val {
+    padding: 6px 10px; font-size: 9.5pt; font-weight: 700;
+    background: rgba(0,0,0,0.18); color: #ffd66b;
+    min-width: 52px; text-align: center; align-self: center;
+    font-family: "Courier New", monospace;
+  }
+
+  /* تطبيق التكبير على عناصر محتوى الصفحة فقط (لا يشمل شريط المعاينة) */
+  @media screen {
+    body { --zoom: 1; }
+    body > header.top,
+    body > .meta-card,
+    body > .intro,
+    body > section.overall,
+    body > section.scale,
+    body > footer.doc-end { zoom: var(--zoom); }
+  }
 </style>
 </head>
 <body>
