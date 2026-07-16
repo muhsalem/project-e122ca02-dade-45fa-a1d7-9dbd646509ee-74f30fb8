@@ -550,9 +550,11 @@ function handleExportPdf(userName: string, userEmail: string) {
       <span class="pb-badge">معاينة قبل الحفظ</span>
       <span class="pb-tag">RTL · العربية</span>
       <span class="pb-tag">A4 · 210×297 مم</span>
+      <span class="pb-tag pb-pages" id="pb-pages">— صفحات</span>
       <span class="pb-tag pb-rev">${escapeHtml(REPORT_VERSION)}</span>
     </div>
     <div class="pb-actions">
+      <button type="button" id="pb-toggle-breaks" class="pb-btn pb-btn-toggle">إخفاء حدود الصفحات</button>
       <button type="button" id="pb-close" class="pb-btn pb-btn-ghost">إغلاق المعاينة</button>
       <button type="button" id="pb-print" class="pb-btn pb-btn-primary">طباعة / حفظ PDF</button>
     </div>
@@ -567,15 +569,120 @@ function handleExportPdf(userName: string, userEmail: string) {
           el.classList.add('long');
         }
       });
+
+      // حساب فواصل الصفحات المتوقعة داخل A4 وإبراز العناصر التي تنكسر
+      // أبعاد A4 عند 96dpi: العرض 794px، الارتفاع 1123px
+      // نأخذ في الحسبان هوامش @page (28mm أعلى / 24mm أسفل ≈ 106px + 91px)،
+      // مع هامش أعلى إضافي للصفحة الأولى (32mm ≈ 121px بدل 106).
+      var PAGE_H = 1123;                 // ارتفاع A4 بالبكسل
+      var MARGIN_TOP = 106;              // 28mm
+      var MARGIN_TOP_FIRST = 121;        // 32mm
+      var MARGIN_BOTTOM = 91;            // 24mm
+      var USABLE_FIRST = PAGE_H - MARGIN_TOP_FIRST - MARGIN_BOTTOM;   // ~911px
+      var USABLE = PAGE_H - MARGIN_TOP - MARGIN_BOTTOM;               // ~926px
+
+      var TOOLBAR_OFFSET = 76;  // padding-top للجسم في وضع الشاشة
+      var body = document.body;
+
+      function computeBreaks() {
+        // إزالة العلامات السابقة
+        document.querySelectorAll('.page-break-marker, .page-num-chip').forEach(function(n){ n.remove(); });
+        document.querySelectorAll('.crosses-break').forEach(function(n){ n.classList.remove('crosses-break'); });
+
+        // محتوى الصفحة يبدأ من أول عنصر بعد الشريط
+        var firstEl = document.querySelector('header.top');
+        if (!firstEl) return 0;
+        var startY = firstEl.offsetTop;   // نسبة إلى الجسم
+        // آخر عنصر
+        var endEl = document.querySelector('footer.doc-end');
+        var endY = endEl ? (endEl.offsetTop + endEl.offsetHeight) : document.body.scrollHeight;
+        var totalContent = endY - startY;
+
+        // احسب مواضع الفواصل المتوقعة
+        var boundaries = [];   // إحداثيات Y (نسبة إلى الجسم) حيث تبدأ صفحة جديدة
+        var cursor = startY + USABLE_FIRST;
+        var pageIdx = 2;
+        while (cursor < endY) {
+          boundaries.push({ y: cursor, page: pageIdx });
+          cursor += USABLE;
+          pageIdx++;
+        }
+
+        // ارسم علامة "بداية الصفحة N" عند كل حدّ
+        boundaries.forEach(function(b) {
+          var line = document.createElement('div');
+          line.className = 'page-break-marker';
+          line.style.top = b.y + 'px';
+          line.setAttribute('data-label', '⇤ بداية الصفحة ' + b.page);
+          body.appendChild(line);
+        });
+
+        // شارات رقم الصفحة على يسار الورقة عند بداية كل صفحة
+        var pageStarts = [{ y: startY, page: 1 }].concat(boundaries);
+        pageStarts.forEach(function(p) {
+          var chip = document.createElement('div');
+          chip.className = 'page-num-chip';
+          chip.style.top = (p.y + 4) + 'px';
+          chip.textContent = 'صفحة ' + p.page;
+          body.appendChild(chip);
+        });
+
+        // أبرز العناصر التي تعبر أي فاصل
+        var candidates = document.querySelectorAll(
+          'section.scale, section.overall, .meta-card, .intro, table.cmp, .followup, header.top'
+        );
+        candidates.forEach(function(el) {
+          var top = el.offsetTop;
+          var bottom = top + el.offsetHeight;
+          for (var i = 0; i < boundaries.length; i++) {
+            var by = boundaries[i].y;
+            if (top < by && bottom > by) {
+              // نتجاهل الأقسام التي وسمناها بـ .long عمدًا لأنها مصمّمة للتقسيم
+              if (!el.classList.contains('long')) {
+                el.classList.add('crosses-break');
+              }
+              break;
+            }
+          }
+        });
+
+        return pageStarts.length;
+      }
+
+      function refreshBadge(n) {
+        var badge = document.getElementById('pb-pages');
+        if (badge) badge.textContent = n + ' صفحات متوقّعة';
+      }
+
+      function run() {
+        var n = computeBreaks();
+        refreshBadge(n);
+      }
+
       // تفعيل أزرار المعاينة (بدون طباعة تلقائية — ينتظر المستخدم للمراجعة أولًا)
       var btnPrint = document.getElementById('pb-print');
       var btnClose = document.getElementById('pb-close');
+      var btnToggle = document.getElementById('pb-toggle-breaks');
       if (btnPrint) btnPrint.addEventListener('click', function() {
         var ready = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
         ready.then(function() { window.print(); });
       });
       if (btnClose) btnClose.addEventListener('click', function() { window.close(); });
-      // تمرير سلس إلى بداية الوثيقة
+      if (btnToggle) btnToggle.addEventListener('click', function() {
+        var hidden = body.classList.toggle('breaks-hidden');
+        btnToggle.classList.toggle('off', hidden);
+        btnToggle.textContent = hidden ? 'إظهار حدود الصفحات' : 'إخفاء حدود الصفحات';
+      });
+
+      // انتظر تحميل الخطوط ثم احسب الفواصل، وأعد الحساب عند تغيير مقاس النافذة
+      var ready = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
+      ready.then(function() { setTimeout(run, 120); });
+      var t;
+      window.addEventListener('resize', function() {
+        clearTimeout(t);
+        t = setTimeout(run, 200);
+      });
+
       window.scrollTo({ top: 0 });
     })();
   </script>
