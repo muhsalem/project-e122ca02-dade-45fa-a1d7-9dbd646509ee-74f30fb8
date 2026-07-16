@@ -509,6 +509,38 @@ function handleExportPdf(userName: string, userEmail: string) {
   .pb-btn-ghost:hover { background: rgba(255,255,255,0.1); }
   .pb-btn-toggle { background: rgba(208,67,58,0.9); color: #fff; border-color: rgba(255,255,255,0.15); }
   .pb-btn-toggle.off { background: rgba(255,255,255,0.14); color: #f4f8f6; border-color: rgba(255,255,255,0.35); }
+
+  /* مجموعة تكبير/تصغير المعاينة */
+  .pb-zoom {
+    display: inline-flex; align-items: stretch;
+    background: rgba(255,255,255,0.10);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 8px; overflow: hidden;
+  }
+  .pb-zoom button {
+    background: transparent; color: #f4f8f6;
+    border: 0; padding: 6px 10px; font-size: 12pt; font-weight: 700;
+    cursor: pointer; font-family: inherit; line-height: 1;
+  }
+  .pb-zoom button:hover:not(:disabled) { background: rgba(255,255,255,0.14); }
+  .pb-zoom button:disabled { opacity: 0.4; cursor: not-allowed; }
+  .pb-zoom .pb-zoom-val {
+    padding: 6px 10px; font-size: 9.5pt; font-weight: 700;
+    background: rgba(0,0,0,0.18); color: #ffd66b;
+    min-width: 52px; text-align: center; align-self: center;
+    font-family: "Courier New", monospace;
+  }
+
+  /* تطبيق التكبير على عناصر محتوى الصفحة فقط (لا يشمل شريط المعاينة) */
+  @media screen {
+    body { --zoom: 1; }
+    body > header.top,
+    body > .meta-card,
+    body > .intro,
+    body > section.overall,
+    body > section.scale,
+    body > footer.doc-end { zoom: var(--zoom); }
+  }
 </style>
 </head>
 <body>
@@ -554,6 +586,12 @@ function handleExportPdf(userName: string, userEmail: string) {
       <span class="pb-tag pb-rev">${escapeHtml(REPORT_VERSION)}</span>
     </div>
     <div class="pb-actions">
+      <div class="pb-zoom" role="group" aria-label="تكبير وتصغير المعاينة">
+        <button type="button" id="pb-zoom-out" title="تصغير" aria-label="تصغير">−</button>
+        <span class="pb-zoom-val" id="pb-zoom-val">100٪</span>
+        <button type="button" id="pb-zoom-in" title="تكبير" aria-label="تكبير">+</button>
+        <button type="button" id="pb-zoom-reset" title="إعادة ضبط" aria-label="إعادة ضبط">⟳</button>
+      </div>
       <button type="button" id="pb-toggle-breaks" class="pb-btn pb-btn-toggle">إخفاء حدود الصفحات</button>
       <button type="button" id="pb-close" class="pb-btn pb-btn-ghost">إغلاق المعاينة</button>
       <button type="button" id="pb-print" class="pb-btn pb-btn-primary">طباعة / حفظ PDF</button>
@@ -673,6 +711,33 @@ function handleExportPdf(userName: string, userEmail: string) {
         btnToggle.classList.toggle('off', hidden);
         btnToggle.textContent = hidden ? 'إظهار حدود الصفحات' : 'إخفاء حدود الصفحات';
       });
+
+      // تكبير/تصغير المعاينة
+      var ZOOM_MIN = 0.5, ZOOM_MAX = 2.0, ZOOM_STEP = 0.1;
+      var zoom = 1;
+      var zVal = document.getElementById('pb-zoom-val');
+      var zIn = document.getElementById('pb-zoom-in');
+      var zOut = document.getElementById('pb-zoom-out');
+      var zReset = document.getElementById('pb-zoom-reset');
+      function applyZoom() {
+        zoom = Math.max(ZOOM_MIN, Math.min(ZOOM_MAX, Math.round(zoom * 100) / 100));
+        body.style.setProperty('--zoom', String(zoom));
+        if (zVal) zVal.textContent = Math.round(zoom * 100) + '٪';
+        if (zIn) zIn.disabled = zoom >= ZOOM_MAX - 0.001;
+        if (zOut) zOut.disabled = zoom <= ZOOM_MIN + 0.001;
+        // أعد حساب فواصل الصفحات لأن التكبير يغيّر ارتفاعات العناصر
+        setTimeout(run, 60);
+      }
+      if (zIn) zIn.addEventListener('click', function() { zoom += ZOOM_STEP; applyZoom(); });
+      if (zOut) zOut.addEventListener('click', function() { zoom -= ZOOM_STEP; applyZoom(); });
+      if (zReset) zReset.addEventListener('click', function() { zoom = 1; applyZoom(); });
+      // Ctrl/Cmd + عجلة الفأرة = تكبير/تصغير
+      window.addEventListener('wheel', function(ev) {
+        if (!(ev.ctrlKey || ev.metaKey)) return;
+        ev.preventDefault();
+        zoom += (ev.deltaY < 0 ? ZOOM_STEP : -ZOOM_STEP);
+        applyZoom();
+      }, { passive: false });
 
       // انتظر تحميل الخطوط ثم احسب الفواصل، وأعد الحساب عند تغيير مقاس النافذة
       var ready = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
