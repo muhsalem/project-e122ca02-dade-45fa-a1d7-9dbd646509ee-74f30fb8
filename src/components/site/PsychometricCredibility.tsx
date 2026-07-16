@@ -765,8 +765,31 @@ function handleExportPdf(userName: string, userEmail: string) {
         <span class="pb-spinner pb-spinner-dark" aria-hidden="true" id="pb-print-spin"></span>
         <span id="pb-print-label">تحميل الخطوط…</span>
       </button>
+      <button type="button" id="pb-print-force" class="pb-btn pb-btn-warn pb-hidden"
+              aria-hidden="true" title="طباعة رغم تعذّر تحميل الخطوط العربية">
+        ⚠ الطباعة رغم تعذّر الخطوط
+      </button>
     </div>
   </div>
+
+  <!-- حوار تأكيد الطباعة رغم فشل الخطوط -->
+  <dialog id="pb-force-dialog" class="pb-dialog" aria-labelledby="pb-force-title" aria-describedby="pb-force-desc">
+    <form method="dialog" class="pb-dialog-body">
+      <h3 id="pb-force-title">⚠ تأكيد الطباعة بدون خطوط عربية أصلية</h3>
+      <p id="pb-force-desc">
+        تعذّر تحميل الخطوط العربية الرسمية للتقرير (Noto Naskh Arabic و/أو Amiri).
+        قد يظهر النص العربي بخط بديل من نظام التشغيل، مما يؤثر على شكل التشكيل والحروف المتّصلة وتناسق المسافات في PDF.
+      </p>
+      <p><strong>الأوزان المتعذّرة:</strong></p>
+      <ul id="pb-force-list"></ul>
+      <p>هل ترغب بمتابعة الطباعة / حفظ PDF على أي حال؟</p>
+    </form>
+    <div class="pb-dialog-actions">
+      <button type="button" id="pb-force-confirm" class="pb-btn pb-btn-warn">نعم، تابع الطباعة</button>
+      <button type="button" id="pb-force-cancel" class="pb-btn pb-btn-ghost">إلغاء</button>
+    </div>
+  </dialog>
+
 
   <script>
     (function() {
