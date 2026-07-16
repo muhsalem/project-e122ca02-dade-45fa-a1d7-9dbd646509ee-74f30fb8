@@ -139,7 +139,7 @@ export const saveTodayPlan = createServerFn({ method: "POST" })
     const { error } = await context.supabase
       .from("study_daily_plans")
       .upsert(
-        { user_id: context.userId, day, plan: data.plan, inputs: data.inputs ?? null },
+        { user_id: context.userId, day, plan: data.plan as never, inputs: (data.inputs ?? null) as never },
         { onConflict: "user_id,day" },
       );
     if (error) throw new Error(error.message);
