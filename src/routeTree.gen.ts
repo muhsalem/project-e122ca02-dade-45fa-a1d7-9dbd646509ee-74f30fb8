@@ -32,6 +32,7 @@ import { Route as PathsRouteImport } from './routes/paths'
 import { Route as ParentDashboardRouteImport } from './routes/parent-dashboard'
 import { Route as MyAssessmentsRouteImport } from './routes/my-assessments'
 import { Route as MetaLearningRouteImport } from './routes/meta-learning'
+import { Route as LicensingRouteImport } from './routes/licensing'
 import { Route as LearningStyleRouteImport } from './routes/learning-style'
 import { Route as LearningDnaDashboardRouteImport } from './routes/learning-dna-dashboard'
 import { Route as LearningDnaRouteImport } from './routes/learning-dna'
@@ -206,6 +207,11 @@ const MyAssessmentsRoute = MyAssessmentsRouteImport.update({
 const MetaLearningRoute = MetaLearningRouteImport.update({
   id: '/meta-learning',
   path: '/meta-learning',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LicensingRoute = LicensingRouteImport.update({
+  id: '/licensing',
+  path: '/licensing',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LearningStyleRoute = LearningStyleRouteImport.update({
@@ -546,6 +552,7 @@ export interface FileRoutesByFullPath {
   '/learning-dna': typeof LearningDnaRoute
   '/learning-dna-dashboard': typeof LearningDnaDashboardRoute
   '/learning-style': typeof LearningStyleRoute
+  '/licensing': typeof LicensingRoute
   '/meta-learning': typeof MetaLearningRoute
   '/my-assessments': typeof MyAssessmentsRoute
   '/parent-dashboard': typeof ParentDashboardRoute
@@ -630,6 +637,7 @@ export interface FileRoutesByTo {
   '/learning-dna': typeof LearningDnaRoute
   '/learning-dna-dashboard': typeof LearningDnaDashboardRoute
   '/learning-style': typeof LearningStyleRoute
+  '/licensing': typeof LicensingRoute
   '/meta-learning': typeof MetaLearningRoute
   '/my-assessments': typeof MyAssessmentsRoute
   '/parent-dashboard': typeof ParentDashboardRoute
@@ -716,6 +724,7 @@ export interface FileRoutesById {
   '/learning-dna': typeof LearningDnaRoute
   '/learning-dna-dashboard': typeof LearningDnaDashboardRoute
   '/learning-style': typeof LearningStyleRoute
+  '/licensing': typeof LicensingRoute
   '/meta-learning': typeof MetaLearningRoute
   '/my-assessments': typeof MyAssessmentsRoute
   '/parent-dashboard': typeof ParentDashboardRoute
@@ -802,6 +811,7 @@ export interface FileRouteTypes {
     | '/learning-dna'
     | '/learning-dna-dashboard'
     | '/learning-style'
+    | '/licensing'
     | '/meta-learning'
     | '/my-assessments'
     | '/parent-dashboard'
@@ -886,6 +896,7 @@ export interface FileRouteTypes {
     | '/learning-dna'
     | '/learning-dna-dashboard'
     | '/learning-style'
+    | '/licensing'
     | '/meta-learning'
     | '/my-assessments'
     | '/parent-dashboard'
@@ -971,6 +982,7 @@ export interface FileRouteTypes {
     | '/learning-dna'
     | '/learning-dna-dashboard'
     | '/learning-style'
+    | '/licensing'
     | '/meta-learning'
     | '/my-assessments'
     | '/parent-dashboard'
@@ -1057,6 +1069,7 @@ export interface RootRouteChildren {
   LearningDnaRoute: typeof LearningDnaRoute
   LearningDnaDashboardRoute: typeof LearningDnaDashboardRoute
   LearningStyleRoute: typeof LearningStyleRoute
+  LicensingRoute: typeof LicensingRoute
   MetaLearningRoute: typeof MetaLearningRoute
   MyAssessmentsRoute: typeof MyAssessmentsRoute
   ParentDashboardRoute: typeof ParentDashboardRoute
@@ -1257,6 +1270,13 @@ declare module '@tanstack/react-router' {
       path: '/meta-learning'
       fullPath: '/meta-learning'
       preLoaderRoute: typeof MetaLearningRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/licensing': {
+      id: '/licensing'
+      path: '/licensing'
+      fullPath: '/licensing'
+      preLoaderRoute: typeof LicensingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/learning-style': {
@@ -1782,6 +1802,7 @@ const rootRouteChildren: RootRouteChildren = {
   LearningDnaRoute: LearningDnaRoute,
   LearningDnaDashboardRoute: LearningDnaDashboardRoute,
   LearningStyleRoute: LearningStyleRoute,
+  LicensingRoute: LicensingRoute,
   MetaLearningRoute: MetaLearningRoute,
   MyAssessmentsRoute: MyAssessmentsRoute,
   ParentDashboardRoute: ParentDashboardRoute,
