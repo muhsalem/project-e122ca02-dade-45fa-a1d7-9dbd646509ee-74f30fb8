@@ -117,6 +117,47 @@ export function PsychometricCredibility() {
           ))}
         </div>
 
+        <div className="mt-10 rounded-2xl border border-border bg-card p-6">
+          <div className="mb-4 flex items-center gap-2">
+            <BookOpen className="h-5 w-5 text-gold" />
+            <h3 className="font-serif text-lg font-semibold text-primary">مصادر ومراجع المقاييس</h3>
+          </div>
+          <p className="mb-5 text-xs leading-6 text-muted-foreground">
+            روابط مباشرة للمقاييس الأصلية ومعلومات الترخيص والاقتباس الأكاديمي (APA). ننصح بمراجعة صفحة المؤلف قبل أي استخدام تجاري.
+          </p>
+          <ul className="divide-y divide-border">
+            {OPEN_SCALES.map((s) => (
+              <li key={s.code} className="py-4 first:pt-0 last:pb-0">
+                <div className="flex flex-wrap items-baseline justify-between gap-2">
+                  <div>
+                    <span className="font-mono text-xs text-gold">{s.code}</span>
+                    <span className="ms-2 font-serif text-sm font-semibold text-primary">{s.name}</span>
+                  </div>
+                  <span className="inline-flex items-center gap-1 rounded-md bg-emerald-100 px-1.5 py-0.5 text-[10px] font-semibold text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-200">
+                    <BadgeCheck className="h-3 w-3" /> {s.license}
+                  </span>
+                </div>
+                <div className="mt-1 text-xs leading-6 text-muted-foreground">
+                  <div>{s.authors}. <em>{s.citation}</em></div>
+                  <div className="mt-1 flex flex-wrap gap-x-4 gap-y-1">
+                    <a href={s.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-primary hover:underline">
+                      <ExternalLink className="h-3 w-3" /> المصدر الرسمي
+                    </a>
+                    {s.doi && (
+                      <a href={s.doi} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-primary hover:underline">
+                        <ExternalLink className="h-3 w-3" /> DOI
+                      </a>
+                    )}
+                  </div>
+                  {s.note && (
+                    <div className="mt-1 text-[11px] italic text-amber-700 dark:text-amber-300">ملاحظة ترخيص: {s.note}</div>
+                  )}
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+
         <div className="mt-8 text-center">
           <Link
             to="/licensing"
@@ -127,6 +168,7 @@ export function PsychometricCredibility() {
             <ExternalLink className="h-3.5 w-3.5" />
           </Link>
         </div>
+
       </div>
     </section>
   );
