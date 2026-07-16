@@ -314,6 +314,40 @@ function handleExportPdf(userName: string, userEmail: string) {
   .meta-card .val { color: #0f3d2e; font-weight: 600; }
   .intro { background: #f4f8f6; border: 1px solid #cfe0d6; border-radius: 8px; padding: 14px 16px; margin: 0 0 18px; font-size: 10.5pt; line-height: 2; }
   .intro strong { color: #0f3d2e; }
+
+  /* الملخص الإجمالي والمقارنة السريعة */
+  section.overall {
+    border: 1px solid #cfe0d6;
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin: 0 0 18px;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  section.overall h2 { margin: 0 0 10px; font-size: 13pt; color: #0f3d2e; font-weight: 700; }
+  .kpis { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; margin-bottom: 12px; }
+  .kpi { border: 1px solid #e2ebe6; border-radius: 6px; padding: 6px 8px; text-align: center; background: #f8fbf9; }
+  .kpi .k-lbl { display: block; font-size: 8.5pt; color: #556; }
+  .kpi .k-val { display: block; font-size: 13pt; font-weight: 700; color: #0f3d2e; margin-top: 2px; }
+  table.cmp { width: 100%; border-collapse: collapse; font-size: 9.5pt; }
+  table.cmp th, table.cmp td { padding: 6px 6px; border-bottom: 1px solid #eee; text-align: center; vertical-align: middle; }
+  table.cmp thead th { background: #f4f8f6; color: #0f3d2e; font-weight: 700; font-size: 9pt; }
+  table.cmp .c-code { font-family: "Courier New", monospace; color: #a37b1e; background: #fff6e0; border-radius: 4px; }
+  .bar-cell { min-width: 90px; }
+  .bar { position: relative; height: 8px; background: #eef2f0; border-radius: 4px; overflow: hidden; margin: 0 auto 2px; width: 90%; }
+  .bar span { position: absolute; inset: 0 auto 0 0; background: #0f3d2e; border-radius: 4px; }
+  .bar.bar-b span { background: #1b6e3b; }
+  .bar.bar-c span { background: #a37b1e; }
+  .bar.bar-d span { background: #2b5aa8; }
+  .bar-cell em { font-style: normal; font-size: 8.5pt; color: #555; }
+  .legend { font-size: 8.5pt; color: #555; margin-top: 10px; line-height: 1.8; }
+  .legend .lg { display: inline-block; width: 10px; height: 8px; border-radius: 3px; margin: 0 6px 0 12px; vertical-align: middle; }
+  .legend .lg-a { background: #0f3d2e; }
+  .legend .lg-b { background: #1b6e3b; }
+  .legend .lg-c { background: #a37b1e; }
+  .legend .lg-d { background: #2b5aa8; }
+
   section.scale {
     border: 1px solid #d8d8d8;
     border-radius: 8px;
