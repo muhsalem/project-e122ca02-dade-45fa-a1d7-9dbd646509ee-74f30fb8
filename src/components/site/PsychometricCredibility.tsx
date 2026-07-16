@@ -534,7 +534,7 @@ function handleExportPdf(userName: string, userEmail: string) {
   }
 
   /* مؤشر تحميل الخطوط */
-  .pb-fonts { display: inline-flex; align-items: center; gap: 6px; transition: background 0.25s, color 0.25s; }
+  .pb-fonts { position: relative; display: inline-flex; align-items: center; gap: 6px; cursor: help; transition: background 0.25s, color 0.25s; }
   .pb-fonts.loading  { background: rgba(255,214,107,0.18); color: #ffd66b; border-color: rgba(255,214,107,0.35); }
   .pb-fonts.ready    { background: rgba(46,160,67,0.22);  color: #7ee08a; border-color: rgba(126,224,138,0.4); }
   .pb-fonts.fallback { background: rgba(208,67,58,0.22);  color: #ffbaae; border-color: rgba(255,186,174,0.4); }
@@ -551,6 +551,44 @@ function handleExportPdf(userName: string, userEmail: string) {
     border-top-color: #4a3208;
   }
   @keyframes pb-spin { to { transform: rotate(360deg); } }
+
+  /* تفاصيل الخطوط (تظهر عند التمرير/التركيز) */
+  .pb-fonts-caret { font-size: 9px; opacity: 0.75; margin-inline-start: 2px; }
+  .pb-fonts-details {
+    position: absolute; top: calc(100% + 6px); inset-inline-end: 0;
+    min-width: 300px; max-width: 380px;
+    background: #1b2b26; color: #f4f8f6;
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 10px; padding: 10px 12px;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.35);
+    font-family: "Noto Naskh Arabic", system-ui, sans-serif;
+    font-size: 11.5px; line-height: 1.55;
+    z-index: 10000; display: none;
+    text-align: right; direction: rtl;
+  }
+  .pb-fonts:hover .pb-fonts-details,
+  .pb-fonts:focus-within .pb-fonts-details,
+  .pb-fonts.pb-open .pb-fonts-details { display: block; }
+  .pb-fonts-details h4 { margin: 0 0 6px; font-size: 12px; color: #cfe9d8; font-weight: 700; }
+  .pb-fonts-details ul { list-style: none; margin: 0; padding: 0; }
+  .pb-fonts-details li {
+    display: grid; grid-template-columns: 14px 1fr auto; gap: 6px;
+    padding: 3px 0; border-bottom: 1px dashed rgba(255,255,255,0.08);
+  }
+  .pb-fonts-details li:last-child { border-bottom: 0; }
+  .pb-fd-icon { text-align: center; font-weight: 700; }
+  .pb-fd-icon.ok { color: #7ee08a; }
+  .pb-fd-icon.err { color: #ffbaae; }
+  .pb-fd-icon.pending { color: #ffd66b; }
+  .pb-fd-name { font-family: "Courier New", monospace; font-size: 11px; color: #e6f2ec; }
+  .pb-fd-status { font-size: 10.5px; opacity: 0.85; }
+  .pb-fd-reason {
+    margin-top: 8px; padding-top: 6px;
+    border-top: 1px solid rgba(255,255,255,0.12);
+    color: #ffbaae; font-size: 10.5px;
+  }
+  .pb-fd-reason:empty { display: none; }
+  .pb-fd-meta { margin-top: 6px; font-size: 10.5px; color: rgba(244,248,246,0.7); }
 
   /* قوائم اختيار حجم الصفحة والهوامش */
   .pb-select {
