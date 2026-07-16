@@ -106,8 +106,12 @@ function escapeHtml(s: string): string {
   return s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c] as string));
 }
 
-function handleExportPdf() {
+function handleExportPdf(userName: string, userEmail: string) {
   const today = new Date().toLocaleDateString("ar-EG", { year: "numeric", month: "long", day: "numeric" });
+  const createdAtIso = new Date().toISOString();
+  const reportId = `BSL-${Date.now().toString(36).toUpperCase()}`;
+  const displayName = userName?.trim() || "زائر";
+  const emailLine = userEmail ? ` · ${userEmail}` : "";
   const scalesHtml = OPEN_SCALES.map((s) => {
     const interp = INTERPRETATIONS[s.code];
     return `
