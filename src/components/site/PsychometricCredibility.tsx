@@ -1225,19 +1225,21 @@ function handleExportPdf(userName: string, userEmail: string) {
           var loaded = perFontResults.filter(function(v) { return v === 'ok'; }).length;
           var total  = REQUIRED_FONTS.length;
           var elapsed = Math.round(((performance && performance.now) ? performance.now() : Date.now()) - t0);
-          setMeta('اكتمل الفحص خلال ' + elapsed + ' مللي ثانية · ' + loaded + '/' + total + ' وزنًا جاهزًا.');
+          var attemptsUsed = 'استُنفدت ' + attempt + '/' + MAX_ATTEMPTS + ' محاولة';
+          setMeta('اكتمل الفحص خلال ' + elapsed + ' مللي ثانية · ' + loaded + '/' + total + ' وزنًا جاهزًا · ' + attemptsUsed + '.');
           if (loaded === total) {
-            setFontsState('ready', '✓ الخطوط جاهزة (' + loaded + '/' + total + ')');
+            var suffix = attempt > 1 ? ' — بعد ' + attempt + ' محاولات' : '';
+            setFontsState('ready', '✓ الخطوط جاهزة (' + loaded + '/' + total + ')' + suffix);
             enablePrint(true, 'طباعة / حفظ PDF');
             setReason('');
           } else if (loaded === 0) {
-            setFontsState('fallback', '⚠ فشل تحميل الخطوط (0/' + total + ')');
+            setFontsState('fallback', '⚠ فشل تحميل الخطوط (0/' + total + ') بعد ' + attempt + ' محاولات');
             enablePrint(true, 'طباعة / حفظ PDF (خط بديل)');
-            if (!fontsReason.textContent) setReason('⚠ تعذّر تحميل أي وزن — سيُستخدم خط النظام. راجع التفاصيل لمعرفة السبب.');
+            setReason('⚠ تعذّر تحميل أي وزن بعد ' + attempt + '/' + MAX_ATTEMPTS + ' محاولة — سيُستخدم خط النظام. راجع التفاصيل لمعرفة السبب.');
           } else {
-            setFontsState('fallback', '⚠ بعض الأوزان غير متوفرة (' + loaded + '/' + total + ')');
+            setFontsState('fallback', '⚠ ' + loaded + '/' + total + ' أوزان فقط بعد ' + attempt + ' محاولات');
             enablePrint(true, 'طباعة / حفظ PDF (جودة أقل)');
-            if (!fontsReason.textContent) setReason('⚠ بعض الأوزان لم تُحمّل — قد تظهر الأحرف بخط بديل. راجع التفاصيل.');
+            setReason('⚠ بعض الأوزان لم تُحمّل بعد ' + attempt + '/' + MAX_ATTEMPTS + ' محاولة — قد تظهر الأحرف بخط بديل.');
           }
           setTimeout(run, 120);
         }
