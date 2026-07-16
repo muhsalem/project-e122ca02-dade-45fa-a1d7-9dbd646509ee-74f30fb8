@@ -1,5 +1,9 @@
 import { Award, BookOpen, ShieldCheck, Users, ExternalLink, BadgeCheck, FileDown } from "lucide-react";
 import { Link } from "@tanstack/react-router";
+import { useAuth } from "@/hooks/use-auth";
+
+const REPORT_VERSION = "v1.2.0";
+const REPORT_BUILD_DATE = "2026-07-16";
 
 const OPEN_SCALES = [
   {
@@ -102,8 +106,12 @@ function escapeHtml(s: string): string {
   return s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c] as string));
 }
 
-function handleExportPdf() {
+function handleExportPdf(userName: string, userEmail: string) {
   const today = new Date().toLocaleDateString("ar-EG", { year: "numeric", month: "long", day: "numeric" });
+  const createdAtIso = new Date().toISOString();
+  const reportId = `BSL-${Date.now().toString(36).toUpperCase()}`;
+  const displayName = userName?.trim() || "زائر";
+  const emailLine = userEmail ? ` · ${userEmail}` : "";
   const scalesHtml = OPEN_SCALES.map((s) => {
     const interp = INTERPRETATIONS[s.code];
     return `
@@ -137,8 +145,11 @@ function handleExportPdf() {
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet" />
 <style>
-  @page { size: A4; margin: 20mm 16mm 18mm; }
-  @page :first { margin-top: 24mm; }
+  @page {
+    size: A4;
+    margin: 28mm 16mm 24mm;
+  }
+  @page :first { margin-top: 32mm; }
   * { box-sizing: border-box; }
   :root {
     --arabic-stack: "Noto Naskh Arabic", "Amiri", "Sakkal Majalla", "Traditional Arabic",
@@ -156,9 +167,50 @@ function handleExportPdf() {
     hyphens: none;
   }
   body { margin: 0; padding: 0; font-size: 11pt; }
+
+  /* ترويسة وتذييل ثابتان يتكرّران على كل صفحة عند الطباعة */
+  .page-header, .page-footer {
+    position: fixed;
+    left: 0;
+    right: 0;
+    font-size: 8.5pt;
+    color: #4a5a55;
+    background: #ffffff;
+  }
+  .page-header {
+    top: 0;
+    padding: 6mm 16mm 4mm;
+    border-bottom: 1px solid #cfe0d6;
+    display: flex; justify-content: space-between; align-items: center; gap: 10px;
+  }
+  .page-header .brand { font-weight: 700; color: #0f3d2e; }
+  .page-header .who { color: #333; }
+  .page-header .rev { font-family: "Courier New", monospace; color: #a37b1e; }
+  .page-footer {
+    bottom: 0;
+    padding: 4mm 16mm 6mm;
+    border-top: 1px solid #cfe0d6;
+    display: flex; justify-content: space-between; align-items: center; gap: 10px;
+  }
+  .page-footer .rid { font-family: "Courier New", monospace; }
+  .page-footer .pageno::after { content: "صفحة " counter(page) " / " counter(pages); }
+
   header.top { border-bottom: 2px solid #0f3d2e; padding-bottom: 10px; margin-bottom: 18px; }
   header.top h1 { margin: 0 0 4px; font-size: 20pt; color: #0f3d2e; font-weight: 700; }
   header.top .sub { font-size: 10pt; color: #555; }
+  .meta-card {
+    margin: 0 0 14px;
+    padding: 10px 14px;
+    border: 1px solid #cfe0d6;
+    background: #f8fbf9;
+    border-radius: 8px;
+    font-size: 10pt;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 4px 18px;
+  }
+  .meta-card .lbl { color: #666; margin-inline-end: 4px; }
+  .meta-card .val { color: #0f3d2e; font-weight: 600; }
   .intro { background: #f4f8f6; border: 1px solid #cfe0d6; border-radius: 8px; padding: 14px 16px; margin: 0 0 18px; font-size: 10.5pt; line-height: 2; }
   .intro strong { color: #0f3d2e; }
   section.scale {
@@ -192,22 +244,41 @@ function handleExportPdf() {
   .links { font-size: 9.75pt; }
   .links a { color: #0f3d2e; text-decoration: underline; }
   .note { font-size: 9pt; color: #8a5a00; font-style: italic; }
-  footer { margin-top: 20px; border-top: 1px solid #ddd; padding-top: 8px; font-size: 9pt; color: #666; text-align: center; }
+  footer.doc-end { margin-top: 20px; border-top: 1px solid #ddd; padding-top: 8px; font-size: 9pt; color: #666; text-align: center; }
   @media print { a { color: #0f3d2e; } }
 </style>
 </head>
 <body>
+  <div class="page-header">
+    <span class="brand">بوصلة · Bosla</span>
+    <span class="who">${escapeHtml(displayName)}${escapeHtml(emailLine)}</span>
+    <span class="rev">${escapeHtml(REPORT_VERSION)}</span>
+  </div>
+  <div class="page-footer">
+    <span class="rid">${escapeHtml(reportId)}</span>
+    <span class="pageno"></span>
+    <span>${escapeHtml(today)}</span>
+  </div>
+
   <header class="top">
     <h1>تقرير المقاييس السيكومترية المفتوحة</h1>
     <div class="sub">بوصلة · Bosla — تاريخ الإصدار: ${escapeHtml(today)}</div>
   </header>
+  <div class="meta-card">
+    <div><span class="lbl">المستخدم:</span><span class="val">${escapeHtml(displayName)}</span></div>
+    <div><span class="lbl">البريد:</span><span class="val">${escapeHtml(userEmail || "—")}</span></div>
+    <div><span class="lbl">تاريخ الإنشاء:</span><span class="val">${escapeHtml(today)}</span></div>
+    <div><span class="lbl">رقم التقرير:</span><span class="val">${escapeHtml(reportId)}</span></div>
+    <div><span class="lbl">إصدار التقرير:</span><span class="val">${escapeHtml(REPORT_VERSION)} · ${escapeHtml(REPORT_BUILD_DATE)}</span></div>
+    <div><span class="lbl">الطابع الزمني:</span><span class="val" style="font-family:monospace">${escapeHtml(createdAtIso)}</span></div>
+  </div>
   <div class="intro">
     <strong>ملخص:</strong> يعتمد نظام بوصلة على خمس أدوات مفتوحة الترخيص فقط (BFI-2، O*NET IP، OLBI، UWES-9، VISA)،
     ويستبعد كل الأدوات التجارية المقيّدة. هذا التقرير يعرض لكل أداة تفسيرًا مختصرًا وتوصيات متابعة عملية.
     الأدوات استكشافية وليست تشخيصية؛ ننصح بإحالة الحالات السريرية إلى مختص معتمد.
   </div>
   ${scalesHtml}
-  <footer>© بوصلة — للتفاصيل القانونية الكاملة راجع صفحة تراخيص المقاييس على الموقع.</footer>
+  <footer class="doc-end">© بوصلة — للتفاصيل القانونية الكاملة راجع صفحة تراخيص المقاييس على الموقع.</footer>
   <script>
     (function() {
       // ضبط تلقائي: أي قسم أطول من ثلثي صفحة A4 يُسمح بتقسيمه ويحصل على هوامش أوسع
@@ -238,6 +309,10 @@ function handleExportPdf() {
 
 
 export function PsychometricCredibility() {
+  const { user } = useAuth();
+  const meta = (user?.user_metadata ?? {}) as { full_name?: string; name?: string };
+  const userName = meta.full_name || meta.name || user?.email?.split("@")[0] || "زائر";
+  const userEmail = user?.email ?? "";
   return (
     <section className="border-y border-border bg-secondary/30">
       <div className="container-page py-14">
@@ -350,7 +425,7 @@ export function PsychometricCredibility() {
           </Link>
           <button
             type="button"
-            onClick={handleExportPdf}
+            onClick={() => handleExportPdf(userName, userEmail)}
             className="inline-flex items-center gap-2 rounded-lg border border-emerald-500/40 bg-emerald-50 px-4 py-2 text-sm font-semibold text-emerald-800 hover:bg-emerald-100 dark:bg-emerald-950/30 dark:text-emerald-200 dark:hover:bg-emerald-950/50"
           >
             <FileDown className="h-4 w-4" />
