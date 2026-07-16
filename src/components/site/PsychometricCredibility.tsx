@@ -1,4 +1,4 @@
-import { Award, BookOpen, ShieldCheck, Users, ExternalLink, BadgeCheck } from "lucide-react";
+import { Award, BookOpen, ShieldCheck, Users, ExternalLink, BadgeCheck, FileDown } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 
 const OPEN_SCALES = [
