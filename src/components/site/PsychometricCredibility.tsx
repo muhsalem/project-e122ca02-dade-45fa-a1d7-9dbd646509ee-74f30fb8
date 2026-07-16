@@ -1350,6 +1350,40 @@ function handleExportPdf(userName: string, userEmail: string) {
             if (perFontResults[i] === 'ok') return false;
             return /Noto Naskh Arabic|Amiri/.test(f.family);
           });
+
+          // === تسجيل كل حالة فشل في Analytics (لكل وزن على حدة) ===
+          REQUIRED_FONTS.forEach(function(f, i) {
+            if (perFontResults[i] === 'ok') return;
+            if (!/Noto Naskh Arabic|Amiri/.test(f.family)) return;
+            var rowEl = rowEls && rowEls[i];
+            var reasonText = '';
+            if (rowEl) {
+              var reasonNode = rowEl.querySelector('.pb-fd-reason');
+              if (reasonNode) reasonText = (reasonNode.textContent || '').trim();
+            }
+            trackAnalytics('font_load_failed', {
+              family: f.family,
+              weight: f.weight,
+              style: f.style,
+              file: f.file,
+              reason: reasonText || 'unknown',
+              attempts_used: attempt,
+              max_attempts: MAX_ATTEMPTS,
+              elapsed_ms: elapsed,
+            });
+          });
+          if (failedArabic.length > 0) {
+            trackAnalytics('font_load_failure_summary', {
+              failed_count: failedArabic.length,
+              total: total,
+              loaded: loaded,
+              families: failedArabic.map(function(f) { return f.family; }),
+              attempts_used: attempt,
+              max_attempts: MAX_ATTEMPTS,
+              elapsed_ms: elapsed,
+            });
+          }
+
           function toggleForceButton(show, count) {
             if (!btnForce) return;
             btnForce.classList.toggle('pb-hidden', !show);
