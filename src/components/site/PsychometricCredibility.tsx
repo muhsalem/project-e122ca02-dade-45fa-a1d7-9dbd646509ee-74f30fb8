@@ -1313,19 +1313,38 @@ function handleExportPdf(userName: string, userEmail: string) {
           var elapsed = Math.round(((performance && performance.now) ? performance.now() : Date.now()) - t0);
           var attemptsUsed = 'استُنفدت ' + attempt + '/' + MAX_ATTEMPTS + ' محاولة';
           setMeta('اكتمل الفحص خلال ' + elapsed + ' مللي ثانية · ' + loaded + '/' + total + ' وزنًا جاهزًا · ' + attemptsUsed + '.');
+
+          // تحديد ما إذا كانت عائلات الخطوط العربية الأساسية قد فشلت
+          var failedArabic = REQUIRED_FONTS.filter(function(f, i) {
+            if (perFontResults[i] === 'ok') return false;
+            return /Noto Naskh Arabic|Amiri/.test(f.family);
+          });
+          function toggleForceButton(show, count) {
+            if (!btnForce) return;
+            btnForce.classList.toggle('pb-hidden', !show);
+            btnForce.setAttribute('aria-hidden', show ? 'false' : 'true');
+            if (show) {
+              btnForce.textContent = '⚠ الطباعة رغم تعذّر الخطوط (' + count + ')';
+              btnForce.title = 'تعذّر تحميل ' + count + ' وزنًا من Noto Naskh / Amiri — يفتح حوار تأكيد';
+            }
+          }
+
           if (loaded === total) {
             var suffix = attempt > 1 ? ' — بعد ' + attempt + ' محاولات' : '';
             setFontsState('ready', '✓ الخطوط جاهزة (' + loaded + '/' + total + ')' + suffix);
             enablePrint(true, 'طباعة / حفظ PDF');
             setReason('');
+            toggleForceButton(false, 0);
           } else if (loaded === 0) {
             setFontsState('fallback', '⚠ فشل تحميل الخطوط (0/' + total + ') بعد ' + attempt + ' محاولات');
-            enablePrint(true, 'طباعة / حفظ PDF (خط بديل)');
-            setReason('⚠ تعذّر تحميل أي وزن بعد ' + attempt + '/' + MAX_ATTEMPTS + ' محاولة — سيُستخدم خط النظام. راجع التفاصيل لمعرفة السبب.');
+            enablePrint(false, 'الطباعة معطّلة — استخدم زر التأكيد');
+            setReason('⚠ تعذّر تحميل أي وزن بعد ' + attempt + '/' + MAX_ATTEMPTS + ' محاولة — اضغط «الطباعة رغم تعذّر الخطوط» للمتابعة بخط النظام.');
+            toggleForceButton(failedArabic.length > 0, failedArabic.length);
           } else {
             setFontsState('fallback', '⚠ ' + loaded + '/' + total + ' أوزان فقط بعد ' + attempt + ' محاولات');
             enablePrint(true, 'طباعة / حفظ PDF (جودة أقل)');
             setReason('⚠ بعض الأوزان لم تُحمّل بعد ' + attempt + '/' + MAX_ATTEMPTS + ' محاولة — قد تظهر الأحرف بخط بديل.');
+            toggleForceButton(failedArabic.length > 0, failedArabic.length);
           }
           setTimeout(run, 120);
         }
