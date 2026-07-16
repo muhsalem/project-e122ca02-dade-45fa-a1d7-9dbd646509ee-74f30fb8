@@ -247,10 +247,10 @@ function handleExportPdf(userName: string, userEmail: string) {
 <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet" />
 <style>
   @page {
-    size: A4;
-    margin: 28mm 16mm 24mm;
+    size: var(--page-size, A4);
+    margin: var(--page-margin, 28mm 16mm 24mm);
   }
-  @page :first { margin-top: 32mm; }
+  @page :first { margin-top: var(--page-margin-top-first, 32mm); }
   * { box-sizing: border-box; }
   :root {
     --arabic-stack: "Noto Naskh Arabic", "Amiri", "Sakkal Majalla", "Traditional Arabic",
