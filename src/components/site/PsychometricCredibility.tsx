@@ -1,5 +1,9 @@
 import { Award, BookOpen, ShieldCheck, Users, ExternalLink, BadgeCheck, FileDown } from "lucide-react";
 import { Link } from "@tanstack/react-router";
+import { useAuth } from "@/hooks/use-auth";
+
+const REPORT_VERSION = "v1.2.0";
+const REPORT_BUILD_DATE = "2026-07-16";
 
 const OPEN_SCALES = [
   {
