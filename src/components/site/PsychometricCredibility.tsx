@@ -551,6 +551,14 @@ function handleExportPdf(userName: string, userEmail: string) {
     border-top-color: #4a3208;
   }
   @keyframes pb-spin { to { transform: rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) {
+    .pb-spinner { animation: none; border-top-color: currentColor; }
+  }
+  .pb-sr-only {
+    position: absolute !important; width: 1px; height: 1px;
+    padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0);
+    white-space: nowrap; border: 0;
+  }
 
   /* تفاصيل الخطوط (تظهر عند التمرير/التركيز) */
   .pb-fonts-caret { font-size: 9px; opacity: 0.75; margin-inline-start: 2px; }
