@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
 import { getAdminAnalytics } from "@/lib/admin-analytics.functions";
@@ -58,9 +58,14 @@ function AdminDashboard() {
   return (
     <section className="container-page py-10">
       <div className="mx-auto max-w-6xl">
-        <div className="mb-8">
-          <h1 className="font-serif text-3xl text-primary md:text-4xl">لوحة الإدارة والتحليلات</h1>
-          <p className="mt-2 text-sm text-muted-foreground">مؤشرات الأداء الرئيسية للمنصة (KPIs)</p>
+        <div className="mb-8 flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <h1 className="font-serif text-3xl text-primary md:text-4xl">لوحة الإدارة والتحليلات</h1>
+            <p className="mt-2 text-sm text-muted-foreground">مؤشرات الأداء الرئيسية للمنصة (KPIs)</p>
+          </div>
+          <Link to="/admin/scales" className="rounded-lg bg-primary px-4 py-2 text-sm text-primary-foreground hover:opacity-90">
+            إدارة المقاييس النفسية
+          </Link>
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
