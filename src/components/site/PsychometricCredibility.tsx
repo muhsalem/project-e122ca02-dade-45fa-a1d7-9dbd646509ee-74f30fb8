@@ -16,6 +16,11 @@ const OPEN_SCALES = [
     citation: "Journal of Personality and Social Psychology, 113(1), 117–143.",
     doi: "https://doi.org/10.1037/pspp0000096",
     url: "https://www.colby.edu/psych/personality-lab/",
+    items: 60,
+    respMin: 1,
+    respMax: 5,
+    domains: 5,
+    typicalAlpha: 0.83,
   },
   {
     code: "O*NET IP",
@@ -25,6 +30,11 @@ const OPEN_SCALES = [
     authors: "U.S. Department of Labor / O*NET Resource Center",
     citation: "Rounds, J., Su, R., Lewis, P., & Rivkin, D. (2010). O*NET Interest Profiler Short Form Psychometric Characteristics.",
     url: "https://www.onetcenter.org/IP.html",
+    items: 60,
+    respMin: 1,
+    respMax: 5,
+    domains: 6,
+    typicalAlpha: 0.85,
   },
   {
     code: "OLBI",
@@ -35,6 +45,11 @@ const OPEN_SCALES = [
     citation: "European Journal of Psychological Assessment, 19(1), 12–23.",
     doi: "https://doi.org/10.1027/1015-5759.19.1.12",
     url: "https://www.wilmarschaufeli.nl/tests/",
+    items: 16,
+    respMin: 1,
+    respMax: 4,
+    domains: 2,
+    typicalAlpha: 0.78,
   },
   {
     code: "UWES-9",
@@ -46,6 +61,11 @@ const OPEN_SCALES = [
     citation: "Educational and Psychological Measurement, 66(4), 701–716.",
     doi: "https://doi.org/10.1177/0013164405282471",
     url: "https://www.wilmarschaufeli.nl/tests/",
+    items: 9,
+    respMin: 0,
+    respMax: 6,
+    domains: 3,
+    typicalAlpha: 0.90,
   },
   {
     code: "VISA",
@@ -56,6 +76,11 @@ const OPEN_SCALES = [
     citation: "Journal of Vocational Behavior, 79(3), 853–871.",
     doi: "https://doi.org/10.1016/j.jvb.2011.02.001",
     url: "https://sites.google.com/view/erik-porfeli/measures",
+    items: 30,
+    respMin: 1,
+    respMax: 5,
+    domains: 6,
+    typicalAlpha: 0.80,
   },
 ];
 
@@ -112,6 +137,82 @@ function handleExportPdf(userName: string, userEmail: string) {
   const reportId = `BSL-${Date.now().toString(36).toUpperCase()}`;
   const displayName = userName?.trim() || "زائر";
   const emailLine = userEmail ? ` · ${userEmail}` : "";
+
+  // مؤشرات إجمالية للمقارنة السريعة بين المقاييس
+  const maxItems = Math.max(...OPEN_SCALES.map((s) => s.items));
+  const maxDomains = Math.max(...OPEN_SCALES.map((s) => s.domains));
+  const maxGranularity = Math.max(...OPEN_SCALES.map((s) => s.respMax - s.respMin + 1));
+  const avgItems = Math.round(OPEN_SCALES.reduce((a, s) => a + s.items, 0) / OPEN_SCALES.length);
+  const avgDomains = (OPEN_SCALES.reduce((a, s) => a + s.domains, 0) / OPEN_SCALES.length).toFixed(1);
+  const avgAlpha = (OPEN_SCALES.reduce((a, s) => a + s.typicalAlpha, 0) / OPEN_SCALES.length).toFixed(2);
+  const totalItems = OPEN_SCALES.reduce((a, s) => a + s.items, 0);
+
+  const summaryRows = OPEN_SCALES.map((s) => {
+    const coverage = Math.round((s.items / maxItems) * 100);
+    const depth = Math.round((s.domains / maxDomains) * 100);
+    const granularity = Math.round(((s.respMax - s.respMin + 1) / maxGranularity) * 100);
+    const alphaPct = Math.round(s.typicalAlpha * 100);
+    return `
+      <tr>
+        <td class="c-code">${escapeHtml(s.code)}</td>
+        <td>${s.items}</td>
+        <td>${s.domains}</td>
+        <td>${s.respMin}–${s.respMax}</td>
+        <td>${s.typicalAlpha.toFixed(2)}</td>
+        <td class="bar-cell">
+          <div class="bar"><span style="width:${coverage}%"></span></div>
+          <em>${coverage}٪</em>
+        </td>
+        <td class="bar-cell">
+          <div class="bar bar-b"><span style="width:${depth}%"></span></div>
+          <em>${depth}٪</em>
+        </td>
+        <td class="bar-cell">
+          <div class="bar bar-c"><span style="width:${granularity}%"></span></div>
+          <em>${granularity}٪</em>
+        </td>
+        <td class="bar-cell">
+          <div class="bar bar-d"><span style="width:${alphaPct}%"></span></div>
+          <em>α ${s.typicalAlpha.toFixed(2)}</em>
+        </td>
+      </tr>`;
+  }).join("");
+
+  const summaryHtml = `
+    <section class="overall">
+      <h2>الملخص الإجمالي · مقارنة سريعة بين المقاييس الخمسة</h2>
+      <div class="kpis">
+        <div class="kpi"><span class="k-lbl">إجمالي البنود</span><span class="k-val">${totalItems}</span></div>
+        <div class="kpi"><span class="k-lbl">متوسط البنود / مقياس</span><span class="k-val">${avgItems}</span></div>
+        <div class="kpi"><span class="k-lbl">متوسط النطاقات</span><span class="k-val">${avgDomains}</span></div>
+        <div class="kpi"><span class="k-lbl">متوسط الثبات α</span><span class="k-val">${avgAlpha}</span></div>
+        <div class="kpi"><span class="k-lbl">عدد المقاييس</span><span class="k-val">${OPEN_SCALES.length}</span></div>
+      </div>
+      <table class="cmp">
+        <thead>
+          <tr>
+            <th>المقياس</th>
+            <th>البنود</th>
+            <th>النطاقات</th>
+            <th>مدى الاستجابة</th>
+            <th>α النموذجي</th>
+            <th>تغطية البنود</th>
+            <th>عمق النطاقات</th>
+            <th>دقّة التدرّج</th>
+            <th>ثبات الأداة</th>
+          </tr>
+        </thead>
+        <tbody>${summaryRows}</tbody>
+      </table>
+      <p class="legend">
+        <strong>كيف تُقرأ الأشرطة؟</strong>
+        <span class="lg lg-a"></span> تغطية البنود = البنود ÷ أعلى مقياس.
+        <span class="lg lg-b"></span> عمق النطاقات = عدد الأبعاد ÷ أعلى مقياس.
+        <span class="lg lg-c"></span> دقّة التدرّج = مدى الاستجابة ÷ أوسع مدى.
+        <span class="lg lg-d"></span> الثبات α النموذجي المُبلَّغ في الأدبيات.
+      </p>
+    </section>`;
+
   const scalesHtml = OPEN_SCALES.map((s) => {
     const interp = INTERPRETATIONS[s.code];
     return `
@@ -213,6 +314,40 @@ function handleExportPdf(userName: string, userEmail: string) {
   .meta-card .val { color: #0f3d2e; font-weight: 600; }
   .intro { background: #f4f8f6; border: 1px solid #cfe0d6; border-radius: 8px; padding: 14px 16px; margin: 0 0 18px; font-size: 10.5pt; line-height: 2; }
   .intro strong { color: #0f3d2e; }
+
+  /* الملخص الإجمالي والمقارنة السريعة */
+  section.overall {
+    border: 1px solid #cfe0d6;
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin: 0 0 18px;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  section.overall h2 { margin: 0 0 10px; font-size: 13pt; color: #0f3d2e; font-weight: 700; }
+  .kpis { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; margin-bottom: 12px; }
+  .kpi { border: 1px solid #e2ebe6; border-radius: 6px; padding: 6px 8px; text-align: center; background: #f8fbf9; }
+  .kpi .k-lbl { display: block; font-size: 8.5pt; color: #556; }
+  .kpi .k-val { display: block; font-size: 13pt; font-weight: 700; color: #0f3d2e; margin-top: 2px; }
+  table.cmp { width: 100%; border-collapse: collapse; font-size: 9.5pt; }
+  table.cmp th, table.cmp td { padding: 6px 6px; border-bottom: 1px solid #eee; text-align: center; vertical-align: middle; }
+  table.cmp thead th { background: #f4f8f6; color: #0f3d2e; font-weight: 700; font-size: 9pt; }
+  table.cmp .c-code { font-family: "Courier New", monospace; color: #a37b1e; background: #fff6e0; border-radius: 4px; }
+  .bar-cell { min-width: 90px; }
+  .bar { position: relative; height: 8px; background: #eef2f0; border-radius: 4px; overflow: hidden; margin: 0 auto 2px; width: 90%; }
+  .bar span { position: absolute; inset: 0 auto 0 0; background: #0f3d2e; border-radius: 4px; }
+  .bar.bar-b span { background: #1b6e3b; }
+  .bar.bar-c span { background: #a37b1e; }
+  .bar.bar-d span { background: #2b5aa8; }
+  .bar-cell em { font-style: normal; font-size: 8.5pt; color: #555; }
+  .legend { font-size: 8.5pt; color: #555; margin-top: 10px; line-height: 1.8; }
+  .legend .lg { display: inline-block; width: 10px; height: 8px; border-radius: 3px; margin: 0 6px 0 12px; vertical-align: middle; }
+  .legend .lg-a { background: #0f3d2e; }
+  .legend .lg-b { background: #1b6e3b; }
+  .legend .lg-c { background: #a37b1e; }
+  .legend .lg-d { background: #2b5aa8; }
+
   section.scale {
     border: 1px solid #d8d8d8;
     border-radius: 8px;
@@ -277,6 +412,7 @@ function handleExportPdf(userName: string, userEmail: string) {
     ويستبعد كل الأدوات التجارية المقيّدة. هذا التقرير يعرض لكل أداة تفسيرًا مختصرًا وتوصيات متابعة عملية.
     الأدوات استكشافية وليست تشخيصية؛ ننصح بإحالة الحالات السريرية إلى مختص معتمد.
   </div>
+  ${summaryHtml}
   ${scalesHtml}
   <footer class="doc-end">© بوصلة — للتفاصيل القانونية الكاملة راجع صفحة تراخيص المقاييس على الموقع.</footer>
   <script>
