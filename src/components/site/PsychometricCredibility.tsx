@@ -658,7 +658,10 @@ function handleExportPdf(userName: string, userEmail: string) {
       </div>
       <button type="button" id="pb-toggle-breaks" class="pb-btn pb-btn-toggle">إخفاء حدود الصفحات</button>
       <button type="button" id="pb-close" class="pb-btn pb-btn-ghost">إغلاق المعاينة</button>
-      <button type="button" id="pb-print" class="pb-btn pb-btn-primary" title="اسم الملف يُقترح تلقائيًا من عنوان الصفحة">طباعة / حفظ PDF</button>
+      <button type="button" id="pb-print" class="pb-btn pb-btn-primary" disabled aria-disabled="true" title="سيتم التفعيل عند اكتمال تحميل الخطوط">
+        <span class="pb-spinner pb-spinner-dark" aria-hidden="true" id="pb-print-spin"></span>
+        <span id="pb-print-label">تحميل الخطوط…</span>
+      </button>
     </div>
   </div>
 
