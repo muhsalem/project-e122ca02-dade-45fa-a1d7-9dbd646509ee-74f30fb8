@@ -7,6 +7,7 @@ import specData from "@/data/specializations.json";
 import { WorkModeBadges } from "@/components/site/WorkModeBadges";
 import { CareerEvaluationCard } from "@/components/site/CareerEvaluationCard";
 import { getWorkModesByField, MODE_LABELS, type WorkModes } from "@/lib/work-modes";
+import { FitScoreSection } from "@/components/site/FitScoreSection";
 
 type Sub = string;
 type GeneralSpec = { name: string; subs: Sub[] };
@@ -142,6 +143,11 @@ function SpecializationsPage() {
         </nav>
 
         {/* Step 1: pick field */}
+        {!field && (
+          <div className="mx-auto mb-6 max-w-5xl">
+            <FitScoreSection title="مقدار التوافق مع تخصصك الدراسي والمهني" />
+          </div>
+        )}
         {!field && (
           <div className="mx-auto max-w-5xl">
             {/* Filter by work mode */}
