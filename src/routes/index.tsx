@@ -151,6 +151,49 @@ function HomePage() {
         </div>
       </section>
 
+      {/* WIIFM — ماذا تكسب أنت شخصيًا؟ */}
+      <section className="border-b border-border bg-gradient-to-b from-background via-gold/5 to-background">
+        <div className="container-page py-20">
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="font-serif text-sm uppercase tracking-widest text-gold">WIIFM · ماذا في الأمر لي؟</p>
+            <h2 className="mt-3 text-3xl text-primary md:text-4xl">ماذا تكسب أنت شخصيًا من بوصلة؟</h2>
+            <p className="mt-4 text-base leading-8 text-muted-foreground">
+              لا نطلب منك وقتك دون مقابل واضح. إليك ما ستحصل عليه فعليًا — نتائج ملموسة يمكنك قياسها والاحتفاظ بها.
+            </p>
+          </div>
+          <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {[
+              { icon: Compass, t: "وضوح فوري في المسار", d: "تعرف تخصصك ومهنتك الأنسب بنسب توافق مبنية على 5 مقاييس علمية مفتوحة." },
+              { icon: Gauge, t: "توفير سنوات من التخبّط", d: "قرارات مبنية على بيانات شخصيتك وميولك بدل التجربة والخطأ المكلف." },
+              { icon: ShieldCheck, t: "تقرير PDF تحتفظ به", d: "نتائجك كاملة قابلة للتصدير والمشاركة مع مرشدك أو عائلتك متى شئت." },
+              { icon: TrendingUp, t: "خطة تنفيذية أسبوعية", d: "ليس مجرد تحليل — بل خطوات عملية محددة توصلك من نقطتك الحالية لهدفك." },
+              { icon: HeartPulse, t: "حماية من الاحتراق", d: "مؤشرات مبكرة عبر OLBI و UWES-9 تنبّهك قبل أن يستنزفك مسار لا يناسبك." },
+              { icon: Sparkles, t: "خصوصية كاملة وشفافية", d: "بياناتك ملكك، ومصادر كل مقياس معلنة بترخيصها — بلا صناديق سوداء." },
+            ].map((b) => (
+              <div key={b.t} className="rounded-2xl border border-border bg-card p-6 transition-all hover:border-gold/50 hover:shadow-lg">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gold/15 text-gold">
+                  <b.icon className="h-6 w-6" />
+                </div>
+                <h3 className="mt-4 font-serif text-lg text-primary">{b.t}</h3>
+                <p className="mt-2 text-sm leading-7 text-muted-foreground">{b.d}</p>
+              </div>
+            ))}
+          </div>
+          <div className="mt-10 text-center">
+            <Link
+              to="/passport"
+              className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-medium text-primary-foreground shadow transition-all hover:shadow-lg"
+            >
+              ابدأ رحلتك الآن — مجانًا
+              <ArrowLeft className="h-4 w-4" />
+            </Link>
+            <p className="mt-3 text-xs text-muted-foreground">لا يتطلب بطاقة ائتمانية · النتائج جاهزة خلال 20 دقيقة</p>
+          </div>
+        </div>
+      </section>
+
+
+
       {/* DISCOVERY — بداية المسار ولمن يريد الاكتشاف */}
       <section className="relative overflow-hidden border-b border-border bg-gradient-to-br from-secondary via-background to-gold/10">
         <div className="absolute inset-0 opacity-40">
