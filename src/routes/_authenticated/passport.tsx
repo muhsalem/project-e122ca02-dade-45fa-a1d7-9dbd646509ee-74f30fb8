@@ -4,6 +4,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Compass, CheckCircle2, Circle, RefreshCw, MapPin, Sparkles, TrendingUp, Target } from "lucide-react";
 import { getPassport, resetDismissed, STAGES } from "@/lib/passport.functions";
 import { NextBestAction } from "@/components/site/NextBestAction";
+import { FitScoreSection } from "@/components/site/FitScoreSection";
 
 export const Route = createFileRoute("/_authenticated/passport")({
   head: () => ({
@@ -187,6 +188,9 @@ function PassportPage() {
             </div>
           </div>
         )}
+
+        {/* Fit Score — academic + career match */}
+        <FitScoreSection />
 
         {/* Next Best Action */}
         <div className="grid gap-6 lg:grid-cols-[1fr_320px]">

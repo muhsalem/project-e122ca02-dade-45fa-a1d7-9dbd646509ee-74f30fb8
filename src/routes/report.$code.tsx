@@ -8,6 +8,7 @@ import { generateGlobalAdvisorReport } from "@/lib/global-advisor.functions";
 import { generateParentReport } from "@/lib/parent-report.functions";
 import { ContentProtection } from "@/components/site/ContentProtection";
 import { MarketPulseInsights } from "@/components/site/MarketPulseInsights";
+import { FitScoreSection } from "@/components/site/FitScoreSection";
 import { CareerLadderInsights } from "@/components/site/CareerLadderInsights";
 import { ReportDisclaimer } from "@/components/site/ClinicalDisclaimer";
 import { createReportShareToken } from "@/lib/share.functions";
@@ -205,6 +206,7 @@ function ViewToggle({ code, name, stage, report }: { code: string; name: string 
         <div className="report-content text-base leading-relaxed text-foreground">
           <ReportDisclaimer tool="هذا التقرير" />
           <ReactMarkdown>{report}</ReactMarkdown>
+          <FitScoreSection title="مقدار توافقك مع التخصص الدراسي والمهني" />
           <GlobalAdvisorSection />
           <CareerLadderInsights reportText={report} />
           <MarketPulseInsights reportText={report} />
