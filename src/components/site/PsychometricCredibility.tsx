@@ -773,7 +773,9 @@ function handleExportPdf(userName: string, userEmail: string) {
   </div>
 
   <!-- حوار تأكيد الطباعة رغم فشل الخطوط -->
-  <dialog id="pb-force-dialog" class="pb-dialog" aria-labelledby="pb-force-title" aria-describedby="pb-force-desc">
+  <dialog id="pb-force-dialog" class="pb-dialog"
+          role="alertdialog" aria-modal="true"
+          aria-labelledby="pb-force-title" aria-describedby="pb-force-desc">
     <form method="dialog" class="pb-dialog-body">
       <h3 id="pb-force-title">⚠ تأكيد الطباعة بدون خطوط عربية أصلية</h3>
       <p id="pb-force-desc">
@@ -786,7 +788,7 @@ function handleExportPdf(userName: string, userEmail: string) {
     </form>
     <div class="pb-dialog-actions">
       <button type="button" id="pb-force-confirm" class="pb-btn pb-btn-warn">نعم، تابع الطباعة</button>
-      <button type="button" id="pb-force-cancel" class="pb-btn pb-btn-ghost">إلغاء</button>
+      <button type="button" id="pb-force-cancel" class="pb-btn pb-btn-ghost" autofocus>إلغاء</button>
     </div>
   </dialog>
 
@@ -996,6 +998,24 @@ function handleExportPdf(userName: string, userEmail: string) {
       var btnForceOk    = document.getElementById('pb-force-confirm');
       var btnForceNo    = document.getElementById('pb-force-cancel');
       var lastForceContext = null;
+      var forceReturnFocus = null;
+      var forceConfirmed = false;
+
+      function getFocusable(root) {
+        return Array.prototype.slice.call(root.querySelectorAll(
+          'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        ));
+      }
+      function trapForceFocus(e) {
+        if (e.key !== 'Tab' || !forceDialog || !forceDialog.open) return;
+        var f = getFocusable(forceDialog);
+        if (!f.length) { e.preventDefault(); return; }
+        var first = f[0], last = f[f.length - 1];
+        var active = document.activeElement;
+        if (e.shiftKey && active === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && active === last) { e.preventDefault(); first.focus(); }
+      }
+
       function openForceDialog(failedWeights) {
         if (!forceDialog) return;
         if (forceList) {
@@ -1014,7 +1034,14 @@ function handleExportPdf(userName: string, userEmail: string) {
         };
         trackAnalytics('font_force_print_opened', lastForceContext);
         if (typeof forceDialog.showModal === 'function') {
+          forceReturnFocus = document.activeElement;
+          forceConfirmed = false;
           forceDialog.showModal();
+          document.addEventListener('keydown', trapForceFocus, true);
+          // ضع التركيز الابتدائي على زر «إلغاء» (الخيار الأكثر أمانًا)
+          setTimeout(function() {
+            if (btnForceNo && typeof btnForceNo.focus === 'function') btnForceNo.focus();
+          }, 0);
         } else {
           if (window.confirm('تعذّر تحميل الخطوط العربية. متابعة الطباعة على أي حال؟')) {
             trackAnalytics('font_force_print_confirmed', Object.assign({ fallback_confirm: true }, lastForceContext || {}));
@@ -1024,7 +1051,24 @@ function handleExportPdf(userName: string, userEmail: string) {
           }
         }
       }
+
+      // إعادة التركيز إلى الزر الذي فتح الحوار، ورصد الإغلاق بمفتاح Escape
+      if (forceDialog) {
+        forceDialog.addEventListener('close', function() {
+          document.removeEventListener('keydown', trapForceFocus, true);
+          if (!forceConfirmed) {
+            // Escape أو إغلاق خارجي — سجّل كإلغاء إن لم يكن مسجّلاً من زر
+            trackAnalytics('font_force_print_dismissed', lastForceContext || {});
+          }
+          if (forceReturnFocus && typeof forceReturnFocus.focus === 'function') {
+            try { forceReturnFocus.focus(); } catch (_) {}
+          }
+          forceReturnFocus = null;
+        });
+      }
+
       if (btnForceOk) btnForceOk.addEventListener('click', function() {
+        forceConfirmed = true;
         trackAnalytics('font_force_print_confirmed', lastForceContext || { failed_count: 0 });
         if (forceDialog && forceDialog.open) forceDialog.close();
         setTimeout(function() { window.print(); }, 60);
