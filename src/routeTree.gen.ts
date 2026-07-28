@@ -9,369 +9,103 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as WorkValuesRouteImport } from './routes/work-values'
-import { Route as WellbeingCheckRouteImport } from './routes/wellbeing-check'
-import { Route as TermsRouteImport } from './routes/terms'
-import { Route as StudyOsRouteImport } from './routes/study-os'
-import { Route as StartRouteImport } from './routes/start'
-import { Route as SpecializationsRouteImport } from './routes/specializations'
-import { Route as SkillsGapRouteImport } from './routes/skills-gap'
-import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
-import { Route as SelfDiscoveryRouteImport } from './routes/self-discovery'
-import { Route as SectorGuideRouteImport } from './routes/sector-guide'
-import { Route as SchoolsRouteImport } from './routes/schools'
-import { Route as Review360RouteImport } from './routes/review360'
-import { Route as ResourcesRouteImport } from './routes/resources'
-import { Route as RefundRouteImport } from './routes/refund'
-import { Route as ProfileRouteImport } from './routes/profile'
-import { Route as PrivacyRouteImport } from './routes/privacy'
-import { Route as PricingRouteImport } from './routes/pricing'
-import { Route as PoiaDashboardRouteImport } from './routes/poia-dashboard'
-import { Route as PoiaCompareRouteImport } from './routes/poia-compare'
-import { Route as PoiaRouteImport } from './routes/poia'
-import { Route as PathsRouteImport } from './routes/paths'
-import { Route as ParentDashboardRouteImport } from './routes/parent-dashboard'
-import { Route as MyAssessmentsRouteImport } from './routes/my-assessments'
-import { Route as MetaLearningRouteImport } from './routes/meta-learning'
-import { Route as LicensingRouteImport } from './routes/licensing'
-import { Route as LearningStyleRouteImport } from './routes/learning-style'
-import { Route as LearningDnaDashboardRouteImport } from './routes/learning-dna-dashboard'
-import { Route as LearningDnaRouteImport } from './routes/learning-dna'
-import { Route as LearningCoachRouteImport } from './routes/learning-coach'
-import { Route as LaborMarketRouteImport } from './routes/labor-market'
-import { Route as JoinAsCoachRouteImport } from './routes/join-as-coach'
-import { Route as InstitutionsRouteImport } from './routes/institutions'
-import { Route as ForCounselorsRouteImport } from './routes/for-counselors'
-import { Route as FaqRouteImport } from './routes/faq'
-import { Route as EmotionalIntelligenceRouteImport } from './routes/emotional-intelligence'
-import { Route as DpaRouteImport } from './routes/dpa'
-import { Route as CounselorCrmRouteImport } from './routes/counselor-crm'
-import { Route as CounselorRouteImport } from './routes/counselor'
-import { Route as ComprehensiveAssessmentRouteImport } from './routes/comprehensive-assessment'
-import { Route as CognitiveProfileRouteImport } from './routes/cognitive-profile'
-import { Route as ClarityCheckRouteImport } from './routes/clarity-check'
-import { Route as CheckoutRouteImport } from './routes/checkout'
-import { Route as CareerTypeAssessmentRouteImport } from './routes/career-type-assessment'
-import { Route as CareerTwinRouteImport } from './routes/career-twin'
-import { Route as CareerSelfEfficacyRouteImport } from './routes/career-self-efficacy'
-import { Route as CareerReadinessRouteImport } from './routes/career-readiness'
-import { Route as CareerLadderRouteImport } from './routes/career-ladder'
-import { Route as CareerGrowthRouteImport } from './routes/career-growth'
-import { Route as CareerChangeRouteImport } from './routes/career-change'
-import { Route as CareerAnchorsRouteImport } from './routes/career-anchors'
-import { Route as BurnoutCheckRouteImport } from './routes/burnout-check'
-import { Route as BookingRouteImport } from './routes/booking'
-import { Route as AuthRouteImport } from './routes/auth'
-import { Route as AuditReportRouteImport } from './routes/audit-report'
-import { Route as AcademicMajorRouteImport } from './routes/academic-major'
-import { Route as AboutRouteImport } from './routes/about'
-import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as ReportIndexRouteImport } from './routes/report.index'
-import { Route as CareerSimsIndexRouteImport } from './routes/career-sims.index'
-import { Route as TrackGrowthRouteImport } from './routes/track.growth'
-import { Route as TrackEntrepreneurshipRouteImport } from './routes/track.entrepreneurship'
-import { Route as TrackDiscoveryRouteImport } from './routes/track.discovery'
-import { Route as TrackChangeRouteImport } from './routes/track.change'
-import { Route as ReviewSubmitCodeRouteImport } from './routes/review-submit.$code'
-import { Route as ReviewResultsCodeRouteImport } from './routes/review-results.$code'
-import { Route as ResourcesWhyWeWorkRouteImport } from './routes/resources.why-we-work'
-import { Route as ResourcesParentGuideRouteImport } from './routes/resources.parent-guide'
-import { Route as ResourcesHowToChooseMajorRouteImport } from './routes/resources.how-to-choose-major'
-import { Route as ResourcesGrowModelRouteImport } from './routes/resources.grow-model'
-import { Route as ResourcesCvWritingRouteImport } from './routes/resources.cv-writing'
-import { Route as ResourcesCoachingVsCareerCounselingRouteImport } from './routes/resources.coaching-vs-career-counseling'
-import { Route as ResourcesCareerPathTermsRouteImport } from './routes/resources.career-path-terms'
-import { Route as ResourcesCareerChangeStrategiesRouteImport } from './routes/resources.career-change-strategies'
-import { Route as ReportCodeRouteImport } from './routes/report.$code'
-import { Route as RTokenRouteImport } from './routes/r.$token'
-import { Route as InstitutionsDashboardRouteImport } from './routes/institutions.dashboard'
-import { Route as IdpCodeRouteImport } from './routes/idp.$code'
-import { Route as CheckoutSuccessRouteImport } from './routes/checkout.success'
-import { Route as CareerSimsSlugRouteImport } from './routes/career-sims.$slug'
-import { Route as AuthenticatedPassportRouteImport } from './routes/_authenticated/passport'
-import { Route as AuthenticatedMyPlanRouteImport } from './routes/_authenticated/my-plan'
-import { Route as AuthenticatedMyBookingsRouteImport } from './routes/_authenticated/my-bookings'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as AcademicMajorRouteImport } from './routes/academic-major'
+import { Route as AuditReportRouteImport } from './routes/audit-report'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as BookingRouteImport } from './routes/booking'
+import { Route as BurnoutCheckRouteImport } from './routes/burnout-check'
+import { Route as CareerAnchorsRouteImport } from './routes/career-anchors'
+import { Route as CareerChangeRouteImport } from './routes/career-change'
+import { Route as CareerGrowthRouteImport } from './routes/career-growth'
+import { Route as CareerLadderRouteImport } from './routes/career-ladder'
+import { Route as CareerReadinessRouteImport } from './routes/career-readiness'
+import { Route as CareerSelfEfficacyRouteImport } from './routes/career-self-efficacy'
+import { Route as CareerTwinRouteImport } from './routes/career-twin'
+import { Route as CareerTypeAssessmentRouteImport } from './routes/career-type-assessment'
+import { Route as CheckoutRouteImport } from './routes/checkout'
+import { Route as ClarityCheckRouteImport } from './routes/clarity-check'
+import { Route as CognitiveProfileRouteImport } from './routes/cognitive-profile'
+import { Route as ComprehensiveAssessmentRouteImport } from './routes/comprehensive-assessment'
+import { Route as CounselorRouteImport } from './routes/counselor'
+import { Route as CounselorCrmRouteImport } from './routes/counselor-crm'
+import { Route as DpaRouteImport } from './routes/dpa'
+import { Route as EmotionalIntelligenceRouteImport } from './routes/emotional-intelligence'
+import { Route as FaqRouteImport } from './routes/faq'
+import { Route as ForCounselorsRouteImport } from './routes/for-counselors'
+import { Route as InstitutionsRouteImport } from './routes/institutions'
+import { Route as JoinAsCoachRouteImport } from './routes/join-as-coach'
+import { Route as LaborMarketRouteImport } from './routes/labor-market'
+import { Route as LearningCoachRouteImport } from './routes/learning-coach'
+import { Route as LearningDnaRouteImport } from './routes/learning-dna'
+import { Route as LearningDnaDashboardRouteImport } from './routes/learning-dna-dashboard'
+import { Route as LearningStyleRouteImport } from './routes/learning-style'
+import { Route as LicensingRouteImport } from './routes/licensing'
+import { Route as MetaLearningRouteImport } from './routes/meta-learning'
+import { Route as MyAssessmentsRouteImport } from './routes/my-assessments'
+import { Route as ParentDashboardRouteImport } from './routes/parent-dashboard'
+import { Route as PathsRouteImport } from './routes/paths'
+import { Route as PoiaRouteImport } from './routes/poia'
+import { Route as PoiaCompareRouteImport } from './routes/poia-compare'
+import { Route as PoiaDashboardRouteImport } from './routes/poia-dashboard'
+import { Route as PricingRouteImport } from './routes/pricing'
+import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as RefundRouteImport } from './routes/refund'
+import { Route as ResourcesRouteImport } from './routes/resources'
+import { Route as Review360RouteImport } from './routes/review360'
+import { Route as SchoolsRouteImport } from './routes/schools'
+import { Route as SectorGuideRouteImport } from './routes/sector-guide'
+import { Route as SelfDiscoveryRouteImport } from './routes/self-discovery'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as SkillsGapRouteImport } from './routes/skills-gap'
+import { Route as SpecializationsRouteImport } from './routes/specializations'
+import { Route as StartRouteImport } from './routes/start'
+import { Route as StudyOsRouteImport } from './routes/study-os'
+import { Route as TermsRouteImport } from './routes/terms'
+import { Route as WellbeingCheckRouteImport } from './routes/wellbeing-check'
+import { Route as WorkValuesRouteImport } from './routes/work-values'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
-import { Route as ApiPublicHealthRouteImport } from './routes/api/public/health'
+import { Route as AuthenticatedMyBookingsRouteImport } from './routes/_authenticated/my-bookings'
+import { Route as AuthenticatedMyPlanRouteImport } from './routes/_authenticated/my-plan'
+import { Route as AuthenticatedPassportRouteImport } from './routes/_authenticated/passport'
+import { Route as CareerSimsIndexRouteImport } from './routes/career-sims.index'
+import { Route as CareerSimsSlugRouteImport } from './routes/career-sims.$slug'
+import { Route as CheckoutSuccessRouteImport } from './routes/checkout.success'
+import { Route as IdpCodeRouteImport } from './routes/idp.$code'
+import { Route as InstitutionsDashboardRouteImport } from './routes/institutions.dashboard'
+import { Route as RTokenRouteImport } from './routes/r.$token'
+import { Route as ReportIndexRouteImport } from './routes/report.index'
+import { Route as ReportCodeRouteImport } from './routes/report.$code'
+import { Route as ResourcesCareerChangeStrategiesRouteImport } from './routes/resources.career-change-strategies'
+import { Route as ResourcesCareerPathTermsRouteImport } from './routes/resources.career-path-terms'
+import { Route as ResourcesCoachingVsCareerCounselingRouteImport } from './routes/resources.coaching-vs-career-counseling'
+import { Route as ResourcesCvWritingRouteImport } from './routes/resources.cv-writing'
+import { Route as ResourcesGrowModelRouteImport } from './routes/resources.grow-model'
+import { Route as ResourcesHowToChooseMajorRouteImport } from './routes/resources.how-to-choose-major'
+import { Route as ResourcesParentGuideRouteImport } from './routes/resources.parent-guide'
+import { Route as ResourcesWhyWeWorkRouteImport } from './routes/resources.why-we-work'
+import { Route as ReviewResultsCodeRouteImport } from './routes/review-results.$code'
+import { Route as ReviewSubmitCodeRouteImport } from './routes/review-submit.$code'
+import { Route as TrackChangeRouteImport } from './routes/track.change'
+import { Route as TrackDiscoveryRouteImport } from './routes/track.discovery'
+import { Route as TrackEntrepreneurshipRouteImport } from './routes/track.entrepreneurship'
+import { Route as TrackGrowthRouteImport } from './routes/track.growth'
 import { Route as AuthenticatedAdminScalesRouteImport } from './routes/_authenticated/admin.scales'
-import { Route as ApiPublicWebhooksTapRouteImport } from './routes/api/public/webhooks/tap'
-import { Route as ApiPublicWebhooksPaymobRouteImport } from './routes/api/public/webhooks/paymob'
+import { Route as ApiPublicHealthRouteImport } from './routes/api/public/health'
 import { Route as ApiPublicWebhooksMoyasarRouteImport } from './routes/api/public/webhooks/moyasar'
+import { Route as ApiPublicWebhooksPaymobRouteImport } from './routes/api/public/webhooks/paymob'
+import { Route as ApiPublicWebhooksTapRouteImport } from './routes/api/public/webhooks/tap'
 
-const WorkValuesRoute = WorkValuesRouteImport.update({
-  id: '/work-values',
-  path: '/work-values',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const WellbeingCheckRoute = WellbeingCheckRouteImport.update({
-  id: '/wellbeing-check',
-  path: '/wellbeing-check',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const TermsRoute = TermsRouteImport.update({
-  id: '/terms',
-  path: '/terms',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const StudyOsRoute = StudyOsRouteImport.update({
-  id: '/study-os',
-  path: '/study-os',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const StartRoute = StartRouteImport.update({
-  id: '/start',
-  path: '/start',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SpecializationsRoute = SpecializationsRouteImport.update({
-  id: '/specializations',
-  path: '/specializations',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SkillsGapRoute = SkillsGapRouteImport.update({
-  id: '/skills-gap',
-  path: '/skills-gap',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
-  id: '/sitemap.xml',
-  path: '/sitemap.xml',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SelfDiscoveryRoute = SelfDiscoveryRouteImport.update({
-  id: '/self-discovery',
-  path: '/self-discovery',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SectorGuideRoute = SectorGuideRouteImport.update({
-  id: '/sector-guide',
-  path: '/sector-guide',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SchoolsRoute = SchoolsRouteImport.update({
-  id: '/schools',
-  path: '/schools',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const Review360Route = Review360RouteImport.update({
-  id: '/review360',
-  path: '/review360',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ResourcesRoute = ResourcesRouteImport.update({
-  id: '/resources',
-  path: '/resources',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const RefundRoute = RefundRouteImport.update({
-  id: '/refund',
-  path: '/refund',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ProfileRoute = ProfileRouteImport.update({
-  id: '/profile',
-  path: '/profile',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PrivacyRoute = PrivacyRouteImport.update({
-  id: '/privacy',
-  path: '/privacy',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PricingRoute = PricingRouteImport.update({
-  id: '/pricing',
-  path: '/pricing',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PoiaDashboardRoute = PoiaDashboardRouteImport.update({
-  id: '/poia-dashboard',
-  path: '/poia-dashboard',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PoiaCompareRoute = PoiaCompareRouteImport.update({
-  id: '/poia-compare',
-  path: '/poia-compare',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PoiaRoute = PoiaRouteImport.update({
-  id: '/poia',
-  path: '/poia',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PathsRoute = PathsRouteImport.update({
-  id: '/paths',
-  path: '/paths',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ParentDashboardRoute = ParentDashboardRouteImport.update({
-  id: '/parent-dashboard',
-  path: '/parent-dashboard',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MyAssessmentsRoute = MyAssessmentsRouteImport.update({
-  id: '/my-assessments',
-  path: '/my-assessments',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MetaLearningRoute = MetaLearningRouteImport.update({
-  id: '/meta-learning',
-  path: '/meta-learning',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LicensingRoute = LicensingRouteImport.update({
-  id: '/licensing',
-  path: '/licensing',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LearningStyleRoute = LearningStyleRouteImport.update({
-  id: '/learning-style',
-  path: '/learning-style',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LearningDnaDashboardRoute = LearningDnaDashboardRouteImport.update({
-  id: '/learning-dna-dashboard',
-  path: '/learning-dna-dashboard',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LearningDnaRoute = LearningDnaRouteImport.update({
-  id: '/learning-dna',
-  path: '/learning-dna',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LearningCoachRoute = LearningCoachRouteImport.update({
-  id: '/learning-coach',
-  path: '/learning-coach',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LaborMarketRoute = LaborMarketRouteImport.update({
-  id: '/labor-market',
-  path: '/labor-market',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const JoinAsCoachRoute = JoinAsCoachRouteImport.update({
-  id: '/join-as-coach',
-  path: '/join-as-coach',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const InstitutionsRoute = InstitutionsRouteImport.update({
-  id: '/institutions',
-  path: '/institutions',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ForCounselorsRoute = ForCounselorsRouteImport.update({
-  id: '/for-counselors',
-  path: '/for-counselors',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FaqRoute = FaqRouteImport.update({
-  id: '/faq',
-  path: '/faq',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const EmotionalIntelligenceRoute = EmotionalIntelligenceRouteImport.update({
-  id: '/emotional-intelligence',
-  path: '/emotional-intelligence',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DpaRoute = DpaRouteImport.update({
-  id: '/dpa',
-  path: '/dpa',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CounselorCrmRoute = CounselorCrmRouteImport.update({
-  id: '/counselor-crm',
-  path: '/counselor-crm',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CounselorRoute = CounselorRouteImport.update({
-  id: '/counselor',
-  path: '/counselor',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ComprehensiveAssessmentRoute = ComprehensiveAssessmentRouteImport.update({
-  id: '/comprehensive-assessment',
-  path: '/comprehensive-assessment',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CognitiveProfileRoute = CognitiveProfileRouteImport.update({
-  id: '/cognitive-profile',
-  path: '/cognitive-profile',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ClarityCheckRoute = ClarityCheckRouteImport.update({
-  id: '/clarity-check',
-  path: '/clarity-check',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CheckoutRoute = CheckoutRouteImport.update({
-  id: '/checkout',
-  path: '/checkout',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CareerTypeAssessmentRoute = CareerTypeAssessmentRouteImport.update({
-  id: '/career-type-assessment',
-  path: '/career-type-assessment',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CareerTwinRoute = CareerTwinRouteImport.update({
-  id: '/career-twin',
-  path: '/career-twin',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CareerSelfEfficacyRoute = CareerSelfEfficacyRouteImport.update({
-  id: '/career-self-efficacy',
-  path: '/career-self-efficacy',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CareerReadinessRoute = CareerReadinessRouteImport.update({
-  id: '/career-readiness',
-  path: '/career-readiness',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CareerLadderRoute = CareerLadderRouteImport.update({
-  id: '/career-ladder',
-  path: '/career-ladder',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CareerGrowthRoute = CareerGrowthRouteImport.update({
-  id: '/career-growth',
-  path: '/career-growth',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CareerChangeRoute = CareerChangeRouteImport.update({
-  id: '/career-change',
-  path: '/career-change',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CareerAnchorsRoute = CareerAnchorsRouteImport.update({
-  id: '/career-anchors',
-  path: '/career-anchors',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BurnoutCheckRoute = BurnoutCheckRouteImport.update({
-  id: '/burnout-check',
-  path: '/burnout-check',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BookingRoute = BookingRouteImport.update({
-  id: '/booking',
-  path: '/booking',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthRoute = AuthRouteImport.update({
-  id: '/auth',
-  path: '/auth',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuditReportRoute = AuditReportRouteImport.update({
-  id: '/audit-report',
-  path: '/audit-report',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AcademicMajorRoute = AcademicMajorRouteImport.update({
-  id: '/academic-major',
-  path: '/academic-major',
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -379,13 +113,329 @@ const AboutRoute = AboutRouteImport.update({
   path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
-  id: '/_authenticated',
+const AcademicMajorRoute = AcademicMajorRouteImport.update({
+  id: '/academic-major',
+  path: '/academic-major',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const AuditReportRoute = AuditReportRouteImport.update({
+  id: '/audit-report',
+  path: '/audit-report',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BookingRoute = BookingRouteImport.update({
+  id: '/booking',
+  path: '/booking',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BurnoutCheckRoute = BurnoutCheckRouteImport.update({
+  id: '/burnout-check',
+  path: '/burnout-check',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CareerAnchorsRoute = CareerAnchorsRouteImport.update({
+  id: '/career-anchors',
+  path: '/career-anchors',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CareerChangeRoute = CareerChangeRouteImport.update({
+  id: '/career-change',
+  path: '/career-change',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CareerGrowthRoute = CareerGrowthRouteImport.update({
+  id: '/career-growth',
+  path: '/career-growth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CareerLadderRoute = CareerLadderRouteImport.update({
+  id: '/career-ladder',
+  path: '/career-ladder',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CareerReadinessRoute = CareerReadinessRouteImport.update({
+  id: '/career-readiness',
+  path: '/career-readiness',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CareerSelfEfficacyRoute = CareerSelfEfficacyRouteImport.update({
+  id: '/career-self-efficacy',
+  path: '/career-self-efficacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CareerTwinRoute = CareerTwinRouteImport.update({
+  id: '/career-twin',
+  path: '/career-twin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CareerTypeAssessmentRoute = CareerTypeAssessmentRouteImport.update({
+  id: '/career-type-assessment',
+  path: '/career-type-assessment',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CheckoutRoute = CheckoutRouteImport.update({
+  id: '/checkout',
+  path: '/checkout',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ClarityCheckRoute = ClarityCheckRouteImport.update({
+  id: '/clarity-check',
+  path: '/clarity-check',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CognitiveProfileRoute = CognitiveProfileRouteImport.update({
+  id: '/cognitive-profile',
+  path: '/cognitive-profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ComprehensiveAssessmentRoute = ComprehensiveAssessmentRouteImport.update({
+  id: '/comprehensive-assessment',
+  path: '/comprehensive-assessment',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CounselorRoute = CounselorRouteImport.update({
+  id: '/counselor',
+  path: '/counselor',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CounselorCrmRoute = CounselorCrmRouteImport.update({
+  id: '/counselor-crm',
+  path: '/counselor-crm',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DpaRoute = DpaRouteImport.update({
+  id: '/dpa',
+  path: '/dpa',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EmotionalIntelligenceRoute = EmotionalIntelligenceRouteImport.update({
+  id: '/emotional-intelligence',
+  path: '/emotional-intelligence',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FaqRoute = FaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForCounselorsRoute = ForCounselorsRouteImport.update({
+  id: '/for-counselors',
+  path: '/for-counselors',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InstitutionsRoute = InstitutionsRouteImport.update({
+  id: '/institutions',
+  path: '/institutions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JoinAsCoachRoute = JoinAsCoachRouteImport.update({
+  id: '/join-as-coach',
+  path: '/join-as-coach',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LaborMarketRoute = LaborMarketRouteImport.update({
+  id: '/labor-market',
+  path: '/labor-market',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LearningCoachRoute = LearningCoachRouteImport.update({
+  id: '/learning-coach',
+  path: '/learning-coach',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LearningDnaRoute = LearningDnaRouteImport.update({
+  id: '/learning-dna',
+  path: '/learning-dna',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LearningDnaDashboardRoute = LearningDnaDashboardRouteImport.update({
+  id: '/learning-dna-dashboard',
+  path: '/learning-dna-dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LearningStyleRoute = LearningStyleRouteImport.update({
+  id: '/learning-style',
+  path: '/learning-style',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LicensingRoute = LicensingRouteImport.update({
+  id: '/licensing',
+  path: '/licensing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MetaLearningRoute = MetaLearningRouteImport.update({
+  id: '/meta-learning',
+  path: '/meta-learning',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MyAssessmentsRoute = MyAssessmentsRouteImport.update({
+  id: '/my-assessments',
+  path: '/my-assessments',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ParentDashboardRoute = ParentDashboardRouteImport.update({
+  id: '/parent-dashboard',
+  path: '/parent-dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PathsRoute = PathsRouteImport.update({
+  id: '/paths',
+  path: '/paths',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PoiaRoute = PoiaRouteImport.update({
+  id: '/poia',
+  path: '/poia',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PoiaCompareRoute = PoiaCompareRouteImport.update({
+  id: '/poia-compare',
+  path: '/poia-compare',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PoiaDashboardRoute = PoiaDashboardRouteImport.update({
+  id: '/poia-dashboard',
+  path: '/poia-dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PricingRoute = PricingRouteImport.update({
+  id: '/pricing',
+  path: '/pricing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RefundRoute = RefundRouteImport.update({
+  id: '/refund',
+  path: '/refund',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResourcesRoute = ResourcesRouteImport.update({
+  id: '/resources',
+  path: '/resources',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Review360Route = Review360RouteImport.update({
+  id: '/review360',
+  path: '/review360',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SchoolsRoute = SchoolsRouteImport.update({
+  id: '/schools',
+  path: '/schools',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SectorGuideRoute = SectorGuideRouteImport.update({
+  id: '/sector-guide',
+  path: '/sector-guide',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SelfDiscoveryRoute = SelfDiscoveryRouteImport.update({
+  id: '/self-discovery',
+  path: '/self-discovery',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SkillsGapRoute = SkillsGapRouteImport.update({
+  id: '/skills-gap',
+  path: '/skills-gap',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SpecializationsRoute = SpecializationsRouteImport.update({
+  id: '/specializations',
+  path: '/specializations',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StartRoute = StartRouteImport.update({
+  id: '/start',
+  path: '/start',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StudyOsRoute = StudyOsRouteImport.update({
+  id: '/study-os',
+  path: '/study-os',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WellbeingCheckRoute = WellbeingCheckRouteImport.update({
+  id: '/wellbeing-check',
+  path: '/wellbeing-check',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WorkValuesRoute = WorkValuesRouteImport.update({
+  id: '/work-values',
+  path: '/work-values',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedMyBookingsRoute = AuthenticatedMyBookingsRouteImport.update({
+  id: '/my-bookings',
+  path: '/my-bookings',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedMyPlanRoute = AuthenticatedMyPlanRouteImport.update({
+  id: '/my-plan',
+  path: '/my-plan',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedPassportRoute = AuthenticatedPassportRouteImport.update({
+  id: '/passport',
+  path: '/passport',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const CareerSimsIndexRoute = CareerSimsIndexRouteImport.update({
+  id: '/career-sims/',
+  path: '/career-sims/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CareerSimsSlugRoute = CareerSimsSlugRouteImport.update({
+  id: '/career-sims/$slug',
+  path: '/career-sims/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CheckoutSuccessRoute = CheckoutSuccessRouteImport.update({
+  id: '/success',
+  path: '/success',
+  getParentRoute: () => CheckoutRoute,
+} as any)
+const IdpCodeRoute = IdpCodeRouteImport.update({
+  id: '/idp/$code',
+  path: '/idp/$code',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InstitutionsDashboardRoute = InstitutionsDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => InstitutionsRoute,
+} as any)
+const RTokenRoute = RTokenRouteImport.update({
+  id: '/r/$token',
+  path: '/r/$token',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ReportIndexRoute = ReportIndexRouteImport.update({
@@ -393,71 +443,15 @@ const ReportIndexRoute = ReportIndexRouteImport.update({
   path: '/report/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CareerSimsIndexRoute = CareerSimsIndexRouteImport.update({
-  id: '/career-sims/',
-  path: '/career-sims/',
+const ReportCodeRoute = ReportCodeRouteImport.update({
+  id: '/report/$code',
+  path: '/report/$code',
   getParentRoute: () => rootRouteImport,
 } as any)
-const TrackGrowthRoute = TrackGrowthRouteImport.update({
-  id: '/track/growth',
-  path: '/track/growth',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const TrackEntrepreneurshipRoute = TrackEntrepreneurshipRouteImport.update({
-  id: '/track/entrepreneurship',
-  path: '/track/entrepreneurship',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const TrackDiscoveryRoute = TrackDiscoveryRouteImport.update({
-  id: '/track/discovery',
-  path: '/track/discovery',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const TrackChangeRoute = TrackChangeRouteImport.update({
-  id: '/track/change',
-  path: '/track/change',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ReviewSubmitCodeRoute = ReviewSubmitCodeRouteImport.update({
-  id: '/review-submit/$code',
-  path: '/review-submit/$code',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ReviewResultsCodeRoute = ReviewResultsCodeRouteImport.update({
-  id: '/review-results/$code',
-  path: '/review-results/$code',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ResourcesWhyWeWorkRoute = ResourcesWhyWeWorkRouteImport.update({
-  id: '/why-we-work',
-  path: '/why-we-work',
-  getParentRoute: () => ResourcesRoute,
-} as any)
-const ResourcesParentGuideRoute = ResourcesParentGuideRouteImport.update({
-  id: '/parent-guide',
-  path: '/parent-guide',
-  getParentRoute: () => ResourcesRoute,
-} as any)
-const ResourcesHowToChooseMajorRoute =
-  ResourcesHowToChooseMajorRouteImport.update({
-    id: '/how-to-choose-major',
-    path: '/how-to-choose-major',
-    getParentRoute: () => ResourcesRoute,
-  } as any)
-const ResourcesGrowModelRoute = ResourcesGrowModelRouteImport.update({
-  id: '/grow-model',
-  path: '/grow-model',
-  getParentRoute: () => ResourcesRoute,
-} as any)
-const ResourcesCvWritingRoute = ResourcesCvWritingRouteImport.update({
-  id: '/cv-writing',
-  path: '/cv-writing',
-  getParentRoute: () => ResourcesRoute,
-} as any)
-const ResourcesCoachingVsCareerCounselingRoute =
-  ResourcesCoachingVsCareerCounselingRouteImport.update({
-    id: '/coaching-vs-career-counseling',
-    path: '/coaching-vs-career-counseling',
+const ResourcesCareerChangeStrategiesRoute =
+  ResourcesCareerChangeStrategiesRouteImport.update({
+    id: '/career-change-strategies',
+    path: '/career-change-strategies',
     getParentRoute: () => ResourcesRoute,
   } as any)
 const ResourcesCareerPathTermsRoute =
@@ -466,65 +460,66 @@ const ResourcesCareerPathTermsRoute =
     path: '/career-path-terms',
     getParentRoute: () => ResourcesRoute,
   } as any)
-const ResourcesCareerChangeStrategiesRoute =
-  ResourcesCareerChangeStrategiesRouteImport.update({
-    id: '/career-change-strategies',
-    path: '/career-change-strategies',
+const ResourcesCoachingVsCareerCounselingRoute =
+  ResourcesCoachingVsCareerCounselingRouteImport.update({
+    id: '/coaching-vs-career-counseling',
+    path: '/coaching-vs-career-counseling',
     getParentRoute: () => ResourcesRoute,
   } as any)
-const ReportCodeRoute = ReportCodeRouteImport.update({
-  id: '/report/$code',
-  path: '/report/$code',
+const ResourcesCvWritingRoute = ResourcesCvWritingRouteImport.update({
+  id: '/cv-writing',
+  path: '/cv-writing',
+  getParentRoute: () => ResourcesRoute,
+} as any)
+const ResourcesGrowModelRoute = ResourcesGrowModelRouteImport.update({
+  id: '/grow-model',
+  path: '/grow-model',
+  getParentRoute: () => ResourcesRoute,
+} as any)
+const ResourcesHowToChooseMajorRoute =
+  ResourcesHowToChooseMajorRouteImport.update({
+    id: '/how-to-choose-major',
+    path: '/how-to-choose-major',
+    getParentRoute: () => ResourcesRoute,
+  } as any)
+const ResourcesParentGuideRoute = ResourcesParentGuideRouteImport.update({
+  id: '/parent-guide',
+  path: '/parent-guide',
+  getParentRoute: () => ResourcesRoute,
+} as any)
+const ResourcesWhyWeWorkRoute = ResourcesWhyWeWorkRouteImport.update({
+  id: '/why-we-work',
+  path: '/why-we-work',
+  getParentRoute: () => ResourcesRoute,
+} as any)
+const ReviewResultsCodeRoute = ReviewResultsCodeRouteImport.update({
+  id: '/review-results/$code',
+  path: '/review-results/$code',
   getParentRoute: () => rootRouteImport,
 } as any)
-const RTokenRoute = RTokenRouteImport.update({
-  id: '/r/$token',
-  path: '/r/$token',
+const ReviewSubmitCodeRoute = ReviewSubmitCodeRouteImport.update({
+  id: '/review-submit/$code',
+  path: '/review-submit/$code',
   getParentRoute: () => rootRouteImport,
 } as any)
-const InstitutionsDashboardRoute = InstitutionsDashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
-  getParentRoute: () => InstitutionsRoute,
-} as any)
-const IdpCodeRoute = IdpCodeRouteImport.update({
-  id: '/idp/$code',
-  path: '/idp/$code',
+const TrackChangeRoute = TrackChangeRouteImport.update({
+  id: '/track/change',
+  path: '/track/change',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CheckoutSuccessRoute = CheckoutSuccessRouteImport.update({
-  id: '/success',
-  path: '/success',
-  getParentRoute: () => CheckoutRoute,
-} as any)
-const CareerSimsSlugRoute = CareerSimsSlugRouteImport.update({
-  id: '/career-sims/$slug',
-  path: '/career-sims/$slug',
+const TrackDiscoveryRoute = TrackDiscoveryRouteImport.update({
+  id: '/track/discovery',
+  path: '/track/discovery',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedPassportRoute = AuthenticatedPassportRouteImport.update({
-  id: '/passport',
-  path: '/passport',
-  getParentRoute: () => AuthenticatedRouteRoute,
+const TrackEntrepreneurshipRoute = TrackEntrepreneurshipRouteImport.update({
+  id: '/track/entrepreneurship',
+  path: '/track/entrepreneurship',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedMyPlanRoute = AuthenticatedMyPlanRouteImport.update({
-  id: '/my-plan',
-  path: '/my-plan',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedMyBookingsRoute = AuthenticatedMyBookingsRouteImport.update({
-  id: '/my-bookings',
-  path: '/my-bookings',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
-  id: '/admin',
-  path: '/admin',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const ApiPublicHealthRoute = ApiPublicHealthRouteImport.update({
-  id: '/api/public/health',
-  path: '/api/public/health',
+const TrackGrowthRoute = TrackGrowthRouteImport.update({
+  id: '/track/growth',
+  path: '/track/growth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedAdminScalesRoute =
@@ -533,14 +528,9 @@ const AuthenticatedAdminScalesRoute =
     path: '/scales',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
-const ApiPublicWebhooksTapRoute = ApiPublicWebhooksTapRouteImport.update({
-  id: '/api/public/webhooks/tap',
-  path: '/api/public/webhooks/tap',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiPublicWebhooksPaymobRoute = ApiPublicWebhooksPaymobRouteImport.update({
-  id: '/api/public/webhooks/paymob',
-  path: '/api/public/webhooks/paymob',
+const ApiPublicHealthRoute = ApiPublicHealthRouteImport.update({
+  id: '/api/public/health',
+  path: '/api/public/health',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiPublicWebhooksMoyasarRoute =
@@ -549,6 +539,16 @@ const ApiPublicWebhooksMoyasarRoute =
     path: '/api/public/webhooks/moyasar',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiPublicWebhooksPaymobRoute = ApiPublicWebhooksPaymobRouteImport.update({
+  id: '/api/public/webhooks/paymob',
+  path: '/api/public/webhooks/paymob',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicWebhooksTapRoute = ApiPublicWebhooksTapRouteImport.update({
+  id: '/api/public/webhooks/tap',
+  path: '/api/public/webhooks/tap',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -1175,396 +1175,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/work-values': {
-      id: '/work-values'
-      path: '/work-values'
-      fullPath: '/work-values'
-      preLoaderRoute: typeof WorkValuesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/wellbeing-check': {
-      id: '/wellbeing-check'
-      path: '/wellbeing-check'
-      fullPath: '/wellbeing-check'
-      preLoaderRoute: typeof WellbeingCheckRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/terms': {
-      id: '/terms'
-      path: '/terms'
-      fullPath: '/terms'
-      preLoaderRoute: typeof TermsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/study-os': {
-      id: '/study-os'
-      path: '/study-os'
-      fullPath: '/study-os'
-      preLoaderRoute: typeof StudyOsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/start': {
-      id: '/start'
-      path: '/start'
-      fullPath: '/start'
-      preLoaderRoute: typeof StartRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/specializations': {
-      id: '/specializations'
-      path: '/specializations'
-      fullPath: '/specializations'
-      preLoaderRoute: typeof SpecializationsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/skills-gap': {
-      id: '/skills-gap'
-      path: '/skills-gap'
-      fullPath: '/skills-gap'
-      preLoaderRoute: typeof SkillsGapRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sitemap.xml': {
-      id: '/sitemap.xml'
-      path: '/sitemap.xml'
-      fullPath: '/sitemap.xml'
-      preLoaderRoute: typeof SitemapDotxmlRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/self-discovery': {
-      id: '/self-discovery'
-      path: '/self-discovery'
-      fullPath: '/self-discovery'
-      preLoaderRoute: typeof SelfDiscoveryRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sector-guide': {
-      id: '/sector-guide'
-      path: '/sector-guide'
-      fullPath: '/sector-guide'
-      preLoaderRoute: typeof SectorGuideRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/schools': {
-      id: '/schools'
-      path: '/schools'
-      fullPath: '/schools'
-      preLoaderRoute: typeof SchoolsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/review360': {
-      id: '/review360'
-      path: '/review360'
-      fullPath: '/review360'
-      preLoaderRoute: typeof Review360RouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/resources': {
-      id: '/resources'
-      path: '/resources'
-      fullPath: '/resources'
-      preLoaderRoute: typeof ResourcesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/refund': {
-      id: '/refund'
-      path: '/refund'
-      fullPath: '/refund'
-      preLoaderRoute: typeof RefundRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/profile': {
-      id: '/profile'
-      path: '/profile'
-      fullPath: '/profile'
-      preLoaderRoute: typeof ProfileRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/privacy': {
-      id: '/privacy'
-      path: '/privacy'
-      fullPath: '/privacy'
-      preLoaderRoute: typeof PrivacyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/pricing': {
-      id: '/pricing'
-      path: '/pricing'
-      fullPath: '/pricing'
-      preLoaderRoute: typeof PricingRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/poia-dashboard': {
-      id: '/poia-dashboard'
-      path: '/poia-dashboard'
-      fullPath: '/poia-dashboard'
-      preLoaderRoute: typeof PoiaDashboardRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/poia-compare': {
-      id: '/poia-compare'
-      path: '/poia-compare'
-      fullPath: '/poia-compare'
-      preLoaderRoute: typeof PoiaCompareRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/poia': {
-      id: '/poia'
-      path: '/poia'
-      fullPath: '/poia'
-      preLoaderRoute: typeof PoiaRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/paths': {
-      id: '/paths'
-      path: '/paths'
-      fullPath: '/paths'
-      preLoaderRoute: typeof PathsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/parent-dashboard': {
-      id: '/parent-dashboard'
-      path: '/parent-dashboard'
-      fullPath: '/parent-dashboard'
-      preLoaderRoute: typeof ParentDashboardRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/my-assessments': {
-      id: '/my-assessments'
-      path: '/my-assessments'
-      fullPath: '/my-assessments'
-      preLoaderRoute: typeof MyAssessmentsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/meta-learning': {
-      id: '/meta-learning'
-      path: '/meta-learning'
-      fullPath: '/meta-learning'
-      preLoaderRoute: typeof MetaLearningRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/licensing': {
-      id: '/licensing'
-      path: '/licensing'
-      fullPath: '/licensing'
-      preLoaderRoute: typeof LicensingRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/learning-style': {
-      id: '/learning-style'
-      path: '/learning-style'
-      fullPath: '/learning-style'
-      preLoaderRoute: typeof LearningStyleRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/learning-dna-dashboard': {
-      id: '/learning-dna-dashboard'
-      path: '/learning-dna-dashboard'
-      fullPath: '/learning-dna-dashboard'
-      preLoaderRoute: typeof LearningDnaDashboardRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/learning-dna': {
-      id: '/learning-dna'
-      path: '/learning-dna'
-      fullPath: '/learning-dna'
-      preLoaderRoute: typeof LearningDnaRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/learning-coach': {
-      id: '/learning-coach'
-      path: '/learning-coach'
-      fullPath: '/learning-coach'
-      preLoaderRoute: typeof LearningCoachRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/labor-market': {
-      id: '/labor-market'
-      path: '/labor-market'
-      fullPath: '/labor-market'
-      preLoaderRoute: typeof LaborMarketRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/join-as-coach': {
-      id: '/join-as-coach'
-      path: '/join-as-coach'
-      fullPath: '/join-as-coach'
-      preLoaderRoute: typeof JoinAsCoachRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/institutions': {
-      id: '/institutions'
-      path: '/institutions'
-      fullPath: '/institutions'
-      preLoaderRoute: typeof InstitutionsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/for-counselors': {
-      id: '/for-counselors'
-      path: '/for-counselors'
-      fullPath: '/for-counselors'
-      preLoaderRoute: typeof ForCounselorsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/faq': {
-      id: '/faq'
-      path: '/faq'
-      fullPath: '/faq'
-      preLoaderRoute: typeof FaqRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/emotional-intelligence': {
-      id: '/emotional-intelligence'
-      path: '/emotional-intelligence'
-      fullPath: '/emotional-intelligence'
-      preLoaderRoute: typeof EmotionalIntelligenceRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/dpa': {
-      id: '/dpa'
-      path: '/dpa'
-      fullPath: '/dpa'
-      preLoaderRoute: typeof DpaRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/counselor-crm': {
-      id: '/counselor-crm'
-      path: '/counselor-crm'
-      fullPath: '/counselor-crm'
-      preLoaderRoute: typeof CounselorCrmRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/counselor': {
-      id: '/counselor'
-      path: '/counselor'
-      fullPath: '/counselor'
-      preLoaderRoute: typeof CounselorRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/comprehensive-assessment': {
-      id: '/comprehensive-assessment'
-      path: '/comprehensive-assessment'
-      fullPath: '/comprehensive-assessment'
-      preLoaderRoute: typeof ComprehensiveAssessmentRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/cognitive-profile': {
-      id: '/cognitive-profile'
-      path: '/cognitive-profile'
-      fullPath: '/cognitive-profile'
-      preLoaderRoute: typeof CognitiveProfileRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/clarity-check': {
-      id: '/clarity-check'
-      path: '/clarity-check'
-      fullPath: '/clarity-check'
-      preLoaderRoute: typeof ClarityCheckRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/checkout': {
-      id: '/checkout'
-      path: '/checkout'
-      fullPath: '/checkout'
-      preLoaderRoute: typeof CheckoutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/career-type-assessment': {
-      id: '/career-type-assessment'
-      path: '/career-type-assessment'
-      fullPath: '/career-type-assessment'
-      preLoaderRoute: typeof CareerTypeAssessmentRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/career-twin': {
-      id: '/career-twin'
-      path: '/career-twin'
-      fullPath: '/career-twin'
-      preLoaderRoute: typeof CareerTwinRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/career-self-efficacy': {
-      id: '/career-self-efficacy'
-      path: '/career-self-efficacy'
-      fullPath: '/career-self-efficacy'
-      preLoaderRoute: typeof CareerSelfEfficacyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/career-readiness': {
-      id: '/career-readiness'
-      path: '/career-readiness'
-      fullPath: '/career-readiness'
-      preLoaderRoute: typeof CareerReadinessRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/career-ladder': {
-      id: '/career-ladder'
-      path: '/career-ladder'
-      fullPath: '/career-ladder'
-      preLoaderRoute: typeof CareerLadderRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/career-growth': {
-      id: '/career-growth'
-      path: '/career-growth'
-      fullPath: '/career-growth'
-      preLoaderRoute: typeof CareerGrowthRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/career-change': {
-      id: '/career-change'
-      path: '/career-change'
-      fullPath: '/career-change'
-      preLoaderRoute: typeof CareerChangeRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/career-anchors': {
-      id: '/career-anchors'
-      path: '/career-anchors'
-      fullPath: '/career-anchors'
-      preLoaderRoute: typeof CareerAnchorsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/burnout-check': {
-      id: '/burnout-check'
-      path: '/burnout-check'
-      fullPath: '/burnout-check'
-      preLoaderRoute: typeof BurnoutCheckRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/booking': {
-      id: '/booking'
-      path: '/booking'
-      fullPath: '/booking'
-      preLoaderRoute: typeof BookingRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/auth': {
-      id: '/auth'
-      path: '/auth'
-      fullPath: '/auth'
-      preLoaderRoute: typeof AuthRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/audit-report': {
-      id: '/audit-report'
-      path: '/audit-report'
-      fullPath: '/audit-report'
-      preLoaderRoute: typeof AuditReportRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/academic-major': {
-      id: '/academic-major'
-      path: '/academic-major'
-      fullPath: '/academic-major'
-      preLoaderRoute: typeof AcademicMajorRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated': {
@@ -1574,179 +1189,403 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/report/': {
-      id: '/report/'
-      path: '/report'
-      fullPath: '/report/'
-      preLoaderRoute: typeof ReportIndexRouteImport
+    '/academic-major': {
+      id: '/academic-major'
+      path: '/academic-major'
+      fullPath: '/academic-major'
+      preLoaderRoute: typeof AcademicMajorRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/career-sims/': {
-      id: '/career-sims/'
-      path: '/career-sims'
-      fullPath: '/career-sims/'
-      preLoaderRoute: typeof CareerSimsIndexRouteImport
+    '/audit-report': {
+      id: '/audit-report'
+      path: '/audit-report'
+      fullPath: '/audit-report'
+      preLoaderRoute: typeof AuditReportRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/track/growth': {
-      id: '/track/growth'
-      path: '/track/growth'
-      fullPath: '/track/growth'
-      preLoaderRoute: typeof TrackGrowthRouteImport
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/track/entrepreneurship': {
-      id: '/track/entrepreneurship'
-      path: '/track/entrepreneurship'
-      fullPath: '/track/entrepreneurship'
-      preLoaderRoute: typeof TrackEntrepreneurshipRouteImport
+    '/booking': {
+      id: '/booking'
+      path: '/booking'
+      fullPath: '/booking'
+      preLoaderRoute: typeof BookingRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/track/discovery': {
-      id: '/track/discovery'
-      path: '/track/discovery'
-      fullPath: '/track/discovery'
-      preLoaderRoute: typeof TrackDiscoveryRouteImport
+    '/burnout-check': {
+      id: '/burnout-check'
+      path: '/burnout-check'
+      fullPath: '/burnout-check'
+      preLoaderRoute: typeof BurnoutCheckRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/track/change': {
-      id: '/track/change'
-      path: '/track/change'
-      fullPath: '/track/change'
-      preLoaderRoute: typeof TrackChangeRouteImport
+    '/career-anchors': {
+      id: '/career-anchors'
+      path: '/career-anchors'
+      fullPath: '/career-anchors'
+      preLoaderRoute: typeof CareerAnchorsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/review-submit/$code': {
-      id: '/review-submit/$code'
-      path: '/review-submit/$code'
-      fullPath: '/review-submit/$code'
-      preLoaderRoute: typeof ReviewSubmitCodeRouteImport
+    '/career-change': {
+      id: '/career-change'
+      path: '/career-change'
+      fullPath: '/career-change'
+      preLoaderRoute: typeof CareerChangeRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/review-results/$code': {
-      id: '/review-results/$code'
-      path: '/review-results/$code'
-      fullPath: '/review-results/$code'
-      preLoaderRoute: typeof ReviewResultsCodeRouteImport
+    '/career-growth': {
+      id: '/career-growth'
+      path: '/career-growth'
+      fullPath: '/career-growth'
+      preLoaderRoute: typeof CareerGrowthRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/resources/why-we-work': {
-      id: '/resources/why-we-work'
-      path: '/why-we-work'
-      fullPath: '/resources/why-we-work'
-      preLoaderRoute: typeof ResourcesWhyWeWorkRouteImport
-      parentRoute: typeof ResourcesRoute
-    }
-    '/resources/parent-guide': {
-      id: '/resources/parent-guide'
-      path: '/parent-guide'
-      fullPath: '/resources/parent-guide'
-      preLoaderRoute: typeof ResourcesParentGuideRouteImport
-      parentRoute: typeof ResourcesRoute
-    }
-    '/resources/how-to-choose-major': {
-      id: '/resources/how-to-choose-major'
-      path: '/how-to-choose-major'
-      fullPath: '/resources/how-to-choose-major'
-      preLoaderRoute: typeof ResourcesHowToChooseMajorRouteImport
-      parentRoute: typeof ResourcesRoute
-    }
-    '/resources/grow-model': {
-      id: '/resources/grow-model'
-      path: '/grow-model'
-      fullPath: '/resources/grow-model'
-      preLoaderRoute: typeof ResourcesGrowModelRouteImport
-      parentRoute: typeof ResourcesRoute
-    }
-    '/resources/cv-writing': {
-      id: '/resources/cv-writing'
-      path: '/cv-writing'
-      fullPath: '/resources/cv-writing'
-      preLoaderRoute: typeof ResourcesCvWritingRouteImport
-      parentRoute: typeof ResourcesRoute
-    }
-    '/resources/coaching-vs-career-counseling': {
-      id: '/resources/coaching-vs-career-counseling'
-      path: '/coaching-vs-career-counseling'
-      fullPath: '/resources/coaching-vs-career-counseling'
-      preLoaderRoute: typeof ResourcesCoachingVsCareerCounselingRouteImport
-      parentRoute: typeof ResourcesRoute
-    }
-    '/resources/career-path-terms': {
-      id: '/resources/career-path-terms'
-      path: '/career-path-terms'
-      fullPath: '/resources/career-path-terms'
-      preLoaderRoute: typeof ResourcesCareerPathTermsRouteImport
-      parentRoute: typeof ResourcesRoute
-    }
-    '/resources/career-change-strategies': {
-      id: '/resources/career-change-strategies'
-      path: '/career-change-strategies'
-      fullPath: '/resources/career-change-strategies'
-      preLoaderRoute: typeof ResourcesCareerChangeStrategiesRouteImport
-      parentRoute: typeof ResourcesRoute
-    }
-    '/report/$code': {
-      id: '/report/$code'
-      path: '/report/$code'
-      fullPath: '/report/$code'
-      preLoaderRoute: typeof ReportCodeRouteImport
+    '/career-ladder': {
+      id: '/career-ladder'
+      path: '/career-ladder'
+      fullPath: '/career-ladder'
+      preLoaderRoute: typeof CareerLadderRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/r/$token': {
-      id: '/r/$token'
-      path: '/r/$token'
-      fullPath: '/r/$token'
-      preLoaderRoute: typeof RTokenRouteImport
+    '/career-readiness': {
+      id: '/career-readiness'
+      path: '/career-readiness'
+      fullPath: '/career-readiness'
+      preLoaderRoute: typeof CareerReadinessRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/institutions/dashboard': {
-      id: '/institutions/dashboard'
-      path: '/dashboard'
-      fullPath: '/institutions/dashboard'
-      preLoaderRoute: typeof InstitutionsDashboardRouteImport
-      parentRoute: typeof InstitutionsRoute
-    }
-    '/idp/$code': {
-      id: '/idp/$code'
-      path: '/idp/$code'
-      fullPath: '/idp/$code'
-      preLoaderRoute: typeof IdpCodeRouteImport
+    '/career-self-efficacy': {
+      id: '/career-self-efficacy'
+      path: '/career-self-efficacy'
+      fullPath: '/career-self-efficacy'
+      preLoaderRoute: typeof CareerSelfEfficacyRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/checkout/success': {
-      id: '/checkout/success'
-      path: '/success'
-      fullPath: '/checkout/success'
-      preLoaderRoute: typeof CheckoutSuccessRouteImport
-      parentRoute: typeof CheckoutRoute
-    }
-    '/career-sims/$slug': {
-      id: '/career-sims/$slug'
-      path: '/career-sims/$slug'
-      fullPath: '/career-sims/$slug'
-      preLoaderRoute: typeof CareerSimsSlugRouteImport
+    '/career-twin': {
+      id: '/career-twin'
+      path: '/career-twin'
+      fullPath: '/career-twin'
+      preLoaderRoute: typeof CareerTwinRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/passport': {
-      id: '/_authenticated/passport'
-      path: '/passport'
-      fullPath: '/passport'
-      preLoaderRoute: typeof AuthenticatedPassportRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+    '/career-type-assessment': {
+      id: '/career-type-assessment'
+      path: '/career-type-assessment'
+      fullPath: '/career-type-assessment'
+      preLoaderRoute: typeof CareerTypeAssessmentRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/my-plan': {
-      id: '/_authenticated/my-plan'
-      path: '/my-plan'
-      fullPath: '/my-plan'
-      preLoaderRoute: typeof AuthenticatedMyPlanRouteImport
+    '/checkout': {
+      id: '/checkout'
+      path: '/checkout'
+      fullPath: '/checkout'
+      preLoaderRoute: typeof CheckoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/clarity-check': {
+      id: '/clarity-check'
+      path: '/clarity-check'
+      fullPath: '/clarity-check'
+      preLoaderRoute: typeof ClarityCheckRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cognitive-profile': {
+      id: '/cognitive-profile'
+      path: '/cognitive-profile'
+      fullPath: '/cognitive-profile'
+      preLoaderRoute: typeof CognitiveProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/comprehensive-assessment': {
+      id: '/comprehensive-assessment'
+      path: '/comprehensive-assessment'
+      fullPath: '/comprehensive-assessment'
+      preLoaderRoute: typeof ComprehensiveAssessmentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/counselor': {
+      id: '/counselor'
+      path: '/counselor'
+      fullPath: '/counselor'
+      preLoaderRoute: typeof CounselorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/counselor-crm': {
+      id: '/counselor-crm'
+      path: '/counselor-crm'
+      fullPath: '/counselor-crm'
+      preLoaderRoute: typeof CounselorCrmRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dpa': {
+      id: '/dpa'
+      path: '/dpa'
+      fullPath: '/dpa'
+      preLoaderRoute: typeof DpaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/emotional-intelligence': {
+      id: '/emotional-intelligence'
+      path: '/emotional-intelligence'
+      fullPath: '/emotional-intelligence'
+      preLoaderRoute: typeof EmotionalIntelligenceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/faq': {
+      id: '/faq'
+      path: '/faq'
+      fullPath: '/faq'
+      preLoaderRoute: typeof FaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/for-counselors': {
+      id: '/for-counselors'
+      path: '/for-counselors'
+      fullPath: '/for-counselors'
+      preLoaderRoute: typeof ForCounselorsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/institutions': {
+      id: '/institutions'
+      path: '/institutions'
+      fullPath: '/institutions'
+      preLoaderRoute: typeof InstitutionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/join-as-coach': {
+      id: '/join-as-coach'
+      path: '/join-as-coach'
+      fullPath: '/join-as-coach'
+      preLoaderRoute: typeof JoinAsCoachRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/labor-market': {
+      id: '/labor-market'
+      path: '/labor-market'
+      fullPath: '/labor-market'
+      preLoaderRoute: typeof LaborMarketRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/learning-coach': {
+      id: '/learning-coach'
+      path: '/learning-coach'
+      fullPath: '/learning-coach'
+      preLoaderRoute: typeof LearningCoachRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/learning-dna': {
+      id: '/learning-dna'
+      path: '/learning-dna'
+      fullPath: '/learning-dna'
+      preLoaderRoute: typeof LearningDnaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/learning-dna-dashboard': {
+      id: '/learning-dna-dashboard'
+      path: '/learning-dna-dashboard'
+      fullPath: '/learning-dna-dashboard'
+      preLoaderRoute: typeof LearningDnaDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/learning-style': {
+      id: '/learning-style'
+      path: '/learning-style'
+      fullPath: '/learning-style'
+      preLoaderRoute: typeof LearningStyleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/licensing': {
+      id: '/licensing'
+      path: '/licensing'
+      fullPath: '/licensing'
+      preLoaderRoute: typeof LicensingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/meta-learning': {
+      id: '/meta-learning'
+      path: '/meta-learning'
+      fullPath: '/meta-learning'
+      preLoaderRoute: typeof MetaLearningRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/my-assessments': {
+      id: '/my-assessments'
+      path: '/my-assessments'
+      fullPath: '/my-assessments'
+      preLoaderRoute: typeof MyAssessmentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/parent-dashboard': {
+      id: '/parent-dashboard'
+      path: '/parent-dashboard'
+      fullPath: '/parent-dashboard'
+      preLoaderRoute: typeof ParentDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/paths': {
+      id: '/paths'
+      path: '/paths'
+      fullPath: '/paths'
+      preLoaderRoute: typeof PathsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/poia': {
+      id: '/poia'
+      path: '/poia'
+      fullPath: '/poia'
+      preLoaderRoute: typeof PoiaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/poia-compare': {
+      id: '/poia-compare'
+      path: '/poia-compare'
+      fullPath: '/poia-compare'
+      preLoaderRoute: typeof PoiaCompareRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/poia-dashboard': {
+      id: '/poia-dashboard'
+      path: '/poia-dashboard'
+      fullPath: '/poia-dashboard'
+      preLoaderRoute: typeof PoiaDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pricing': {
+      id: '/pricing'
+      path: '/pricing'
+      fullPath: '/pricing'
+      preLoaderRoute: typeof PricingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/refund': {
+      id: '/refund'
+      path: '/refund'
+      fullPath: '/refund'
+      preLoaderRoute: typeof RefundRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resources': {
+      id: '/resources'
+      path: '/resources'
+      fullPath: '/resources'
+      preLoaderRoute: typeof ResourcesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/review360': {
+      id: '/review360'
+      path: '/review360'
+      fullPath: '/review360'
+      preLoaderRoute: typeof Review360RouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/schools': {
+      id: '/schools'
+      path: '/schools'
+      fullPath: '/schools'
+      preLoaderRoute: typeof SchoolsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sector-guide': {
+      id: '/sector-guide'
+      path: '/sector-guide'
+      fullPath: '/sector-guide'
+      preLoaderRoute: typeof SectorGuideRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/self-discovery': {
+      id: '/self-discovery'
+      path: '/self-discovery'
+      fullPath: '/self-discovery'
+      preLoaderRoute: typeof SelfDiscoveryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/skills-gap': {
+      id: '/skills-gap'
+      path: '/skills-gap'
+      fullPath: '/skills-gap'
+      preLoaderRoute: typeof SkillsGapRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/specializations': {
+      id: '/specializations'
+      path: '/specializations'
+      fullPath: '/specializations'
+      preLoaderRoute: typeof SpecializationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/start': {
+      id: '/start'
+      path: '/start'
+      fullPath: '/start'
+      preLoaderRoute: typeof StartRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/study-os': {
+      id: '/study-os'
+      path: '/study-os'
+      fullPath: '/study-os'
+      preLoaderRoute: typeof StudyOsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/wellbeing-check': {
+      id: '/wellbeing-check'
+      path: '/wellbeing-check'
+      fullPath: '/wellbeing-check'
+      preLoaderRoute: typeof WellbeingCheckRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/work-values': {
+      id: '/work-values'
+      path: '/work-values'
+      fullPath: '/work-values'
+      preLoaderRoute: typeof WorkValuesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/my-bookings': {
@@ -1756,18 +1595,172 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedMyBookingsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/admin': {
-      id: '/_authenticated/admin'
-      path: '/admin'
-      fullPath: '/admin'
-      preLoaderRoute: typeof AuthenticatedAdminRouteImport
+    '/_authenticated/my-plan': {
+      id: '/_authenticated/my-plan'
+      path: '/my-plan'
+      fullPath: '/my-plan'
+      preLoaderRoute: typeof AuthenticatedMyPlanRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/api/public/health': {
-      id: '/api/public/health'
-      path: '/api/public/health'
-      fullPath: '/api/public/health'
-      preLoaderRoute: typeof ApiPublicHealthRouteImport
+    '/_authenticated/passport': {
+      id: '/_authenticated/passport'
+      path: '/passport'
+      fullPath: '/passport'
+      preLoaderRoute: typeof AuthenticatedPassportRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/career-sims/': {
+      id: '/career-sims/'
+      path: '/career-sims'
+      fullPath: '/career-sims/'
+      preLoaderRoute: typeof CareerSimsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/career-sims/$slug': {
+      id: '/career-sims/$slug'
+      path: '/career-sims/$slug'
+      fullPath: '/career-sims/$slug'
+      preLoaderRoute: typeof CareerSimsSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/checkout/success': {
+      id: '/checkout/success'
+      path: '/success'
+      fullPath: '/checkout/success'
+      preLoaderRoute: typeof CheckoutSuccessRouteImport
+      parentRoute: typeof CheckoutRoute
+    }
+    '/idp/$code': {
+      id: '/idp/$code'
+      path: '/idp/$code'
+      fullPath: '/idp/$code'
+      preLoaderRoute: typeof IdpCodeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/institutions/dashboard': {
+      id: '/institutions/dashboard'
+      path: '/dashboard'
+      fullPath: '/institutions/dashboard'
+      preLoaderRoute: typeof InstitutionsDashboardRouteImport
+      parentRoute: typeof InstitutionsRoute
+    }
+    '/r/$token': {
+      id: '/r/$token'
+      path: '/r/$token'
+      fullPath: '/r/$token'
+      preLoaderRoute: typeof RTokenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/report/': {
+      id: '/report/'
+      path: '/report'
+      fullPath: '/report/'
+      preLoaderRoute: typeof ReportIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/report/$code': {
+      id: '/report/$code'
+      path: '/report/$code'
+      fullPath: '/report/$code'
+      preLoaderRoute: typeof ReportCodeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resources/career-change-strategies': {
+      id: '/resources/career-change-strategies'
+      path: '/career-change-strategies'
+      fullPath: '/resources/career-change-strategies'
+      preLoaderRoute: typeof ResourcesCareerChangeStrategiesRouteImport
+      parentRoute: typeof ResourcesRoute
+    }
+    '/resources/career-path-terms': {
+      id: '/resources/career-path-terms'
+      path: '/career-path-terms'
+      fullPath: '/resources/career-path-terms'
+      preLoaderRoute: typeof ResourcesCareerPathTermsRouteImport
+      parentRoute: typeof ResourcesRoute
+    }
+    '/resources/coaching-vs-career-counseling': {
+      id: '/resources/coaching-vs-career-counseling'
+      path: '/coaching-vs-career-counseling'
+      fullPath: '/resources/coaching-vs-career-counseling'
+      preLoaderRoute: typeof ResourcesCoachingVsCareerCounselingRouteImport
+      parentRoute: typeof ResourcesRoute
+    }
+    '/resources/cv-writing': {
+      id: '/resources/cv-writing'
+      path: '/cv-writing'
+      fullPath: '/resources/cv-writing'
+      preLoaderRoute: typeof ResourcesCvWritingRouteImport
+      parentRoute: typeof ResourcesRoute
+    }
+    '/resources/grow-model': {
+      id: '/resources/grow-model'
+      path: '/grow-model'
+      fullPath: '/resources/grow-model'
+      preLoaderRoute: typeof ResourcesGrowModelRouteImport
+      parentRoute: typeof ResourcesRoute
+    }
+    '/resources/how-to-choose-major': {
+      id: '/resources/how-to-choose-major'
+      path: '/how-to-choose-major'
+      fullPath: '/resources/how-to-choose-major'
+      preLoaderRoute: typeof ResourcesHowToChooseMajorRouteImport
+      parentRoute: typeof ResourcesRoute
+    }
+    '/resources/parent-guide': {
+      id: '/resources/parent-guide'
+      path: '/parent-guide'
+      fullPath: '/resources/parent-guide'
+      preLoaderRoute: typeof ResourcesParentGuideRouteImport
+      parentRoute: typeof ResourcesRoute
+    }
+    '/resources/why-we-work': {
+      id: '/resources/why-we-work'
+      path: '/why-we-work'
+      fullPath: '/resources/why-we-work'
+      preLoaderRoute: typeof ResourcesWhyWeWorkRouteImport
+      parentRoute: typeof ResourcesRoute
+    }
+    '/review-results/$code': {
+      id: '/review-results/$code'
+      path: '/review-results/$code'
+      fullPath: '/review-results/$code'
+      preLoaderRoute: typeof ReviewResultsCodeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/review-submit/$code': {
+      id: '/review-submit/$code'
+      path: '/review-submit/$code'
+      fullPath: '/review-submit/$code'
+      preLoaderRoute: typeof ReviewSubmitCodeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/track/change': {
+      id: '/track/change'
+      path: '/track/change'
+      fullPath: '/track/change'
+      preLoaderRoute: typeof TrackChangeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/track/discovery': {
+      id: '/track/discovery'
+      path: '/track/discovery'
+      fullPath: '/track/discovery'
+      preLoaderRoute: typeof TrackDiscoveryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/track/entrepreneurship': {
+      id: '/track/entrepreneurship'
+      path: '/track/entrepreneurship'
+      fullPath: '/track/entrepreneurship'
+      preLoaderRoute: typeof TrackEntrepreneurshipRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/track/growth': {
+      id: '/track/growth'
+      path: '/track/growth'
+      fullPath: '/track/growth'
+      preLoaderRoute: typeof TrackGrowthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/admin/scales': {
@@ -1777,11 +1770,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminScalesRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
-    '/api/public/webhooks/tap': {
-      id: '/api/public/webhooks/tap'
-      path: '/api/public/webhooks/tap'
-      fullPath: '/api/public/webhooks/tap'
-      preLoaderRoute: typeof ApiPublicWebhooksTapRouteImport
+    '/api/public/health': {
+      id: '/api/public/health'
+      path: '/api/public/health'
+      fullPath: '/api/public/health'
+      preLoaderRoute: typeof ApiPublicHealthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/webhooks/moyasar': {
+      id: '/api/public/webhooks/moyasar'
+      path: '/api/public/webhooks/moyasar'
+      fullPath: '/api/public/webhooks/moyasar'
+      preLoaderRoute: typeof ApiPublicWebhooksMoyasarRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/public/webhooks/paymob': {
@@ -1791,11 +1791,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicWebhooksPaymobRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/public/webhooks/moyasar': {
-      id: '/api/public/webhooks/moyasar'
-      path: '/api/public/webhooks/moyasar'
-      fullPath: '/api/public/webhooks/moyasar'
-      preLoaderRoute: typeof ApiPublicWebhooksMoyasarRouteImport
+    '/api/public/webhooks/tap': {
+      id: '/api/public/webhooks/tap'
+      path: '/api/public/webhooks/tap'
+      fullPath: '/api/public/webhooks/tap'
+      preLoaderRoute: typeof ApiPublicWebhooksTapRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
