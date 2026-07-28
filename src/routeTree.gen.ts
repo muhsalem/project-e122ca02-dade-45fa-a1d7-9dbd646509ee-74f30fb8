@@ -37,6 +37,7 @@ import { Route as EmotionalIntelligenceRouteImport } from './routes/emotional-in
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as ForCounselorsRouteImport } from './routes/for-counselors'
 import { Route as InstitutionsRouteImport } from './routes/institutions'
+import { Route as InterdisciplinaryRouteImport } from './routes/interdisciplinary'
 import { Route as JoinAsCoachRouteImport } from './routes/join-as-coach'
 import { Route as LaborMarketRouteImport } from './routes/labor-market'
 import { Route as LearningCoachRouteImport } from './routes/learning-coach'
@@ -237,6 +238,11 @@ const ForCounselorsRoute = ForCounselorsRouteImport.update({
 const InstitutionsRoute = InstitutionsRouteImport.update({
   id: '/institutions',
   path: '/institutions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InterdisciplinaryRoute = InterdisciplinaryRouteImport.update({
+  id: '/interdisciplinary',
+  path: '/interdisciplinary',
   getParentRoute: () => rootRouteImport,
 } as any)
 const JoinAsCoachRoute = JoinAsCoachRouteImport.update({
@@ -584,6 +590,7 @@ export interface FileRoutesByFullPath {
   '/faq': typeof FaqRoute
   '/for-counselors': typeof ForCounselorsRoute
   '/institutions': typeof InstitutionsRouteWithChildren
+  '/interdisciplinary': typeof InterdisciplinaryRoute
   '/join-as-coach': typeof JoinAsCoachRoute
   '/labor-market': typeof LaborMarketRoute
   '/learning-coach': typeof LearningCoachRoute
@@ -675,6 +682,7 @@ export interface FileRoutesByTo {
   '/faq': typeof FaqRoute
   '/for-counselors': typeof ForCounselorsRoute
   '/institutions': typeof InstitutionsRouteWithChildren
+  '/interdisciplinary': typeof InterdisciplinaryRoute
   '/join-as-coach': typeof JoinAsCoachRoute
   '/labor-market': typeof LaborMarketRoute
   '/learning-coach': typeof LearningCoachRoute
@@ -768,6 +776,7 @@ export interface FileRoutesById {
   '/faq': typeof FaqRoute
   '/for-counselors': typeof ForCounselorsRoute
   '/institutions': typeof InstitutionsRouteWithChildren
+  '/interdisciplinary': typeof InterdisciplinaryRoute
   '/join-as-coach': typeof JoinAsCoachRoute
   '/labor-market': typeof LaborMarketRoute
   '/learning-coach': typeof LearningCoachRoute
@@ -861,6 +870,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/for-counselors'
     | '/institutions'
+    | '/interdisciplinary'
     | '/join-as-coach'
     | '/labor-market'
     | '/learning-coach'
@@ -952,6 +962,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/for-counselors'
     | '/institutions'
+    | '/interdisciplinary'
     | '/join-as-coach'
     | '/labor-market'
     | '/learning-coach'
@@ -1044,6 +1055,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/for-counselors'
     | '/institutions'
+    | '/interdisciplinary'
     | '/join-as-coach'
     | '/labor-market'
     | '/learning-coach'
@@ -1137,6 +1149,7 @@ export interface RootRouteChildren {
   FaqRoute: typeof FaqRoute
   ForCounselorsRoute: typeof ForCounselorsRoute
   InstitutionsRoute: typeof InstitutionsRouteWithChildren
+  InterdisciplinaryRoute: typeof InterdisciplinaryRoute
   JoinAsCoachRoute: typeof JoinAsCoachRoute
   LaborMarketRoute: typeof LaborMarketRoute
   LearningCoachRoute: typeof LearningCoachRoute
@@ -1382,6 +1395,13 @@ declare module '@tanstack/react-router' {
       path: '/institutions'
       fullPath: '/institutions'
       preLoaderRoute: typeof InstitutionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/interdisciplinary': {
+      id: '/interdisciplinary'
+      path: '/interdisciplinary'
+      fullPath: '/interdisciplinary'
+      preLoaderRoute: typeof InterdisciplinaryRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/join-as-coach': {
@@ -1929,6 +1949,7 @@ const rootRouteChildren: RootRouteChildren = {
   FaqRoute: FaqRoute,
   ForCounselorsRoute: ForCounselorsRoute,
   InstitutionsRoute: InstitutionsRouteWithChildren,
+  InterdisciplinaryRoute: InterdisciplinaryRoute,
   JoinAsCoachRoute: JoinAsCoachRoute,
   LaborMarketRoute: LaborMarketRoute,
   LearningCoachRoute: LearningCoachRoute,
