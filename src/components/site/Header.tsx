@@ -38,6 +38,7 @@ const assessmentsGroup = {
         { to: "/interdisciplinary", label: "التخصصات البينية" },
         { to: "/degrees", label: "اختصارات الدرجات (MBA/PhD/…)" },
         { to: "/major-match", label: "Bawsala Match — مطابقة التخصص" },
+        { to: "/encyclopedia-v9", label: "الموسوعة المرجعية v9 (الأصل)" },
         { to: "/track/discovery", label: "خريطة الاختبارات الأكاديمية" },
       ],
     },
