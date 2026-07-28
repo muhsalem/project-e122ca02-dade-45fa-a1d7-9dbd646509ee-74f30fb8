@@ -1,196 +1,252 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Compass, GraduationCap, RefreshCw, TrendingUp, HeartPulse, BookOpen, Activity, ArrowLeft, CheckCircle2, Brain } from "lucide-react";
+import {
+  Compass, GraduationCap, BookOpen, Briefcase, ArrowLeft, CheckCircle2,
+  Sparkles, HeartPulse, Activity, Brain, RefreshCw, TrendingUp,
+} from "lucide-react";
 
 export const Route = createFileRoute("/paths")({
   head: () => ({
     meta: [
-      { title: "اختر مسارك — خريطة الاختبارات | بوصلة" },
-      { name: "description", content: "اختبارات بوصلة منظَّمة في 7 مسارات: الاكتشاف، التغيير، التطوّر، علم نفس التعلّم، Learning DNA، الفرز النفسي، والأثر المهني والصحي." },
-      { property: "og:title", content: "خريطة الاختبارات المهنية — بوصلة" },
-      { property: "og:description", content: "اختبارات منظَّمة في سبعة مسارات حسب مرحلتك ووفق تسلسل قياسي معتمد في الإرشاد المهني." },
+      { title: "اختر مسارك — الإرشاد التربوي والأكاديمي والمهني | بوصلة" },
+      { name: "description", content: "ثلاثة مسارات إرشاد متكاملة: تربوي (التعلّم والدافعية)، أكاديمي (التخصص الجامعي)، ومهني (اكتشاف/تغيير/تطوّر) — بخطوات واضحة لكل مسار." },
+      { property: "og:title", content: "اختر مسارك — بوصلة" },
+      { property: "og:description", content: "ثلاثة مسارات إرشاد: تربوي وأكاديمي ومهني، بخطوات مرتّبة وأدوات علمية مفتوحة الترخيص." },
     ],
   }),
   component: PathsPage,
 });
 
-
-type TestItem = { name: string; href: string; note?: string };
-type Track = {
-  key: string;
-  title: string;
-  audience: string;
-  outcome: string;
+type Step = { name: string; href: string; note?: string };
+type SubTrack = { key: string; title: string; audience: string; outcome: string; steps: Step[] };
+type Domain = {
+  key: "educational" | "academic" | "career";
+  label: string;
+  tagline: string;
   icon: typeof Compass;
   accent: string;
-  tests: TestItem[];
+  chip: string;
+  subs: SubTrack[];
 };
 
-const TRACKS: Track[] = [
+const DOMAINS: Domain[] = [
   {
-    key: "discovery",
-    title: "المسار 1 — الاكتشاف",
-    audience: "طالب/طالبة أو خرّيج لم يحدّد مساره",
-    outcome: "تقرير «اكتشاف الذات» + اقتراح أنسب 5 تخصصات",
-    icon: GraduationCap,
-    accent: "from-blue-500/15 to-blue-500/5 border-blue-500/30",
-    tests: [
-      { name: "1) القيم المهنية (WVI)", href: "/work-values", note: "نبدأ بالقيم لأنها البوصلة الأخلاقية لأي قرار مهني" },
-      { name: "2) مرساة المسيرة المهنية (Schein)", href: "/career-anchors", note: "ما الذي لا يمكنك التنازل عنه في عملك؟" },
-      { name: "3) اكتشاف الذات (Holland RIASEC + Big Five)", href: "/self-discovery", note: "الميول والشخصية" },
-      { name: "4) اكتشاف المسار المهني (ISCO-08)", href: "/career-type-assessment" },
-      { name: "5) الملف المعرفي (القدرات الأربع)", href: "/cognitive-profile", note: "تحقق من تطابق القدرات مع الميول" },
-      { name: "6) التخصص الجامعي المناسب", href: "/academic-major", note: "يستفيد تلقائيًا من نتائجك السابقة" },
-    ],
-  },
-  {
-    key: "change",
-    title: "المسار 2 — التغيير",
-    audience: "موظّف يفكّر في تغيير مساره",
-    outcome: "قرار واضح: ابقَ / طوّر / غيّر",
-    icon: RefreshCw,
-    accent: "from-amber-500/15 to-amber-500/5 border-amber-500/30",
-    tests: [
-      { name: "1) وضوح المسار المهني (قبل/بعد)", href: "/clarity-check", note: "قياس أساس قبل أي تشخيص" },
-      { name: "2) مؤشر الاحتراق المهني (MBI-GS)", href: "/burnout-check", note: "هل المشكلة احتراق ظرفي أم عدم توافق جذري؟" },
-      { name: "3) تشخيص تغيير المسار (احتراق + انخراط + دافعية)", href: "/career-change" },
-      { name: "4) الكفاءة الذاتية لاتخاذ القرار (CDSE)", href: "/career-self-efficacy", note: "هل أنت جاهز نفسيًا للقرار؟" },
-    ],
-  },
-  {
-    key: "growth",
-    title: "المسار 3 — التطوّر والترقّي",
-    audience: "موظّف راضٍ ويريد الترقّي",
-    outcome: "خطة تطوير فردية (IDP) لـ 90 يومًا + سلّم مهني",
-    icon: TrendingUp,
-    accent: "from-emerald-500/15 to-emerald-500/5 border-emerald-500/30",
-    tests: [
-      { name: "1) الذكاء العاطفي (WLEIS)", href: "/emotional-intelligence", note: "حجر الأساس للقيادة والترقّي" },
-      { name: "2) تطوير المسار الوظيفي (الأداء + القيادة)", href: "/career-growth" },
-      { name: "3) سلالم المسارات المهنية (Junior → Lead)", href: "/career-ladder" },
-      { name: "4) تقييم 360° (اختياري بإذن العميل)", href: "/review360" },
-      { name: "5) شهادة الجاهزية المهنية", href: "/career-readiness", note: "تُصدَر بعد إكمال 4 اختبارات" },
-    ],
-  },
-  {
-    key: "learning",
-    title: "المسار 4 — علم نفس التعلّم",
-    audience: "طالب/متدرّب يريد فهم قناة استقباله ودورة معالجته للمعرفة",
-    outcome: "تعرّف على نمط التعلّم الكلاسيكي (VARK/Kolb) كنقطة بداية تمهيدية",
+    key: "educational",
+    label: "الإرشاد التربوي",
+    tagline: "كيف تتعلّم؟ كيف تُدير طاقتك ودافعيتك وصحتك النفسية؟",
     icon: BookOpen,
     accent: "from-violet-500/15 to-violet-500/5 border-violet-500/30",
-    tests: [
-      { name: "اكتشاف نمط التعلّم (VARK + Kolb)", href: "/learning-style", note: "نموذجان كلاسيكيان تمهيديّان — للنتيجة الأعمق انتقل إلى Learning DNA" },
+    chip: "للطلاب والمتدربين وأولياء الأمور",
+    subs: [
+      {
+        key: "learning-dna",
+        title: "بصمتك التعليمية — Learning DNA",
+        audience: "من يريد قياساً متقدّماً لطريقة تعلّمه الفعلية",
+        outcome: "٧ مؤشرات مركّبة + خطة تعلّم شخصية ومدرّب AI",
+        steps: [
+          { name: "١) اختبار Learning DNA الشامل", href: "/learning-dna", note: "استبيان + ذاكرة + Stroop + حلّ مشكلات" },
+          { name: "٢) لوحة Learning DNA الشخصية", href: "/learning-dna-dashboard", note: "تابع تطوّر مؤشراتك السبعة" },
+          { name: "٣) AI Learning Coach", href: "/learning-coach", note: "توصيات فورية مبنيّة على بصمتك" },
+        ],
+      },
+      {
+        key: "study-os",
+        title: "نظام المذاكرة — Study OS",
+        audience: "طالب/متدرّب يريد بناء عادات دراسية فعّالة",
+        outcome: "جلسات Pomodoro + Flashcards بتباعد + Check-in يومي",
+        steps: [
+          { name: "١) نمط التعلّم التمهيدي (VARK + Kolb)", href: "/learning-style", note: "نقطة بداية سريعة" },
+          { name: "٢) تشغيل Study OS", href: "/study-os", note: "Pomodoro وFlashcards وخطة يومية متكيّفة" },
+          { name: "٣) مهارات ما وراء المعرفة", href: "/meta-learning" },
+        ],
+      },
+      {
+        key: "wellbeing",
+        title: "الصحة النفسية والتوازن",
+        audience: "لكل طالب/موظّف يحتاج اطمئناناً نفسياً سريعاً",
+        outcome: "فرز موجز + توصية إحالة عند الحاجة",
+        steps: [
+          { name: "الفحص النفسي المختصر (PHQ-2 + GAD-2)", href: "/wellbeing-check", note: "للفرز فقط، لا يُغني عن مختصّ" },
+        ],
+      },
     ],
   },
   {
-    key: "learning-dna",
-    title: "المسار 5 — Learning DNA · البصمة التعليمية",
-    audience: "كل من يريد قياساً علمياً متقدّماً لطريقة تعلّمه الفعلية",
-    outcome: "30+ بُعد + 3 اختبارات أداء + 7 مؤشرات مركّبة + خطة تعلّم شخصية ومدرّب AI",
-    icon: Brain,
-    accent: "from-indigo-500/15 to-indigo-500/5 border-indigo-500/30",
-    tests: [
-      { name: "1) Learning DNA — الاختبار الشامل", href: "/learning-dna", note: "استبيان (36 بنداً) + ذاكرة + Stroop + حلّ مشكلات" },
-      { name: "2) لوحة Learning DNA الشخصية", href: "/learning-dna-dashboard", note: "تابع تطوّر مؤشراتك السبعة (LES · RET · FOC · PSS · LAS · SLS · DLS)" },
-      { name: "3) AI Learning Coach — مدرّب التعلّم الذكي", href: "/learning-coach", note: "محادثة مع مدرّب يقرأ بصمتك ويعطيك توصيات فورية" },
+    key: "academic",
+    title: "",
+    label: "الإرشاد الأكاديمي",
+    tagline: "أي تخصص جامعي يناسبك؟ وكيف تربطه بميولك وقدراتك؟",
+    icon: GraduationCap,
+    accent: "from-blue-500/15 to-blue-500/5 border-blue-500/30",
+    chip: "لطلاب الثانوية والجامعة",
+    subs: [
+      {
+        key: "major",
+        title: "اختيار التخصص الجامعي",
+        audience: "طالب/طالبة أمام قرار التخصص",
+        outcome: "قائمة أنسب ٥ تخصصات مع نسبة توافق واضحة",
+        steps: [
+          { name: "١) القيم المهنية (WVI)", href: "/work-values", note: "البوصلة الأخلاقية قبل أي قرار" },
+          { name: "٢) اكتشاف الذات (Big Five + O*NET Interest Profiler)", href: "/self-discovery" },
+          { name: "٣) الملف المعرفي (القدرات الأربع)", href: "/cognitive-profile" },
+          { name: "٤) التخصص الجامعي المناسب", href: "/academic-major", note: "يستخدم نتائجك السابقة تلقائياً" },
+          { name: "٥) مستكشف التخصصات", href: "/specializations" },
+        ],
+      },
+      {
+        key: "parent",
+        title: "دليل ولي الأمر",
+        audience: "أولياء الأمور والمدارس",
+        outcome: "تقرير مبسّط + إرشادات لدعم الابن دون توجيهه قسراً",
+        steps: [
+          { name: "لوحة ولي الأمر", href: "/parent-dashboard" },
+          { name: "دليل المدارس", href: "/schools" },
+        ],
+      },
     ],
   },
-
-
-
   {
-    key: "screening",
-    title: "المسار 6 — الفرز النفسي",
-    audience: "أداة عرضية لكل من يحتاج اطمئنانًا نفسيًا",
-    outcome: "تقرير فرز موجز + توصية إحالة عند الحاجة",
-    icon: HeartPulse,
-    accent: "from-rose-500/15 to-rose-500/5 border-rose-500/30",
-    tests: [
-      { name: "الفحص النفسي المختصر (PHQ-2 + GAD-2)", href: "/wellbeing-check", note: "للفرز فقط، لا يُغني عن مختصّ" },
+    key: "career",
+    label: "الإرشاد المهني",
+    tagline: "اكتشف، غيّر، أو طوّر مسارك — بخطوات مبنيّة على العلم.",
+    icon: Briefcase,
+    accent: "from-emerald-500/15 to-emerald-500/5 border-emerald-500/30",
+    chip: "للخريجين والموظفين والمديرين",
+    subs: [
+      {
+        key: "discovery",
+        title: "المسار (أ) — الاكتشاف",
+        audience: "خريج/باحث عن عمل لم يحدّد مساره",
+        outcome: "تقرير اكتشاف الذات + اقتراح أنسب ٥ مهن",
+        steps: [
+          { name: "١) القيم المهنية (WVI)", href: "/work-values" },
+          { name: "٢) مرساة المسيرة المهنية (Schein)", href: "/career-anchors" },
+          { name: "٣) اكتشاف الذات (Big Five + O*NET)", href: "/self-discovery" },
+          { name: "٤) اكتشاف المسار المهني (ISCO-08)", href: "/career-type-assessment" },
+          { name: "٥) هوية المسار (VISA)", href: "/career-anchors" },
+        ],
+      },
+      {
+        key: "change",
+        title: "المسار (ب) — التغيير",
+        audience: "موظّف يفكّر في تغيير مساره",
+        outcome: "قرار واضح: ابقَ / طوّر / غيّر",
+        steps: [
+          { name: "١) وضوح المسار المهني", href: "/clarity-check" },
+          { name: "٢) مؤشر الاحتراق (OLBI)", href: "/burnout-check" },
+          { name: "٣) تشخيص تغيير المسار", href: "/career-change" },
+          { name: "٤) الكفاءة الذاتية لاتخاذ القرار", href: "/career-self-efficacy" },
+        ],
+      },
+      {
+        key: "growth",
+        title: "المسار (ج) — التطوّر والترقّي",
+        audience: "موظّف راضٍ يريد الترقّي",
+        outcome: "خطة تطوير فردية (IDP) لـ ٩٠ يوماً + سلّم مهني",
+        steps: [
+          { name: "١) الذكاء العاطفي (IPIP-EI)", href: "/emotional-intelligence" },
+          { name: "٢) تطوير المسار الوظيفي", href: "/career-growth" },
+          { name: "٣) سلالم المسارات المهنية", href: "/career-ladder" },
+          { name: "٤) تقييم 360° (اختياري)", href: "/review360" },
+          { name: "٥) شهادة الجاهزية المهنية", href: "/career-readiness" },
+        ],
+      },
+      {
+        key: "impact",
+        title: "الأثر المهني والصحي (POIA)",
+        audience: "كل من يريد قياس أثر عمله على حياته",
+        outcome: "٦ مؤشرات + مقارنة مع ٢٠ مهنة",
+        steps: [
+          { name: "١) قياس POIA", href: "/poia" },
+          { name: "٢) لوحة المؤشرات", href: "/poia-dashboard" },
+          { name: "٣) مقارنة المهن", href: "/poia-compare" },
+        ],
+      },
     ],
   },
-  {
-    key: "poia",
-    title: "المسار 7 — الأثر المهني والصحي (POIA)",
-    audience: "لكل موظّف أو مهني يريد قياس أثر وظيفته على حياته",
-    outcome: "ستة مؤشرات (PI · OH · BRI · CSI · CFS · QWL) + تقرير ذكي + مقارنة مهن",
-    icon: Activity,
-    accent: "from-fuchsia-500/15 to-fuchsia-500/5 border-fuchsia-500/30",
-    tests: [
-      { name: "1) قياس الأثر المهني والصحي (POIA)", href: "/poia", note: "يقيس أثر العمل على الجسد والنفس والعلاقات والاستدامة" },
-      { name: "2) لوحة المؤشرات الشخصية", href: "/poia-dashboard", note: "متابعة تطوّرك عبر الزمن" },
-      { name: "3) مقارنة المهن", href: "/poia-compare", note: "قارن مؤشراتك بمتوسطات 20 مهنة" },
-    ],
-  },
-
 ];
 
 function PathsPage() {
   return (
     <section className="container-page py-12 md:py-16">
-      {/* Hero */}
       <div className="mx-auto max-w-3xl text-center">
         <div className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/10 px-4 py-1.5 text-xs font-medium text-gold">
           <Compass className="h-3.5 w-3.5" />
-          خريطة الاختبارات المهنية
+          ثلاثة مسارات إرشاد متكاملة
         </div>
         <h1 className="mt-4 font-serif text-3xl text-primary md:text-5xl">اختر مسارك</h1>
         <p className="mx-auto mt-3 max-w-2xl text-sm leading-7 text-muted-foreground md:text-base">
-          نظّمنا اختبارات بوصلة في <span className="font-semibold text-primary">سبعة مسارات</span> واضحة حسب مرحلتك،
-          حتى لا تتشتّت بين عشرات الأدوات. ابدأ بالمسار الذي يصف حالتك الآن.
+          نظّمنا خدمات بوصلة في ثلاثة مسارات رئيسية:
+          <span className="mx-1 font-semibold text-primary">تربوي</span>·
+          <span className="mx-1 font-semibold text-primary">أكاديمي</span>·
+          <span className="mx-1 font-semibold text-primary">مهني</span>.
+          اختر المسار الذي يصف مرحلتك الآن، ثم اتّبع الخطوات بالترتيب.
         </p>
 
+        <div className="mt-6 flex flex-wrap justify-center gap-3 text-xs">
+          {DOMAINS.map((d) => (
+            <a key={d.key} href={`#${d.key}`} className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1.5 hover:border-gold/40">
+              <d.icon className="h-3.5 w-3.5 text-gold" />
+              {d.label}
+            </a>
+          ))}
+          <Link to="/start" className="inline-flex items-center gap-1.5 rounded-full bg-primary px-3 py-1.5 text-primary-foreground hover:opacity-90">
+            <Sparkles className="h-3.5 w-3.5" /> مساعد الترشيح الذكي
+          </Link>
+        </div>
       </div>
 
-      {/* Tracks */}
-      <div className="mx-auto mt-10 grid max-w-6xl gap-6 md:grid-cols-2">
-        {TRACKS.map((t) => {
-          const Icon = t.icon;
+      <div className="mx-auto mt-12 max-w-6xl space-y-14">
+        {DOMAINS.map((d) => {
+          const Icon = d.icon;
           return (
-            <article
-              key={t.key}
-              className={`rounded-2xl border bg-gradient-to-br p-6 shadow-[var(--shadow-soft)] ${t.accent}`}
-            >
-              <header className="flex items-start gap-3">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-background/80 text-primary">
-                  <Icon className="h-6 w-6" />
-                </div>
-                <div>
-                  <h2 className="font-serif text-xl text-primary md:text-2xl">{t.title}</h2>
-                  <p className="mt-1 text-xs text-muted-foreground">{t.audience}</p>
+            <section key={d.key} id={d.key} className="scroll-mt-24">
+              <header className={`rounded-2xl border bg-gradient-to-br p-6 ${d.accent}`}>
+                <div className="flex items-start gap-4">
+                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-background/80 text-primary">
+                    <Icon className="h-7 w-7" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">{d.chip}</div>
+                    <h2 className="mt-1 font-serif text-2xl text-primary md:text-3xl">{d.label}</h2>
+                    <p className="mt-2 text-sm text-muted-foreground md:text-base">{d.tagline}</p>
+                  </div>
                 </div>
               </header>
 
-              <p className="mt-4 rounded-lg bg-background/70 px-3 py-2 text-xs leading-6 text-primary">
-                <span className="font-semibold">المخرج:</span> {t.outcome}
-              </p>
-
-              <ul className="mt-4 space-y-2">
-                {t.tests.map((test) => (
-                  <li key={test.href}>
-                    <Link
-                      to={test.href}
-                      className="group flex items-start gap-2 rounded-lg border border-border bg-background/60 px-3 py-2.5 text-sm transition-colors hover:border-gold/40 hover:bg-background"
-                    >
-                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
-                      <div className="flex-1">
-                        <div className="font-medium text-primary group-hover:underline">{test.name}</div>
-                        {test.note && (
-                          <div className="mt-0.5 text-[11px] text-muted-foreground">{test.note}</div>
-                        )}
-                      </div>
-                      <ArrowLeft className="mt-1 h-3.5 w-3.5 shrink-0 text-muted-foreground transition-transform group-hover:-translate-x-0.5" />
-                    </Link>
-                  </li>
+              <div className="mt-5 grid gap-5 md:grid-cols-2">
+                {d.subs.map((s) => (
+                  <article key={s.key} className="rounded-2xl border border-border bg-card p-5 shadow-[var(--shadow-soft)]">
+                    <h3 className="font-serif text-lg text-primary">{s.title}</h3>
+                    <p className="mt-1 text-xs text-muted-foreground">{s.audience}</p>
+                    <p className="mt-3 rounded-lg bg-secondary/60 px-3 py-2 text-xs leading-6 text-primary">
+                      <span className="font-semibold">المخرج:</span> {s.outcome}
+                    </p>
+                    <ol className="mt-4 space-y-2">
+                      {s.steps.map((st) => (
+                        <li key={st.href + st.name}>
+                          <Link
+                            to={st.href}
+                            className="group flex items-start gap-2 rounded-lg border border-border bg-background/60 px-3 py-2.5 text-sm transition-colors hover:border-gold/40 hover:bg-background"
+                          >
+                            <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
+                            <div className="flex-1">
+                              <div className="font-medium text-primary group-hover:underline">{st.name}</div>
+                              {st.note && <div className="mt-0.5 text-[11px] text-muted-foreground">{st.note}</div>}
+                            </div>
+                            <ArrowLeft className="mt-1 h-3.5 w-3.5 shrink-0 text-muted-foreground transition-transform group-hover:-translate-x-0.5" />
+                          </Link>
+                        </li>
+                      ))}
+                    </ol>
+                  </article>
                 ))}
-              </ul>
-            </article>
+              </div>
+            </section>
           );
         })}
       </div>
 
-      {/* Footer note */}
-      <div className="mx-auto mt-10 max-w-3xl rounded-2xl border border-border bg-card p-5 text-center text-sm text-muted-foreground">
+      <div className="mx-auto mt-14 max-w-3xl rounded-2xl border border-border bg-card p-5 text-center text-sm text-muted-foreground">
         لست متأكدًا أين تبدأ؟ جرّب{" "}
         <Link to="/start" className="font-semibold text-primary underline-offset-4 hover:underline">
           مساعد الترشيح الذكي

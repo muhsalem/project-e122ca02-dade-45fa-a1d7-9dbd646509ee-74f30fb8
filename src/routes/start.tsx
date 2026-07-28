@@ -1,92 +1,144 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { Compass, ArrowRight, Sparkles } from "lucide-react";
+import { BookOpen, GraduationCap, Briefcase, ArrowRight, Sparkles, Compass } from "lucide-react";
 
 export const Route = createFileRoute("/start")({
   head: () => ({
     meta: [
-      { title: "ابدأ رحلتك — بوصلة" },
-
-      { name: "description", content: "ثلاث خطوات بسيطة ترشدك إلى أنسب تقييم مهني لحالتك الراهنة — مجاناً." },
+      { title: "ابدأ رحلتك — اختر مسار الإرشاد المناسب | بوصلة" },
+      { name: "description", content: "اختر بين ثلاثة مسارات إرشاد: تربوي، أكاديمي، أو مهني — ثم حدّد مرحلتك لنرشدك إلى أنسب أداة." },
     ],
   }),
   component: StartFunnel,
 });
 
-type Stage = "student" | "graduate" | "employed_unhappy" | "employed_growing" | "manager";
+type Domain = "educational" | "academic" | "career";
 
-const stages: { id: Stage; label: string; desc: string; target: string }[] = [
-  { id: "student", label: "طالب/طالبة", desc: "لم أحدد تخصصي أو مساري بعد", target: "/self-discovery" },
-  { id: "graduate", label: "خريج/باحث عن عمل", desc: "أبحث عن أول وظيفة أو أعد للسوق", target: "/career-readiness" },
-  { id: "employed_unhappy", label: "موظف غير راضٍ", desc: "أشعر بالإرهاق وأفكر في التغيير", target: "/career-change" },
-  { id: "employed_growing", label: "موظف طموح", desc: "راضٍ عن مجالي وأريد التطور والترقي", target: "/career-growth" },
-  { id: "manager", label: "مدير/HR", desc: "أبحث عن حلول لفريقي أو مؤسستي", target: "/institutions" },
+const DOMAINS: {
+  id: Domain;
+  label: string;
+  desc: string;
+  icon: typeof BookOpen;
+  options: { label: string; desc: string; target: string }[];
+}[] = [
+  {
+    id: "educational",
+    label: "الإرشاد التربوي",
+    desc: "كيف تتعلّم وتُدير طاقتك ودافعيتك",
+    icon: BookOpen,
+    options: [
+      { label: "أريد فهم بصمتي التعليمية", desc: "قياس علمي متقدّم لطريقة تعلّمي", target: "/learning-dna" },
+      { label: "أحتاج نظام مذاكرة فعّال", desc: "Pomodoro + Flashcards + خطة يومية", target: "/study-os" },
+      { label: "أشعر بضغط نفسي أو إرهاق", desc: "فرز نفسي سريع (PHQ-2 + GAD-2)", target: "/wellbeing-check" },
+    ],
+  },
+  {
+    id: "academic",
+    label: "الإرشاد الأكاديمي",
+    desc: "اختيار التخصص الجامعي المناسب",
+    icon: GraduationCap,
+    options: [
+      { label: "طالب ثانوية أختار تخصصي", desc: "ابدأ باكتشاف الذات ثم مطابقة التخصصات", target: "/self-discovery" },
+      { label: "ولي أمر أدعم ابني/ابنتي", desc: "دليل مبسّط بلوحة ولي الأمر", target: "/parent-dashboard" },
+      { label: "أريد استكشاف التخصصات مباشرة", desc: "مستكشف التخصصات الجامعية", target: "/specializations" },
+    ],
+  },
+  {
+    id: "career",
+    label: "الإرشاد المهني",
+    desc: "اكتشف، غيّر، أو طوّر مسارك المهني",
+    icon: Briefcase,
+    options: [
+      { label: "خريج/باحث عن عمل", desc: "اكتشاف المسار المهني الأنسب", target: "/self-discovery" },
+      { label: "موظف أفكّر في التغيير", desc: "تشخيص الاحتراق ووضوح المسار", target: "/career-change" },
+      { label: "موظف طموح أريد الترقّي", desc: "خطة تطوير فردية وسلّم مهني", target: "/career-growth" },
+      { label: "مدير/HR — حلول لفريقي", desc: "لوحات ومؤشرات مؤسسية", target: "/institutions" },
+    ],
+  },
 ];
 
 function StartFunnel() {
   const navigate = useNavigate();
-  const [picked, setPicked] = useState<Stage | null>(null);
+  const [domain, setDomain] = useState<Domain | null>(null);
+
+  const active = DOMAINS.find((d) => d.id === domain) ?? null;
 
   return (
-    <section className="container-page py-16 md:py-24">
+    <section className="container-page py-12 md:py-20">
       <div className="mx-auto max-w-3xl text-center">
         <div className="inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-4 py-1.5 text-xs text-gold">
           <Sparkles className="h-3.5 w-3.5" />
-          مجاني تماماً — لا يتطلب تسجيلاً
+          مجاني — لا يتطلّب تسجيلاً للبدء
         </div>
-        <h1 className="mt-5 font-serif text-3xl text-primary md:text-5xl">
-          ابدأ رحلتك
-        </h1>
-
+        <h1 className="mt-5 font-serif text-3xl text-primary md:text-5xl">ابدأ رحلتك</h1>
         <p className="mx-auto mt-4 max-w-xl text-muted-foreground leading-9">
-          أخبرنا أين أنت الآن في رحلتك المهنية، وسنرشدك إلى أنسب تقييم علمي لحالتك —
-          مبني على نماذج Holland و MBI و GROW المعتمدة دولياً.
+          اختر نوع الإرشاد الذي تحتاجه الآن، ثم حدّد وضعك بدقّة — لنرشدك إلى أنسب أداة.
         </p>
       </div>
 
-      <div className="mx-auto mt-12 grid max-w-3xl gap-3">
-        {stages.map((s) => (
-          <button
-            key={s.id}
-            onClick={() => setPicked(s.id)}
-            className={`group flex items-center justify-between gap-4 rounded-2xl border-2 p-5 text-right transition-all ${
-              picked === s.id
-                ? "border-primary bg-primary/5"
-                : "border-border bg-card hover:border-gold/50"
-            }`}
-          >
-            <div className="flex-1">
-              <div className="font-serif text-lg text-primary">{s.label}</div>
-              <div className="mt-1 text-sm text-muted-foreground">{s.desc}</div>
-            </div>
-            <Compass className={`h-6 w-6 shrink-0 ${picked === s.id ? "text-gold" : "text-muted-foreground"}`} />
-          </button>
-        ))}
-      </div>
+      {/* Step 1: pick a domain */}
+      <ol className="mx-auto mt-10 max-w-4xl">
+        <li>
+          <div className="mb-3 flex items-center gap-2 text-xs font-medium text-muted-foreground">
+            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-primary-foreground">١</span>
+            اختر نوع الإرشاد
+          </div>
+          <div className="grid gap-3 md:grid-cols-3">
+            {DOMAINS.map((d) => {
+              const Icon = d.icon;
+              const active = domain === d.id;
+              return (
+                <button
+                  key={d.id}
+                  onClick={() => setDomain(d.id)}
+                  className={`group rounded-2xl border-2 p-5 text-right transition-all ${
+                    active ? "border-primary bg-primary/5" : "border-border bg-card hover:border-gold/50"
+                  }`}
+                >
+                  <Icon className={`h-6 w-6 ${active ? "text-gold" : "text-muted-foreground"}`} />
+                  <div className="mt-3 font-serif text-lg text-primary">{d.label}</div>
+                  <div className="mt-1 text-xs text-muted-foreground">{d.desc}</div>
+                </button>
+              );
+            })}
+          </div>
+        </li>
 
-      {picked && (
-        <div className="mx-auto mt-8 flex max-w-3xl justify-center">
-          <button
-            onClick={() => {
-              const t = stages.find((x) => x.id === picked)!.target;
-              navigate({ to: t });
-            }}
-            className="inline-flex items-center gap-2 rounded-md bg-primary px-8 py-3.5 text-sm font-medium text-primary-foreground hover:opacity-90"
-          >
-            ابدأ التقييم المناسب لك
-            <ArrowRight className="h-4 w-4 rtl:rotate-180" />
-          </button>
-        </div>
-      )}
+        {/* Step 2: pick the situation */}
+        {active && (
+          <li className="mt-10">
+            <div className="mb-3 flex items-center gap-2 text-xs font-medium text-muted-foreground">
+              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-primary-foreground">٢</span>
+              حدّد وضعك ضمن {active.label}
+            </div>
+            <div className="grid gap-3 md:grid-cols-2">
+              {active.options.map((o) => (
+                <button
+                  key={o.target + o.label}
+                  onClick={() => navigate({ to: o.target })}
+                  className="flex items-center justify-between gap-4 rounded-2xl border border-border bg-card p-5 text-right transition-all hover:border-gold/50 hover:shadow-[var(--shadow-soft)]"
+                >
+                  <div className="flex-1">
+                    <div className="font-serif text-base text-primary">{o.label}</div>
+                    <div className="mt-1 text-xs text-muted-foreground">{o.desc}</div>
+                  </div>
+                  <ArrowRight className="h-5 w-5 shrink-0 text-gold rtl:rotate-180" />
+                </button>
+              ))}
+            </div>
+          </li>
+        )}
+      </ol>
 
       <div className="mx-auto mt-16 max-w-3xl rounded-2xl border border-border bg-secondary/40 p-6 text-center text-sm text-muted-foreground">
-        تفضل استكشاف كل التقييمات؟{" "}
-        <Link to="/comprehensive-assessment" className="text-primary underline-offset-4 hover:underline">
-          جرّب التقييم الشامل
+        <Compass className="mx-auto mb-2 h-5 w-5 text-gold" />
+        تفضّل رؤية كل المسارات دفعة واحدة؟{" "}
+        <Link to="/paths" className="font-semibold text-primary underline-offset-4 hover:underline">
+          اذهب إلى خريطة المسارات
         </Link>{" "}
         أو{" "}
-        <Link to="/pricing" className="text-primary underline-offset-4 hover:underline">
-          شاهد باقات الكوتشينج والأسعار
+        <Link to="/comprehensive-assessment" className="text-primary underline-offset-4 hover:underline">
+          جرّب التقييم الشامل
         </Link>
         .
       </div>
