@@ -38,7 +38,8 @@ function Page() {
       <div className="mx-auto max-w-6xl">
         <header className="mb-6 text-center">
           <span className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/10 px-4 py-1.5 text-xs font-medium text-primary">
-            <BookOpen className="h-3.5 w-3.5 text-gold" /> ISCED-F 2013 · v{COMPREHENSIVENESS_AUDIT.version}
+            <BookOpen className="h-3.5 w-3.5 text-gold" /> ISCED-F 2013 · موسوعة {COMPREHENSIVENESS_AUDIT.version}
+
           </span>
           <h1 className="mt-4 font-serif text-3xl text-primary md:text-4xl">قاعدة التخصصات الأكاديمية</h1>
           <p className="mx-auto mt-3 max-w-2xl text-sm text-muted-foreground">
