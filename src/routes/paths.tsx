@@ -72,7 +72,6 @@ const DOMAINS: Domain[] = [
   },
   {
     key: "academic",
-    title: "",
     label: "الإرشاد الأكاديمي",
     tagline: "أي تخصص جامعي يناسبك؟ وكيف تربطه بميولك وقدراتك؟",
     icon: GraduationCap,
