@@ -35,7 +35,6 @@ import { Route as CounselorCrmRouteImport } from './routes/counselor-crm'
 import { Route as DegreesRouteImport } from './routes/degrees'
 import { Route as DpaRouteImport } from './routes/dpa'
 import { Route as EmotionalIntelligenceRouteImport } from './routes/emotional-intelligence'
-import { Route as EncyclopediaV9RouteImport } from './routes/encyclopedia-v9'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as ForCounselorsRouteImport } from './routes/for-counselors'
 import { Route as InstitutionsRouteImport } from './routes/institutions'
@@ -231,11 +230,6 @@ const DpaRoute = DpaRouteImport.update({
 const EmotionalIntelligenceRoute = EmotionalIntelligenceRouteImport.update({
   id: '/emotional-intelligence',
   path: '/emotional-intelligence',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const EncyclopediaV9Route = EncyclopediaV9RouteImport.update({
-  id: '/encyclopedia-v9',
-  path: '/encyclopedia-v9',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FaqRoute = FaqRouteImport.update({
@@ -606,7 +600,6 @@ export interface FileRoutesByFullPath {
   '/degrees': typeof DegreesRoute
   '/dpa': typeof DpaRoute
   '/emotional-intelligence': typeof EmotionalIntelligenceRoute
-  '/encyclopedia-v9': typeof EncyclopediaV9Route
   '/faq': typeof FaqRoute
   '/for-counselors': typeof ForCounselorsRoute
   '/institutions': typeof InstitutionsRouteWithChildren
@@ -701,7 +694,6 @@ export interface FileRoutesByTo {
   '/degrees': typeof DegreesRoute
   '/dpa': typeof DpaRoute
   '/emotional-intelligence': typeof EmotionalIntelligenceRoute
-  '/encyclopedia-v9': typeof EncyclopediaV9Route
   '/faq': typeof FaqRoute
   '/for-counselors': typeof ForCounselorsRoute
   '/institutions': typeof InstitutionsRouteWithChildren
@@ -798,7 +790,6 @@ export interface FileRoutesById {
   '/degrees': typeof DegreesRoute
   '/dpa': typeof DpaRoute
   '/emotional-intelligence': typeof EmotionalIntelligenceRoute
-  '/encyclopedia-v9': typeof EncyclopediaV9Route
   '/faq': typeof FaqRoute
   '/for-counselors': typeof ForCounselorsRoute
   '/institutions': typeof InstitutionsRouteWithChildren
@@ -895,7 +886,6 @@ export interface FileRouteTypes {
     | '/degrees'
     | '/dpa'
     | '/emotional-intelligence'
-    | '/encyclopedia-v9'
     | '/faq'
     | '/for-counselors'
     | '/institutions'
@@ -990,7 +980,6 @@ export interface FileRouteTypes {
     | '/degrees'
     | '/dpa'
     | '/emotional-intelligence'
-    | '/encyclopedia-v9'
     | '/faq'
     | '/for-counselors'
     | '/institutions'
@@ -1086,7 +1075,6 @@ export interface FileRouteTypes {
     | '/degrees'
     | '/dpa'
     | '/emotional-intelligence'
-    | '/encyclopedia-v9'
     | '/faq'
     | '/for-counselors'
     | '/institutions'
@@ -1183,7 +1171,6 @@ export interface RootRouteChildren {
   DegreesRoute: typeof DegreesRoute
   DpaRoute: typeof DpaRoute
   EmotionalIntelligenceRoute: typeof EmotionalIntelligenceRoute
-  EncyclopediaV9Route: typeof EncyclopediaV9Route
   FaqRoute: typeof FaqRoute
   ForCounselorsRoute: typeof ForCounselorsRoute
   InstitutionsRoute: typeof InstitutionsRouteWithChildren
@@ -1420,13 +1407,6 @@ declare module '@tanstack/react-router' {
       path: '/emotional-intelligence'
       fullPath: '/emotional-intelligence'
       preLoaderRoute: typeof EmotionalIntelligenceRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/encyclopedia-v9': {
-      id: '/encyclopedia-v9'
-      path: '/encyclopedia-v9'
-      fullPath: '/encyclopedia-v9'
-      preLoaderRoute: typeof EncyclopediaV9RouteImport
       parentRoute: typeof rootRouteImport
     }
     '/faq': {
@@ -2007,7 +1987,6 @@ const rootRouteChildren: RootRouteChildren = {
   DegreesRoute: DegreesRoute,
   DpaRoute: DpaRoute,
   EmotionalIntelligenceRoute: EmotionalIntelligenceRoute,
-  EncyclopediaV9Route: EncyclopediaV9Route,
   FaqRoute: FaqRoute,
   ForCounselorsRoute: ForCounselorsRoute,
   InstitutionsRoute: InstitutionsRouteWithChildren,
