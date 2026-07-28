@@ -21,6 +21,7 @@ type Vec = Partial<Record<Riasec, number>> & { bfi?: Partial<Record<BigFive, num
 
 // Field-level RIASEC/BFI expectations (values 0..1)
 const FIELD_PROFILE: Record<string, Vec> = {
+  // Legacy IDs (kept for backward compatibility)
   sciences:      { I: 1.0, R: 0.5, C: 0.5, A: 0.2, bfi: { O: 1, C: 0.7 } },
   engineering:   { R: 1.0, I: 0.9, C: 0.5, bfi: { C: 1, O: 0.6 } },
   medicine:      { S: 1.0, I: 0.9, R: 0.5, C: 0.5, bfi: { C: 1, A: 0.9 } },
@@ -34,6 +35,43 @@ const FIELD_PROFILE: Record<string, Vec> = {
   arts_fine:     { A: 1.0, E: 0.5, S: 0.4, bfi: { O: 1, E: 0.5 } },
   islamic:       { S: 0.8, I: 0.7, A: 0.5, C: 0.6, bfi: { A: 0.9, C: 0.8 } },
   services:      { S: 0.9, E: 0.8, R: 0.5, bfi: { E: 0.9, A: 0.7 } },
+
+  // Encyclopedia v2 IDs (ISCED-F 2013 aligned)
+  performing_arts:              { A: 1.0, S: 0.6, E: 0.4, bfi: { O: 1, E: 0.6 } },
+  visual_arts:                  { A: 1.0, I: 0.4, E: 0.4, bfi: { O: 1, C: 0.5 } },
+  history:                      { I: 0.9, A: 0.6, S: 0.4, bfi: { O: 1, C: 0.6 } },
+  languages_literature:         { A: 1.0, S: 0.6, I: 0.6, bfi: { O: 1, A: 0.6 } },
+  philosophy:                   { I: 1.0, A: 0.6, S: 0.4, bfi: { O: 1 } },
+  religious_studies:            { S: 0.9, I: 0.8, A: 0.5, C: 0.6, bfi: { A: 0.9, C: 0.8 } },
+  psychology:                   { S: 1.0, I: 0.9, A: 0.5, bfi: { A: 1, O: 0.9 } },
+  sociology_anthro:             { S: 1.0, I: 0.8, A: 0.5, bfi: { A: 1, O: 0.8 } },
+  economics:                    { I: 1.0, C: 0.7, E: 0.6, bfi: { C: 1, O: 0.7 } },
+  political_science:            { E: 0.9, S: 0.7, I: 0.7, bfi: { E: 1, O: 0.7 } },
+  geography:                    { I: 0.9, R: 0.6, C: 0.5, bfi: { O: 0.9, C: 0.6 } },
+  area_studies:                 { I: 0.9, S: 0.6, A: 0.5, bfi: { O: 1 } },
+  physics:                      { I: 1.0, R: 0.6, C: 0.6, bfi: { O: 1, C: 0.8 } },
+  chemistry:                    { I: 1.0, R: 0.7, C: 0.7, bfi: { O: 0.9, C: 0.8 } },
+  biology:                      { I: 1.0, R: 0.5, S: 0.4, bfi: { O: 1, C: 0.7 } },
+  earth_sciences:               { I: 0.9, R: 0.8, C: 0.5, bfi: { O: 0.9, C: 0.7 } },
+  space_sciences:               { I: 1.0, R: 0.6, C: 0.6, bfi: { O: 1, C: 0.7 } },
+  mathematics:                  { I: 1.0, C: 0.8, bfi: { O: 0.9, C: 1 } },
+  statistics_actuarial:         { C: 1.0, I: 0.9, bfi: { C: 1, O: 0.7 } },
+  computer_science:             { I: 1.0, R: 0.7, C: 0.6, A: 0.3, bfi: { O: 1, C: 0.7 } },
+  logic_systems:                { I: 1.0, C: 0.7, bfi: { O: 0.9, C: 0.8 } },
+  agriculture_food:             { R: 1.0, I: 0.7, S: 0.3, bfi: { C: 0.8, O: 0.5 } },
+  architecture_planning:        { A: 0.9, R: 0.7, I: 0.6, C: 0.5, bfi: { O: 1, C: 0.7 } },
+  environment_energy:           { I: 0.9, R: 0.7, S: 0.4, bfi: { O: 0.9, C: 0.7 } },
+  medicine_health:              { S: 1.0, I: 0.9, R: 0.5, C: 0.5, bfi: { C: 1, A: 0.9 } },
+  sports_kinesiology:           { R: 0.9, S: 0.8, I: 0.5, bfi: { E: 0.9, C: 0.7 } },
+  forensic_sciences:            { I: 0.9, R: 0.6, C: 0.8, bfi: { C: 1, O: 0.6 } },
+  media_communication:          { A: 0.9, E: 0.9, S: 0.6, bfi: { E: 1, O: 0.8 } },
+  social_public_services:       { S: 1.0, E: 0.6, C: 0.6, bfi: { A: 1, C: 0.7 } },
+  interdisciplinary_bio:        { I: 1.0, R: 0.6, S: 0.5, bfi: { O: 1, C: 0.7 } },
+  interdisciplinary_socio_tech: { I: 0.9, S: 0.7, E: 0.5, A: 0.4, bfi: { O: 1, C: 0.6 } },
+  hospitality_tourism:          { S: 0.9, E: 0.8, A: 0.5, bfi: { E: 1, A: 0.8 } },
+  personal_care_services:       { S: 0.9, R: 0.6, A: 0.5, bfi: { A: 0.9, E: 0.7 } },
+  security_safety:              { R: 0.9, C: 0.7, S: 0.5, bfi: { C: 1, A: 0.6 } },
+  transport_services:           { R: 0.9, C: 0.7, bfi: { C: 0.9 } },
 };
 
 // General-spec overrides — refine within field where meaningful
