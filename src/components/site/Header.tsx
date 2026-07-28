@@ -34,6 +34,10 @@ const assessmentsGroup = {
       items: [
         { to: "/academic-major", label: "اختيار التخصص الجامعي" },
         { to: "/specializations", label: "استكشاف التخصصات" },
+        { to: "/academic-disciplines", label: "قاعدة ISCED الأكاديمية (v4)" },
+        { to: "/interdisciplinary", label: "التخصصات البينية" },
+        { to: "/degrees", label: "اختصارات الدرجات (MBA/PhD/…)" },
+        { to: "/major-match", label: "Bawsala Match — مطابقة التخصص" },
         { to: "/track/discovery", label: "خريطة الاختبارات الأكاديمية" },
       ],
     },
