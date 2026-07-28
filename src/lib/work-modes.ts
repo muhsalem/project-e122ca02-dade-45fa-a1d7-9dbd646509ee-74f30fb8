@@ -80,6 +80,26 @@ const FIELD_MAP: Record<string, WorkModes> = {
   },
 };
 
+// Aliases for encyclopedia v2 field IDs → legacy work-modes profiles
+const FIELD_ALIASES: Record<string, keyof typeof FIELD_MAP> = {
+  physics: "sciences", chemistry: "sciences", biology: "sciences",
+  earth_sciences: "sciences", space_sciences: "sciences",
+  mathematics: "sciences", statistics_actuarial: "sciences", logic_systems: "sciences",
+  computer_science: "computing",
+  medicine_health: "medicine", sports_kinesiology: "medicine",
+  forensic_sciences: "medicine", interdisciplinary_bio: "medicine",
+  psychology: "social", sociology_anthro: "social", political_science: "social",
+  geography: "social", area_studies: "social", economics: "business",
+  social_public_services: "social", interdisciplinary_socio_tech: "computing",
+  performing_arts: "arts_fine", visual_arts: "arts_fine", media_communication: "arts_fine",
+  languages_literature: "arts", history: "arts", philosophy: "arts",
+  religious_studies: "islamic",
+  agriculture_food: "agriculture",
+  architecture_planning: "engineering", environment_energy: "engineering",
+  hospitality_tourism: "services", personal_care_services: "services",
+  security_safety: "services", transport_services: "services",
+};
+
 // fallback عبر بادئة ISCO-08 (أول رقم = المجموعة الكبرى)
 const ISCO_MAP: Record<string, WorkModes> = {
   // 1 — مدراء
@@ -145,7 +165,10 @@ const DEFAULT_MODES: WorkModes = {
 };
 
 export function getWorkModesByField(fieldId: string | null | undefined): WorkModes {
-  if (fieldId && FIELD_MAP[fieldId]) return FIELD_MAP[fieldId];
+  if (!fieldId) return DEFAULT_MODES;
+  if (FIELD_MAP[fieldId]) return FIELD_MAP[fieldId];
+  const alias = FIELD_ALIASES[fieldId];
+  if (alias && FIELD_MAP[alias]) return FIELD_MAP[alias];
   return DEFAULT_MODES;
 }
 
