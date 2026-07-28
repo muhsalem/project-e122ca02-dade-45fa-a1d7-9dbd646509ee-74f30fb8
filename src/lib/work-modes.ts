@@ -165,7 +165,10 @@ const DEFAULT_MODES: WorkModes = {
 };
 
 export function getWorkModesByField(fieldId: string | null | undefined): WorkModes {
-  if (fieldId && FIELD_MAP[fieldId]) return FIELD_MAP[fieldId];
+  if (!fieldId) return DEFAULT_MODES;
+  if (FIELD_MAP[fieldId]) return FIELD_MAP[fieldId];
+  const alias = FIELD_ALIASES[fieldId];
+  if (alias && FIELD_MAP[alias]) return FIELD_MAP[alias];
   return DEFAULT_MODES;
 }
 
