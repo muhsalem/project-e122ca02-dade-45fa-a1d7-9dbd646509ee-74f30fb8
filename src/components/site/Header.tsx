@@ -14,60 +14,52 @@ const assessmentsGroup = {
   label: "اختر مسارك",
   sections: [
     {
-      title: "ابدأ من هنا",
+      title: "🚀 ابدأ من هنا",
       items: [
-        { to: "/paths", label: "خريطة الاختبارات (دليل الاختيار)" },
-        { to: "/my-plan", label: "لوحة خطتي المهنية" },
-        { to: "/my-bookings", label: "حجوزاتي" },
+        { to: "/paths", label: "ما الذي تريد العمل عليه اليوم؟" },
+        { to: "/my-plan", label: "لوحة خطتي" },
       ],
     },
     {
-      title: "أريد الاكتشاف",
-      items: [
-        { to: "/track/discovery", label: "نظرة عامة — الاكتشاف" },
-        { to: "/academic-major", label: "اختيار التخصص الجامعي" },
-        { to: "/self-discovery", label: "اكتشاف المهنة (RIASEC + Big Five)" },
-        { to: "/career-type-assessment", label: "استكشاف المسار (ISCO-08)" },
-        { to: "/work-values", label: "القيم المهنية (WVI)" },
-        { to: "/career-anchors", label: "مرساة المسيرة (Schein)" },
-      ],
-    },
-    {
-      title: "أريد التغيير",
-      items: [
-        { to: "/track/change", label: "نظرة عامة — التغيير" },
-        { to: "/career-change", label: "التحول الوظيفي" },
-        { to: "/clarity-check", label: "القلق وعدم وضوح المسار" },
-        { to: "/burnout-check", label: "الاحتراق الوظيفي (MBI)" },
-      ],
-    },
-    {
-      title: "أريد التطوير",
-      items: [
-        { to: "/track/growth", label: "نظرة عامة — التطوير" },
-        { to: "/career-growth", label: "بناء الخطة المهنية" },
-        { to: "/career-ladder", label: "تحقيق الأهداف وسلّم الترقي" },
-        { to: "/career-readiness", label: "تطوير الأداء والجاهزية" },
-        { to: "/career-self-efficacy", label: "الكفاءة الذاتية لاتخاذ القرار" },
-        { to: "/emotional-intelligence", label: "الذكاء العاطفي والتكيّف (WLEIS)" },
-        { to: "/wellbeing-check", label: "الفرز النفسي المختصر" },
-      ],
-    },
-    {
-      title: "أريد أن أبدء مشروعي",
-      items: [
-        { to: "/track/entrepreneurship", label: "نظرة عامة — ريادة الأعمال" },
-        { to: "/cognitive-profile", label: "الملف المعرفي والقيادي" },
-      ],
-    },
-    {
-      title: "علم نفس التعلّم",
+      title: "🧠 كيف تتعلم؟",
       items: [
         { to: "/learning-style", label: "نمط التعلّم (VARK + Kolb)" },
         { to: "/learning-dna", label: "Learning DNA — البصمة التعليمية" },
-        { to: "/meta-learning", label: "التعلّم-الميتا (Grit + Mindset + MAI)" },
-        { to: "/learning-dna-dashboard", label: "لوحة بصمة التعلّم" },
+        { to: "/meta-learning", label: "التعلّم-الميتا (Grit + Mindset)" },
         { to: "/learning-coach", label: "المدرّب الذكي للتعلّم" },
+      ],
+    },
+    {
+      title: "🎓 التخصصات الدراسية والجامعية",
+      items: [
+        { to: "/academic-major", label: "اختيار التخصص الجامعي" },
+        { to: "/specializations", label: "استكشاف التخصصات" },
+        { to: "/track/discovery", label: "خريطة الاختبارات الأكاديمية" },
+      ],
+    },
+    {
+      title: "💼 المسار المهني — أريد الاكتشاف",
+      items: [
+        { to: "/self-discovery", label: "اكتشاف المهنة (RIASEC + Big Five)" },
+        { to: "/career-type-assessment", label: "استكشاف المسار (ISCO-08)" },
+        { to: "/work-values", label: "القيم المهنية (WVI)" },
+      ],
+    },
+    {
+      title: "💼 المسار المهني — أريد التغيير",
+      items: [
+        { to: "/career-change", label: "التحول الوظيفي" },
+        { to: "/clarity-check", label: "القلق وعدم وضوح المسار" },
+        { to: "/burnout-check", label: "الاحتراق الوظيفي (OLBI)" },
+      ],
+    },
+    {
+      title: "💼 المسار المهني — أريد التطوير",
+      items: [
+        { to: "/career-growth", label: "بناء الخطة المهنية (IDP)" },
+        { to: "/career-ladder", label: "سلّم الترقي والأهداف" },
+        { to: "/career-readiness", label: "تطوير الأداء والجاهزية" },
+        { to: "/emotional-intelligence", label: "الذكاء العاطفي (WLEIS)" },
       ],
     },
   ],
