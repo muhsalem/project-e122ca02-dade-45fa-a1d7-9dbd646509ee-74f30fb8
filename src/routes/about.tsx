@@ -5,10 +5,10 @@ import { PsychometricCredibility } from "@/components/site/PsychometricCredibili
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "من نحن — بوصلة" },
-      { name: "description", content: "منصة بوصلة: قصتنا، رسالتنا، وفريقنا للإرشاد المهني والكوتشينج للناطقين بالعربية." },
-      { property: "og:title", content: "من نحن — بوصلة" },
-      { property: "og:description", content: "قصتنا، رسالتنا، ومنهجيتنا في الإرشاد المهني والكوتشينج العربي." },
+      { title: "من نحن — بوصلة للإرشاد التربوي والأكاديمي والمهني" },
+      { name: "description", content: "بوصلة: منصة عربية متخصّصة في الإرشاد التربوي والأكاديمي والمهني — قصتنا، رسالتنا، ومنهجيتنا العلمية." },
+      { property: "og:title", content: "من نحن — بوصلة للإرشاد التربوي والأكاديمي والمهني" },
+      { property: "og:description", content: "منصة عربية متخصّصة في الإرشاد التربوي والأكاديمي والمهني بمنهجية علمية." },
       { property: "og:image", content: "/og-image.jpg" },
       { property: "og:url", content: "/about" },
     ],
@@ -34,20 +34,21 @@ function AboutPage() {
         <div className="grid gap-12 lg:grid-cols-2">
           <div>
             <p className="font-serif text-sm uppercase tracking-widest text-gold">رسالتنا</p>
-            <h2 className="mt-3 text-3xl text-primary">تمكين جيل واعٍ بمساره</h2>
+            <h2 className="mt-3 text-3xl text-primary">إرشاد متكامل: تربوي وأكاديمي ومهني</h2>
             <p className="mt-5 leading-9 text-muted-foreground">
-              نقدّم خدمات إرشاد مهني وكوتشينج مستوحاة من أُطر دولية معروفة مثل
-              نماذج Holland و Super وبنية GROW للكوتشينج، مع تكييف يحترم خصوصية
-              الثقافة العربية وواقع سوق العمل الإقليمي.
+              نحن منصة عربية متخصّصة في ثلاثة محاور مترابطة: الإرشاد التربوي
+              (عادات التعلّم والدافعية والرفاه)، والإرشاد الأكاديمي (اختيار التخصص
+              والمسار الدراسي)، والإرشاد المهني (بناء المسار الوظيفي وتطويره) —
+              بأُطر علمية معروفة مثل Holland و Super و GROW.
             </p>
           </div>
           <div>
             <p className="font-serif text-sm uppercase tracking-widest text-gold">رؤيتنا</p>
             <h2 className="mt-3 text-3xl text-primary">أن يكون لكل عربي بوصلته</h2>
             <p className="mt-5 leading-9 text-muted-foreground">
-              نطمح أن نكون المرجع الأول للإرشاد المهني في العالم العربي،
-              وأن نسهم في تقليص فجوة المهارات وتعزيز الرضا الوظيفي للأجيال
-              القادمة.
+              نطمح أن نكون المرجع الأول للإرشاد التربوي والأكاديمي والمهني في
+              العالم العربي، ونرافق الطالب من مقعد الدراسة حتى بناء مسار مهني
+              يشبهه ويليق بطموحه.
             </p>
           </div>
         </div>

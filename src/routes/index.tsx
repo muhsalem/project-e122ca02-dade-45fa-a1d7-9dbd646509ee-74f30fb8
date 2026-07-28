@@ -8,10 +8,10 @@ import { Illustration } from "@/components/site/Illustration";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "بوصلة — اكتشف مسارك المهني بثقة" },
-      { name: "description", content: "منصة إرشاد مهني عربية: تقييمات نفسية-مهنية تجريبية مبنية على مقاييس دولية، جلسات كوتشينج فردية، ودليل تخصصات جامعية موسّع." },
-      { property: "og:title", content: "بوصلة — اكتشف مسارك المهني بثقة" },
-      { property: "og:description", content: "تقييمات نفسية-مهنية تجريبية، جلسات كوتشينج فردية، ودليل تخصصات جامعية." },
+      { title: "بوصلة — الإرشاد التربوي والأكاديمي والمهني" },
+      { name: "description", content: "منصة عربية متخصّصة في الإرشاد التربوي والأكاديمي والمهني: تقييمات مفتوحة الترخيص، توجيه دراسي وجامعي، وتخطيط مسار مهني للطلاب والخريجين والمرشدين." },
+      { property: "og:title", content: "بوصلة — الإرشاد التربوي والأكاديمي والمهني" },
+      { property: "og:description", content: "إرشاد تربوي وأكاديمي ومهني بمنهجية علمية: من اكتشاف الذات إلى اختيار التخصص وبناء المسار المهني." },
       { property: "og:image", content: "/og-image.jpg" },
       { name: "twitter:image", content: "/og-image.jpg" },
       { property: "og:url", content: "/" },
@@ -48,16 +48,17 @@ function HomePage() {
                 <img src={logo} alt="شعار بوصلة" width={28} height={28} className="h-7 w-7 object-contain" />
               </span>
               <Sparkles className="h-3.5 w-3.5 text-gold" />
-              معايير دولية في الإرشاد النفسي المهني
+              متخصّصون في الإرشاد التربوي والأكاديمي والمهني
             </span>
             <h1 className="mt-6 text-4xl leading-tight text-primary md:text-6xl">
-              اكتشف ذاتك،
+              إرشاد <span className="text-gold">تربوي وأكاديمي ومهني</span>
               <br />
-              وارسم <span className="text-gold">مسارك المهني</span> بثقة.
+              يرافقك من المدرسة إلى سوق العمل.
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-9 text-muted-foreground">
-              منصة عربية للإرشاد المهني والكوتشينج، تخدم طلبة المدارس
-              والجامعات والخريجين عبر تقييمات نفسية-مهنية تجريبية وجلسات فردية.
+              منصة عربية متخصّصة في الإرشاد التربوي والأكاديمي والمهني: نساعد الطلاب
+              وأولياء الأمور والمرشدين على اتخاذ قرارات دراسية ومهنية واعية،
+              بمنهجية علمية ومقاييس مفتوحة الترخيص.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
@@ -90,22 +91,22 @@ function HomePage() {
       <section className="border-b border-border bg-secondary/50">
         <div className="container-page py-20">
           <div className="mx-auto max-w-2xl text-center">
-            <p className="font-serif text-sm uppercase tracking-widest text-gold">المنهجية</p>
+            <p className="font-serif text-sm uppercase tracking-widest text-gold">تخصّصنا</p>
             <h2 className="mt-3 text-3xl text-primary md:text-4xl">
-              أسس علمية، نتائج ملموسة
+              ثلاثة محاور للإرشاد… رحلة واحدة متكاملة
             </h2>
             <p className="mt-4 text-muted-foreground">
-              نستند إلى أُطر مرجعية معروفة في الإرشاد المهني مثل نموذج Holland
-              للميول ونموذج Super لتطوير المسار، مع بنية جلسات مستوحاة من نموذج
-              GROW للكوتشينج، وبتكييف يحترم الثقافة العربية وسوق العمل الإقليمي.
+              نجمع بين الإرشاد التربوي (مهارات التعلّم والدافعية والرفاه النفسي)،
+              والإرشاد الأكاديمي (اختيار التخصص والمسار الدراسي)، والإرشاد المهني
+              (المسار الوظيفي وتطوير الأداء) — بأُطر معروفة مثل Holland و Super و GROW.
             </p>
           </div>
 
           <div className="mt-14 grid gap-6 md:grid-cols-3">
             {[
-              { icon: Brain, title: "علم النفس المهني", desc: "قياس الميول والشخصية عبر نسخ عربية تجريبية من مقاييس دولية معروفة." },
-              { icon: Target, title: "تخطيط المسار", desc: "بناء خطة مهنية واضحة قصيرة وطويلة المدى مستوحاة من نموذج Super." },
-              { icon: ShieldCheck, title: "كوتشينج ببنية GROW", desc: "جلسات فردية تتبع بنية GROW مع التزام بالأخلاقيات المهنية للكوتشينج." },
+              { icon: BookOpen, title: "الإرشاد التربوي", desc: "تنمية عادات التعلّم والدافعية والتوازن النفسي عبر Study OS و Learning DNA." },
+              { icon: GraduationCap, title: "الإرشاد الأكاديمي", desc: "توجيه اختيار التخصص الجامعي والمسار الدراسي بأدوات قياس ميول علمية." },
+              { icon: Briefcase, title: "الإرشاد المهني", desc: "بناء خطة مهنية واضحة وتطوير المسار الوظيفي بمنهجية Super و GROW." },
             ].map((p) => (
               <article key={p.title} className="rounded-2xl border border-border bg-card p-8 transition-shadow hover:shadow-[var(--shadow-soft)]">
                 <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary">
