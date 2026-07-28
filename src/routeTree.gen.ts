@@ -32,6 +32,7 @@ import { Route as CognitiveProfileRouteImport } from './routes/cognitive-profile
 import { Route as ComprehensiveAssessmentRouteImport } from './routes/comprehensive-assessment'
 import { Route as CounselorRouteImport } from './routes/counselor'
 import { Route as CounselorCrmRouteImport } from './routes/counselor-crm'
+import { Route as DegreesRouteImport } from './routes/degrees'
 import { Route as DpaRouteImport } from './routes/dpa'
 import { Route as EmotionalIntelligenceRouteImport } from './routes/emotional-intelligence'
 import { Route as FaqRouteImport } from './routes/faq'
@@ -45,6 +46,7 @@ import { Route as LearningDnaRouteImport } from './routes/learning-dna'
 import { Route as LearningDnaDashboardRouteImport } from './routes/learning-dna-dashboard'
 import { Route as LearningStyleRouteImport } from './routes/learning-style'
 import { Route as LicensingRouteImport } from './routes/licensing'
+import { Route as MajorMatchRouteImport } from './routes/major-match'
 import { Route as MetaLearningRouteImport } from './routes/meta-learning'
 import { Route as MyAssessmentsRouteImport } from './routes/my-assessments'
 import { Route as ParentDashboardRouteImport } from './routes/parent-dashboard'
@@ -215,6 +217,11 @@ const CounselorCrmRoute = CounselorCrmRouteImport.update({
   path: '/counselor-crm',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DegreesRoute = DegreesRouteImport.update({
+  id: '/degrees',
+  path: '/degrees',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DpaRoute = DpaRouteImport.update({
   id: '/dpa',
   path: '/dpa',
@@ -278,6 +285,11 @@ const LearningStyleRoute = LearningStyleRouteImport.update({
 const LicensingRoute = LicensingRouteImport.update({
   id: '/licensing',
   path: '/licensing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MajorMatchRoute = MajorMatchRouteImport.update({
+  id: '/major-match',
+  path: '/major-match',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MetaLearningRoute = MetaLearningRouteImport.update({
@@ -585,6 +597,7 @@ export interface FileRoutesByFullPath {
   '/comprehensive-assessment': typeof ComprehensiveAssessmentRoute
   '/counselor': typeof CounselorRoute
   '/counselor-crm': typeof CounselorCrmRoute
+  '/degrees': typeof DegreesRoute
   '/dpa': typeof DpaRoute
   '/emotional-intelligence': typeof EmotionalIntelligenceRoute
   '/faq': typeof FaqRoute
@@ -598,6 +611,7 @@ export interface FileRoutesByFullPath {
   '/learning-dna-dashboard': typeof LearningDnaDashboardRoute
   '/learning-style': typeof LearningStyleRoute
   '/licensing': typeof LicensingRoute
+  '/major-match': typeof MajorMatchRoute
   '/meta-learning': typeof MetaLearningRoute
   '/my-assessments': typeof MyAssessmentsRoute
   '/parent-dashboard': typeof ParentDashboardRoute
@@ -677,6 +691,7 @@ export interface FileRoutesByTo {
   '/comprehensive-assessment': typeof ComprehensiveAssessmentRoute
   '/counselor': typeof CounselorRoute
   '/counselor-crm': typeof CounselorCrmRoute
+  '/degrees': typeof DegreesRoute
   '/dpa': typeof DpaRoute
   '/emotional-intelligence': typeof EmotionalIntelligenceRoute
   '/faq': typeof FaqRoute
@@ -690,6 +705,7 @@ export interface FileRoutesByTo {
   '/learning-dna-dashboard': typeof LearningDnaDashboardRoute
   '/learning-style': typeof LearningStyleRoute
   '/licensing': typeof LicensingRoute
+  '/major-match': typeof MajorMatchRoute
   '/meta-learning': typeof MetaLearningRoute
   '/my-assessments': typeof MyAssessmentsRoute
   '/parent-dashboard': typeof ParentDashboardRoute
@@ -771,6 +787,7 @@ export interface FileRoutesById {
   '/comprehensive-assessment': typeof ComprehensiveAssessmentRoute
   '/counselor': typeof CounselorRoute
   '/counselor-crm': typeof CounselorCrmRoute
+  '/degrees': typeof DegreesRoute
   '/dpa': typeof DpaRoute
   '/emotional-intelligence': typeof EmotionalIntelligenceRoute
   '/faq': typeof FaqRoute
@@ -784,6 +801,7 @@ export interface FileRoutesById {
   '/learning-dna-dashboard': typeof LearningDnaDashboardRoute
   '/learning-style': typeof LearningStyleRoute
   '/licensing': typeof LicensingRoute
+  '/major-match': typeof MajorMatchRoute
   '/meta-learning': typeof MetaLearningRoute
   '/my-assessments': typeof MyAssessmentsRoute
   '/parent-dashboard': typeof ParentDashboardRoute
@@ -865,6 +883,7 @@ export interface FileRouteTypes {
     | '/comprehensive-assessment'
     | '/counselor'
     | '/counselor-crm'
+    | '/degrees'
     | '/dpa'
     | '/emotional-intelligence'
     | '/faq'
@@ -878,6 +897,7 @@ export interface FileRouteTypes {
     | '/learning-dna-dashboard'
     | '/learning-style'
     | '/licensing'
+    | '/major-match'
     | '/meta-learning'
     | '/my-assessments'
     | '/parent-dashboard'
@@ -957,6 +977,7 @@ export interface FileRouteTypes {
     | '/comprehensive-assessment'
     | '/counselor'
     | '/counselor-crm'
+    | '/degrees'
     | '/dpa'
     | '/emotional-intelligence'
     | '/faq'
@@ -970,6 +991,7 @@ export interface FileRouteTypes {
     | '/learning-dna-dashboard'
     | '/learning-style'
     | '/licensing'
+    | '/major-match'
     | '/meta-learning'
     | '/my-assessments'
     | '/parent-dashboard'
@@ -1050,6 +1072,7 @@ export interface FileRouteTypes {
     | '/comprehensive-assessment'
     | '/counselor'
     | '/counselor-crm'
+    | '/degrees'
     | '/dpa'
     | '/emotional-intelligence'
     | '/faq'
@@ -1063,6 +1086,7 @@ export interface FileRouteTypes {
     | '/learning-dna-dashboard'
     | '/learning-style'
     | '/licensing'
+    | '/major-match'
     | '/meta-learning'
     | '/my-assessments'
     | '/parent-dashboard'
@@ -1144,6 +1168,7 @@ export interface RootRouteChildren {
   ComprehensiveAssessmentRoute: typeof ComprehensiveAssessmentRoute
   CounselorRoute: typeof CounselorRoute
   CounselorCrmRoute: typeof CounselorCrmRoute
+  DegreesRoute: typeof DegreesRoute
   DpaRoute: typeof DpaRoute
   EmotionalIntelligenceRoute: typeof EmotionalIntelligenceRoute
   FaqRoute: typeof FaqRoute
@@ -1157,6 +1182,7 @@ export interface RootRouteChildren {
   LearningDnaDashboardRoute: typeof LearningDnaDashboardRoute
   LearningStyleRoute: typeof LearningStyleRoute
   LicensingRoute: typeof LicensingRoute
+  MajorMatchRoute: typeof MajorMatchRoute
   MetaLearningRoute: typeof MetaLearningRoute
   MyAssessmentsRoute: typeof MyAssessmentsRoute
   ParentDashboardRoute: typeof ParentDashboardRoute
@@ -1362,6 +1388,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CounselorCrmRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/degrees': {
+      id: '/degrees'
+      path: '/degrees'
+      fullPath: '/degrees'
+      preLoaderRoute: typeof DegreesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/dpa': {
       id: '/dpa'
       path: '/dpa'
@@ -1451,6 +1484,13 @@ declare module '@tanstack/react-router' {
       path: '/licensing'
       fullPath: '/licensing'
       preLoaderRoute: typeof LicensingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/major-match': {
+      id: '/major-match'
+      path: '/major-match'
+      fullPath: '/major-match'
+      preLoaderRoute: typeof MajorMatchRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/meta-learning': {
@@ -1944,6 +1984,7 @@ const rootRouteChildren: RootRouteChildren = {
   ComprehensiveAssessmentRoute: ComprehensiveAssessmentRoute,
   CounselorRoute: CounselorRoute,
   CounselorCrmRoute: CounselorCrmRoute,
+  DegreesRoute: DegreesRoute,
   DpaRoute: DpaRoute,
   EmotionalIntelligenceRoute: EmotionalIntelligenceRoute,
   FaqRoute: FaqRoute,
@@ -1957,6 +1998,7 @@ const rootRouteChildren: RootRouteChildren = {
   LearningDnaDashboardRoute: LearningDnaDashboardRoute,
   LearningStyleRoute: LearningStyleRoute,
   LicensingRoute: LicensingRoute,
+  MajorMatchRoute: MajorMatchRoute,
   MetaLearningRoute: MetaLearningRoute,
   MyAssessmentsRoute: MyAssessmentsRoute,
   ParentDashboardRoute: ParentDashboardRoute,
