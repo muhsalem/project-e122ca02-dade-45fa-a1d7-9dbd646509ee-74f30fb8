@@ -7,9 +7,9 @@ import { AcademicTabs } from "@/components/site/AcademicTabs";
 export const Route = createFileRoute("/academic-disciplines")({
   head: () => ({
     meta: [
-      { title: "قاعدة التخصصات الأكاديمية (v4) — بوصلة" },
+      { title: "قاعدة التخصصات الأكاديمية (ISCED-F 2013 · v9) — بوصلة" },
       { name: "description", content: "استكشف 39 مجالًا و128 تخصصًا عامًا و585 تخصصًا دقيقًا وفق ISCED-F 2013، مع رموز التصنيف الدولي." },
-      { property: "og:title", content: "قاعدة التخصصات الأكاديمية v4 — بوصلة" },
+      { property: "og:title", content: "قاعدة التخصصات الأكاديمية v9 — بوصلة" },
       { property: "og:description", content: "قاعدة بيانات أكاديمية شاملة بترميز ISCED لكل تخصص." },
     ],
   }),
