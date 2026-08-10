@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { Network, Search } from "lucide-react";
 import { INTERDISCIPLINARY_GROUPS, MATURITY_LABELS, type Maturity, type Demand, type Relevance } from "@/data/bawsala/interdisciplinary_fields_complete";
+import { AcademicTabs } from "@/components/site/AcademicTabs";
 
 export const Route = createFileRoute("/interdisciplinary")({
   head: () => ({
@@ -57,6 +58,7 @@ function Page() {
             {INTERDISCIPLINARY_GROUPS.length} مجموعة · {totalFields} حقل بينيّ — مصنّفة بالنضج المؤسسي، طلب السوق، وملاءمة السياق العربي.
           </p>
         </header>
+        <AcademicTabs />
 
         <div className="mb-6 rounded-2xl border border-border bg-card p-4 space-y-3">
           <div className="flex items-center gap-2 rounded-lg border border-border bg-background px-3 py-2">

@@ -8,6 +8,7 @@ import { WorkModeBadges } from "@/components/site/WorkModeBadges";
 import { CareerEvaluationCard } from "@/components/site/CareerEvaluationCard";
 import { getWorkModesByField, MODE_LABELS, type WorkModes } from "@/lib/work-modes";
 import { FitScoreSection } from "@/components/site/FitScoreSection";
+import { AcademicTabs } from "@/components/site/AcademicTabs";
 
 type Sub = string;
 type GeneralSpec = { name: string; subs: Sub[] };
@@ -109,6 +110,7 @@ function SpecializationsPage() {
       </section>
 
       <section className="container-page py-10">
+        <AcademicTabs />
         {/* Breadcrumb */}
         <nav className="mx-auto mb-6 flex max-w-5xl flex-wrap items-center gap-2 text-sm text-muted-foreground">
           <button
