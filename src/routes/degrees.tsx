@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { GraduationCap, Search } from "lucide-react";
 import { ABBREVIATION_GROUPS, type DegreeLevel } from "@/data/bawsala/academic_abbreviations";
+import { AcademicTabs } from "@/components/site/AcademicTabs";
 
 export const Route = createFileRoute("/degrees")({
   head: () => ({
@@ -55,6 +56,7 @@ function Page() {
             {ABBREVIATION_GROUPS.length} مجموعة · {totalAbbrs} اختصار · {totalPathways} مسارًا ترقّويًا مقترحًا.
           </p>
         </header>
+        <AcademicTabs />
 
         <div className="mb-6 rounded-2xl border border-border bg-card p-4 space-y-3">
           <div className="flex items-center gap-2 rounded-lg border border-border bg-background px-3 py-2">

@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { AcademicTabs } from "@/components/site/AcademicTabs";
 import { useMemo, useState } from "react";
 import { Sparkles, ShieldAlert, ShieldCheck, AlertTriangle } from "lucide-react";
 import {
@@ -96,6 +97,7 @@ function Page() {
               اضبط المؤشرات على اليمين لترى التوصيات تحدَّث فورًا.
             </p>
           </header>
+        <AcademicTabs />
 
           <div className="space-y-3">
             {visible.map((r, i) => <RecCard key={r.fieldId} r={r} rank={i + 1} />)}

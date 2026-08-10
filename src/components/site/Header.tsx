@@ -32,13 +32,12 @@ const assessmentsGroup = {
     {
       title: "🎓 التخصصات الدراسية والجامعية",
       items: [
-        { to: "/academic-major", label: "اختيار التخصص الجامعي" },
-        { to: "/specializations", label: "استكشاف التخصصات" },
-        { to: "/academic-disciplines", label: "قاعدة ISCED الأكاديمية (v4)" },
-        { to: "/interdisciplinary", label: "التخصصات البينية" },
-        { to: "/degrees", label: "اختصارات الدرجات (MBA/PhD/…)" },
-        { to: "/major-match", label: "Bawsala Match — مطابقة التخصص" },
-        { to: "/track/discovery", label: "خريطة الاختبارات الأكاديمية" },
+        { to: "/major-match", label: "ابدأ: مطابقة التخصص — Bawsala Match" },
+        { to: "/academic-major", label: "اختبر: اختيار التخصص الجامعي (AI)" },
+        { to: "/academic-disciplines", label: "استكشف: قاعدة التخصصات (ISCED-F 2013 · v9)" },
+        { to: "/specializations", label: "استكشف: خريطة التخصصات" },
+        { to: "/interdisciplinary", label: "استكشف: التخصصات البينية" },
+        { to: "/degrees", label: "مرجع: اختصارات الدرجات (MBA/PhD/…)" },
       ],
     },
     {
@@ -47,8 +46,10 @@ const assessmentsGroup = {
         { to: "/self-discovery", label: "اكتشاف المهنة (RIASEC + Big Five)" },
         { to: "/career-type-assessment", label: "استكشاف المسار (ISCO-08)" },
         { to: "/work-values", label: "القيم المهنية (WVI)" },
+        { to: "/track/discovery", label: "خريطة الاختبارات الأكاديمية" },
       ],
     },
+
     {
       title: "💼 المسار المهني — أريد التغيير",
       items: [

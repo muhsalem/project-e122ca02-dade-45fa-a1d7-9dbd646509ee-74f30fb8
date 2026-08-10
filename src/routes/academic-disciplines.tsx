@@ -2,13 +2,14 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { BookOpen, ChevronLeft, Search } from "lucide-react";
 import { ACADEMIC_FIELDS, CATEGORIES, COMPREHENSIVENESS_AUDIT, type CategoryId, type AcademicField, type Discipline } from "@/data/bawsala/academic_disciplines";
+import { AcademicTabs } from "@/components/site/AcademicTabs";
 
 export const Route = createFileRoute("/academic-disciplines")({
   head: () => ({
     meta: [
-      { title: "قاعدة التخصصات الأكاديمية (v4) — بوصلة" },
+      { title: "قاعدة التخصصات الأكاديمية (ISCED-F 2013 · v9) — بوصلة" },
       { name: "description", content: "استكشف 39 مجالًا و128 تخصصًا عامًا و585 تخصصًا دقيقًا وفق ISCED-F 2013، مع رموز التصنيف الدولي." },
-      { property: "og:title", content: "قاعدة التخصصات الأكاديمية v4 — بوصلة" },
+      { property: "og:title", content: "قاعدة التخصصات الأكاديمية v9 — بوصلة" },
       { property: "og:description", content: "قاعدة بيانات أكاديمية شاملة بترميز ISCED لكل تخصص." },
     ],
   }),
@@ -46,6 +47,7 @@ function Page() {
             {ACADEMIC_FIELDS.length} مجالًا · {ACADEMIC_FIELDS.reduce((n,f)=>n+f.disciplines.length,0)} تخصصًا عامًا · {ACADEMIC_FIELDS.reduce((n,f)=>n+f.disciplines.reduce((m,d)=>m+d.subDisciplines.length,0),0)} تخصصًا دقيقًا — بترميز ISCED.
           </p>
         </header>
+        <AcademicTabs />
 
         <div className="mb-6 rounded-2xl border border-border bg-card p-4">
           <div className="mb-3 flex items-center gap-2 rounded-lg border border-border bg-background px-3 py-2">
