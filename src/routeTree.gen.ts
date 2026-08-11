@@ -65,6 +65,7 @@ import { Route as SectorGuideRouteImport } from './routes/sector-guide'
 import { Route as SelfDiscoveryRouteImport } from './routes/self-discovery'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SkillsGapRouteImport } from './routes/skills-gap'
+import { Route as SpecializationCompassRouteImport } from './routes/specialization-compass'
 import { Route as SpecializationsRouteImport } from './routes/specializations'
 import { Route as StartRouteImport } from './routes/start'
 import { Route as StudyOsRouteImport } from './routes/study-os'
@@ -382,6 +383,11 @@ const SkillsGapRoute = SkillsGapRouteImport.update({
   path: '/skills-gap',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SpecializationCompassRoute = SpecializationCompassRouteImport.update({
+  id: '/specialization-compass',
+  path: '/specialization-compass',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SpecializationsRoute = SpecializationsRouteImport.update({
   id: '/specializations',
   path: '/specializations',
@@ -630,6 +636,7 @@ export interface FileRoutesByFullPath {
   '/self-discovery': typeof SelfDiscoveryRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/skills-gap': typeof SkillsGapRoute
+  '/specialization-compass': typeof SpecializationCompassRoute
   '/specializations': typeof SpecializationsRoute
   '/start': typeof StartRoute
   '/study-os': typeof StudyOsRoute
@@ -724,6 +731,7 @@ export interface FileRoutesByTo {
   '/self-discovery': typeof SelfDiscoveryRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/skills-gap': typeof SkillsGapRoute
+  '/specialization-compass': typeof SpecializationCompassRoute
   '/specializations': typeof SpecializationsRoute
   '/start': typeof StartRoute
   '/study-os': typeof StudyOsRoute
@@ -820,6 +828,7 @@ export interface FileRoutesById {
   '/self-discovery': typeof SelfDiscoveryRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/skills-gap': typeof SkillsGapRoute
+  '/specialization-compass': typeof SpecializationCompassRoute
   '/specializations': typeof SpecializationsRoute
   '/start': typeof StartRoute
   '/study-os': typeof StudyOsRoute
@@ -916,6 +925,7 @@ export interface FileRouteTypes {
     | '/self-discovery'
     | '/sitemap.xml'
     | '/skills-gap'
+    | '/specialization-compass'
     | '/specializations'
     | '/start'
     | '/study-os'
@@ -1010,6 +1020,7 @@ export interface FileRouteTypes {
     | '/self-discovery'
     | '/sitemap.xml'
     | '/skills-gap'
+    | '/specialization-compass'
     | '/specializations'
     | '/start'
     | '/study-os'
@@ -1105,6 +1116,7 @@ export interface FileRouteTypes {
     | '/self-discovery'
     | '/sitemap.xml'
     | '/skills-gap'
+    | '/specialization-compass'
     | '/specializations'
     | '/start'
     | '/study-os'
@@ -1201,6 +1213,7 @@ export interface RootRouteChildren {
   SelfDiscoveryRoute: typeof SelfDiscoveryRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SkillsGapRoute: typeof SkillsGapRoute
+  SpecializationCompassRoute: typeof SpecializationCompassRoute
   SpecializationsRoute: typeof SpecializationsRoute
   StartRoute: typeof StartRoute
   StudyOsRoute: typeof StudyOsRoute
@@ -1619,6 +1632,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SkillsGapRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/specialization-compass': {
+      id: '/specialization-compass'
+      path: '/specialization-compass'
+      fullPath: '/specialization-compass'
+      preLoaderRoute: typeof SpecializationCompassRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/specializations': {
       id: '/specializations'
       path: '/specializations'
@@ -2017,6 +2037,7 @@ const rootRouteChildren: RootRouteChildren = {
   SelfDiscoveryRoute: SelfDiscoveryRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   SkillsGapRoute: SkillsGapRoute,
+  SpecializationCompassRoute: SpecializationCompassRoute,
   SpecializationsRoute: SpecializationsRoute,
   StartRoute: StartRoute,
   StudyOsRoute: StudyOsRoute,
@@ -2043,13 +2064,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
