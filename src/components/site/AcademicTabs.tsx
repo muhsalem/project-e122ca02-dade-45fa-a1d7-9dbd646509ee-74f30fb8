@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 
 const TABS = [
   { to: "/major-match", label: "مطابقة التخصص", hint: "ابدأ" },
+  { to: "/specialization-compass", label: "بوصلة التخصصات (AI)", hint: "حلّل" },
   { to: "/academic-major", label: "اختيار التخصص (AI)", hint: "اختبر" },
   { to: "/academic-disciplines", label: "قاعدة ISCED-F (v9)", hint: "استكشف" },
   { to: "/specializations", label: "خريطة التخصصات", hint: "استكشف" },
