@@ -732,7 +732,7 @@ function CareerTypePage() {
         )}
 
         <div className="mt-6 text-center text-sm">
-          <Link to="/career-path" className="text-primary hover:underline">
+          <Link to="/resources/career-path-terms" className="text-primary hover:underline">
             ← مراجعة تعريفات Occupation و Job و Profession و Craft أولاً
           </Link>
         </div>
