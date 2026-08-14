@@ -32,7 +32,9 @@ const assessmentsGroup = {
     {
       title: "🎓 التخصصات الدراسية والجامعية",
       items: [
+        { to: "/academic-journey", label: "🧭 المسار الموحّد للتخصصات (يجمع الكل)" },
         { to: "/major-match", label: "ابدأ: مطابقة التخصص — Bawsala Match" },
+        { to: "/specialization-compass", label: "حلّل: بوصلة التخصصات (AI)" },
         { to: "/academic-major", label: "اختبر: اختيار التخصص الجامعي (AI)" },
         { to: "/academic-disciplines", label: "استكشف: قاعدة التخصصات (ISCED-F 2013 · v9)" },
         { to: "/specializations", label: "استكشف: خريطة التخصصات" },
