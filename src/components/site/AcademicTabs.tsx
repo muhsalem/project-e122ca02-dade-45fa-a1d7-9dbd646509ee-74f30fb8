@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 
 const TABS = [
+  { to: "/academic-journey", label: "المسار الموحّد", hint: "الرحلة" },
   { to: "/major-match", label: "مطابقة التخصص", hint: "ابدأ" },
   { to: "/specialization-compass", label: "بوصلة التخصصات (AI)", hint: "حلّل" },
   { to: "/academic-major", label: "اختيار التخصص (AI)", hint: "اختبر" },

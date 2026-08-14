@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AcademicDisciplinesRouteImport } from './routes/academic-disciplines'
+import { Route as AcademicJourneyRouteImport } from './routes/academic-journey'
 import { Route as AcademicMajorRouteImport } from './routes/academic-major'
 import { Route as AuditReportRouteImport } from './routes/audit-report'
 import { Route as AuthRouteImport } from './routes/auth'
@@ -121,6 +122,11 @@ const AboutRoute = AboutRouteImport.update({
 const AcademicDisciplinesRoute = AcademicDisciplinesRouteImport.update({
   id: '/academic-disciplines',
   path: '/academic-disciplines',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AcademicJourneyRoute = AcademicJourneyRouteImport.update({
+  id: '/academic-journey',
+  path: '/academic-journey',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AcademicMajorRoute = AcademicMajorRouteImport.update({
@@ -584,6 +590,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/academic-disciplines': typeof AcademicDisciplinesRoute
+  '/academic-journey': typeof AcademicJourneyRoute
   '/academic-major': typeof AcademicMajorRoute
   '/audit-report': typeof AuditReportRoute
   '/auth': typeof AuthRoute
@@ -679,6 +686,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/academic-disciplines': typeof AcademicDisciplinesRoute
+  '/academic-journey': typeof AcademicJourneyRoute
   '/academic-major': typeof AcademicMajorRoute
   '/audit-report': typeof AuditReportRoute
   '/auth': typeof AuthRoute
@@ -776,6 +784,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/academic-disciplines': typeof AcademicDisciplinesRoute
+  '/academic-journey': typeof AcademicJourneyRoute
   '/academic-major': typeof AcademicMajorRoute
   '/audit-report': typeof AuditReportRoute
   '/auth': typeof AuthRoute
@@ -873,6 +882,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/academic-disciplines'
+    | '/academic-journey'
     | '/academic-major'
     | '/audit-report'
     | '/auth'
@@ -968,6 +978,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/academic-disciplines'
+    | '/academic-journey'
     | '/academic-major'
     | '/audit-report'
     | '/auth'
@@ -1064,6 +1075,7 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/about'
     | '/academic-disciplines'
+    | '/academic-journey'
     | '/academic-major'
     | '/audit-report'
     | '/auth'
@@ -1161,6 +1173,7 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
   AcademicDisciplinesRoute: typeof AcademicDisciplinesRoute
+  AcademicJourneyRoute: typeof AcademicJourneyRoute
   AcademicMajorRoute: typeof AcademicMajorRoute
   AuditReportRoute: typeof AuditReportRoute
   AuthRoute: typeof AuthRoute
@@ -1266,6 +1279,13 @@ declare module '@tanstack/react-router' {
       path: '/academic-disciplines'
       fullPath: '/academic-disciplines'
       preLoaderRoute: typeof AcademicDisciplinesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/academic-journey': {
+      id: '/academic-journey'
+      path: '/academic-journey'
+      fullPath: '/academic-journey'
+      preLoaderRoute: typeof AcademicJourneyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/academic-major': {
@@ -1985,6 +2005,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AboutRoute: AboutRoute,
   AcademicDisciplinesRoute: AcademicDisciplinesRoute,
+  AcademicJourneyRoute: AcademicJourneyRoute,
   AcademicMajorRoute: AcademicMajorRoute,
   AuditReportRoute: AuditReportRoute,
   AuthRoute: AuthRoute,
