@@ -125,9 +125,13 @@ function Slider({ label, value, onChange }: { label: string; value: number; onCh
 }
 
 function RecCard({ r, rank }: { r: Recommendation; rank: number }) {
+  const [open, setOpen] = useState(false);
   const meta = FIELD_LABEL[r.fieldId] ?? { ar: r.fieldId, icon: "📚" };
   const g = GSCCI_LABELS[r.gscci];
   const Icon = r.excluded ? ShieldAlert : r.capped ? AlertTriangle : ShieldCheck;
+  const profile = getFieldProfile(r.fieldId);
+  const reasons = useMemo(() => explainMatch(r.fieldId, r.breakdown), [r.fieldId, r.breakdown]);
+  const crosses = useMemo(() => (open ? intersectionsFor(r.fieldId, 4) : []), [open, r.fieldId]);
   return (
     <div className={`rounded-xl border p-4 ${r.excluded ? "border-destructive/40 bg-destructive/5 opacity-70" : "border-border bg-card"}`}>
       <div className="flex items-start gap-3">
@@ -151,12 +155,53 @@ function RecCard({ r, rank }: { r: Recommendation; rank: number }) {
             <Metric label="AGAF" v={r.breakdown.agaf} />
             <Metric label="الطموح" v={r.breakdown.ambitions} />
           </div>
+          {profile && (
+            <div className="mt-2 flex flex-wrap gap-1.5 text-[10px]">
+              <Chip>مناعة أتمتة {profile.aiResilience}٪</Chip>
+              <Chip>طلب 2035 {profile.demand2035}٪</Chip>
+              <Chip>تشبّع {profile.saturation}٪</Chip>
+              <Chip>عن بُعد {profile.remote}٪</Chip>
+              <Chip>{profile.years} سنوات دراسة</Chip>
+            </div>
+          )}
           {r.capped && <p className="mt-1 text-[11px] text-amber-700 dark:text-amber-400">مسقّف — يتطلب اعتماد هيئة شرعية قبل التوصية النهائية.</p>}
+          <button onClick={() => setOpen((v) => !v)} className="mt-2 text-[11px] text-gold underline">
+            {open ? "إخفاء تفسير القرار" : "لماذا هذا التخصص؟ (تفسير القرار)"}
+          </button>
+          {open && (
+            <div className="mt-2 space-y-3 rounded-lg border border-border bg-background/60 p-3">
+              <ul className="space-y-1 text-[11px]">
+                {reasons.map((x, i) => (
+                  <li key={i} className={x.positive ? "text-primary" : "text-amber-700 dark:text-amber-400"}>
+                    <strong>{x.label}:</strong> {x.detail}
+                  </li>
+                ))}
+                {!reasons.length && <li className="text-muted-foreground">لا توجد إشارات قوية بعد — اضبط المؤشرات لمزيد من الدقة.</li>}
+              </ul>
+              {crosses.length > 0 && (
+                <div>
+                  <div className="mb-1 text-[11px] font-semibold text-primary">تقاطعات بينية مقترحة</div>
+                  <ul className="space-y-1 text-[11px] text-muted-foreground">
+                    {crosses.map((c) => (
+                      <li key={`${c.aId}-${c.bId}`}>
+                        <span className="text-primary">{c.aAr} × {c.bAr}</span> — نضج {c.maturity}٪ · {c.rationale}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>
   );
 }
+
+function Chip({ children }: { children: React.ReactNode }) {
+  return <span className="rounded-full border border-border px-2 py-0.5 text-muted-foreground">{children}</span>;
+}
+
 
 function Metric({ label, v }: { label: string; v: number }) {
   return (
