@@ -12,6 +12,8 @@ import {
   type Recommendation,
 } from "@/data/bawsala/bawsala_integration";
 import { ACADEMIC_FIELDS } from "@/data/bawsala/academic_disciplines";
+import { getFieldProfile } from "@/data/bawsala/field_profiles";
+import { explainMatch, intersectionsFor } from "@/lib/knowledge-graph";
 
 export const Route = createFileRoute("/major-match")({
   head: () => ({
